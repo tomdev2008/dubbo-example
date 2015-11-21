@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
+
+    <!-- 用rest协议在8080端口暴露服务 -->
+    <dubbo:protocol name="rest" port="7001" server="netty"/>
+
+    <!-- 使用redis注册中心暴露服务地址 -->
+    <dubbo:registry   address="redis://127.0.0.1:6379" />
+
+    <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.fansz.members.api.UserService" ref="userService"/>
+
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="userService" class="com.fansz.members.api.provider.UserServiceImpl"/>
+</beans>

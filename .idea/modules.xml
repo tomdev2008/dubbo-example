@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/fansz-members.iml" filepath="$PROJECT_DIR$/fansz-members.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" filepath="$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" filepath="$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-provider/api-impl.iml" filepath="$PROJECT_DIR$/fansz-members-provider/api-impl.iml" />
+    </modules>
+  </component>
+</project>

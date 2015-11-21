@@ -1,0 +1,3 @@
+com/fansz/members/model/User.class
+com/fansz/members/api/UserService.class
+com/fansz/members/model/LoginResult.class
