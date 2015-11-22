@@ -13,6 +13,8 @@
         <module>fansz-members-provider</module>
         <module>fansz-members-consumer</module>
     </modules>
+    <dependencyManagement>
+    </dependencyManagement>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip_maven_deploy>true</skip_maven_deploy>

@@ -1,0 +1,44 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:maxActive="${redis.pool.maxActive}"
+          p:maxIdle="${redis.pool.maxIdle}"
+          p:maxWait="${redis.pool.maxWait}"
+          p:minEvictableIdleTimeMillis="${redis.pool.minEvictableIdleTimeMillis}"
+          p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
+          p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
+    <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <constructor-arg index="0" value="fansz-master"></constructor-arg>
+        <constructor-arg index="1">
+            <set>
+                <value>10.0.0.8:26379</value>
+                <value>10.0.0.8:26380</value>
+                <value>10.0.0.8:26380</value>
+            </set>
+        </constructor-arg>
+    </bean>
+    <!-- 配置redis 缓存服务器 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <constructor-arg index="0" ref="redisSentinelConfiguration"/>
+        <constructor-arg index="1" ref="poolConfig"/>
+    </bean>
+    <!-- redis操作模板 -->
+    <!--<bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+
+    <bean id="jdkSerializationRedisSerializer"
+          class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+          p:connectionFactory-ref="jedisConnectionFactory"
+          p:keySerializer-ref="stringRedisSerializer"
+          p:valueSerializer-ref="jdkSerializationRedisSerializer"/>
+-->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"/>
+</beans>

@@ -22,17 +22,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="api-impl" />
-        <module name="api-provider" />
         <module name="fansz-members-api" />
         <module name="fansz-members-consumer" />
+      </profile>
+      <profile default="false" name="Annotation profile for fansz-members-provider" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="fansz-members-provider" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="fansz-members" target="1.7" />
-      <module name="fansz-members-api" target="1.7" />
-      <module name="fansz-members-consumer" target="1.7" />
+      <module name="fansz-members" target="1.5" />
+      <module name="fansz-members-api" target="1.5" />
+      <module name="fansz-members-consumer" target="1.5" />
       <module name="fansz-members-provider" target="1.7" />
     </bytecodeTargetLevel>
   </component>
