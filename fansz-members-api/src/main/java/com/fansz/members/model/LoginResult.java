@@ -6,35 +6,44 @@ import java.io.Serializable;
  * Created by allan on 15/11/20.
  */
 public class LoginResult implements Serializable {
-    private static final long serialVersionUID = -2727440646612614067L;
 
-    private String status;
+    private String accessToken;
 
-    private String message;
+    private String refreshToken;
 
-    private Object result;
+    private long expiresAt;//accessToken的失效时间,为距离1970年1月1日0点的ms
 
-    public String getStatus() {
-        return status;
+    private long uid;
+
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getMessage() {
-        return message;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
-    public Object getResult() {
-        return result;
+    public long getExpiresAt() {
+        return expiresAt;
     }
 
-    public void setResult(Object result) {
-        this.result = result;
+    public void setExpiresAt(long expiresAt) {
+        this.expiresAt = expiresAt;
+    }
+
+    public long getUid() {
+        return uid;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
     }
 }

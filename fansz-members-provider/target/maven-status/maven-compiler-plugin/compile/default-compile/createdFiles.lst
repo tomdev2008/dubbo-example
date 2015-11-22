@@ -1,2 +1,10 @@
+com/fansz/members/tools/MembersConstant.class
+com/fansz/members/tools/DateTools.class
+com/fansz/members/tools/DateTools$DateWrapper.class
+com/fansz/members/api/provider/AuthApiProvider.class
 com/fansz/members/Main.class
-com/fansz/members/api/provider/UserServiceImpl.class
+com/fansz/members/tools/UUIDTools.class
+com/fansz/members/api/repository/UserRepository.class
+com/fansz/members/tools/DateTools$TokenField.class
+com/fansz/members/api/entity/UserEntity.class
+com/fansz/members/tools/SecurityTools.class

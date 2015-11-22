@@ -43,7 +43,6 @@
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
 
 
-
     <!-- 数据源配置,使用应用内的C3P0数据库连接池 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${jdbc.driver}"/>

@@ -1,3 +1,6 @@
-/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/api/UserService.java
-/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/User.java
+/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/api/AuthApi.java
+/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/RefreshParameters.java
+/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/RefreshResult.java
+/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/UserParameters.java
 /Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/LoginResult.java
+/Users/allan/Work/backend/fansz-members/fansz-members-api/src/main/java/com/fansz/members/model/CommonResult.java

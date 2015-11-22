@@ -1,3 +1,6 @@
-com/fansz/members/model/User.class
-com/fansz/members/api/UserService.class
+com/fansz/members/model/UserParameters.class
 com/fansz/members/model/LoginResult.class
+com/fansz/members/model/CommonResult.class
+com/fansz/members/api/AuthApi.class
+com/fansz/members/model/RefreshResult.class
+com/fansz/members/model/RefreshParameters.class
