@@ -9,6 +9,8 @@ public class UserEntity implements Serializable{
 
     private String userAccount;
 
+    private String realName;
+
     private String passwd;
 
     public Long getUserId() {
@@ -33,5 +35,13 @@ public class UserEntity implements Serializable{
 
     public void setPasswd(String passwd) {
         this.passwd = passwd == null ? null : passwd.trim();
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

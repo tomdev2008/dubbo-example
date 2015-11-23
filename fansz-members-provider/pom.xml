@@ -171,7 +171,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
-            <version>1.5.2.RELEASE</version>
+            <version>1.6.1.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -196,6 +196,17 @@
             <version>0.1</version>
         </dependency>
 
+        <!--kryo序列化-->
+        <dependency>
+            <groupId>com.esotericsoftware.kryo</groupId>
+            <artifactId>kryo</artifactId>
+            <version>2.24.0</version>
+        </dependency>
+        <dependency>
+            <groupId>de.javakaffee</groupId>
+            <artifactId>kryo-serializers</artifactId>
+            <version>0.26</version>
+        </dependency>
         <!-- 如果要使用json序列化 -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>

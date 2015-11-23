@@ -1,8 +1,11 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.UserEntity;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,4 +27,6 @@ public interface UserRepository {
     int updateByPrimaryKeySelective(UserEntity record);
 
     int updateByPrimaryKey(UserEntity record);
+
+    List<UserEntity> findByName(@Param("userName") String userName,PageBounds pageBounds);
 }
