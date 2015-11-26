@@ -1,15 +1,6 @@
 package com.fansz.members.model;
 
-import com.fansz.appservice.resource.param.RegisterPara;
-import com.fansz.appservice.utils.ShortUUIDGenerator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.Serializable;
 import java.util.Date;

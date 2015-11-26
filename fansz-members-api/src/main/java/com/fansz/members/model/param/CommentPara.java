@@ -19,4 +19,6 @@ public class CommentPara {
     @NotEmpty(message = "error.postId.empty")
     private String postId;
 
+    private String id;
+
 }

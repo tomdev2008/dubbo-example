@@ -1,20 +1,11 @@
 package com.fansz.members.model;
 
-import com.fansz.appservice.resource.param.PostParam;
-import com.fansz.appservice.utils.ShortUUIDGenerator;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 @Data
-@NoArgsConstructor
-@Document(collection="post")
 public class Post {
 
     private String id;

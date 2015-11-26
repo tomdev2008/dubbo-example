@@ -1,11 +1,6 @@
 package com.fansz.members.model;
 
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.utils.ShortUUIDGenerator;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -13,8 +8,6 @@ import java.util.List;
  * Created by root on 15-11-4.
  */
 @Data
-@NoArgsConstructor
-@Document(collection = "fandom")
 public class Fandom {
     private String id;
     private String title;

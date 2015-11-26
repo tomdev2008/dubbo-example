@@ -5,13 +5,12 @@ import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
 import com.fansz.members.model.User;
+import com.fansz.members.model.param.CriteriaParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -44,11 +43,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            // TODO 去重
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            contactsService.addFriend(appUserDetails.getUser().getId(), followId);
+            contactsService.addFriend(myId, followId);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -77,10 +72,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            contactsService.acceptFriend(appUserDetails.getUser().getId(), followId);
+             contactsService.acceptFriend(myId, followId);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -109,10 +101,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            contactsService.removeFriend(appUserDetails.getUser().getId(), id);
+            contactsService.removeFriend(myId, id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -141,10 +130,7 @@ public class ContactsProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<User> friends = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            friends = contactsService.getFriends(appUserDetails.getUser().getId());
+            friends = contactsService.getFriends(myId);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -174,10 +160,7 @@ public class ContactsProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         User user = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            user = contactsService.getFriend(appUserDetails.getUser().getId(), id);
+            user = contactsService.getFriend(myId, id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -206,10 +189,7 @@ public class ContactsProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<User> users = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            users = contactsService.findFriend(appUserDetails.getUser().getId(), criteria);
+            users = contactsService.findFriend(myId, criteria);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -237,10 +217,7 @@ public class ContactsProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         User user = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            user = contactsService.getFriend(appUserDetails.getUser().getId(), id);
+            user = contactsService.getFriend(id, id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -260,17 +237,14 @@ public class ContactsProvider {
      * @return resp 返回对象
      */
     @GET
-    @Path("/follower")
+    @Path("/follower/{id}")
     @Produces("application/json")
-    public Response getFollowRequest()
+    public Response getFollowRequest(@PathParam("id") String id)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<User> user = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            user = contactsService.getCandidates(appUserDetails.getUser().getId());
+            user = contactsService.getCandidates(id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));

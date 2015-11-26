@@ -1,6 +1,8 @@
 package com.fansz.members.model;
 
 
+import lombok.Data;
+
 import java.util.List;
 
 /**

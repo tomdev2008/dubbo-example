@@ -1,17 +1,6 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.persistence.domain.Category;
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.SubCategory;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.CategoryMapper;
-import com.fansz.appservice.persistence.mapper.FandomMapper;
-import com.fansz.appservice.resource.param.CategoryParam;
-import com.fansz.appservice.service.CategoryService;
-import com.fansz.appservice.service.FileService;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import com.fansz.members.api.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

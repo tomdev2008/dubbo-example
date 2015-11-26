@@ -1,14 +1,11 @@
 package com.fansz.members.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
 
 /**
  * Created by root on 15-10-26.
  */
 @Data
-@NoArgsConstructor
-@Document(collection = "friends")
 public class Friends {
 
     private String id;

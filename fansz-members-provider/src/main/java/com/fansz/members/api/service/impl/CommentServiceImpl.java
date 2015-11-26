@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
     PostMapper postMapper;
 
     @Override
-    public Comment addComment(User user, CommentPara commentPara) throws IOException {
+    public Comment addComment(CommentPara commentPara) throws IOException {
 
         Comment comment = new Comment(user, commentPara);
         commentMapper.save(comment);

@@ -4,14 +4,12 @@ import com.fansz.members.api.service.CommentService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.Comment;
 import com.fansz.members.model.param.CommentPagePara;
 import com.fansz.members.model.param.CommentPara;
-import com.fansz.members.model.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
@@ -47,10 +45,8 @@ public class CommentProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Comment comment = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails   ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
 
-            comment = commentService.addComment(appUserDetails.getUser(), commentPara);
+            comment = commentService.addComment(commentPara);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -80,9 +76,6 @@ public class CommentProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            AppUserDetails appUserDetails = (AppUserDetails   ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
             commentService.removeComment(id);
 
         } catch (IllegalArgumentException iae) {
@@ -114,8 +107,6 @@ public class CommentProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Comment> Comments = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails   ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
 
             Comments = commentService.getComments(commentPagePara);
 

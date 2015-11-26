@@ -3,6 +3,7 @@ package com.fansz.members.api.utils;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.Vector;
  */
 @AllArgsConstructor
 @Log4j
+@Service
 public class ErrorParser {
 
     private MessageSource messageSource = null;

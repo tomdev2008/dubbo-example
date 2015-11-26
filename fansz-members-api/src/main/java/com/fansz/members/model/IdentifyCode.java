@@ -1,6 +1,6 @@
 package com.fansz.members.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Data;
 
 import java.util.Date;
 
@@ -8,9 +8,6 @@ import java.util.Date;
  * Created by root on 15-10-20.
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Document(collection="identifyCode")
 public class IdentifyCode {
 
     private String mobile;

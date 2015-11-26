@@ -4,6 +4,7 @@ import com.fansz.members.model.Category;
 import com.fansz.members.model.SubCategory;
 import com.fansz.members.model.User;
 import com.fansz.members.model.param.CategoryParam;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,14 +17,9 @@ public interface CategoryService {
 
     SubCategory addSubCategory(CategoryParam categoryParam) throws IOException;
 
-    Category getCategoryById(
-            @NotEmpty(message = "error.category.id")
-            String id);
+    Category getCategoryById(String id);
 
     List<Category> getAllCategory();
 
-    SubCategory getFandomsBySubCategory(
-            User user,
-            @NotEmpty(message = "error.category.id")
-            String id);
+    SubCategory getFandomsBySubCategory(User user,String id);
 }

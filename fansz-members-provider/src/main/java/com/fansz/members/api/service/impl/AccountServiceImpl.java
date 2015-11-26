@@ -8,7 +8,6 @@ import com.fansz.members.model.User;
 import com.fansz.members.model.param.RegisterPara;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 

@@ -10,10 +10,8 @@ import com.fansz.members.model.param.ChangePasswordPara;
 import com.fansz.members.model.param.RegisterPara;
 import com.fansz.members.model.param.ResetPasswordParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
@@ -132,8 +130,6 @@ public class AccountProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
 
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
 
             accountService.changePassword(changePasswordPara);
 
