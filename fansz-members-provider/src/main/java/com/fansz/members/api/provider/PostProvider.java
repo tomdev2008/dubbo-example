@@ -1,22 +1,17 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.Post;
-import com.fansz.appservice.resource.param.PagePara;
-import com.fansz.appservice.resource.param.PostParam;
-import com.fansz.appservice.service.PostService;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import com.fansz.members.api.service.PostService;
+import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.param.PagePara;
+import com.fansz.members.model.post.PostInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -29,9 +24,6 @@ import java.util.Vector;
 @Service
 @Component("/postProvider")
 public class PostProvider {
-
-    @Autowired
-    private ErrorParser errorParser;
 
     @Autowired
     private PostService postService;
@@ -55,7 +47,7 @@ public class PostProvider {
             AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Assert.notNull(appUserDetails, "error.user.null");
 
-            PostParam postParam = new PostParam(form);
+            PostInfoResult postParam = new PostInfoResult(form);
 
             post = postService.addPost(
                     appUserDetails.getUser(),

@@ -13,6 +13,12 @@ public class CommonResult<T> implements Serializable {
 
     private String message;
 
+    private int totalNum;
+
+    private int nextCursor;
+
+    private int previousCursor;
+
     private T result;
 
     public CommonResult(){
@@ -48,5 +54,27 @@ public class CommonResult<T> implements Serializable {
         this.result = result;
     }
 
+    public int getTotalNum() {
+        return totalNum;
+    }
 
+    public void setTotalNum(int totalNum) {
+        this.totalNum = totalNum;
+    }
+
+    public int getNextCursor() {
+        return nextCursor;
+    }
+
+    public void setNextCursor(int nextCursor) {
+        this.nextCursor = nextCursor;
+    }
+
+    public int getPreviousCursor() {
+        return previousCursor;
+    }
+
+    public void setPreviousCursor(int previousCursor) {
+        this.previousCursor = previousCursor;
+    }
 }

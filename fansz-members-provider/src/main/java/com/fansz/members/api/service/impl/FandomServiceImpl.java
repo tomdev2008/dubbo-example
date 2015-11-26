@@ -1,23 +1,12 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.Post;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.FandomMapper;
-import com.fansz.appservice.persistence.mapper.ProfileMapper;
-import com.fansz.appservice.resource.param.FandomFollowers;
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.resource.param.GetPostsParam;
-import com.fansz.appservice.service.FandomService;
-import com.fansz.appservice.service.FileService;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import com.fansz.members.api.service.FandomService;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.fandom.PostsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -38,55 +27,12 @@ public class FandomServiceImpl implements FandomService {
     @Autowired
     private FileService fileService;
 
-    @Override
-    public Fandom addFandom(User user, FandomParam fandomParam) throws IOException {
 
-        InputStream fileInputStream = null;
-        String source = null;
-        String fileId = null;
-        String fileName = null;
-        FormDataContentDisposition formDataContentDisposition;
-
-        Fandom fandom = new Fandom(user, fandomParam);
-
-        //Save Avatar
-        if (fandomParam.getAvatar() != null && !StringUtils.isEmpty(fandomParam.getAvatar().getName()))
-        {
-            fileInputStream = fandomParam.getAvatar().getValueAs(InputStream.class);
-            //Get FileName
-            formDataContentDisposition = fandomParam.getAvatar().getFormDataContentDisposition();
-            source = formDataContentDisposition.getFileName();
-            source = new String(source.getBytes("ISO8859-1"), "UTF-8");
-
-            //Generate Random File name
-            fileName = fileService.fileUpload(PICTURE_BASH_PATH,fileInputStream,source);
-            fandom.setAvatar(fileName);
-        }
-
-        //Save BackImage
-        if (fandomParam.getBackImage() != null &&!StringUtils.isEmpty(fandomParam.getBackImage().getName()))
-        {
-            fileInputStream = fandomParam.getBackImage().getValueAs(InputStream.class);
-            //Get FileName
-            formDataContentDisposition = fandomParam.getBackImage().getFormDataContentDisposition();
-            source = formDataContentDisposition.getFileName();
-            source = new String(source.getBytes("ISO8859-1"), "UTF-8");
-
-            //Generate Random File name
-            fileName = fileService.fileUpload(PICTURE_BASH_PATH,fileInputStream,source);
-            fandom.setBackImage(fileName);
-        }
-
-        //Save fandom
-        fandomMapper.save(fandom);
-
-        return fandom;
-    }
 
     @Override
-    public Fandom getFandom(User user,String id) {
+    public Fandom getFandom(Long  user,String id) {
         Fandom fandom = fandomMapper.getFandom(id);
-        GetPostsParam param = new GetPostsParam();
+        PostsQueryParam param = new PostsQueryParam();
         param.setId(id);
         param.setKind("1");
         List<Post> posts = getPostsByFandom(param);
@@ -96,7 +42,7 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public List<Post> getPostsByFandom(GetPostsParam param) {
+    public List<Post> getPostsByFandom(PostsQueryParam param) {
         return fandomMapper.getPostsByFandomId(param);
     }
 

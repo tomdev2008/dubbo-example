@@ -1,19 +1,28 @@
 package com.fansz.members.model.param;
 
-import com.fansz.appservice.utils.RegularPattern;
-import lombok.Data;
-
-import javax.validation.constraints.Pattern;
 
 /**
  * Created by root on 15-11-10.
  */
-@Data
 public class PagePara {
 
-    @Pattern(regexp = RegularPattern.PATTERN_POSITIVE_INTERGE, message = "error.int.pageStart")
-    private int pageStart;
+    private int limit;
 
-    @Pattern(regexp = RegularPattern.PATTERN_POSITIVE_INTERGE, message = "error.int.count")
-    private int count;
+    private int offset;
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 }

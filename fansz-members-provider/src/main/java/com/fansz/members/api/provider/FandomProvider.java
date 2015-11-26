@@ -1,23 +1,20 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.resource.param.FandomFollowers;
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.resource.param.GetPostsParam;
-import com.fansz.appservice.service.CategoryService;
-import com.fansz.appservice.service.FandomService;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import com.fansz.members.api.FandomApi;
+import com.fansz.members.api.service.CategoryService;
+import com.fansz.members.api.service.FandomService;
+import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.fandom.FandomFollowers;
+import com.fansz.members.model.fandom.PostsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -30,10 +27,8 @@ import java.util.Vector;
  */
 @Service
 @Component("/fandomProvider")
-public class FandomProvider {
+public class FandomProvider implements FandomApi{
 
-    @Autowired
-    private ErrorParser errorParser;
 
     @Autowired
     private FandomService fandomService;
@@ -44,57 +39,21 @@ public class FandomProvider {
     @Autowired
     private CategoryService categoryService;
 
-    /**
-     * 添加圈子接口
-     * @param form 圈子参数
-     * @return resp 返回对象
-     */
-    @POST
-    @Path("/add")
-    @Consumes("multipart/form-data")
-    @Produces("application/json")
-    public Response addFandom(FormDataMultiPart form)
-    {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        Fandom fandom = null;
-        try {
-            FandomParam fandomParam = new FandomParam(form);
 
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            fandom = fandomService.addFandom(appUserDetails.getUser(),fandomParam);
-
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (ConstraintViolationException cve) {
-            errorMessages.addAll(errorParser.phase(cve.getConstraintViolations()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, fandom);
-        }
-    }
 
     /**
      * 获取圈子信息接口
-     * @param id 圈子id
+     * @param fandomQueryParam 圈子id
      * @return resp 返回对象
      */
     @GET
-    @Path("/{id}")
+    @Path("/show")
     @Produces("application/json")
-    public Response getFandom(@PathParam("id") String id)
+    public Response getFandom(FandomQueryParam fandomQueryParam)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Fandom fandom = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
             fandom = fandomService.getFandom(appUserDetails.getUser(), id);
 
         } catch (IllegalArgumentException iae) {
@@ -121,7 +80,7 @@ public class FandomProvider {
     @Path("/posts")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response getPostsByFandom(GetPostsParam param)
+    public Response getPostsByFandom(PostsQueryParam param)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Post> posts = null;

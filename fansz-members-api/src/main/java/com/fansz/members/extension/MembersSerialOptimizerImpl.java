@@ -2,6 +2,7 @@ package com.fansz.members.extension;
 
 import com.alibaba.dubbo.common.serialize.support.SerializationOptimizer;
 import com.fansz.members.model.*;
+import com.fansz.members.model.account.LoginResult;
 
 import java.util.Collection;
 import java.util.LinkedList;

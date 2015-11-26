@@ -1,12 +1,9 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.CriteriaParam;
-import com.fansz.appservice.service.ContactsService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
+import com.fansz.members.api.service.ContactsService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
+import com.fansz.members.api.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -27,9 +24,6 @@ import java.util.Vector;
 @Service
 @Component("/contactsProvider")
 public class ContactsProvider {
-
-    @Autowired
-    private ErrorParser errorParser;
 
     @Autowired
     private ContactsService contactsService;

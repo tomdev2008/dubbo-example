@@ -1,30 +1,26 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.ModifyProfilePara;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.friendship.FocusedFandomResult;
+import com.fansz.members.model.user.FriendResult;
+import com.fansz.members.model.user.ModifyProfileParam;
 
-import javax.validation.Valid;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
  * Created by root on 15-11-3.
  */
 public interface ProfileService {
-    User getProfile(String id);
+    UserEntity getProfile(Long uid);
 
-    void modifyProfile(@Valid String id, ModifyProfilePara modifyProfilePara);
+    void modifyProfile(Long id, ModifyProfileParam modifyProfileParam);
 
-    String setAvatar(String userId, FormDataBodyPart filePart) throws IOException;
+    String setAvatar(String userId, InputStream filePart) throws IOException;
 
-    List<Fandom> getFollowedFandoms(
-            @NotEmpty(message = "error.userId.empty")
-            String id);
+    List<FocusedFandomResult> getFollowedFandoms(Long uid);
 
-    List<User> getUsers(
-            String s, @NotEmpty(message = "error.mobile.empty")
-    String id);
+    List<FriendResult> getFriends(Long uid);
 }

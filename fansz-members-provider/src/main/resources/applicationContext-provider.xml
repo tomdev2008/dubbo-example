@@ -49,22 +49,22 @@
     <dubbo:service interface="com.fansz.members.api.Category" ref="categoryProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Comment" ref="commentProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.CommentApi" ref="commentProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Contacts" ref="contactsProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.ContactsApi" ref="contactsProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Fandom" ref="fandomProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.FandomApi" ref="fandomProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Post" ref="postProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.PostApi" ref="postProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Profile" ref="profileProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.UserApi" ref="profileProvider" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Service" ref="serviceProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.ImageApi" ref="serviceProvider" validation="false" timeout="2000"
                    connections="100"/>
 
     <!-- 和本地bean一样实现服务 -->

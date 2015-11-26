@@ -1,23 +1,22 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.configuration.sms.SMSProperties;
-import com.fansz.appservice.persistence.domain.IdentifyCode;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.IdentifyMapper;
-import com.fansz.appservice.persistence.mapper.UserMapper;
-import com.fansz.appservice.resource.param.ChangePasswordPara;
-import com.fansz.appservice.resource.param.RegisterPara;
-import com.fansz.appservice.resource.param.ResetPasswordParam;
-import com.fansz.appservice.service.AccountService;
-import com.fansz.appservice.service.MessageService;
-import com.fansz.appservice.utils.IdentifyCodeGenerator;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.model.VerifyCode;
+import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.service.AccountService;
+import com.fansz.members.api.service.MessageService;
+import com.fansz.members.api.service.VerifyCodeService;
+import com.fansz.members.model.account.ChangePasswordParam;
+import com.fansz.members.model.account.RegisterParam;
+import com.fansz.members.model.account.ResetPasswordParam;
+import com.fansz.members.tools.SecurityTools;
 import lombok.extern.log4j.Log4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
-import java.util.Date;
 
 /**
  * Created by root on 15-11-3.
@@ -26,119 +25,57 @@ import java.util.Date;
 @Log4j
 public class AccountServiceImpl implements AccountService {
 
+    private Logger logger= LoggerFactory.getLogger(AccountServiceImpl.class);
+
     @Autowired
-    private UserMapper userMapper;
+    private UserEntityMapper userEntityMapper;
+
+    @Autowired
+    private VerifyCodeService verifyCodeService;
 
     @Autowired
     private MessageService messageService;
 
-    @Autowired
-    private IdentifyCodeGenerator identifyCodeGenerator;
-
-    @Autowired
-    private IdentifyMapper identifyMapper;
-
-    @Autowired
-    private SMSProperties smsProperties;
-
     @Override
-    public User register(RegisterPara registerPara) {
+    public UserEntity register(RegisterParam registerParam) {
 
         //Check Identify Code
-        IdentifyCode identifyCode = identifyMapper.getIdentifyCode(registerPara.getMobile());
-        Assert.notNull(identifyCode, "error.identifyCode.empty");
-        Assert.isTrue(identifyCode.getSendCount() > 0, "error.identifyCode.overSendCount");
-        Assert.isTrue(identifyCode.getIdentifyCode().equals(registerPara.getIdentifyCode()), "error.identifyCode.wrongCode");
-        Assert.isTrue(identifyCode.getExpiredTime().getTime() >= (new Date()).getTime(), "error.identifyCode.expiredCode");
+        VerifyCode identifyCode = verifyCodeService.getVerifyCode(registerParam.getMobile(),"register");
 
         //Remove invalid Code
-        identifyMapper.removeInvalidIdentifyCode(registerPara.getMobile());
+        verifyCodeService.removeVerifyCode(registerParam.getMobile(),"register");
 
         //Create User
-        User user = new User(registerPara);
-        log.info("Begin to add user " + user);
+        UserEntity user = new UserEntity();
+        BeanUtils.copyProperties(registerParam,user);
+        logger.info("Begin to add user " + user);
 
         //Save User Info
-        userMapper.saveUser(user);
-        log.info("user saved:" + user);
+        userEntityMapper.insertSelective(user);
+        logger.info("user saved:" + user);
 
         return user;
     }
 
     /**
      * 获取忘记密码验证码
-     * @param mobile 手机号码
+     * @param changePasswordPara 手机号码
      */
-    @Override
-    public void getPasswordIdentifyCode(String mobile) {
-        //TODO Check last time of sended Message of the mobile, can not send more messages in one minute.
 
-        //Check Identify Code
-        IdentifyCode code = identifyMapper.getIdentifyCode(mobile);
-        if (null != code && null != code.getExpiredTime())
-        {
-            Assert.notNull(code, "error.identifyCode.empty");
-        }
-
-        //Check User is exist
-        Assert.isTrue(userMapper.isExisted(mobile), "error.register.userNotExist");
-
-        //Generate Identify Code
-        String idendify = identifyCodeGenerator.getIdentifyCode();
-
-        //Save Identify Code to DB
-        Date currentDate = new Date();
-        IdentifyCode identifyCode = new IdentifyCode(mobile, idendify,
-                new Date(currentDate.getTime() + smsProperties.getIdentityCodePeriod()) , 10);
-        identifyMapper.saveIdentifyCode(identifyCode);
-
-        //Generate Message
-        String msg = smsProperties.getPasswordMsg().replace("{code}", identifyCode.getIdentifyCode())
-                .replace("{time}", String.valueOf(smsProperties.getPasswordTime()));
-
-        //Send Message
-        messageService.sendMessage(mobile, msg);
-    }
 
     @Override
-    public void getRegisterIdentifyCode(String mobile) {
-        //TODO Check last time of sended Message of the mobile, can not send more messages in one minute.
+    public void changePassword(ChangePasswordParam changePasswordPara) {
 
-        //Check User is not exist
-        Assert.isTrue(!userMapper.isExisted(mobile), "error.register.userExist");
-
-        //Generate Identify Code
-        String idendify = identifyCodeGenerator.getIdentifyCode();
-
-        //Save Identify Code to DB
-        Date currentDate = new Date();
-        IdentifyCode identifyCode = new IdentifyCode(mobile, idendify,
-                new Date(currentDate.getTime() + smsProperties.getIdentityCodePeriod()) , 10);
-        identifyMapper.saveIdentifyCode(identifyCode);
-
-        //Generate Message
-        String msg = smsProperties.getIdentityCodeMsg().replace("{code}", identifyCode.getIdentifyCode())
-                .replace("{time}", String.valueOf(smsProperties.getIdentityCodeTime()));
-
-        //Send Message
-        messageService.sendMessage(mobile, msg);
-    }
-
-    @Override
-    public void changePassword(ChangePasswordPara changePasswordPara) {
-
-        //TODO M2 Need Create Bean
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(4);
+        String encodedPwd = SecurityTools.encode(changePasswordPara.getOldPassword());
 
         //Get User Info
-        User user = userMapper.findByUserId(changePasswordPara.getUserId());
-        Assert.notNull(user, "error.register.userNotExist");
-
-        //Check User Old Password
-        Assert.isTrue(bCryptPasswordEncoder.matches(changePasswordPara.getPasswordOld(), user.getPassword()), "error.user.wrongPassword");
-
+        UserEntity user = userEntityMapper.selectByPrimaryKey(changePasswordPara.getUid());
+        if(user==null||!user.getPassword().equals(encodedPwd)){
+            throw new RuntimeException("用户不存在");
+        }
         //Update New Password
-        userMapper.updatePassword(changePasswordPara);
+        String encodedNewPwd = SecurityTools.encode(changePasswordPara.getNewPassword());
+        userEntityMapper.updatePassword(changePasswordPara.getUid(),encodedNewPwd);
     }
 
     /**
@@ -147,21 +84,22 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-
-        //Check User is exist
-        Assert.isTrue(userMapper.isExisted(resetPasswordParam.getMobile()), "error.register.userNotExist");
+        UserEntity userEntity=userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
+        if(userEntity==null){//用户不存在
+            throw new RuntimeException("用户不存在");
+        }
 
         //Check Identify Code
-        IdentifyCode identifyCode = identifyMapper.getIdentifyCode(resetPasswordParam.getMobile());
-        Assert.notNull(identifyCode, "error.identifyCode.empty");
-        Assert.isTrue(identifyCode.getSendCount() > 0, "error.identifyCode.overSendCount");
-        Assert.isTrue(identifyCode.getIdentifyCode().equals(resetPasswordParam.getIdentifyCode()), "error.identifyCode.wrongCode");
-        Assert.isTrue(identifyCode.getExpiredTime().getTime() >= (new Date()).getTime(), "error.identifyCode.expiredCode");
+        VerifyCode identifyCode = verifyCodeService.getVerifyCode(resetPasswordParam.getMobile(),"reset");
 
+        if(identifyCode==null||!identifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())){
+            throw new RuntimeException("校验码错误");
+        }
         //Remove invalid Code
-        identifyMapper.removeInvalidIdentifyCode(resetPasswordParam.getMobile());
+        verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(),"reset");
+        String encodedPwd = SecurityTools.encode(resetPasswordParam.getPassword());
 
         //Change Password
-        userMapper.resetPassword(resetPasswordParam);
+        userEntityMapper.updatePassword(userEntity.getId(),encodedPwd);
     }
 }

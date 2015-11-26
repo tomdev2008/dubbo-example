@@ -1,32 +1,29 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.Post;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.FandomFollowers;
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.resource.param.GetPostsParam;
+import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.fandom.FandomFollowers;
+import com.fansz.members.model.fandom.PostsQueryParam;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
  * Created by root on 15-11-3.
  */
 public interface FandomService {
-    public Fandom addFandom(User user, FandomParam fandomParam) throws IOException;
 
-    Fandom getFandom(User user, String id);
+    FandomEntity getFandom(Long userId, Long  fandomId);
 
-    List<Post> getPostsByFandom(GetPostsParam param);
+    List<FandomPostEntity> getPostsByFandom(PostsQueryParam param);
 
-    List<Fandom> getFandomsByCategoryId(User user, String categoryId);
+    List<FandomEntity> getFandomsByCategoryId(Long userId, String categoryId);
 
-    void followFandom(User user, String id);
+    void followFandom(Long userId, String id);
 
-    void unfollowFandom(User user, String id);
+    void unfollowFandom(Long userId, String id);
 
-    List<Fandom> getRecommendFandom(String id);
+    List<FandomEntity> getRecommendFandom(String id);
 
-    List<User> followerOfFandom(FandomFollowers fandomFollowers);
+    List<UserEntity> followerOfFandom(FandomFollowers fandomFollowers);
 }

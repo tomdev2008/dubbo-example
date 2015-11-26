@@ -1,6 +1,5 @@
 package com.fansz.members.consumer;
 
-import com.fansz.members.api.AuthApi;
 import com.fansz.members.model.UserParameters;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

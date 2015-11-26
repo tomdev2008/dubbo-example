@@ -1,9 +1,9 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.members.api.AuthApi;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.UserRepository;
 import com.fansz.members.model.*;
+import com.fansz.members.model.account.LoginResult;
 import com.fansz.members.tools.DateTools;
 import com.fansz.members.tools.MembersConstant;
 import com.fansz.members.tools.SecurityTools;

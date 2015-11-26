@@ -14,13 +14,12 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 public interface PostService {
-    Post addPost(@Valid User user, PostParam postParam) throws IOException;
+    Post addPost( User user, PostParam postParam) throws IOException;
 
     void removePost(String id);
 
     Post getPost(
             User user,
-            @NotEmpty(message = "error.postId.empty")
             String id);
 
     void likePost(User user, String id);

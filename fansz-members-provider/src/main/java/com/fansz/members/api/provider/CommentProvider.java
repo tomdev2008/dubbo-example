@@ -1,20 +1,18 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.Comment;
-import com.fansz.appservice.resource.param.CommentPagePara;
-import com.fansz.appservice.resource.param.CommentPara;
-import com.fansz.appservice.service.CommentService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
+import com.fansz.members.api.CommentApi;
+import com.fansz.members.api.service.CommentService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.comment.CommentPagePara;
+import com.fansz.members.model.comment.CommentParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -27,13 +25,11 @@ import java.util.Vector;
  */
 @Service
 @Component("/commentProvider")
-public class CommentProvider {
+public class CommentProvider implements CommentApi{
 
     @Autowired
     private CommentService commentService;
 
-    @Autowired
-    private ErrorParser errorParser;
 
     /**
      * 发布评论接口
@@ -44,13 +40,11 @@ public class CommentProvider {
     @Path("/add")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response addComment(CommentPara commentPara)
+    public Response addComment(CommentParam commentPara)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Comment comment = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails   ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
 
             comment = commentService.addComment(appUserDetails.getUser(), commentPara);
 
