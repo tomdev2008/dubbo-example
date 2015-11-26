@@ -1,7 +1,7 @@
-com/fansz/members/model/UserParameters.class
-com/fansz/members/model/LoginResult.class
-com/fansz/members/extension/MembersSerialOptimizerImpl.class
-com/fansz/members/model/CommonResult.class
-com/fansz/members/api/AuthApi.class
 com/fansz/members/model/RefreshResult.class
+com/fansz/members/model/UserParameters.class
+com/fansz/members/extension/MembersSerialOptimizerImpl.class
 com/fansz/members/model/RefreshParameters.class
+com/fansz/members/model/CommonResult.class
+com/fansz/members/model/LoginResult.class
+com/fansz/members/api/AuthApi.class

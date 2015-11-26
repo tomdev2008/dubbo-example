@@ -43,6 +43,30 @@
     <dubbo:service interface="com.fansz.members.api.AuthApi" ref="userService" validation="false" timeout="2000"
                    connections="100"/>
 
+    <dubbo:service interface="com.fansz.members.api.Account" ref="accountProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Category" ref="categoryProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Comment" ref="commentProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Contacts" ref="contactsProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Fandom" ref="fandomProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Post" ref="postProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Profile" ref="profileProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
+    <dubbo:service interface="com.fansz.members.api.Service" ref="serviceProvider" validation="false" timeout="2000"
+                   connections="100"/>
+
     <!-- 和本地bean一样实现服务 -->
     <bean id="userService" class="com.fansz.members.api.provider.AuthApiProvider"/>
 </beans>

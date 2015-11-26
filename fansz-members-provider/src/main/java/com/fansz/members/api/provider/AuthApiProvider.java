@@ -46,7 +46,7 @@ public class AuthApiProvider implements AuthApi {
 
 
             String key = "session:" + entity.getUserId();
-            Map<String, String> session = new HashMap<>();
+            Map<String, String> session = new HashMap<String, String>();
             session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
             session.put("accessToken", loginResult.getAccessToken());
             session.put("refreshToken", loginResult.getRefreshToken());
@@ -71,7 +71,7 @@ public class AuthApiProvider implements AuthApi {
             refreshResult.setExpiresAt(expiresAt.getTime());
 
 
-            Map<String, String> session = new HashMap<>();
+            Map<String, String> session = new HashMap<String, String>();
             session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
             session.put("accessToken", refreshResult.getAccessToken());
             session.put("expiredAt", String.valueOf(refreshResult.getExpiresAt()));
