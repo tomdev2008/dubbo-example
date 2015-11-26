@@ -35,9 +35,9 @@ public class PostParam {
     @Length(max = 20, message = "error.direction.over")
     private String direction;
 
-    private List<String> fandoms = new Vector<>();
+    private List<String> fandoms = new Vector<String>();
 
-    private List<FormDataBodyPart> attachments = new Vector<>();
+    private List<FormDataBodyPart> attachments = new Vector<FormDataBodyPart>();
 
     public PostParam(FormDataMultiPart form) throws UnsupportedEncodingException {
 

@@ -1,21 +1,20 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.ChangePasswordPara;
-import com.fansz.appservice.resource.param.RegisterPara;
-import com.fansz.appservice.resource.param.ResetPasswordParam;
-import com.fansz.appservice.service.AccountService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
+
+import com.fansz.members.api.service.AccountService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.ChangePasswordPara;
+import com.fansz.members.model.param.RegisterPara;
+import com.fansz.members.model.param.ResetPasswordParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -133,7 +132,7 @@ public class AccountProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
 
         try {
-            AppUserDetails appUserDetails = (AppUserDetails   ) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             Assert.notNull(appUserDetails, "error.user.null");
 
             accountService.changePassword(changePasswordPara);

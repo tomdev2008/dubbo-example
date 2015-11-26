@@ -1,11 +1,5 @@
 package com.fansz.members.model;
 
-import com.fansz.appservice.resource.param.CategoryParam;
-import com.fansz.appservice.utils.ShortUUIDGenerator;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -14,8 +8,6 @@ import java.util.List;
  * fandom类别
  */
 @Data
-@Document(collection = "category")
-@NoArgsConstructor
 public class Category {
 
     // 编号
@@ -32,10 +24,4 @@ public class Category {
 
     // 子类别
     private List<SubCategory> subCategories;
-
-    public Category(CategoryParam categoryParam) {
-        this.id = ShortUUIDGenerator.generate();
-        this.title = categoryParam.getTitle();
-        this.content = categoryParam.getContent();
-    }
 }

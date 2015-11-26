@@ -1,10 +1,9 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Category;
-import com.fansz.appservice.persistence.domain.SubCategory;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.CategoryParam;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fansz.members.model.Category;
+import com.fansz.members.model.SubCategory;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.CategoryParam;
 
 import java.io.IOException;
 import java.util.List;

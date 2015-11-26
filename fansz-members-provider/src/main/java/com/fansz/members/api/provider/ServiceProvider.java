@@ -1,9 +1,9 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.service.FileService;
-import com.fansz.appservice.utils.Constants;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
+import com.fansz.members.api.service.FileService;
+import com.fansz.members.api.utils.Constants;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

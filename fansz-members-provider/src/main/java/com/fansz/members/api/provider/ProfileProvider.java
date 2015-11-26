@@ -1,23 +1,18 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.ModifyProfilePara;
-import com.fansz.appservice.resource.param.UsersInfoParam;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.Fandom;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.ModifyProfilePara;
+import com.fansz.members.model.param.UsersInfoParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

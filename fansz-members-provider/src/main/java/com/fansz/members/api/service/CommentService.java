@@ -1,9 +1,9 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Comment;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.CommentPagePara;
-import com.fansz.appservice.resource.param.CommentPara;
+import com.fansz.members.model.Comment;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.CommentPagePara;
+import com.fansz.members.model.param.CommentPara;
 
 import javax.validation.Valid;
 import java.io.IOException;

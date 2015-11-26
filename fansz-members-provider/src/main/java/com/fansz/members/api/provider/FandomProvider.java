@@ -1,23 +1,24 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.resource.param.FandomFollowers;
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.resource.param.GetPostsParam;
-import com.fansz.appservice.service.CategoryService;
-import com.fansz.appservice.service.FandomService;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataMultiPart;
+import com.fansz.members.api.Category;
+import com.fansz.members.api.service.CategoryService;
+import com.fansz.members.api.service.FandomService;
+import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.Fandom;
+import com.fansz.members.model.Post;
+import com.fansz.members.model.SubCategory;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.FandomFollowers;
+import com.fansz.members.model.param.FandomParam;
+import com.fansz.members.model.param.GetPostsParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
