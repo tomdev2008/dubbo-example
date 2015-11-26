@@ -17,7 +17,7 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
@@ -39,6 +39,10 @@
                                          token="classpath:/conf/redis.properties"
                                          value="file:${application.root}/conf/redis.properties"
                                          encoding="utf-8"/>
+                                <replace file="target/classes/applicationContext-provider.xml"
+                                         token="classpath:/conf/dubbo.properties"
+                                         value="file:${application.root}/conf/dubbo.properties"
+                                         encoding="utf-8"/>
                             </tasks>
                         </configuration>
                         <goals>
@@ -46,7 +50,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -56,6 +60,7 @@
                         <exclude>**/log4j.xml</exclude>
                         <exclude>**/jdbc.properties</exclude>
                         <exclude>**/redis.properties</exclude>
+                        <exclude>**/dubbo.properties</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -78,7 +83,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!---->
+            <!--
             <plugin>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-maven-plugin</artifactId>
@@ -108,7 +113,7 @@
                         <version>5.1.27</version>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
     <dependencies>

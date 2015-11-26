@@ -12,7 +12,7 @@
     </context:component-scan>
 
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
+                                  location="file:${application.root}/conf/jdbc.properties,file:${application.root}/conf/redis.properties,file:${application.root}/conf/dubbo.properties"/>
 
     <import resource="classpath:/spring/spring-mybatis.xml"/>
     <import resource="classpath:/spring/spring-redis.xml"/>
