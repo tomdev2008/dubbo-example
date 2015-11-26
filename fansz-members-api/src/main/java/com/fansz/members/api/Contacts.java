@@ -1,7 +1,5 @@
 package com.fansz.members.api;
 
-import com.fansz.members.model.param.CriteriaParam;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 

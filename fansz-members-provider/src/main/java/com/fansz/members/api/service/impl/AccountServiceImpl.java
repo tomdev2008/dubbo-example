@@ -1,16 +1,9 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.configuration.sms.SMSProperties;
-import com.fansz.appservice.persistence.domain.IdentifyCode;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.IdentifyMapper;
-import com.fansz.appservice.persistence.mapper.UserMapper;
-import com.fansz.appservice.resource.param.ChangePasswordPara;
-import com.fansz.appservice.resource.param.RegisterPara;
-import com.fansz.appservice.resource.param.ResetPasswordParam;
-import com.fansz.appservice.service.AccountService;
-import com.fansz.appservice.service.MessageService;
-import com.fansz.appservice.utils.IdentifyCodeGenerator;
+import com.fansz.members.api.service.AccountService;
+import com.fansz.members.api.service.MessageService;
+import com.fansz.members.api.utils.IdentifyCodeGenerator;
+import com.fansz.members.model.param.RegisterPara;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

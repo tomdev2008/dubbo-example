@@ -1,12 +1,9 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.ChangePasswordPara;
-import com.fansz.appservice.resource.param.RegisterPara;
-import com.fansz.appservice.resource.param.ResetPasswordParam;
-import com.fansz.appservice.utils.RegularPattern;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fansz.members.api.utils.RegularPattern;
+import com.fansz.members.model.param.ChangePasswordPara;
+import com.fansz.members.model.param.RegisterPara;
+import com.fansz.members.model.param.ResetPasswordParam;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;

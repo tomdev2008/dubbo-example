@@ -8,12 +8,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
 /**
- * Created by root on 15-11-26.
+ * 账号相关服务
  */
 @Path("/accounts")
 public interface AccountApi {
     /**
-     * 注册接口
+     * 用户注册
+     *
      * @param registerPara 注册对象
      * @return resp 返回对象
      */
@@ -25,6 +26,7 @@ public interface AccountApi {
 
     /**
      * 重置密码接口
+     *
      * @param resetPasswordParam 密码对象
      * @return resp 返回对象
      */
@@ -34,28 +36,10 @@ public interface AccountApi {
     @Produces("application/json")
     public Response resetPassword(ResetPasswordParam resetPasswordParam);
 
-    /**
-     * 获取忘记密码验证码接口
-     * @param mobile 手机号码
-     * @return resp 返回对象
-     */
-    @GET
-    @Path("/identify/password/{mobile}")
-    @Produces("application/json")
-    public Response getPasswordIdentifyCode(@PathParam("mobile") String mobile);
-
-    /**
-     * 获取注册验证码接口
-     * @param mobile 手机号码
-     * @return resp 返回对象
-     */
-    @GET
-    @Path("/identify/register/{mobile}")
-    @Produces("application/json")
-    public Response getRegisterIdentifyCode(@PathParam("mobile") String mobile);
 
     /**
      * 修改密码接口
+     *
      * @param changePasswordPara 修改密码对象
      * @return resp 返回对象
      */

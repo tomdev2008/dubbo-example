@@ -1,10 +1,5 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.CriteriaParam;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.validation.Valid;
 import java.util.List;
 

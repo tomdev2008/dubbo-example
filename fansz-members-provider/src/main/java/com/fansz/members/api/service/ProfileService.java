@@ -1,10 +1,6 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.ModifyProfilePara;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fansz.members.model.param.ModifyProfilePara;
 
 import javax.validation.Valid;
 import java.io.IOException;

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.members.api.repository.FandomPostEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomPostEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="fandom_id" property="fandomId" jdbcType="INTEGER" />
+    <result column="post_content" property="postContent" jdbcType="VARCHAR" />
+    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, member_id, fandom_id, post_content, post_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from feeds_member_post_fandom
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from feeds_member_post_fandom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
+    insert into feeds_member_post_fandom (id, member_id, fandom_id, 
+      post_content, post_time)
+    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{fandomId,jdbcType=INTEGER}, 
+      #{postContent,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
+    insert into feeds_member_post_fandom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="memberId != null" >
+        member_id,
+      </if>
+      <if test="fandomId != null" >
+        fandom_id,
+      </if>
+      <if test="postContent != null" >
+        post_content,
+      </if>
+      <if test="postTime != null" >
+        post_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="fandomId != null" >
+        #{fandomId,jdbcType=INTEGER},
+      </if>
+      <if test="postContent != null" >
+        #{postContent,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        #{postTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
+    update feeds_member_post_fandom
+    <set >
+      <if test="memberId != null" >
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="fandomId != null" >
+        fandom_id = #{fandomId,jdbcType=INTEGER},
+      </if>
+      <if test="postContent != null" >
+        post_content = #{postContent,jdbcType=VARCHAR},
+      </if>
+      <if test="postTime != null" >
+        post_time = #{postTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
+    update feeds_member_post_fandom
+    set member_id = #{memberId,jdbcType=INTEGER},
+      fandom_id = #{fandomId,jdbcType=INTEGER},
+      post_content = #{postContent,jdbcType=VARCHAR},
+      post_time = #{postTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

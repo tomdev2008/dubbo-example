@@ -1,20 +1,17 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.appservice.configuration.security.AppUserDetails;
-import com.fansz.appservice.persistence.domain.Comment;
-import com.fansz.appservice.resource.param.CommentPagePara;
-import com.fansz.appservice.resource.param.CommentPara;
-import com.fansz.appservice.service.CommentService;
-import com.fansz.appservice.utils.ErrorMessage;
-import com.fansz.appservice.utils.ErrorParser;
-import com.fansz.appservice.utils.StringUtils;
+import com.fansz.members.api.service.CommentService;
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.param.CommentPagePara;
+import com.fansz.members.model.param.CommentPara;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import javax.inject.Singleton;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

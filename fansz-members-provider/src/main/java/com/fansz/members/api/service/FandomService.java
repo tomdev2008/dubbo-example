@@ -1,11 +1,8 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.Post;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.FandomFollowers;
-import com.fansz.appservice.resource.param.FandomParam;
-import com.fansz.appservice.resource.param.GetPostsParam;
+import com.fansz.members.model.param.FandomFollowers;
+import com.fansz.members.model.param.FandomParam;
+import com.fansz.members.model.param.GetPostsParam;
 
 import java.io.IOException;
 import java.util.List;
