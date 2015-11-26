@@ -10,8 +10,18 @@ import javax.ws.rs.core.Response;
 /**
  * Created by root on 15-11-26.
  */
-@Path("/account")
-public interface Account {
+@Path("/accounts")
+public interface AccountApi {
+    /**
+     * 注册接口
+     * @param registerPara 注册对象
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/register")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response register(RegisterPara registerPara);
 
     /**
      * 重置密码接口
@@ -55,14 +65,5 @@ public interface Account {
     @Produces("application/json")
     public Response changePassword(ChangePasswordPara changePasswordPara);
 
-    /**
-     * 注册接口
-     * @param registerPara 注册对象
-     * @return resp 返回对象
-     */
-    @POST
-    @Path("/register")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response register(RegisterPara registerPara);
+
 }

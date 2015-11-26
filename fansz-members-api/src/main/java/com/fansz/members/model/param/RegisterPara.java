@@ -11,7 +11,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
 
-@Data
 public class RegisterPara {
 
     @NotEmpty(message = "error.loginName.empty")
