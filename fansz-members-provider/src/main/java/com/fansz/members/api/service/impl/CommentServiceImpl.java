@@ -4,12 +4,10 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.PostCommentEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.CommentService;
-import com.fansz.members.model.comment.CommentPagePara;
+import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,7 +28,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<PostCommentEntity> getComments(CommentPagePara commentPagePara) {
+    public List<PostCommentEntity> getComments(CommentPagedParam commentPagePara) {
         return null;
     }
 }

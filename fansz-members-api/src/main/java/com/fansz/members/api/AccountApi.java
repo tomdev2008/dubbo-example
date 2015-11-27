@@ -4,7 +4,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.account.*;
 import com.fansz.members.model.RegisterResult;
-import com.fansz.members.model.param.NullResult;
+import com.fansz.members.model.NullResult;
 
 import javax.ws.rs.*;
 

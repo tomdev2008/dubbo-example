@@ -1,6 +1,6 @@
 package com.fansz.members.model.friendship;
 
-import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.user.UserInfoResult;
 
 import java.io.Serializable;
 

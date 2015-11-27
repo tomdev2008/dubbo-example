@@ -2,14 +2,12 @@ package com.fansz.members.api.provider;
 
 
 import com.fansz.members.api.AccountApi;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.*;
-import com.fansz.members.model.param.NullResult;
-import com.fansz.members.model.param.RegisterPara;
+import com.fansz.members.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -71,7 +69,6 @@ public class AccountProvider implements AccountApi {
 
         try {
             accountService.changePassword(changePasswordParam);
-
         } catch (Exception iae) {
             result.setStatus("1");
         }

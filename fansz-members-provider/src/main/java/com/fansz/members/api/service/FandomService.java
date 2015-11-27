@@ -1,11 +1,10 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.fandom.FandomFollowers;
-import com.fansz.members.model.fandom.PostsQueryParam;
+import com.fansz.members.model.fandom.*;
 
+import com.fansz.members.model.post.GetPostsParam;
 
 import java.util.List;
 
@@ -14,17 +13,20 @@ import java.util.List;
  */
 public interface FandomService {
 
-    FandomEntity getFandom(Long userId, Long  fandomId);
+    FandomInfoResult addFandom(FandomParam fandomParam);
 
-    List<FandomPostEntity> getPostsByFandom(PostsQueryParam param);
+    FandomInfoResult getFandom(NormalFandomPara fandomPara);
 
-    List<FandomEntity> getFandomsByCategoryId(Long userId, String categoryId);
+    List<FandomPostEntity> getPostsByFandom(GetPostsParam param);
 
-    void followFandom(Long userId, String id);
 
-    void unfollowFandom(Long userId, String id);
+    List<FandomInfoResult> getFandomsByCategoryId(FandomByCategory fandomByCategory);
 
-    List<FandomEntity> getRecommendFandom(String id);
+    void followFandom(NormalFandomPara fandomPara);
+
+    void unfollowFandom(Integer id);
+
+    List<FandomInfoResult> getRecommendFandom(String id);
 
     List<UserEntity> followerOfFandom(FandomFollowers fandomFollowers);
 }

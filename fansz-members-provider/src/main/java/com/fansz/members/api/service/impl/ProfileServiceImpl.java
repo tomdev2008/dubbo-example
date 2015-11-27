@@ -1,22 +1,18 @@
 package com.fansz.members.api.service.impl;
 
+import com.alibaba.dubbo.config.annotation.Service;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.user.UserInfoResult;
 import com.fansz.members.model.user.FriendResult;
 import com.fansz.members.model.user.ModifyProfileParam;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,12 +54,13 @@ public class ProfileServiceImpl implements ProfileService {
 
         List<UserInfoResult> users = userEntityMapper.findByMobiles(mobileList);
 
-        List<FriendResult> friendList=new ArrayList<>();
-        for(UserInfoResult userInfo:users){
-            FriendResult friend=new FriendResult();
-            BeanUtils.copyProperties(userInfo,friend);
+        List<FriendResult> friendList = new ArrayList<>();
+        for (UserInfoResult userInfo : users) {
+            FriendResult friend = new FriendResult();
+            BeanUtils.copyProperties(userInfo, friend);
             friendList.add(friend);
         }
         return friendList;
+
     }
 }

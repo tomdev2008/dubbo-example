@@ -1,6 +1,7 @@
 package com.fansz.members.consumer;
 
-import com.fansz.members.model.UserParameters;
+import com.fansz.members.api.AccountApi;
+import com.fansz.members.model.account.RegisterParam;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -9,12 +10,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-consumer.xml");
-        AuthApi us = ac.getBean(AuthApi.class);
-        UserParameters userParameters=new UserParameters();
-        userParameters.setUserAccount("demo");
+        AccountApi us = ac.getBean(AccountApi.class);
+        RegisterParam userParameters=new RegisterParam();
+        userParameters.setLoginAccount("demo");
         userParameters.setPassword("demo");
         userParameters.setVerifyCode("demo");
-        userParameters.setAppKey("com.fansz.app");
-        us.login(userParameters);
+        us.register(userParameters);
     }
 }

@@ -13,7 +13,7 @@
     <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100" contextpath="members"/>
     <!--7002端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl"/>
+                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" extension="com.fansz.members.extension.ApplicationExceptionMapper"/>
     <!-- use tomcat server
     <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
                     extension="com.alibaba.dubbo.demo.extension.TraceInterceptor,

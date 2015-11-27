@@ -13,6 +13,6 @@ public class JsonHelper {
 
     public static String toString(Object obj) {
         return JSON.toJSONString(obj);
-    }
 
+    }
 }

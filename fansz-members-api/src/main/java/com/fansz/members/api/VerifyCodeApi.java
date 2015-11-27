@@ -4,13 +4,11 @@ import javax.ws.rs.Path;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.param.NullResult;
+import com.fansz.members.model.NullResult;
 
 import javax.ws.rs.GET;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Response;
 
 /**
  * 验证码相关服务

@@ -1,4 +1,4 @@
-package com.fansz.members.model.param;
+package com.fansz.members.model;
 
 /**
  * Created by allan on 15/11/26.

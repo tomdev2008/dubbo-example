@@ -2,12 +2,14 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.UserEntity;
 
-import javax.validation.Valid;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
  * Created by root on 15-11-3.
  */
+@Service
 public interface ContactsService {
 
     void addFriend(String id, String followId);
@@ -23,4 +25,5 @@ public interface ContactsService {
     void acceptFriend(String id, String followId);
 
     UserEntity getFriend(String myId, String id);
+
 }

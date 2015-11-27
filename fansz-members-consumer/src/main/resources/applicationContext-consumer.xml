@@ -12,7 +12,7 @@
     <!--uncomment this if you want to test dubbo's monitor-->
     <!--<dubbo:monitor protocol="registry"/>-->
 
-    <dubbo:reference id="userService" interface="com.fansz.members.api.AuthApi" protocol="rest"/>
+    <dubbo:reference id="userService" interface="com.fansz.members.api.AccountApi" protocol="rest"/>
 
     <!-- directly connect to provider to simulate the access to non-dubbo rest services -->
     <!--<dubbo:reference id="userService2" interface="com.fansz.members.api.LoginServicee" url="rest://localhost:7001/users/"/>-->

@@ -18,7 +18,6 @@ public class MembersSerialOptimizerImpl implements SerializationOptimizer {
         classes.add(LoginResult.class);
         classes.add(RefreshResult.class);
         classes.add(RefreshParameters.class);
-        classes.add(UserParameters.class);
         return classes;
     }
 }

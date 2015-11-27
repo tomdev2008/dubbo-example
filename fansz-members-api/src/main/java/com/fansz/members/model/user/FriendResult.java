@@ -1,7 +1,5 @@
 package com.fansz.members.model.user;
 
-import com.fansz.members.model.param.UserInfoResult;
-
 /**
  * Created by allan on 15/11/26.
  */

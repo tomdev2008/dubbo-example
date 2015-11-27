@@ -4,7 +4,6 @@ import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.model.VerifyCode;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
-import com.fansz.members.api.service.MessageService;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.api.utils.VerifyCodeType;
@@ -44,9 +43,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private VerifyCodeService verifyCodeService;
-
-    @Autowired
-    private MessageService messageService;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;

@@ -3,9 +3,8 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.param.PagePara;
-import com.fansz.members.model.post.PostParam;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.stereotype.Service;
 

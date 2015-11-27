@@ -4,13 +4,8 @@ import com.fansz.members.api.ContactsApi;
 import com.fansz.members.api.service.ContactsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * 好友关系接口类
@@ -33,8 +28,7 @@ public class ContactsProvider implements ContactsApi{
     public Response addFriend(@PathParam("followId") String followId)
     {
         try {
-
-            contactsService.addFriend(null, followId);
+            contactsService.addFriend(followId, followId);
 
         } catch (Exception iae) {
         }
@@ -49,7 +43,7 @@ public class ContactsProvider implements ContactsApi{
     public Response acceptFriend(String followId)
     {
         try {
-            contactsService.acceptFriend(null, followId);
+             contactsService.acceptFriend(followId, followId);
 
         } catch (Exception iae) {
         }
@@ -62,13 +56,8 @@ public class ContactsProvider implements ContactsApi{
      * @return resp 返回对象
      */
     public Response removeFriend(@PathParam("id") String id) {
-        try {
+            contactsService.removeFriend(id, id);
 
-            contactsService.removeFriend(null, id);
-
-        } catch (Exception iae) {
-
-        }
         return null;
     }
 
@@ -96,7 +85,6 @@ public class ContactsProvider implements ContactsApi{
         try {
              contactsService.getFriend(null, id);
         } catch (Exception iae) {
-
         }
         return null;
     }
@@ -111,7 +99,6 @@ public class ContactsProvider implements ContactsApi{
         try {
 
             contactsService.findFriend(null);
-
         } catch (IllegalArgumentException iae) {
         }
         return null;
@@ -125,7 +112,6 @@ public class ContactsProvider implements ContactsApi{
     public Response getUserProfile(String id)
     {
         try {
-
             contactsService.getFriend(null, id);
 
         } catch (Exception iae) {
@@ -143,7 +129,6 @@ public class ContactsProvider implements ContactsApi{
         try {
 
              contactsService.getCandidates(null);
-
         } catch (Exception iae) {
 
         }

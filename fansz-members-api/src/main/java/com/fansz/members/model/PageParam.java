@@ -1,10 +1,13 @@
-package com.fansz.members.model.param;
+package com.fansz.members.model;
 
+import java.io.Serializable;
 
 /**
- * Created by root on 15-11-10.
+ * 分页参数
  */
-public class PagePara {
+public class PageParam implements Serializable {
+
+    private static final long serialVersionUID = 2149367388124720438L;
 
     private int limit;
 

@@ -1,7 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.user.UserInfoResult;
 import com.fansz.members.model.user.FriendResult;
 import com.fansz.members.model.user.ModifyProfileParam;
 

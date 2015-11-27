@@ -2,16 +2,19 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.VerifyCodeApi;
 import com.fansz.members.api.service.VerifyCodeService;
+import com.fansz.members.api.utils.Constants;
 import com.fansz.members.api.utils.VerifyCodeType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.param.NullResult;
+import com.fansz.members.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.PathParam;
 
 /**
- * Created by allan on 15/11/26.
+ * 验证码服务提供者
+ *
+ * @author yanyanming
  */
 @Component("verifyCodeProvider")
 public class VerifyCodeProvider implements VerifyCodeApi {
@@ -27,12 +30,8 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      */
     public CommonResult<NullResult> getVerifyCodeForReset(@PathParam("mobile") String mobile) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
-        try {
-            verifyCodeService.createVerifyCode(mobile, VerifyCodeType.RESET);
-        } catch (Exception iae) {
-            result.setStatus("1");
-        }
+        result.setStatus(Constants.SUCCESS);
+        verifyCodeService.createVerifyCode(mobile, VerifyCodeType.RESET);
         return result;
 
     }
@@ -45,12 +44,8 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      */
     public CommonResult<NullResult> getVerifyCodeForRegister(@PathParam("mobile") String mobile) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
-        try {
-            verifyCodeService.createVerifyCode(mobile,VerifyCodeType.REGISTER);
-        } catch (Exception iae) {
-            result.setStatus("1");
-        }
+        result.setStatus(Constants.SUCCESS);
+        verifyCodeService.createVerifyCode(mobile, VerifyCodeType.REGISTER);
         return result;
     }
 

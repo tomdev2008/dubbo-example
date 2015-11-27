@@ -11,6 +11,8 @@
         <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
     </context:component-scan>
 
+    <bean id="verifyCodeGenerator" class="com.fansz.members.tools.VerifyCodeGenerator"/>
+
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
 

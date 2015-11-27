@@ -1,7 +1,7 @@
 package com.fansz.members.api;
 
 import com.fansz.members.model.comment.CommentDelParam;
-import com.fansz.members.model.comment.CommentPagePara;
+import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
 
 import javax.ws.rs.*;
@@ -42,5 +42,5 @@ public interface CommentApi {
     @GET
     @Path("/post")
     @Produces("application/json")
-    public Response getComments(CommentPagePara commentPagePara);
+    public Response getComments(CommentPagedParam commentPagePara);
 }

@@ -16,57 +16,6 @@
 
     <import resource="classpath:/spring/spring-mybatis.xml"/>
     <import resource="classpath:/spring/spring-redis.xml"/>
-    <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
+    <import resource="classpath:/spring/spring-dubbox.xml"/>
 
-    <!-- 用rest协议在7001端口暴露服务 -->
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100" contextpath="members"/>
-    <!--7002端口提供RPC服务-->
-    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl"/>
-    <!-- use tomcat server
-    <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
-                    extension="com.alibaba.dubbo.demo.extension.TraceInterceptor,
-                    com.alibaba.dubbo.demo.extension.TraceFilter,
-                    com.alibaba.dubbo.demo.extension.ClientTraceFilter,
-                    com.alibaba.dubbo.demo.extension.DynamicTraceBinding,
-                    com.alibaba.dubbo.demo.extension.CustomExceptionMapper,
-                    com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
-     -->
-
-    <!-- 使用redis注册中心暴露服务地址
-    <dubbo:registry address="redis://10.0.0.8:6379?backup=edis://10.0.0.8:6380"/>-->
-    <dubbo:registry address="${dubbo.registry.address}"/>
-
-
-    <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.fansz.members.api.AuthApi" ref="userService" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.AccountApi" ref="accountProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.Category" ref="categoryProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.CommentApi" ref="commentProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.ContactsApi" ref="contactsProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.FandomApi" ref="fandomProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.PostApi" ref="postProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.ProfileApi" ref="profileProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.ImageApi" ref="serviceProvider" validation="false" timeout="2000"
-                   connections="100"/>
-
-    <!-- 和本地bean一样实现服务 -->
-    <bean id="userService" class="com.fansz.members.api.provider.AuthApiProvider"/>
 </beans>

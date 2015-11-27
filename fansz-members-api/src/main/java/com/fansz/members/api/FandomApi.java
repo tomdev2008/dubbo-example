@@ -7,6 +7,7 @@ import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.fandom.PostsQueryParam;
 import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.fandom.FandomParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -19,9 +20,21 @@ import java.util.List;
 public interface FandomApi {
 
     /**
+     * 添加圈子接口
+     *
+     * @param form 圈子参数
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/add")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public Response addFandom(FandomParam form);
+
+    /**
      * 获取圈子信息接口
      *
-     * @param id 圈子id
+     * @param fandomQueryParam 圈子id
      * @return resp 返回对象
      */
     @GET

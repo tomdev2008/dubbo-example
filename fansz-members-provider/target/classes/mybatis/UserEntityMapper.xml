@@ -32,15 +32,28 @@
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
   </select>
 
+<<<<<<< HEAD
     <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
-    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.param.UserInfoResult">
+    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.user.UserInfoResult">
         select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+=======
+  <select id="getFandomFollowers" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,
+    profile_createtime, profile_updatetime, member_type, member_status
+    from feeds_member_fandom fandom, connects_member_profile profile
+    where fandom.member_id = profile.id
+    and   fandom.fandom_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+>>>>>>> origin/zz
     delete from connects_member_profile
     where id = #{id,jdbcType=INTEGER}
   </delete>

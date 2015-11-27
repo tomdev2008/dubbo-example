@@ -68,6 +68,7 @@ public interface ContactsApi {
     @Produces("application/json")
     public Response findFriend(String criteria);
 
+
     /**
      * 获取用户详细信息接口
      * @param id 用户id

@@ -1,12 +1,10 @@
 package com.fansz.members.model.comment;
 
 
-import com.fansz.members.model.param.PagePara;
-
 /**
  * Created by root on 15-11-4.
  */
-public class CommentPagePara extends PagePara{
+public class CommentPagedParam {
 
     private Long postId;
 

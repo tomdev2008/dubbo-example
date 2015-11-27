@@ -1,11 +1,10 @@
 package com.fansz.members.api;
 
-import com.fansz.members.model.param.PagePara;
-import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.PageParam;
+import com.fansz.members.model.post.PostParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.io.InputStream;
 
 /**
  * Created by root on 15-11-26.
@@ -14,14 +13,14 @@ public interface PostApi {
 
     /**
      * 发帖子接口
-     * @param form 帖子信息
+     * @param postParam 帖子信息
      * @return resp 返回对象
      */
     @POST
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response addPost(PostInfoResult form);
+    public Response addPost(PostParam postParam);
 
     /**
      * 删除帖子接口
@@ -83,7 +82,7 @@ public interface PostApi {
     @Path("/friend")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response getFriendsPosts(PagePara pagePara);
+    public Response getFriendsPosts(PageParam pagePara);
 
     /**
      * 获得我所关注的所有fandom的所有帖子接口
@@ -94,5 +93,5 @@ public interface PostApi {
     @Path("/fandom")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response getAllFandomPosts(PagePara pagePara);
+    public Response getAllFandomPosts(PageParam pagePara);
 }

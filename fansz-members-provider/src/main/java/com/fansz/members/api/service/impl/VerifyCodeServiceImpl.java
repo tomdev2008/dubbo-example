@@ -4,8 +4,11 @@ import com.fansz.members.api.model.SmsMessage;
 import com.fansz.members.api.model.VerifyCode;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.VerifyCodeService;
+import com.fansz.members.api.utils.Constants;
 import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.tools.UUIDTools;
+import com.fansz.members.tools.VerifyCodeGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,7 +20,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * Created by allan on 15/11/26.
+ * 验证码服务层实现
  */
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
@@ -30,7 +33,10 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Resource(name = "smsProperties")
     private Properties smsProperties;
 
-    private final static String VERIFY_KEY = "verify:";
+    @Resource(name = "verifyCodeGenerator")
+    private VerifyCodeGenerator verifyCodeGenerator;
+
+
 
     /**
      * 获取验证码,重置密码时使用
@@ -40,32 +46,32 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Override
     public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
         int exists = userEntityMapper.isExists(mobile);
-        String template="";
+        String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用
                 if (exists > 0) {
-                    return false;
+                    throw new ApplicationException(Constants.MOBILE_NOT_FOUND, "手机号码不存在");
                 }
-                template=smsProperties.getProperty("template.verify.register");
+                template = smsProperties.getProperty("template.verify.register");
                 break;
             case RESET://重置密码时,要求号码已经存在
                 if (exists == 0) {
-                    return false;
+                    throw new ApplicationException(Constants.MOBILE_IS_USED, "手机号码已经被使用");
                 }
-                template=smsProperties.getProperty("template.verify.reset");
+                template = smsProperties.getProperty("template.verify.reset");
                 break;
         }
 
-        return createVerifyCode(mobile, verifyCodeType.getName(),template);
+        return createVerifyCode(mobile, verifyCodeType.getName(), template);
     }
 
 
     private boolean createVerifyCode(String mobile, String key, String template) {
-        String createTime = (String) redisTemplate.boundHashOps(VERIFY_KEY + mobile).get(key + ".createTime");
+        String createTime = (String) redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).get(key + ".createTime");
 
         if (isAllowed(createTime)) {
             Map<String, String> verifyMap = new HashMap<>();
-            verifyMap.put(key + ".verifyCode", UUIDTools.getUniqueId());
+            verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
 
             long currentTime = System.currentTimeMillis();
             long validPeriod = Long.valueOf(smsProperties.getProperty("period.verify", "10"));//单位为分钟
@@ -79,7 +85,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
             String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
             //Send Message
             SmsMessage sms = new SmsMessage(messgeContent, mobile);
-            redisTemplate.convertAndSend("sms",sms);
+            redisTemplate.convertAndSend("sms", sms);
             //redisTemplate.boundListOps("sms").leftPush(JsonHelper.toString(sms));
             return true;
         }
@@ -96,7 +102,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     }
 
     public VerifyCode queryVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        String verifyStr = (String) redisTemplate.boundHashOps(VERIFY_KEY).get(verifyCodeType.getName() + ".verifyCode");
+        String verifyStr = (String) redisTemplate.boundHashOps(Constants.VERIFY_KEY).get(verifyCodeType.getName() + ".verifyCode");
         if (verifyStr == null || verifyStr.trim().length() == 0) {
             return null;
         }
@@ -111,6 +117,6 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Override
     public void removeVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        redisTemplate.boundHashOps(VERIFY_KEY + mobile).delete(verifyCodeType.getName() + ".verifyCode", verifyCodeType.getName() + ".createTime", verifyCodeType.getName() + ".expiredTime");
+        redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).delete(verifyCodeType.getName() + ".verifyCode", verifyCodeType.getName() + ".createTime", verifyCodeType.getName() + ".expiredTime");
     }
 }

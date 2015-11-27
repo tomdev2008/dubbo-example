@@ -1,18 +1,15 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.FriendShipApi;
-import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.friendship.FocusedFandomParam;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.param.UserInfoResult;
 import com.fansz.members.model.user.FriendResult;
 import com.fansz.members.model.user.FriendsParam;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**

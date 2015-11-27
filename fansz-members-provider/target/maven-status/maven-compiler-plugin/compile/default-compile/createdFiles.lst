@@ -12,11 +12,11 @@ com/fansz/members/api/service/impl/AccountServiceImpl.class
 com/fansz/members/api/repository/PostCommentEntityMapper.class
 com/fansz/members/api/provider/AccountProvider.class
 com/fansz/members/tools/MembersConstant.class
-com/fansz/members/api/service/MessageService.class
 com/fansz/members/api/entity/FandomEntity.class
 com/fansz/members/Main.class
 com/fansz/members/api/repository/FandomPostLikeEntityMapper.class
 com/fansz/members/api/service/CommentService.class
+com/fansz/members/api/entity/FandomWholeEntity.class
 com/fansz/members/tools/DateTools$TokenField.class
 com/fansz/members/api/entity/UserEntity.class
 com/fansz/members/api/provider/ContactsProvider.class
@@ -24,13 +24,16 @@ com/fansz/members/api/service/impl/FandomServiceImpl.class
 com/fansz/members/api/repository/FandomPostEntityMapper.class
 com/fansz/members/api/provider/PostProvider.class
 com/fansz/members/api/entity/FandomPostEntity.class
+com/fansz/members/api/entity/FandomFollowEntity.class
 com/fansz/members/api/utils/GeoHash.class
 com/fansz/members/tools/DateTools$DateWrapper.class
 com/fansz/members/api/service/impl/VerifyCodeServiceImpl$1.class
 com/fansz/members/api/service/impl/PostServiceImpl.class
 com/fansz/members/api/repository/UserRelationEntityMapper.class
 com/fansz/members/api/provider/FriendShipProvider.class
+com/fansz/members/api/provider/FandomProvider.class
 com/fansz/members/api/service/ContactsService.class
+com/fansz/members/api/entity/FandomPostWholeEntity.class
 com/fansz/members/api/repository/UserEntityMapper.class
 com/fansz/members/api/provider/CommentProvider.class
 com/fansz/members/api/service/impl/ProfileServiceImpl.class
@@ -47,6 +50,7 @@ com/fansz/members/api/model/SmsMessage.class
 com/fansz/members/api/service/VerifyCodeService.class
 com/fansz/members/api/service/impl/CommentServiceImpl.class
 com/fansz/members/tools/UUIDTools.class
+com/fansz/members/api/repository/FandomFollowEntityMapper.class
 com/fansz/members/api/service/impl/ContactsServiceImpl.class
 com/fansz/members/api/provider/VerifyCodeProvider.class
 com/fansz/members/api/provider/ProfileProvider.class

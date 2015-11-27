@@ -2,8 +2,12 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @MapperScan
+@Service
 public interface FandomMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +20,8 @@ public interface FandomMapper {
     int updateByPrimaryKeySelective(FandomEntity record);
 
     int updateByPrimaryKey(FandomEntity record);
+
+    List<FandomEntity> selectByParentId(Integer id);
+
+    List<FandomEntity> getRecommendFandom();
 }

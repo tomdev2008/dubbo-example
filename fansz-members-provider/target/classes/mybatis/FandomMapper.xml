@@ -10,6 +10,19 @@
     <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR" />
     <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR" />
   </resultMap>
+
+  <resultMap id="ResultMap" type="com.fansz.members.api.entity.FandomEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fandom_name" property="fandomName" jdbcType="VARCHAR" />
+    <result column="fandom_parent_id" property="fandomParentId" jdbcType="INTEGER" />
+    <result column="fandom_admin_id" property="fandomAdminId" jdbcType="INTEGER" />
+    <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="INTEGER" />
+    <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR" />
+    <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR" />
+    <result column="followCount" property="followCount" jdbcType="INTEGER" />
+  </resultMap>
+
+
   <sql id="Base_Column_List" >
     id, fandom_name, fandom_parent_id, fandom_admin_id, fandom_creator_id, fandom_avatar_url, 
     fandom_intro
@@ -20,6 +33,14 @@
     from feeds_fandom
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from feeds_fandom
+    where fandom_parent_id = #{id,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from feeds_fandom
     where id = #{id,jdbcType=INTEGER}
@@ -115,4 +136,17 @@
       fandom_intro = #{fandomIntro,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="getRecommendFandom" resultMap="ResultMap" parameterType="java.lang.Integer" >
+
+    select <include refid="Base_Column_List" /> , followCount
+    from feeds_fandom fandom ,
+    (select count(1)  followCount, fandom_id from feeds_member_fandom group by fandom_id) fandom_count
+    where fandom.id = fandom_count.fandom_id
+    order by fandom.count
+    limit 3
+
+  </select>
+
+
 </mapper>

@@ -1,4 +1,4 @@
-package com.fansz.members.model.param;
+package com.fansz.members.model.user;
 
 import java.util.Date;
 

@@ -1,15 +1,16 @@
 package com.fansz.members.api.repository;
 
-import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.user.UserInfoResult;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @MapperScan
+@Service
 public interface UserEntityMapper {
 
     int deleteByPrimaryKey(Long id);
@@ -37,4 +38,6 @@ public interface UserEntityMapper {
     List<FocusedFandomResult> findFandomById(Long id);
 
     List<UserInfoResult> findByMobiles(List<String> mobiles);
+    List<UserEntity> getFandomFollowers(Integer id);
+
 }

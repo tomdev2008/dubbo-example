@@ -21,6 +21,7 @@
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, 
     profile_createtime, profile_updatetime, member_type, member_status
   </sql>
+
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -30,39 +31,48 @@
 
     <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
-  </select>
+    </select>
 
     <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
-    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.param.UserInfoResult">
+    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.user.UserInfoResult">
         select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR}
     </select>
 
+    <select id="getFandomFollowers" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,
+    profile_createtime, profile_updatetime, member_type, member_status
+    from feeds_member_fandom fandom, connects_member_profile profile
+    where fandom.member_id = profile.id
+    and   fandom.fandom_id = #{id,jdbcType=INTEGER}
+  </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from connects_member_profile
-    where id = #{id,jdbcType=INTEGER}
+    delete from connects_member_profile where id = #{id,jdbcType=INTEGER}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserEntity">
-    insert into connects_member_profile (id, sn, loginname, 
-      password, mobile, email, 
-      nickname, gender, birthday, 
-      member_avatar, profile_createtime, profile_updatetime, 
-      member_type, member_status)
-    values (#{id,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
-      #{memberAvatar,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP}, #{profileUpdatetime,jdbcType=TIMESTAMP}, 
-      #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
-  </insert>
+        insert into connects_member_profile (sn, loginname,
+        password, mobile, email,
+        nickname, gender, birthday,
+        member_avatar, profile_createtime, profile_updatetime,
+        member_type, member_status)
+        values (#{sn,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR},
+        #{memberAvatar,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP},
+        #{profileUpdatetime,jdbcType=TIMESTAMP},
+        #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
+        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
     <insert id="insertSelective" parameterType="com.fansz.members.api.entity.UserEntity">
         insert into connects_member_profile
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="sn != null">
                 sn,
             </if>
@@ -104,9 +114,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
             <if test="sn != null">
                 #{sn,jdbcType=VARCHAR},
             </if>
@@ -147,7 +154,11 @@
                 #{memberStatus,jdbcType=VARCHAR},
             </if>
         </trim>
+        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.UserEntity">
         update connects_member_profile
         <set>

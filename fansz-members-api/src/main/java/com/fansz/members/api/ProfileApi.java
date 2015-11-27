@@ -2,14 +2,12 @@ package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.param.NullResult;
-import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.NullResult;
+import com.fansz.members.model.user.UserInfoResult;
 import com.fansz.members.model.user.ModifyProfileParam;
 import com.fansz.members.model.user.QueryUserParam;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.io.InputStream;
 
 /**
  * 用户服务

@@ -1,12 +1,12 @@
 package com.fansz.members.model.fandom;
 
 
-import com.fansz.members.model.param.PagePara;
+import com.fansz.members.model.PageParam;
 
 /**
  * Created by root on 15-11-19.
  */
-public class PostsQueryParam extends PagePara {
+public class PostsQueryParam extends PageParam {
 
     private Long fandomId;
 

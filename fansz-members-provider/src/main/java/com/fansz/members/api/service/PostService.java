@@ -3,8 +3,9 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -12,9 +13,10 @@ import java.util.List;
 /**
  * Created by root on 15-11-3.
  */
+@Service
 public interface PostService {
 
-    FandomPostEntity addPost(UserEntity user, PostParam postParam);
+    FandomPostEntity addPost(UserEntity user, com.fansz.members.model.post.PostParam postParam);
 
     void removePost(String id);
 

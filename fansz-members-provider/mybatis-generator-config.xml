@@ -33,7 +33,6 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-
         <table tableName="connects_member_profile" domainObjectName="UserEntity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -69,6 +68,16 @@
                selectByExampleQueryId="false"/>
 
         <table tableName="member_album" domainObjectName="UserAlbum"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_member_fandom" domainObjectName="UserAlbum"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_member_fandom" domainObjectName="FandomFollowEntity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
