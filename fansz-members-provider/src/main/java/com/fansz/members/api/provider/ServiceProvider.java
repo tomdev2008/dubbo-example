@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.activation.MimetypesFileTypeMap;
-import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.CacheControl;
 import javax.ws.rs.core.Response;

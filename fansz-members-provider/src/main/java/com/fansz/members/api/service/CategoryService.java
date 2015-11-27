@@ -1,7 +1,9 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.model.SubCategory;
+import com.fansz.members.model.User;
 import com.fansz.members.model.param.CategoryParam;
-import org.springframework.stereotype.Service;
+import com.fansz.members.model.Category;
 
 import java.io.IOException;
 import java.util.List;
@@ -18,5 +20,5 @@ public interface CategoryService {
 
     List<Category> getAllCategory();
 
-    SubCategory getFandomsBySubCategory(User user,String id);
+    SubCategory getFandomsBySubCategory(String myId,String id);
 }

@@ -33,7 +33,7 @@ public class AuthApiProvider implements AuthApi {
         CommonResult apiResult = new CommonResult("0", "登录失败");
         UserEntity entity = userRepository.findByAccount(user.getUserAccount());
         String encodedPwd = SecurityTools.encode(user.getPassword());
-        if (entity != null && entity.getPasswd().equals(encodedPwd)) {
+        if (entity != null && entity.getPassword().equals(encodedPwd)) {
             apiResult.setStatus("1");
             apiResult.setMessage("登录成功");
             LoginResult loginResult = new LoginResult();
@@ -41,11 +41,11 @@ public class AuthApiProvider implements AuthApi {
             loginResult.setRefreshToken(UUIDTools.getUniqueId());
             Date expiresAt = DateTools.wrapDate(new Date(), "m+" + MembersConstant.EXPIRED_PERIOD);
             loginResult.setExpiresAt(expiresAt.getTime());
-            loginResult.setUid(entity.getUserId());
+            loginResult.setUid(entity.getId());
             apiResult.setResult(loginResult);
 
 
-            String key = "session:" + entity.getUserId();
+            String key = "session:" + entity.getId();
             Map<String, String> session = new HashMap<String, String>();
             session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
             session.put("accessToken", loginResult.getAccessToken());

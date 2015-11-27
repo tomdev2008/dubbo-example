@@ -5,11 +5,11 @@ package com.fansz.members.model.param;
  */
 public class PagePara {
 
-    private int pageStart;
+    private Integer pageStart;
 
-    private int count;
+    private Integer count;
 
-    public int getPageStart() {
+    public Integer getPageStart() {
         return pageStart;
     }
 

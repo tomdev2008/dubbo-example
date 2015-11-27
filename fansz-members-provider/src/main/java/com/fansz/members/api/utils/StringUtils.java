@@ -1,13 +1,18 @@
 package com.fansz.members.api.utils;
 
+import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.Fandom;
 import com.fansz.members.model.Friendship;
+import com.fansz.members.model.Post;
 import com.fansz.members.model.User;
 import com.fansz.members.model.param.PagePara;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Vector;
@@ -267,5 +272,87 @@ public class StringUtils {
         pagePara.setCount(count);
 
         return pagePara;
+    }
+
+    public static Integer changeIdType(String id)
+    {
+        return Integer.parseInt(id);
+    }
+
+    // 转换fandom实体数据
+    public static Fandom changeFandom(FandomEntity fandomEntity)
+    {
+        Fandom fandom = new Fandom();
+        fandom.setTitle(fandomEntity.getFandomName());
+        fandom.setAvatar(fandomEntity.getFandomAvatarUrl());
+        fandom.setCategoryId(fandomEntity.getFandomParentId().toString());
+        fandom.setDescription(fandomEntity.getFandomIntro());
+
+        return fandom;
+    }
+
+    // 批量转换fandom实体数据
+    public static List<Fandom> changeFandoms(List<FandomEntity> fandomEntity)
+    {
+        List<Fandom> fandoms = new ArrayList<Fandom>();
+
+        Fandom fandom = null;
+        for (FandomEntity entity : fandomEntity)
+        {
+            fandom = new Fandom();
+            fandom.setTitle(entity.getFandomName());
+            fandom.setAvatar(entity.getFandomAvatarUrl());
+            fandom.setCategoryId(entity.getFandomParentId().toString());
+            fandom.setDescription(entity.getFandomIntro());
+            fandoms.add(fandom);
+        }
+
+        return fandoms;
+    }
+
+    // fandom数据转换
+    public static Post changeFandom(FandomPostEntity fandomEntity)
+    {
+        Post post = new Post();
+        post.setId(fandomEntity.getId().toString());
+
+        List<String> fandoms = new ArrayList<>();
+        fandoms.add(fandomEntity.getFandomId().toString());
+        post.setFandoms(fandoms);
+
+        post.setContent(fandomEntity.getPostContent());
+        post.setCreateTime(fandomEntity.getPostTime());
+
+        return post;
+    }
+
+    // 转换用户信息
+    public static User changeUser(UserEntity entity)
+    {
+        User user = new User();
+        user.setId(entity.getId().toString());
+        user.setMobile(entity.getMobile());
+        user.setLoginName(entity.getLoginname());
+        user.setAvatar(entity.getMemberAvatar());
+        user.setCreateTime(entity.getProfileCreatetime());
+        user.setNickName(entity.getNickname());
+        user.setGender(entity.getGender());
+
+        return user;
+    }
+
+    // 批量转换用户信息
+    public static List<User> changeUsers(List<UserEntity> entitys) {
+
+        List<User> users = new ArrayList<>();
+        if (entitys != null && entitys.size() > 0)
+        {
+            for (UserEntity userEntity : entitys)
+            {
+                users.add(changeUser(userEntity));
+            }
+        }
+
+        return users;
     }
 }

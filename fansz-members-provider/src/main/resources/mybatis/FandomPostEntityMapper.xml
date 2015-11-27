@@ -8,6 +8,17 @@
     <result column="post_content" property="postContent" jdbcType="VARCHAR" />
     <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
+  <resultMap id="WholeResultMap" type="com.fansz.members.api.entity.FandomPostWholeEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="member_id" property="memberId" jdbcType="INTEGER" />
+    <result column="fandom_id" property="fandomId" jdbcType="INTEGER" />
+    <result column="post_content" property="postContent" jdbcType="VARCHAR" />
+    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
+    <result column="likeCount" property="fandomId" jdbcType="INTEGER" />
+  </resultMap>
+
+
   <sql id="Base_Column_List" >
     id, member_id, fandom_id, post_content, post_time
   </sql>
@@ -17,6 +28,33 @@
     from feeds_member_post_fandom
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer" >
+
+    select
+      <include refid="Base_Column_List" />, likeCount
+    from feeds_member_post_fandom post,
+    (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+    where post.id = post_count.post_id
+    and   post.fandom_id = #{id,jdbcType=INTEGER}
+    order by post.post_time DESC
+  </select>
+
+  <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from feeds_member_post_fandom
+    where fandom_id = #{id,jdbcType=INTEGER}
+
+    select <include refid="Base_Column_List" /> , likeCount
+    from feeds_member_post_fandom post,
+    (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+    where post.id = post_count.post_id
+    and   post.fandom_id = #{id,jdbcType=INTEGER}
+    order by likeCount DESC
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from feeds_member_post_fandom
     where id = #{id,jdbcType=INTEGER}

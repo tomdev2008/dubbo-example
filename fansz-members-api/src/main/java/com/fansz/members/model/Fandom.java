@@ -1,5 +1,7 @@
 package com.fansz.members.model;
 
+import com.fansz.members.model.param.FandomParam;
+
 import java.util.List;
 
 /**
@@ -113,5 +115,18 @@ public class Fandom {
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public Fandom(FandomParam fandomParam) {
+        this.id = fandomParam.getUserId();
+        this.title = fandomParam.getTitle();
+        this.avatar = fandomParam.getAvatar();
+        this.categoryId = fandomParam.getCategoryId();
+        this.description = fandomParam.getDescription();
+        this.backImage = fandomParam.getBackImage();
+    }
+
+    public Fandom() {
+
     }
 }

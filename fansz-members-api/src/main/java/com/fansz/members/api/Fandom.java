@@ -19,7 +19,7 @@ public interface Fandom {
      */
     @POST
     @Path("/add")
-    @Consumes("multipart/form-data")
+    @Consumes("application/json")
     @Produces("application/json")
     public Response addFandom(FandomParam form);
 

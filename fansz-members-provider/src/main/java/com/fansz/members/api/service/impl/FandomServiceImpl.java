@@ -1,16 +1,27 @@
 package com.fansz.members.api.service.impl;
 
+import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.FandomFollowEntity;
+import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.FandomFollowEntityMapper;
+import com.fansz.members.api.repository.FandomMapper;
+import com.fansz.members.api.repository.FandomPostEntityMapper;
+import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.service.FileService;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.param.FandomParam;
-import com.fansz.members.model.param.GetPostsParam;
+import com.fansz.members.model.Fandom;
+import com.fansz.members.model.Post;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,162 +30,164 @@ import java.util.List;
 @Service
 public class FandomServiceImpl implements FandomService {
 
-    @Value("${pictures.base}")
-    private String PICTURE_BASH_PATH;
-
     @Autowired
     private FandomMapper fandomMapper;
 
     @Autowired
-    private ProfileMapper profileMapper;
+    private FandomPostEntityMapper postEntityMapper;
 
     @Autowired
-    private FileService fileService;
+    private UserEntityMapper userEntityMapper;
+
+    @Autowired
+    private FandomFollowEntityMapper fandomFollowEntityMapper;
 
     @Override
-    public Fandom addFandom(User user, FandomParam fandomParam) throws IOException {
+    public Fandom addFandom(FandomParam fandomParam) throws IOException {
 
-        InputStream fileInputStream = null;
-        String source = null;
-        String fileId = null;
-        String fileName = null;
-        FormDataContentDisposition formDataContentDisposition;
-
-        Fandom fandom = new Fandom(user, fandomParam);
-
-        //Save Avatar
-        if (fandomParam.getAvatar() != null && !StringUtils.isEmpty(fandomParam.getAvatar().getName()))
-        {
-            fileInputStream = fandomParam.getAvatar().getValueAs(InputStream.class);
-            //Get FileName
-            formDataContentDisposition = fandomParam.getAvatar().getFormDataContentDisposition();
-            source = formDataContentDisposition.getFileName();
-            source = new String(source.getBytes("ISO8859-1"), "UTF-8");
-
-            //Generate Random File name
-            fileName = fileService.fileUpload(PICTURE_BASH_PATH,fileInputStream,source);
-            fandom.setAvatar(fileName);
-        }
-
-        //Save BackImage
-        if (fandomParam.getBackImage() != null &&!StringUtils.isEmpty(fandomParam.getBackImage().getName()))
-        {
-            fileInputStream = fandomParam.getBackImage().getValueAs(InputStream.class);
-            //Get FileName
-            formDataContentDisposition = fandomParam.getBackImage().getFormDataContentDisposition();
-            source = formDataContentDisposition.getFileName();
-            source = new String(source.getBytes("ISO8859-1"), "UTF-8");
-
-            //Generate Random File name
-            fileName = fileService.fileUpload(PICTURE_BASH_PATH,fileInputStream,source);
-            fandom.setBackImage(fileName);
-        }
+        FandomEntity entity = new FandomEntity();
+        entity.setFandomCreatorId(StringUtils.changeIdType(fandomParam.getUserId()));
+        entity.setFandomName(fandomParam.getTitle());
+        entity.setFandomIntro(fandomParam.getDescription());
+        entity.setFandomAvatarUrl(fandomParam.getAvatar());
+        entity.setFandomParentId(StringUtils.changeIdType(fandomParam.getCategoryId()));
 
         //Save fandom
-        fandomMapper.save(fandom);
+        fandomMapper.insert(entity);
+
+        Fandom fandom = new Fandom(fandomParam);
 
         return fandom;
     }
 
     @Override
-    public Fandom getFandom(User user,String id) {
-        Fandom fandom = fandomMapper.getFandom(id);
+    public Fandom getFandom(NormalFandomPara fandomPara) {
+        FandomEntity entity = fandomMapper.selectByPrimaryKey(fandomPara.getFandomId());
         GetPostsParam param = new GetPostsParam();
-        param.setId(id);
+        param.setId(fandomPara.getFandomId());
         param.setKind("1");
         List<Post> posts = getPostsByFandom(param);
+
+        Fandom fandom = StringUtils.changeFandom(entity);
         fandom.setPosts(posts);
-        fandom.setFollowed(fandomMapper.isfollowedFandom(user, id));
+//        fandom.setFollowed(fandomMapper.isfollowedFandom(user, id));
         return fandom;
     }
 
     @Override
     public List<Post> getPostsByFandom(GetPostsParam param) {
-        return fandomMapper.getPostsByFandomId(param);
-    }
+        List<FandomPostEntity> posts = null;
 
-    @Override
-    public List<Fandom> getFandomsByCategoryId(User user, String categoryId) {
-        List<Fandom> fandoms = fandomMapper.getFandomsByCategoryId(categoryId);
-
-        // 设置我是否已关注这些fandom
-        if (null != fandoms)
+        if ("1".equals(param.getKind()))
         {
-            User userNew = profileMapper.getProfile(user.getId());
-            if (null != userNew && !StringUtils.isEmpty(userNew.getFandomIds()))
+            posts = postEntityMapper.selectHotByFandomId(param.getId());
+        }
+        else
+        {
+            posts = postEntityMapper.selectNewByFandomId(param.getId());
+        }
+
+        List<Post> postList = new ArrayList<>();
+
+        if (posts != null && posts.size() > 0)
+        {
+            for (FandomPostEntity entity1 : posts)
             {
-                StringUtils.setFollowedFandom(fandoms, userNew.getFandomIds());
+                postList.add(StringUtils.changeFandom(entity1));
             }
         }
 
-        return fandoms;
+        return postList;
+    }
+
+    @Override
+    public List<Fandom> getFandomsByCategoryId(FandomByCategory fandomByCategory) {
+        List<FandomEntity> fandoms = fandomMapper.selectByParentId(fandomByCategory.getCategoryId());
+
+//        // 设置我是否已关注这些fandom
+//        if (null != fandoms)
+//        {
+//            User userNew = profileMapper.getProfile(user.getId());
+//            if (null != userNew && !StringUtils.isEmpty(userNew.getFandomIds()))
+//            {
+//                StringUtils.setFollowedFandom(fandoms, userNew.getFandomIds());
+//            }
+//        }
+
+        return StringUtils.changeFandoms(fandoms);
     }
 
     /**
      * 关注圈子
-     * @param user 用户
-     * @param id 圈子id
+     * @param fandomPara 圈子id
      */
     @Override
-    public void followFandom(User user, String id)
+    public void followFandom(NormalFandomPara fandomPara)
     {
-        fandomMapper.followFandom(user, id);
-        profileMapper.followFandom(user.getId(), id);
+        FandomFollowEntity fandomFollowEntity = new FandomFollowEntity();
+
+        fandomFollowEntity.setMemberId(fandomPara.getUserId());
+        fandomFollowEntity.setFandomId(fandomPara.getFandomId());
+        fandomFollowEntity.setJoinTime(new Date());
+
+        fandomFollowEntityMapper.insert(fandomFollowEntity);
     }
 
     /**
      * 取消关注圈子
-     * @param user 用户
-     * @param id 圈子id
+     * @param id 关注圈子id
      */
     @Override
-    public void unfollowFandom(User user, String id)
+    public void unfollowFandom(Integer id)
     {
-        fandomMapper.unfollowFandom(user, id);
-        profileMapper.unFollowFandom(user.getId(), id);
+        fandomFollowEntityMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public List<Fandom> getRecommendFandom(String id)
     {
         // 获取推荐的fandom
-        List<Fandom> fandoms = fandomMapper.getRecommendFandom();
+        List<FandomEntity> fandoms = fandomMapper.getRecommendFandom();
 
-        // 设置我是否已关注这些fandom
-        if (null != fandoms)
-        {
-            User user = profileMapper.getProfile(id);
-            if (null != user && !StringUtils.isEmpty(user.getFandomIds()))
-            {
-                StringUtils.setFollowedFandom(fandoms, user.getFandomIds());
-            }
-        }
+//        // 设置我是否已关注这些fandom
+//        if (null != fandoms)
+//        {
+//            User user = profileMapper.getProfile(id);
+//            if (null != user && !StringUtils.isEmpty(user.getFandomIds()))
+//            {
+//                StringUtils.setFollowedFandom(fandoms, user.getFandomIds());
+//            }
+//        }
 
-        return fandoms;
+        return StringUtils.changeFandoms(fandoms);
     }
 
     @Override
     public List<User> followerOfFandom(FandomFollowers fandomFollowers) {
 
-        FandomFollowers pageParam = (FandomFollowers)StringUtils.setPageParam(fandomFollowers);
+//        FandomFollowers pageParam = (FandomFollowers)StringUtils.setPageParam(fandomFollowers);
 
-        List<User> users = fandomMapper.getFandomFollowers(pageParam);
+        List<UserEntity> users = userEntityMapper.getFandomFollowers(fandomFollowers.getId());
 
-        int size = users.size();
-        int start = fandomFollowers.getPageStart();
-        int end = fandomFollowers.getPageStart() + fandomFollowers.getCount();
+//        int size = users.size();
+//        int start = fandomFollowers.getPageStart();
+//        int end = fandomFollowers.getPageStart() + fandomFollowers.getCount();
+//
+//        if (start > size)
+//        {
+//            return null;
+//        }
+//        else if (start <= size && size <= end)
+//        {
+//            return users.subList(start, size);
+//        }
+//        else
+//        {
+//            return users.subList(start, end);
+//        }
 
-        if (start > size)
-        {
-            return null;
-        }
-        else if (start <= size && size <= end)
-        {
-            return users.subList(start, size);
-        }
-        else
-        {
-            return users.subList(start, end);
-        }
+        return StringUtils.changeUsers(users);
     }
+
+
 }

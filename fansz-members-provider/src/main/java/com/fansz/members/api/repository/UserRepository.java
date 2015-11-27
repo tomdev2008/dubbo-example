@@ -4,6 +4,7 @@ import com.fansz.members.api.entity.UserEntity;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * Created by allan on 15/11/22.
  */
 @MapperScan
+@Service
 public interface UserRepository {
 
     UserEntity findByAccount(String userAccount);

@@ -4,6 +4,7 @@ import com.fansz.members.model.Post;
 import com.fansz.members.model.User;
 import com.fansz.members.model.param.PagePara;
 import com.fansz.members.model.param.PostParam;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by root on 15-11-3.
  */
+@Service
 public interface PostService {
     Post addPost(User user, PostParam postParam) throws IOException;
 

@@ -1,15 +1,11 @@
 package com.fansz.members.model.param;
 
-import lombok.Data;
-import org.hibernate.validator.constraints.NotEmpty;
-
 /**
  * Created by root on 15-11-13.
  */
-@Data
+
 public class CategoryParam {
 
-    @NotEmpty(message = "error.parent.id")
     // 父类别
     private String parentId;
 
@@ -22,4 +18,28 @@ public class CategoryParam {
     // 头像
 //    private FormDataBodyPart avatar;
 
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 }

@@ -2,8 +2,10 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.UserAlbumEntity;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.stereotype.Service;
 
 @MapperScan
+@Service
 public interface UserAlbumMapper {
     int deleteByPrimaryKey(Integer id);
 

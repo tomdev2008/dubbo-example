@@ -27,6 +27,16 @@
     from connects_member_profile
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getFandomFollowers" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,
+    profile_createtime, profile_updatetime, member_type, member_status
+    from feeds_member_fandom fandom, connects_member_profile profile
+    where fandom.member_id = profile.id
+    and   fandom.fandom_id = #{id,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from connects_member_profile
     where id = #{id,jdbcType=INTEGER}

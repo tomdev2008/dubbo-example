@@ -4,15 +4,13 @@ import com.fansz.members.api.service.CategoryService;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.param.FandomFollowers;
-import com.fansz.members.model.param.FandomParam;
-import com.fansz.members.model.param.GetPostsParam;
+import com.fansz.members.model.*;
+import com.fansz.members.model.param.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
@@ -42,24 +40,19 @@ public class FandomProvider {
 
     /**
      * 添加圈子接口
-     * @param form 圈子参数
+     * @param fandomParam 圈子参数
      * @return resp 返回对象
      */
     @POST
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response addFandom(FormDataMultiPart form)
+    public Response addFandom(FandomParam fandomParam)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Fandom fandom = null;
         try {
-            FandomParam fandomParam = new FandomParam(form);
-
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            fandom = fandomService.addFandom(appUserDetails.getUser(),fandomParam);
+            fandom = fandomService.addFandom(fandomParam);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -78,20 +71,19 @@ public class FandomProvider {
 
     /**
      * 获取圈子信息接口
-     * @param id 圈子id
+     * @param fandomPara 圈子id
      * @return resp 返回对象
      */
-    @GET
-    @Path("/{id}")
+    @POST
+    @Path("/get")
+    @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response getFandom(@PathParam("id") String id)
+    public Response getFandom(NormalFandomPara fandomPara)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Fandom fandom = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            fandom = fandomService.getFandom(appUserDetails.getUser(), id);
+            fandom = fandomService.getFandom(fandomPara);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -122,8 +114,6 @@ public class FandomProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Post> posts = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
             posts = fandomService.getPostsByFandom(param);
 
         } catch (IllegalArgumentException iae) {
@@ -143,20 +133,19 @@ public class FandomProvider {
 
     /**
      * 分类获取圈子接口
-     * @param categoryId 圈子id
+     * @param fandomByCategory 圈子id
      * @return resp 返回对象
      */
-    @GET
-    @Path("/category/{categoryId}")
+    @POST
+    @Path("/category")
+    @Consumes("application/json")
     @Produces("application/json")
-    public Response getFandomsByCategory(@PathParam("categoryId") String categoryId)
+    public Response getFandomsByCategory(FandomByCategory fandomByCategory)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Fandom> fandoms = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            fandoms = fandomService.getFandomsByCategoryId(appUserDetails.getUser(), categoryId);
+            fandoms = fandomService.getFandomsByCategoryId(fandomByCategory);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -175,19 +164,17 @@ public class FandomProvider {
 
     /**
      * 关注圈子接口
-     * @param id 圈子id
+     * @param fandomPara 圈子id
      * @return resp 返回对象
      */
     @POST
-    @Path("/{id}/follow")
+    @Path("/follow")
     @Produces("application/json")
-    public Response followFandom(@PathParam("id") String id)
+    public Response followFandom(NormalFandomPara fandomPara)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            fandomService.followFandom(appUserDetails.getUser(), id);
+            fandomService.followFandom(fandomPara);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -210,15 +197,13 @@ public class FandomProvider {
      * @return resp 返回对象
      */
     @POST
-    @Path("/{id}/unfollow")
+    @Path("/unfollow/{id}")
     @Produces("application/json")
-    public Response unfollowFandom(@PathParam("id") String id)
+    public Response unfollowFandom(@PathParam("id") Integer id)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            fandomService.unfollowFandom(appUserDetails.getUser(), id);
+            fandomService.unfollowFandom(id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -240,16 +225,14 @@ public class FandomProvider {
      * @return resp 返回对象
      */
     @GET
-    @Path("/recommend")
+    @Path("/recommend/{id}")
     @Produces("application/json")
-    public Response getRecommendFandom()
+    public Response getRecommendFandom(@PathParam("id") String id)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Fandom> fandom = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            fandom = fandomService.getRecommendFandom(appUserDetails.getUser().getId());
+            fandom = fandomService.getRecommendFandom(id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -281,9 +264,6 @@ public class FandomProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         Category categorie = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
             // 获取所有圈子类别
             categorie = categoryService.getCategoryById(id);
         } catch (IllegalArgumentException iae) {
@@ -313,9 +293,6 @@ public class FandomProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<Category> categories = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
             // 获取所有圈子类别
             categories = categoryService.getAllCategory();
         } catch (IllegalArgumentException iae) {
@@ -346,11 +323,8 @@ public class FandomProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         SubCategory subCategory = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
             // 获取所有圈子类别
-            subCategory = categoryService.getFandomsBySubCategory(appUserDetails.getUser(), id);
+            subCategory = categoryService.getFandomsBySubCategory(id, id);
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
         } catch (ConstraintViolationException cve) {
@@ -381,8 +355,6 @@ public class FandomProvider {
 
         List<User> users = null;
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
             users = fandomService.followerOfFandom(fandomFollowers);
 
         } catch (IllegalArgumentException iae) {

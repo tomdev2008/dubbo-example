@@ -18,7 +18,7 @@ public class JsonHelper {
 
     public String toJsonString(Object obj) throws IOException {
         StringWriter stringWriter = new StringWriter();
-        jacksonObjectMapper.writer().writeValue(stringWriter, obj);
+//        jacksonObjectMapper.writer().writeValue(stringWriter, obj);
         stringWriter.flush();
         String result = stringWriter.toString();
         stringWriter.close();

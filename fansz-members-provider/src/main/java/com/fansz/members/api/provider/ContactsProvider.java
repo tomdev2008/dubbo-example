@@ -5,12 +5,9 @@ import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
 import com.fansz.members.model.User;
-import com.fansz.members.model.param.CriteriaParam;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.*;
@@ -44,7 +41,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            contactsService.addFriend(myId, followId);
+            contactsService.addFriend(followId, followId);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -73,7 +70,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-             contactsService.acceptFriend(myId, followId);
+             contactsService.acceptFriend(followId, followId);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -102,7 +99,7 @@ public class ContactsProvider {
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         try {
-            contactsService.removeFriend(myId, id);
+            contactsService.removeFriend(id, id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -126,7 +123,7 @@ public class ContactsProvider {
     @GET
     @Path("/friend")
     @Produces("application/json")
-    public Response getFriends()
+    public Response getFriends(String myId)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<User> friends = null;
@@ -161,7 +158,7 @@ public class ContactsProvider {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         User user = null;
         try {
-            user = contactsService.getFriend(myId, id);
+            user = contactsService.getFriend(id, id);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -178,19 +175,19 @@ public class ContactsProvider {
 
     /**
      * 搜索好友接口
-     * @param criteria 查询条件
+     * @param string 查询条件
      * @return resp 返回对象
      */
     @POST
     @Path("/findnew")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response findFriend(CriteriaParam criteria)
+    public Response findFriend(String id, String string)
     {
         Vector<ErrorMessage> errorMessages = new Vector<>();
         List<User> users = null;
         try {
-            users = contactsService.findFriend(myId, criteria);
+            users = contactsService.findFriend(id, string);
 
         } catch (IllegalArgumentException iae) {
             errorMessages.add(errorParser.phase(iae.getMessage()));
