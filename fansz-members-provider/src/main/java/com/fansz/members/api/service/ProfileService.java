@@ -1,30 +1,22 @@
 package com.fansz.members.api.service;
 
-<<<<<<< HEAD
-import com.fansz.members.api.entity.FandomEntity;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.friendship.FocusedFandomResult;
+import com.fansz.members.model.param.UserInfoResult;
 import com.fansz.members.model.user.FriendResult;
 import com.fansz.members.model.user.ModifyProfileParam;
-=======
-import com.fansz.members.model.param.ModifyProfilePara;
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by root on 15-11-3.
+ * 用户配置服务
  */
 public interface ProfileService {
-    UserEntity getProfile(Long uid);
 
-    void modifyProfile(Long id, ModifyProfileParam modifyProfileParam);
+    UserInfoResult getProfile(String uid);
 
-    String setAvatar(String userId, InputStream filePart) throws IOException;
+    void modifyProfile(ModifyProfileParam modifyProfileParam);
 
-    List<FocusedFandomResult> getFollowedFandoms(Long uid);
+    List<FocusedFandomResult> getFollowedFandoms(String uid);
 
-    List<FriendResult> getFriends(Long uid);
+    List<FriendResult> getFriendsInfo(String mobiles);
 }

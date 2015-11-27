@@ -1,81 +1,59 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.members.api.UserApi;
-import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.service.ProfileService;
-<<<<<<< HEAD
+import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.param.NullResult;
 import com.fansz.members.model.param.UserInfoResult;
 import com.fansz.members.model.user.ModifyProfileParam;
 import com.fansz.members.model.user.QueryUserParam;
-import org.springframework.beans.BeanUtils;
-=======
-import com.fansz.members.api.utils.ErrorMessage;
-import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.param.ModifyProfilePara;
-import com.fansz.members.model.param.UsersInfoParam;
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.core.Response;
-import java.io.InputStream;
-import java.util.Vector;
-
 /**
- * Created by root on 15-11-3.
+ * 配置服务提供者
  */
-@Component("/profileProvider")
-public class ProfileProvider implements UserApi {
+@Component("profileProvider")
+public class ProfileProvider implements ProfileApi {
 
 
     @Autowired
     private ProfileService profileService;
 
+    /**
+     * 获取当前登陆用户的详细信息
+     *
+     * @param queryUserParam
+     * @return
+     */
     @Override
     public CommonResult<UserInfoResult> getProfile(QueryUserParam queryUserParam) {
         CommonResult<UserInfoResult> result = new CommonResult<>();
-        result.setStatus("0");
+        result.setStatus(Constants.SUCCESS);
         try {
-            UserEntity user = profileService.getProfile(queryUserParam.getUid());
-            UserInfoResult userInfoResult = new UserInfoResult();
-            BeanUtils.copyProperties(user, userInfoResult);
-
+            UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
+            result.setResult(userInfoResult);
         } catch (Exception iae) {
-            result.setStatus("1");
-        }
-        return result;
-    }
-
-    @Override
-    public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
-        try {
-
-            profileService.modifyProfile(modifyProfileParam.getUid(), modifyProfileParam);
-        } catch (Exception e) {
-            result.setStatus("1");
+            result.setStatus(Constants.FAIL);
         }
         return result;
     }
 
     /**
-     * 设置用户图像
+     * 修改当前用户的配置信息
      *
-     * @param form 个人头像信息
-     * @return resp 返回对象
+     * @param modifyProfileParam
+     * @return
      */
     @Override
-    public CommonResult<NullResult> setAvatar(InputStream form) {
+    public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
+        result.setStatus(Constants.SUCCESS);
         try {
-             //TODO
-
-        } catch (IllegalArgumentException iae) {
-            result.setStatus("1");
+            profileService.modifyProfile(modifyProfileParam);
+        } catch (Exception e) {
+            result.setStatus(Constants.FAIL);
         }
         return result;
     }

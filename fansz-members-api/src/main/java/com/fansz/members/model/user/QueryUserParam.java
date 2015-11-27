@@ -4,15 +4,15 @@ package com.fansz.members.model.user;
  * Created by allan on 15/11/26.
  */
 public class QueryUserParam {
-    private Long uid;
+    private String uid;
 
     private String accessToken;
 
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

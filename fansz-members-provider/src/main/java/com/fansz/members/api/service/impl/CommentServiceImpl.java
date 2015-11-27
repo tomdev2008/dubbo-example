@@ -1,12 +1,11 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.persistence.domain.Comment;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.CommentMapper;
-import com.fansz.appservice.persistence.mapper.PostMapper;
-import com.fansz.appservice.resource.param.CommentPagePara;
-import com.fansz.appservice.resource.param.CommentPara;
-import com.fansz.appservice.service.CommentService;
+
+import com.fansz.members.api.entity.PostCommentEntity;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.service.CommentService;
+import com.fansz.members.model.comment.CommentPagePara;
+import com.fansz.members.model.comment.CommentParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,31 +18,19 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    CommentMapper commentMapper;
-
-    @Autowired
-    PostMapper postMapper;
 
     @Override
-    public Comment addComment(User user, CommentPara commentPara) throws IOException {
-
-        Comment comment = new Comment(user, commentPara);
-        commentMapper.save(comment);
-
-        postMapper.modifyCommentsCount(comment.getPostId(), 1);
-        return comment;
+    public PostCommentEntity addComment(UserEntity user, CommentParam commentPara) {
+      return null;
     }
 
     @Override
     public void removeComment(String id) {
-        commentMapper.removeComment(id);
-        Comment comment = commentMapper.getComment(id);
-        postMapper.modifyCommentsCount(comment.getPostId(), -1);
+
     }
 
     @Override
-    public List<Comment> getComments(CommentPagePara commentPagePara) {
-        return commentMapper.getComments(commentPagePara);
+    public List<PostCommentEntity> getComments(CommentPagePara commentPagePara) {
+        return null;
     }
 }

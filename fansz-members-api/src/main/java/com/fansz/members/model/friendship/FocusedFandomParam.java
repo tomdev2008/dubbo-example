@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class FocusedFandomParam implements Serializable {
     private static final long serialVersionUID = 394668565041221041L;
     private String accessToken;
-    private Long uid;
+    private String uid;
     private int count;
     private int cursor;
 
@@ -20,11 +20,11 @@ public class FocusedFandomParam implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

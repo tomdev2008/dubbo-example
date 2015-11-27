@@ -158,6 +158,11 @@
             <version>3.0.7.Final</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.6</version>
+        </dependency>
         <!-- 如果要使用xml序列化 -->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>

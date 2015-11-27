@@ -9,22 +9,14 @@ import com.fansz.members.model.param.NullResult;
 import javax.ws.rs.*;
 
 /**
-<<<<<<< HEAD
  * 账户服务
-=======
- * 账号相关服务
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
  */
 @Path("/accounts")
 public interface AccountApi {
     /**
      * 用户注册
      *
-<<<<<<< HEAD
      * @param registerParam 注册对象
-=======
-     * @param registerPara 注册对象
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
      * @return resp 返回对象
      */
     @POST
@@ -46,7 +38,6 @@ public interface AccountApi {
     public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam);
 
 
-<<<<<<< HEAD
     /**
      * 修改密码接口
      *
@@ -73,15 +64,8 @@ public interface AccountApi {
      * 用户登出
      *
      * @param uid
-     * @return
-=======
-
-    /**
-     * 修改密码接口
-     *
-     * @param changePasswordPara 修改密码对象
+     * @param uid 修改密码对象
      * @return resp 返回对象
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
      */
     @POST
     @Path("/logout/{uid}")

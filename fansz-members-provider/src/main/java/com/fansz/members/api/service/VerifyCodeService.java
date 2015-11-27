@@ -1,30 +1,35 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.api.model.VerifyCode;
-import com.fansz.members.api.utils.RegularPattern;
-
-import javax.validation.constraints.Pattern;
+import com.fansz.members.api.utils.VerifyCodeType;
 
 /**
  * Created by allan on 15/11/26.
  */
 public interface VerifyCodeService {
     /**
-     * 获取忘记密码验证码接口
+     * 获取新的验证码
      *
-     * @param mobile 手机号码
+     * @param mobile         手机号码
+     * @param verifyCodeType 验证码类型
      */
-    public boolean getPasswordIdentifyCode(String mobile);
+    public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
     /**
-     * 获取注册验证码
+     * 查询验证码
      *
-     * @param mobile 手机号码
+     * @param mobile
+     * @param verifyCodeType
+     * @return
      */
-    public boolean getRegisterIdentifyCode(String mobile);
+    VerifyCode queryVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
-    VerifyCode getVerifyCode(String mobile, String key);
-
-    void removeVerifyCode(String mobile,String key);
+    /**
+     * 删除验证码
+     *
+     * @param mobile
+     * @param verifyCodeType
+     */
+    void removeVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
 }

@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 public class RegisterResult implements Serializable {
     private static final long serialVersionUID = -6646623722931553825L;
-    private Long uid;
+    private String uid;
 
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 }

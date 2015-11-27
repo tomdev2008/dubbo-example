@@ -1,126 +1,69 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.Friendship;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.persistence.mapper.FandomMapper;
-import com.fansz.appservice.persistence.mapper.FriendsMapper;
-import com.fansz.appservice.persistence.mapper.ProfileMapper;
-import com.fansz.appservice.resource.param.ModifyProfilePara;
-import com.fansz.appservice.service.FileService;
-import com.fansz.appservice.service.ProfileService;
-import com.fansz.appservice.utils.Constants;
-import com.fansz.appservice.utils.StringUtils;
-import org.glassfish.jersey.media.multipart.FormDataBodyPart;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.FandomMapper;
+import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.model.friendship.FocusedFandomResult;
+import com.fansz.members.model.param.UserInfoResult;
+import com.fansz.members.model.user.FriendResult;
+import com.fansz.members.model.user.ModifyProfileParam;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by root on 15-11-3.
+ * 配置服务实现层
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class ProfileServiceImpl implements ProfileService {
 
-    @Value("${pictures.base}")
-    private String PICTURE_BASE_PATH;
-
     @Autowired
-    private ProfileMapper profileMapper;
-
-    @Autowired
-    private FandomMapper fandomMapper;
-
-    @Autowired
-    private FileService fileService;
-
-    @Autowired
-    private FriendsMapper friendsMapper;
+    private UserEntityMapper userEntityMapper;
 
     @Override
-    public User getProfile(String id) {
-
-        return profileMapper.getProfile(id);
+    public UserInfoResult getProfile(String uid) {
+        return userEntityMapper.findByUid(uid);
     }
 
     @Override
-    public void modifyProfile(String id, ModifyProfilePara modifyProfilePara) {
-        profileMapper.modifyProfile(id, modifyProfilePara);
+    public void modifyProfile(ModifyProfileParam modifyProfilePara) {
+        UserEntity user = new UserEntity();
+        user.setSn(modifyProfilePara.getUid());
+        user.setBirthday(modifyProfilePara.getBirthday());
+        user.setGender(modifyProfilePara.getGender());
+        user.setNickname(modifyProfilePara.getNickName());
+        userEntityMapper.updateByUidSelective(user);
     }
 
     @Override
-    public String setAvatar(String userId, FormDataBodyPart filePart) throws IOException {
-
-        //获取文件IO流
-        InputStream fileInputStream = filePart.getValueAs(InputStream.class);
-
-        //获取文件名
-        FormDataContentDisposition formDataContentDisposition = filePart.getFormDataContentDisposition();
-        String source = formDataContentDisposition.getFileName();
-        source = new String(source.getBytes("ISO8859-1"), "UTF-8");
-
-        //写文件流
-        String fileName = fileService.fileUpload(PICTURE_BASE_PATH, fileInputStream, source);
-
-        //保存头像文件名
-        profileMapper.saveAvatar(userId, fileName);
-
-        return fileName;
+    public List<FocusedFandomResult> getFollowedFandoms(String uid) {
+        UserInfoResult user = userEntityMapper.findByUid(uid);
+        return userEntityMapper.findFandomById(user.getId());
     }
 
     @Override
-    public List<Fandom> getFollowedFandoms(String id) {
-        User user = profileMapper.getProfile(id);
+    public List<FriendResult> getFriendsInfo(String mobiles) {
+        List<String> mobileList = Arrays.asList(mobiles.split(","));
 
-        if (null != user && !StringUtils.isEmpty(user.getFandomIds()))
-        {
-            List<String> fandomsId = user.getFandomIds();
-            List<Fandom> fandoms = fandomMapper.getFandomsByIds(fandomsId);
+        List<UserInfoResult> users = userEntityMapper.findByMobiles(mobileList);
 
-            if (fandoms != null && fandoms.size() > 0)
-            {
-                for (Fandom fandom : fandoms)
-                {
-                    fandom.setFollowed("1");
-                }
-            }
-
-            return fandoms;
+        List<FriendResult> friendList=new ArrayList<>();
+        for(UserInfoResult userInfo:users){
+            FriendResult friend=new FriendResult();
+            BeanUtils.copyProperties(userInfo,friend);
+            friendList.add(friend);
         }
-        else
-        {
-            return null;
-        }
-
-    }
-
-    @Override
-    public List<User> getUsers(String id, String mobile) {
-        String[] mobiles = mobile.split(",");
-        List<String> mobileList = Arrays.asList(mobiles);
-
-        List<User> users = profileMapper.getUsers(mobileList);
-
-        Friendship myFriendship = friendsMapper.getFriendShip(id);
-
-        if (null != users)
-        {
-            for (User user : users)
-            {
-                user.setRelation(StringUtils.getShip(user.getId(), myFriendship));
-
-                if (id.equals(user.getId()))
-                {
-                    user.setRelation(Constants.FRIENDS_STATUS_MYSELF);
-                }
-            }
-        }
-        return users;
+        return friendList;
     }
 }

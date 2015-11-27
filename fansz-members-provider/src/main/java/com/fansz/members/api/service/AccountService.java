@@ -1,6 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.ChangePasswordParam;
 import com.fansz.members.model.account.RegisterParam;
 import com.fansz.members.model.account.ResetPasswordParam;
@@ -9,7 +10,7 @@ import com.fansz.members.model.account.ResetPasswordParam;
  */
 public interface AccountService {
 
-    public UserEntity register(RegisterParam registerParam);
+    public RegisterResult register(RegisterParam registerParam);
 
 
     /**

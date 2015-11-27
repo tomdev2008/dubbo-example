@@ -9,7 +9,8 @@ import java.io.Serializable;
 public class ModifyProfileParam implements Serializable{
 
     private static final long serialVersionUID = -2028355548744485358L;
-    private Long uid;
+
+    private String uid;
 
     private String accessToken;
 
@@ -19,11 +20,11 @@ public class ModifyProfileParam implements Serializable{
 
     private String gender;
 
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 

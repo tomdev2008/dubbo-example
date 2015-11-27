@@ -1,29 +1,23 @@
 package com.fansz.members.api.provider;
 
+import com.fansz.members.api.PostApi;
 import com.fansz.members.api.service.PostService;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.api.utils.ErrorMessage;
-import com.fansz.members.api.utils.StringUtils;
 import com.fansz.members.model.param.PagePara;
 import com.fansz.members.model.post.PostInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
-import java.util.List;
-import java.util.Vector;
 
 /**
  * 帖子接口类
  * Created by root on 15-11-3.
  */
-@Service
-@Component("/postProvider")
-public class PostProvider {
+@Component("postProvider")
+public class PostProvider implements PostApi{
 
     @Autowired
     private PostService postService;
@@ -36,36 +30,13 @@ public class PostProvider {
      * @param form 帖子信息
      * @return resp 返回对象
      */
-    @POST
-    @Path("/add")
-    @Consumes("multipart/form-data")
-    @Produces("application/json")
-    public Response addPost(FormDataMultiPart form){
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        Post post = null;
+    public Response addPost(PostInfoResult form){
         try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
+            PostInfoResult postParam = new PostInfoResult();
+        } catch (Exception iae) {
 
-            PostInfoResult postParam = new PostInfoResult(form);
-
-            post = postService.addPost(
-                    appUserDetails.getUser(),
-//                    profileService.getProfile("3aT2L0XgFeIVUlQAol9rNf"),
-                    postParam);
-            Assert.notNull(post, "error.post.add");
-
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
         }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, post);
-        }
+        return null;
     }
 
     /**
@@ -73,26 +44,8 @@ public class PostProvider {
      * @param id 帖子id
      * @return resp 返回对象
      */
-    @POST
-    @Path("/{id}/remove")
-    @Produces("application/json")
     public Response removePost(@PathParam("id") String id) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            postService.removePost(id);
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, null);
-        }
+        return null;
     }
 
     /**
@@ -100,27 +53,8 @@ public class PostProvider {
      * @param id 帖子id
      * @return resp 返回对象
      */
-    @GET
-    @Path("/{id}")
-    @Produces("application/json")
     public Response getPost(@PathParam("id") String id) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        Post post = null;
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            post = postService.getPost(appUserDetails.getUser(), id);
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, post);
-        }
+       return null;
 
     }
 
@@ -129,26 +63,8 @@ public class PostProvider {
      * @param id 帖子id
      * @return resp 返回对象
      */
-    @POST
-    @Path("/{id}/like")
-    @Produces("application/json")
     public Response likePost(@PathParam("id") String id) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            postService.likePost(appUserDetails.getUser(), id);
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, null);
-        }
+        return null;
     }
 
     /**
@@ -156,26 +72,8 @@ public class PostProvider {
      * @param id 帖子id
      * @return resp 返回对象
      */
-    @POST
-    @Path("/{id}/unlike")
-    @Produces("application/json")
-    public Response unlikePost(@PathParam("id") String id) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-            postService.unlikePost(appUserDetails.getUser(), id);
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, null);
-        }
+    public Response unlikePost(String id) {
+       return null;
     }
 
     /**
@@ -183,28 +81,8 @@ public class PostProvider {
      * @param friendId 好友id
      * @return resp 返回对象
      */
-    @GET
-    @Path("/friend/{id}")
-    @Produces("application/json")
-    public Response getFriendPosts(@PathParam("id") String friendId) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        List<Post> posts = null;
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            posts = postService.getFriendPosts(appUserDetails.getUser(), friendId);
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, posts);
-        }
+    public Response getFriendPosts( String friendId) {
+        return null;
     }
 
     /**
@@ -212,32 +90,8 @@ public class PostProvider {
      * @param pagePara 分页参数
      * @return resp 返回对象
      */
-    @POST
-    @Path("/friend")
-    @Consumes("application/json")
-    @Produces("application/json")
     public Response getFriendsPosts(PagePara pagePara) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        List<Post> posts = null;
-
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            posts = postService.getFriendsPosts(appUserDetails.getUser(), pagePara);
-
-
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, posts);
-        }
+        return null;
     }
 
     /**
@@ -245,30 +99,7 @@ public class PostProvider {
      * @param pagePara 分页参数
      * @return resp 返回对象
      */
-    @POST
-    @Path("/fandom")
-    @Consumes("application/json")
-    @Produces("application/json")
     public Response getAllFandomPosts(PagePara pagePara) {
-        Vector<ErrorMessage> errorMessages = new Vector<>();
-        List<Post> posts = null;
-
-        try {
-            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Assert.notNull(appUserDetails, "error.user.null");
-
-            posts = postService.getAllFandomPosts(appUserDetails.getUser(), pagePara);
-
-        } catch (IllegalArgumentException iae) {
-            errorMessages.add(errorParser.phase(iae.getMessage()));
-        } catch (Exception e) {
-            errorMessages.add(errorParser.phase("error.unknown"));
-        }
-        if (errorMessages.size() != 0) {
-            return StringUtils.getErrorResponse(errorMessages);
-        }
-        else {
-            return StringUtils.getSuccessResponse(0, posts);
-        }
+        return null;
     }
 }

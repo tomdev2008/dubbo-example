@@ -4,18 +4,12 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.AccountApi;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.AccountService;
-import com.fansz.members.api.utils.ErrorMessage;
-import com.fansz.members.api.utils.StringUtils;
-<<<<<<< HEAD
+import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.*;
 import com.fansz.members.model.param.NullResult;
-=======
-import com.fansz.members.model.param.ChangePasswordPara;
 import com.fansz.members.model.param.RegisterPara;
-import com.fansz.members.model.param.ResetPasswordParam;
->>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,15 +31,12 @@ public class AccountProvider implements AccountApi {
      */
     public CommonResult<RegisterResult> register(RegisterParam registerParam) {
         CommonResult<RegisterResult> result = new CommonResult<>();
-        result.setStatus("0");
+        result.setStatus(Constants.SUCCESS);
         try {
-            UserEntity user = accountService.register(registerParam);
-            RegisterResult registerResult = new RegisterResult();
-            registerResult.setUid(user.getId());
+            RegisterResult registerResult = accountService.register(registerParam);
             result.setResult(registerResult);
-
         } catch (Exception e) {
-            result.setStatus("1");
+            result.setStatus(Constants.FAIL);
         }
         return result;
     }

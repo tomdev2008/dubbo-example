@@ -12,7 +12,8 @@ import java.util.List;
  * Created by root on 15-11-4.
  */
 public interface CommentService {
-    PostCommentEntity addComment(UserEntity user, CommentParam commentPara) throws IOException;
+
+    PostCommentEntity addComment(UserEntity user, CommentParam commentPara);
 
     void removeComment(String id);
 

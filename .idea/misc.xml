@@ -50,6 +50,7 @@
         <option value="$PROJECT_DIR$/fansz-members-api/pom.xml" />
         <option value="$PROJECT_DIR$/fansz-members-provider/pom.xml" />
         <option value="$PROJECT_DIR$/fansz-members-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/fansz-sms-sender/pom.xml" />
       </list>
     </option>
   </component>

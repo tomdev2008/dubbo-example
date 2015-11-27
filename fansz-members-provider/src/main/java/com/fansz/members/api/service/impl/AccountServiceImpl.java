@@ -6,25 +6,38 @@ import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.MessageService;
 import com.fansz.members.api.service.VerifyCodeService;
+import com.fansz.members.api.utils.Constants;
+import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.ChangePasswordParam;
 import com.fansz.members.model.account.RegisterParam;
 import com.fansz.members.model.account.ResetPasswordParam;
+import com.fansz.members.tools.DateTools;
+import com.fansz.members.tools.MembersConstant;
 import com.fansz.members.tools.SecurityTools;
-import com.fansz.members.api.utils.IdentifyCodeGenerator;
-import com.fansz.members.model.param.RegisterPara;
-import lombok.extern.log4j.Log4j;
+import com.fansz.members.tools.UUIDTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by root on 15-11-3.
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class AccountServiceImpl implements AccountService {
 
-    private Logger logger= LoggerFactory.getLogger(AccountServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Autowired
     private UserEntityMapper userEntityMapper;
@@ -35,70 +48,88 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     @Override
-    public UserEntity register(RegisterParam registerParam) {
+    public RegisterResult register(RegisterParam registerParam) {
+        //验证码校验
+        VerifyCode verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        //Check Identify Code
-        VerifyCode identifyCode = verifyCodeService.getVerifyCode(registerParam.getMobile(),"register");
-
+        if (verifyCode == null || verifyCode.getVerifyCode().equals(registerParam.getVerifyCode())) {
+            throw new ApplicationException(Constants.VERIFY_ERROR, "验证码错误");
+        }
         //Remove invalid Code
-        verifyCodeService.removeVerifyCode(registerParam.getMobile(),"register");
+        verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
         //Create User
         UserEntity user = new UserEntity();
-        BeanUtils.copyProperties(registerParam,user);
+        BeanUtils.copyProperties(registerParam, user);
+        user.setSn(UUIDTools.getUniqueId());
         logger.info("Begin to add user " + user);
 
         //Save User Info
         userEntityMapper.insertSelective(user);
         logger.info("user saved:" + user);
+        RegisterResult registerResult = new RegisterResult();
+        registerResult.setUid(user.getSn());
+        putSessionInRedis(registerResult);
+        return registerResult;
+    }
 
-        return user;
+    private void putSessionInRedis(RegisterResult registerResult) {
+        String key = "session:" + registerResult.getUid();
+        Map<String, String> session = new HashMap<>();
+        session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
+        session.put("accessToken", UUIDTools.getUniqueId());
+        session.put("refreshToken", UUIDTools.getUniqueId());
+        Date expiresAt = DateTools.wrapDate(new Date(), "m+" + MembersConstant.EXPIRED_PERIOD);
+        session.put("expiredAt", String.valueOf(expiresAt.getTime()));
+        redisTemplate.boundHashOps(key).putAll(session);
     }
 
     /**
-     * 获取忘记密码验证码
-     * @param changePasswordPara 手机号码
+     * 修改密码
+     *
+     * @param changePasswordPara 修改密码参数
      */
-
-
     @Override
     public void changePassword(ChangePasswordParam changePasswordPara) {
-
         String encodedPwd = SecurityTools.encode(changePasswordPara.getOldPassword());
 
         //Get User Info
         UserEntity user = userEntityMapper.selectByPrimaryKey(changePasswordPara.getUid());
-        if(user==null||!user.getPassword().equals(encodedPwd)){
-            throw new RuntimeException("用户不存在");
+        if (user == null || !user.getPassword().equals(encodedPwd)) {
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
         }
         //Update New Password
         String encodedNewPwd = SecurityTools.encode(changePasswordPara.getNewPassword());
-        userEntityMapper.updatePassword(changePasswordPara.getUid(),encodedNewPwd);
+        userEntityMapper.updatePassword(changePasswordPara.getUid(), encodedNewPwd);
     }
 
     /**
-     * 重置密码接口
+     * 重置密码
+     *
      * @param resetPasswordParam 密码对象
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-        UserEntity userEntity=userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
-        if(userEntity==null){//用户不存在
-            throw new RuntimeException("用户不存在");
+        UserEntity userEntity = userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
+        if (userEntity == null) {//用户不存在
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
         }
 
-        //Check Identify Code
-        VerifyCode identifyCode = verifyCodeService.getVerifyCode(resetPasswordParam.getMobile(),"reset");
+        //验证码校验
+        VerifyCode verifyCode = verifyCodeService.queryVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
 
-        if(identifyCode==null||!identifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())){
-            throw new RuntimeException("校验码错误");
+        if (verifyCode == null || !verifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())) {
+            throw new ApplicationException(Constants.VERIFY_ERROR, "校验码错误");
         }
-        //Remove invalid Code
-        verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(),"reset");
+        //删除验证码
+        verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
         String encodedPwd = SecurityTools.encode(resetPasswordParam.getPassword());
 
-        //Change Password
-        userEntityMapper.updatePassword(userEntity.getId(),encodedPwd);
+        //更新密码
+        userEntityMapper.updatePassword(userEntity.getId(), encodedPwd);
     }
 }

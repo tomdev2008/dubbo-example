@@ -9,6 +9,9 @@ public class FriendsParam implements Serializable {
 
     private String accessToken;
 
+    private String mobiles;
+
+
     public Long getUid() {
         return uid;
     }
@@ -23,5 +26,13 @@ public class FriendsParam implements Serializable {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
+    }
+
+    public String getMobiles() {
+        return mobiles;
+    }
+
+    public void setMobiles(String mobiles) {
+        this.mobiles = mobiles;
     }
 }

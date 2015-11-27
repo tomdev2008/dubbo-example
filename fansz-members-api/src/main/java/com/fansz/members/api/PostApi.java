@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.fansz.members.model.param.PagePara;
+import com.fansz.members.model.post.PostInfoResult;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -20,7 +21,7 @@ public interface PostApi {
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response addPost(InputStream form);
+    public Response addPost(PostInfoResult form);
 
     /**
      * 删除帖子接口

@@ -58,6 +58,7 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.9.12" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxb-provider:3.0.7.Final" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.7" level="project" />

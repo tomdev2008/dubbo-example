@@ -1,0 +1,71 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <context:property-placeholder ignore-resource-not-found="false"
+                                  location="classpath:redis.properties"/>
+
+
+    <util:properties  id="smsProperties" location="classpath:sms.properties"/>
+
+    <bean id="redisPropertySource" class="org.springframework.core.env.MapPropertySource">
+        <constructor-arg index="0" value="RedisSentinelConfiguration"/>
+        <constructor-arg index="1">
+            <map>
+                <entry key="spring.redis.sentinel.master" value="${spring.redis.sentinel.master}"/>
+                <entry key="spring.redis.sentinel.nodes" value="${spring.redis.sentinel.nodes}"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:maxTotal="${redis.pool.maxTotal}"
+          p:maxIdle="${redis.pool.maxIdle}"
+          p:maxWaitMillis="${redis.pool.maxWaitMillis}"
+          p:minEvictableIdleTimeMillis="${redis.pool.minEvictableIdleTimeMillis}"
+          p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
+          p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
+
+    <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <constructor-arg index="0" ref="redisPropertySource"/>
+    </bean>
+
+    <!-- 配置redis 缓存服务器 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:password="fansz">
+        <constructor-arg index="0" ref="redisSentinelConfiguration"/>
+        <constructor-arg index="1" ref="poolConfig"/>
+    </bean>
+
+    <bean id="jedisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"></property>
+        <!--<property name="defaultSerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>-->
+    </bean>
+    <bean id="smsQueueListener" class="com.fansz.sms.listener.SmsQueueListener"/>
+
+    <bean id="serialization" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+
+    <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+        <property name="delegate" ref="smsQueueListener"/>
+        <property name="serializer" ref="serialization"/>
+    </bean>
+
+    <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="messageListeners">
+            <!-- map of listeners and their associated topics (channels or/and patterns) -->
+            <map>
+                <entry key-ref="messageListener">
+                    <bean class="org.springframework.data.redis.listener.ChannelTopic">
+                        <constructor-arg value="sms"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+</beans>
