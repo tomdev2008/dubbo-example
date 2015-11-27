@@ -1,5 +1,7 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.model.Fandom;
+import com.fansz.members.model.User;
 import com.fansz.members.model.param.ModifyProfilePara;
 
 import javax.validation.Valid;
@@ -12,15 +14,11 @@ import java.util.List;
 public interface ProfileService {
     User getProfile(String id);
 
-    void modifyProfile(@Valid String id, ModifyProfilePara modifyProfilePara);
+    void modifyProfile(String id, ModifyProfilePara modifyProfilePara);
 
-    String setAvatar(String userId, FormDataBodyPart filePart) throws IOException;
+    String setAvatar(String userId, String avatar) throws IOException;
 
-    List<Fandom> getFollowedFandoms(
-            @NotEmpty(message = "error.userId.empty")
-            String id);
+    List<Fandom> getFollowedFandoms(String id);
 
-    List<User> getUsers(
-            String s, @NotEmpty(message = "error.mobile.empty")
-    String id);
+    List<User> getUsers(String s, String id);
 }

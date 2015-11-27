@@ -1,11 +1,11 @@
 package com.fansz.members.api.utils;
-
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.MetadataException;
-import com.drew.metadata.exif.ExifDirectoryBase;
-import com.drew.metadata.exif.ExifIFD0Directory;
+//
+//import com.drew.imaging.ImageMetadataReader;
+//import com.drew.imaging.ImageProcessingException;
+//import com.drew.metadata.Metadata;
+//import com.drew.metadata.MetadataException;
+//import com.drew.metadata.exif.ExifDirectoryBase;
+//import com.drew.metadata.exif.ExifIFD0Directory;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -58,28 +58,29 @@ public class PictureUtils {
         return rotatedImage;
     }
 
-    public static int getRotatedAngle(File file) throws ImageProcessingException, IOException, MetadataException {
+    public static int getRotatedAngle(File file) {
+//        public static int getRotatedAngle(File file) throws ImageProcessingException, IOException, MetadataException {
         int angle = 0;
-        //Read MetaData
-        Metadata metadata = ImageMetadataReader.readMetadata(file);
-        ExifIFD0Directory directory
-                = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-        if (directory == null) return 0;
-        int orientation = directory.getInt(ExifDirectoryBase.TAG_ORIENTATION);
-        switch (orientation) {
-            case 3:
-                angle = 180;
-                break;
-            case 6:
-                angle = 90;
-                break;
-            case 8:
-                angle = 270;
-                break;
-            default:
-                angle = 0;
-                break;
-        }
+//        //Read MetaData
+//        Metadata metadata = ImageMetadataReader.readMetadata(file);
+//        ExifIFD0Directory directory
+//                = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+//        if (directory == null) return 0;
+//        int orientation = directory.getInt(ExifDirectoryBase.TAG_ORIENTATION);
+//        switch (orientation) {
+//            case 3:
+//                angle = 180;
+//                break;
+//            case 6:
+//                angle = 90;
+//                break;
+//            case 8:
+//                angle = 270;
+//                break;
+//            default:
+//                angle = 0;
+//                break;
+//        }
 
         return angle;
     }

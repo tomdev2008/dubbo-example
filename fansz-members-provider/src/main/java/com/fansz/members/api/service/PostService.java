@@ -1,12 +1,10 @@
 package com.fansz.members.api.service;
 
-import com.fansz.appservice.persistence.domain.Post;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.PagePara;
-import com.fansz.appservice.resource.param.PostParam;
-import org.hibernate.validator.constraints.NotEmpty;
+import com.fansz.members.model.Post;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.PagePara;
+import com.fansz.members.model.param.PostParam;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -14,13 +12,12 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 public interface PostService {
-    Post addPost(@Valid User user, PostParam postParam) throws IOException;
+    Post addPost(User user, PostParam postParam) throws IOException;
 
     void removePost(String id);
 
     Post getPost(
             User user,
-            @NotEmpty(message = "error.postId.empty")
             String id);
 
     void likePost(User user, String id);
@@ -29,7 +26,6 @@ public interface PostService {
 
     List<Post> getFriendPosts(
             User user,
-            @NotEmpty(message = "error.postId.empty")
             String friendId);
 
     List<Post> getFriendsPosts(

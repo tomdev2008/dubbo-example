@@ -1,7 +1,5 @@
 package com.fansz.members.api.service;
 
-import com.drew.imaging.ImageProcessingException;
-import com.drew.metadata.MetadataException;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -24,5 +22,5 @@ public interface FileService {
 
     File getFile(String fullFileName) throws FileNotFoundException;
 
-    File getFile(String picturePath, String fileId, int width, int height) throws IOException, MetadataException, ImageProcessingException;
+    File getFile(String picturePath, String fileId, int width, int height);
 }

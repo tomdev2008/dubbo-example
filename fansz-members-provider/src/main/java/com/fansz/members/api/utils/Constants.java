@@ -1,11 +1,9 @@
 package com.fansz.members.api.utils;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Created by root on 15-10-12.
  */
-@ConfigurationProperties(prefix = "user.length")
 public class Constants {
 
     public static String MOBILE = "mobile";

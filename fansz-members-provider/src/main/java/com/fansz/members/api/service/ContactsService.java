@@ -1,7 +1,6 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.User;
-import com.fansz.members.model.param.CriteriaParam;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public interface ContactsService {
 
     List<User> findFriend(
             String id,
-            CriteriaParam criteria);
+            String str);
 
     List<User> getCandidates(
             String id);

@@ -1,9 +1,9 @@
 package com.fansz.members.api.utils;
 
-import com.fansz.appservice.persistence.domain.Fandom;
-import com.fansz.appservice.persistence.domain.Friendship;
-import com.fansz.appservice.persistence.domain.User;
-import com.fansz.appservice.resource.param.PagePara;
+import com.fansz.members.model.Fandom;
+import com.fansz.members.model.Friendship;
+import com.fansz.members.model.User;
+import com.fansz.members.model.param.PagePara;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
@@ -154,14 +154,24 @@ public class StringUtils {
 
     public static Response getErrorResponse(Vector<ErrorMessage> errorMessages)
     {
-        UnifyResponse<List<ErrorMessage>> unifyResponse = new UnifyResponse<List<ErrorMessage>>(errorMessages.get(0).getReturnCode(), errorMessages.get(0).getErrorMsg()
-                , 0, null);
+        UnifyResponse<List<ErrorMessage>> unifyResponse = new UnifyResponse<List<ErrorMessage>>();
+
+        unifyResponse.setCode(errorMessages.get(0).getReturnCode());
+        unifyResponse.setInfo(errorMessages.get(0).getErrorMsg());
+        unifyResponse.setAfterCount(0);
+        unifyResponse.setContent(null);
+
         return Response.status(418).entity(unifyResponse).build();
     }
 
     public static Response getSuccessResponse(int afterCount, Object obj)
     {
-        UnifyResponse<Object> unifyResponse = new UnifyResponse<>("0", "success", afterCount, obj);
+        UnifyResponse<Object> unifyResponse = new UnifyResponse<>();
+        unifyResponse.setCode("0");
+        unifyResponse.setInfo("success");
+        unifyResponse.setAfterCount(afterCount);
+        unifyResponse.setContent(obj);
+
         return Response.ok(unifyResponse).build();
     }
 
