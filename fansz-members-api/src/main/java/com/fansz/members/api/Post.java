@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.fansz.members.model.param.PagePara;
+import com.fansz.members.model.param.PostParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -12,14 +13,14 @@ public interface Post {
 
     /**
      * 发帖子接口
-     * @param form 帖子信息
+     * @param postParam 帖子信息
      * @return resp 返回对象
      */
     @POST
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response addPost(FormDataMultiPart form);
+    public Response addPost(PostParam postParam);
 
     /**
      * 删除帖子接口

@@ -1,13 +1,10 @@
 package com.fansz.members.model;
 
-import lombok.Data;
-
 import java.util.List;
 
 /**
  * Created by root on 15-11-12.
  */
-@Data
 public class SubCategory {
 
     // 编号
@@ -27,4 +24,52 @@ public class SubCategory {
 
     // 该子类别里面的fandom
     private List<Fandom> fandoms;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Fandom> getFandoms() {
+        return fandoms;
+    }
+
+    public void setFandoms(List<Fandom> fandoms) {
+        this.fandoms = fandoms;
+    }
 }

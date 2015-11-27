@@ -1,14 +1,11 @@
 package com.fansz.members.model;
 
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by root on 15-10-26.
  */
-@Data
 public class Friendship implements Serializable
 {
     private String id;
@@ -25,4 +22,43 @@ public class Friendship implements Serializable
     // 主动添加他人列表
     private List<User> requesters;
 
+    public List<User> getRequesters() {
+        return requesters;
+    }
+
+    public void setRequesters(List<User> requesters) {
+        this.requesters = requesters;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<User> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<User> friends) {
+        this.friends = friends;
+    }
+
+    public List<User> getCandidates() {
+        return candidates;
+    }
+
+    public void setCandidates(List<User> candidates) {
+        this.candidates = candidates;
+    }
 }

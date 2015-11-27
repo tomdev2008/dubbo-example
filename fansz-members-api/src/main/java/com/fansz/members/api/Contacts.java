@@ -59,14 +59,14 @@ public interface Contacts {
 
     /**
      * 搜索好友接口
-     * @param criteria 查询条件
+     * @param str 查询条件
      * @return resp 返回对象
      */
     @POST
     @Path("/findnew")
     @Consumes("application/json")
     @Produces("application/json")
-    public Response findFriend(CriteriaParam criteria);
+    public Response findFriend(String str);
 
     /**
      * 获取用户详细信息接口

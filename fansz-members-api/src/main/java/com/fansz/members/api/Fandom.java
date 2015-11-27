@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.fansz.members.model.param.FandomFollowers;
+import com.fansz.members.model.param.FandomParam;
 import com.fansz.members.model.param.GetPostsParam;
 
 import javax.ws.rs.*;
@@ -20,7 +21,7 @@ public interface Fandom {
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response addFandom(FormDataMultiPart form);
+    public Response addFandom(FandomParam form);
 
     /**
      * 获取圈子信息接口

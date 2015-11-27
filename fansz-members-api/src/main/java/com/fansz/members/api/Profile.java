@@ -24,14 +24,14 @@ public interface Profile {
 
     /**
      * 获取我所有关注的fandom接口
-     * @param form 个人头像信息
+     * @param avater 个人头像信息
      * @return resp 返回对象
      */
     @POST
     @Path("/avatar")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    public Response setAvatar(FormDataMultiPart form);
+    public Response setAvatar(String avater);
 
     /**
      * 获取我所有关注的fandom接口
