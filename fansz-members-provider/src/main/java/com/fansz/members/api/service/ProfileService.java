@@ -1,7 +1,5 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.model.Fandom;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.ModifyProfilePara;
 
 import javax.validation.Valid;

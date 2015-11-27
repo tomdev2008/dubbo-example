@@ -4,7 +4,6 @@ import com.fansz.members.api.service.PostService;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.Post;
 import com.fansz.members.model.param.PagePara;
 import com.fansz.members.model.param.PostParam;
 import org.springframework.beans.factory.annotation.Autowired;

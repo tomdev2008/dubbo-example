@@ -1,6 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.User;
+
 import com.fansz.members.model.param.ChangePasswordPara;
 import com.fansz.members.model.param.RegisterPara;
 import com.fansz.members.model.param.ResetPasswordParam;

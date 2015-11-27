@@ -5,7 +5,6 @@ import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.ChangePasswordPara;
 import com.fansz.members.model.param.RegisterPara;
 import com.fansz.members.model.param.ResetPasswordParam;

@@ -43,7 +43,7 @@
     <dubbo:service interface="com.fansz.members.api.AuthApi" ref="userService" validation="false" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.Account" ref="accountProvider" validation="false" timeout="2000"
+    <dubbo:service interface="com.fansz.members.api.AccountApi" ref="accountProvider" validation="false" timeout="2000"
                    connections="100"/>
 
     <dubbo:service interface="com.fansz.members.api.Category" ref="categoryProvider" validation="false" timeout="2000"

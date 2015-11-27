@@ -1,15 +1,10 @@
 package com.fansz.members.api.provider;
 
-import com.fansz.members.api.Category;
 import com.fansz.members.api.service.CategoryService;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.Fandom;
-import com.fansz.members.model.Post;
-import com.fansz.members.model.SubCategory;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.FandomFollowers;
 import com.fansz.members.model.param.FandomParam;
 import com.fansz.members.model.param.GetPostsParam;

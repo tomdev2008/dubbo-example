@@ -6,6 +6,7 @@ import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
 import com.fansz.members.model.User;
 import com.fansz.members.model.param.CriteriaParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;

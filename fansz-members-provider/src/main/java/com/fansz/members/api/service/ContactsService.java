@@ -4,7 +4,6 @@ import com.fansz.members.model.User;
 import com.fansz.members.model.param.CriteriaParam;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.List;
 
 /**

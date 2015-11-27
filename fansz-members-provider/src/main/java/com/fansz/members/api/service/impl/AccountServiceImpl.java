@@ -3,8 +3,6 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.MessageService;
 import com.fansz.members.api.utils.IdentifyCodeGenerator;
-import com.fansz.members.model.IdentifyCode;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.RegisterPara;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;

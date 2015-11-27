@@ -1,8 +1,5 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.model.Category;
-import com.fansz.members.model.SubCategory;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.CategoryParam;
 import org.springframework.stereotype.Service;
 

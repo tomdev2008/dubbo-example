@@ -13,7 +13,8 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/fansz_social?useUnicode=true&amp;characterEncoding=utf-8" userId="fansz_dev"
+                        connectionURL="jdbc:mysql://192.168.88.2:3306/fansz?useUnicode=true&amp;characterEncoding=utf-8"
+                        userId="fansz_dev"
                         password="fansz_dev"/>
 
         <javaModelGenerator targetPackage="com.fansz.members.api.entity"
@@ -27,13 +28,13 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator  targetPackage="com.fansz.members.api.repository"
+        <javaClientGenerator targetPackage="com.fansz.members.api.repository"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
 
-        <table tableName="T_USER" domainObjectName="UserEntity2"
+        <table tableName="connects_member_profile" domainObjectName="UserEntity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
@@ -41,5 +42,35 @@
                                 replaceString=""/>-->
         </table>
 
+
+        <table tableName="connects_member_relation" domainObjectName="UserRelationEntity"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_fandom" domainObjectName="Fandom"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_member_post_fandom" domainObjectName="FandomPostEntity"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_member_post_comment" domainObjectName="PostCommentEntity"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="feeds_member_post_like" domainObjectName="FandomPostLikeEntity"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
+
+        <table tableName="member_album" domainObjectName="UserAlbum"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>

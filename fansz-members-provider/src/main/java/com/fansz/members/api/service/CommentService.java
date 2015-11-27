@@ -1,7 +1,5 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.model.Comment;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.CommentPagePara;
 import com.fansz.members.model.param.CommentPara;
 import org.springframework.stereotype.Service;

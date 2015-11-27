@@ -3,8 +3,6 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.StringUtils;
-import com.fansz.members.model.Fandom;
-import com.fansz.members.model.User;
 import com.fansz.members.model.param.ModifyProfilePara;
 import com.fansz.members.model.param.UsersInfoParam;
 import org.springframework.beans.factory.annotation.Autowired;
