@@ -1,5 +1,7 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.api.entity.UserEntity;
+
 import javax.validation.Valid;
 import java.util.List;
 
@@ -8,29 +10,17 @@ import java.util.List;
  */
 public interface ContactsService {
 
-    void addFriend(
-            String id,
-            String followId) ;
+    void addFriend(String id, String followId);
 
-    void removeFriend(
-            String id,
-            String friendId);
+    void removeFriend(String id, String friendId);
 
-    List<User> getFriends(
-            String id);
+    List<UserEntity> getFriends(String id);
 
-    List<User> findFriend(
-            String id,
-            CriteriaParam criteria);
+    List<UserEntity> findFriend(String uid);
 
-    List<User> getCandidates(
-            String id);
+    List<UserEntity> getCandidates(String id);
 
-    void acceptFriend(
-            String id,
-            String followId);
+    void acceptFriend(String id, String followId);
 
-    User getFriend(
-            String myId,
-            String id);
+    UserEntity getFriend(String myId, String id);
 }

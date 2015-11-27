@@ -4,6 +4,9 @@ import com.fansz.appservice.persistence.domain.Post;
 import com.fansz.appservice.persistence.domain.User;
 import com.fansz.appservice.resource.param.PagePara;
 import com.fansz.appservice.resource.param.PostParam;
+import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.UserEntity;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
@@ -14,26 +17,25 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 public interface PostService {
-    Post addPost( User user, PostParam postParam) throws IOException;
+    FandomPostEntity addPost(UserEntity user, PostParam postParam) throws IOException;
 
     void removePost(String id);
 
-    Post getPost(
-            User user,
+    FandomPostEntity getPost(
+            UserEntity user,
             String id);
 
-    void likePost(User user, String id);
+    void likePost(UserEntity user, String id);
 
-    void unlikePost(User user, String id);
+    void unlikePost(UserEntity user, String id);
 
-    List<Post> getFriendPosts(
-            User user,
-            @NotEmpty(message = "error.postId.empty")
+    List<FandomPostEntity> getFriendPosts(
+            UserEntity user,
             String friendId);
 
-    List<Post> getFriendsPosts(
-            User user,
-            PagePara pagePara);
+    List<FandomPostEntity> getFriendsPosts(
+            UserEntity user,
+            PageBounds pagePara);
 
-    List<Post> getAllFandomPosts(User user, PagePara pagePara);
+    List<FandomPostEntity> getAllFandomPosts(UserEntity user, PageBounds pagePara);
 }

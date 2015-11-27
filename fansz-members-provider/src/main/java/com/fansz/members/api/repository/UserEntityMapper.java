@@ -20,7 +20,7 @@ public interface UserEntityMapper {
 
     int isExists(String mobile);
 
-    int updatePassword(@Param("uid") Long uid, @Param("newPassword")String  newPassword);
+    int updatePassword(@Param("uid") Long uid, @Param("newPassword") String newPassword);
 
     UserEntity findByMoblie(String mobile);
 }

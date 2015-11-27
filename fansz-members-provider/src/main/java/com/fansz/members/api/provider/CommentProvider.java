@@ -5,8 +5,13 @@ import com.fansz.members.api.service.CommentService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.ErrorParser;
 import com.fansz.members.api.utils.StringUtils;
+<<<<<<< HEAD
 import com.fansz.members.model.comment.CommentPagePara;
 import com.fansz.members.model.comment.CommentParam;
+=======
+import com.fansz.members.model.param.CommentPagePara;
+import com.fansz.members.model.param.CommentPara;
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

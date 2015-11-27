@@ -3,12 +3,19 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.UserApi;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.ProfileService;
+<<<<<<< HEAD
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.param.NullResult;
 import com.fansz.members.model.param.UserInfoResult;
 import com.fansz.members.model.user.ModifyProfileParam;
 import com.fansz.members.model.user.QueryUserParam;
 import org.springframework.beans.BeanUtils;
+=======
+import com.fansz.members.api.utils.ErrorMessage;
+import com.fansz.members.api.utils.StringUtils;
+import com.fansz.members.model.param.ModifyProfilePara;
+import com.fansz.members.model.param.UsersInfoParam;
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

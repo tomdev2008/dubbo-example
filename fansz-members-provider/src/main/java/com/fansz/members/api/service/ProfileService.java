@@ -1,10 +1,14 @@
 package com.fansz.members.api.service;
 
+<<<<<<< HEAD
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.friendship.FocusedFandomResult;
 import com.fansz.members.model.user.FriendResult;
 import com.fansz.members.model.user.ModifyProfileParam;
+=======
+import com.fansz.members.model.param.ModifyProfilePara;
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 
 import java.io.IOException;
 import java.io.InputStream;

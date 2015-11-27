@@ -10,19 +10,18 @@ import com.fansz.members.model.account.ChangePasswordParam;
 import com.fansz.members.model.account.RegisterParam;
 import com.fansz.members.model.account.ResetPasswordParam;
 import com.fansz.members.tools.SecurityTools;
+import com.fansz.members.api.utils.IdentifyCodeGenerator;
+import com.fansz.members.model.param.RegisterPara;
 import lombok.extern.log4j.Log4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
  * Created by root on 15-11-3.
  */
 @Service
-@Log4j
 public class AccountServiceImpl implements AccountService {
 
     private Logger logger= LoggerFactory.getLogger(AccountServiceImpl.class);

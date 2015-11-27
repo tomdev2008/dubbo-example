@@ -2,7 +2,12 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.utils.StringUtils;
+<<<<<<< HEAD
 import com.fansz.members.model.fandom.PostsQueryParam;
+=======
+import com.fansz.members.model.param.FandomParam;
+import com.fansz.members.model.param.GetPostsParam;
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

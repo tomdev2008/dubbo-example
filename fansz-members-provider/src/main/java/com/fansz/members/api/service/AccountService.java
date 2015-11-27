@@ -4,12 +4,9 @@ import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.account.ChangePasswordParam;
 import com.fansz.members.model.account.RegisterParam;
 import com.fansz.members.model.account.ResetPasswordParam;
-import org.springframework.validation.annotation.Validated;
-
 /**
  * Created by root on 15-11-3.
  */
-@Validated
 public interface AccountService {
 
     public UserEntity register(RegisterParam registerParam);

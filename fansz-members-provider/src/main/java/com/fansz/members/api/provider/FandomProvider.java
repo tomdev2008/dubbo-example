@@ -1,14 +1,23 @@
 package com.fansz.members.api.provider;
 
+<<<<<<< HEAD
 import com.fansz.members.api.FandomApi;
+=======
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import com.fansz.members.api.service.CategoryService;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.ErrorMessage;
 import com.fansz.members.api.utils.StringUtils;
+<<<<<<< HEAD
 import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.fandom.FandomFollowers;
 import com.fansz.members.model.fandom.PostsQueryParam;
+=======
+import com.fansz.members.model.param.FandomFollowers;
+import com.fansz.members.model.param.FandomParam;
+import com.fansz.members.model.param.GetPostsParam;
+>>>>>>> 959ccc6f288736da7023f3bbfd307fdceab3a9c3
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
