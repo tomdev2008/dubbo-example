@@ -6,6 +6,7 @@ import javax.ws.rs.core.Response;
 /**
  * Created by root on 15-11-26.
  */
+@Path("/contacts")
 public interface ContactsApi {
 
     /**

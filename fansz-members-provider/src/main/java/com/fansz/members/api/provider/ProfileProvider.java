@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class ProfileProvider implements ProfileApi {
 
 
-    @Autowired
+    //@Autowired
     private ProfileService profileService;
 
     /**

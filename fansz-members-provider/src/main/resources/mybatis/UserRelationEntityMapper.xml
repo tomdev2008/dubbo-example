@@ -19,14 +19,14 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.BIGINT">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
       delete from connects_member_relation where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserRelationEntity">
         insert into connects_member_relation (my_member_id, freind_member_id,relation_status)
         values (#{myMemberId,jdbcType=BIGINT}, #{freindMemberId,jdbcType=BIGINT},#{relationStatus,jdbcType=VARCHAR})
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
@@ -55,7 +55,7 @@
                 #{relationStatus,jdbcType=VARCHAR},
             </if>
         </trim>
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>

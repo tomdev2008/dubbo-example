@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @MapperScan
-@Service
 public interface FandomFollowEntityMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -22,4 +21,7 @@ public interface FandomFollowEntityMapper {
     int updateByPrimaryKey(FandomFollowEntity record);
 
     List<FandomFollowEntity> selectBySelective(FandomFollowEntity record);
+
+    List<Long> findFandomsByUserId(Long id);
+
 }

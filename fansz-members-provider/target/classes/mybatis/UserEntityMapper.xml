@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fansz.members.api.repository.UserEntityMapper">
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.UserEntity">
-        <id column="id" jdbcType="INTEGER" property="id"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="loginname" jdbcType="VARCHAR" property="loginname"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -21,61 +21,58 @@
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, 
     profile_createtime, profile_updatetime, member_type, member_status
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from connects_member_profile
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Long">
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
-  </select>
+    </select>
 
-<<<<<<< HEAD
     <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
         select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
-    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.user.UserInfoResult">
+    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.profile.UserInfoResult">
         select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-=======
-  <select id="getFandomFollowers" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="getFandomFollowers" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,
     profile_createtime, profile_updatetime, member_type, member_status
     from feeds_member_fandom fandom, connects_member_profile profile
     where fandom.member_id = profile.id
-    and   fandom.fandom_id = #{id,jdbcType=INTEGER}
+    and   fandom.fandom_id = #{id,jdbcType=BIGINT}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
->>>>>>> origin/zz
-    delete from connects_member_profile
-    where id = #{id,jdbcType=INTEGER}
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from connects_member_profile where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserEntity">
-    insert into connects_member_profile (id, sn, loginname, 
-      password, mobile, email, 
-      nickname, gender, birthday, 
-      member_avatar, profile_createtime, profile_updatetime, 
-      member_type, member_status)
-    values (#{id,jdbcType=INTEGER}, #{sn,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, 
-      #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, 
-      #{memberAvatar,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP}, #{profileUpdatetime,jdbcType=TIMESTAMP}, 
-      #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
-  </insert>
+        insert into connects_member_profile (sn, loginname,
+        password, mobile, email,
+        nickname, gender, birthday,
+        member_avatar, profile_createtime, profile_updatetime,
+        member_type, member_status)
+        values (#{sn,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR},
+        #{memberAvatar,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP},
+        #{profileUpdatetime,jdbcType=TIMESTAMP},
+        #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
     <insert id="insertSelective" parameterType="com.fansz.members.api.entity.UserEntity">
         insert into connects_member_profile
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="sn != null">
                 sn,
             </if>
@@ -117,9 +114,6 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                #{id,jdbcType=INTEGER},
-            </if>
             <if test="sn != null">
                 #{sn,jdbcType=VARCHAR},
             </if>
@@ -160,7 +154,11 @@
                 #{memberStatus,jdbcType=VARCHAR},
             </if>
         </trim>
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.UserEntity">
         update connects_member_profile
         <set>
@@ -204,7 +202,7 @@
                 member_status = #{memberStatus,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByUidSelective" parameterType="com.fansz.members.api.entity.UserEntity">
@@ -265,18 +263,20 @@
       profile_updatetime = #{profileUpdatetime,jdbcType=TIMESTAMP},
       member_type = #{memberType,jdbcType=VARCHAR},
       member_status = #{memberStatus,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
     <update id="updatePassword" parameterType="com.fansz.members.model.account.ChangePasswordParam">
      update connects_member_profile
      set password=#{newPassword,jdbcType=VARCHAR}
-     wher id=#{uid,jdbcType=INTEGER}
+     wher id=#{uid,jdbcType=BIGINT}
    </update>
 
-    <select id="findFandomById" parameterType="java.lang.Long" resultType="FocusedFandomResult">
-        select a.id,a.fandom_name title,a.fandom_avatar_url avatarUr,a.fandom_intro description,a.fandom_parent_id categoryId
-        from feeds_member_fandom a,feeds_fandom b
-        where a.member_id=#{id,jdbcType=LONG} and a.fandom_id=b.id
+    <select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from connects_member_profile
+        where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
+
 </mapper>

@@ -22,14 +22,14 @@
     profile_createtime, profile_updatetime, member_type, member_status
   </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.BIGINT" resultMap="BaseResultMap">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from connects_member_profile
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.BIGINT">
+    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Long">
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
@@ -41,7 +41,7 @@
         select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR}
     </select>
 
-    <select id="getFandomFollowers" parameterType="java.lang.BIGINT" resultMap="BaseResultMap">
+    <select id="getFandomFollowers" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,
     profile_createtime, profile_updatetime, member_type, member_status
@@ -50,7 +50,7 @@
     and   fandom.fandom_id = #{id,jdbcType=BIGINT}
   </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.BIGINT">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from connects_member_profile where id = #{id,jdbcType=BIGINT}
   </delete>
 
@@ -66,7 +66,7 @@
         #{memberAvatar,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP},
         #{profileUpdatetime,jdbcType=TIMESTAMP},
         #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
@@ -154,7 +154,7 @@
                 #{memberStatus,jdbcType=VARCHAR},
             </if>
         </trim>
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>

@@ -12,6 +12,7 @@ import com.fansz.members.tools.VerifyCodeGenerator;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.util.Properties;
 /**
  * 验证码服务层实现
  */
+@Service
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Autowired

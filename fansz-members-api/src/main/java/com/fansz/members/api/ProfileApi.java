@@ -12,7 +12,7 @@ import javax.ws.rs.*;
 /**
  * 用户服务
  */
-@Path("/users")
+@Path("/profiles")
 public interface ProfileApi {
     /**
      * 获得当前登陆用户的详细信息

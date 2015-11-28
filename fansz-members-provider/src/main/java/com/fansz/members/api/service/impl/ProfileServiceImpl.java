@@ -2,6 +2,7 @@ package com.fansz.members.api.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.FandomFollowEntityMapper;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.ProfileService;
@@ -22,17 +23,22 @@ import java.util.List;
  * 配置服务实现层
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED)
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private UserEntityMapper userEntityMapper;
 
+    @Autowired
     private FandomMapper fandomMapper;
+
+    @Autowired
+    private FandomFollowEntityMapper fandomFollowEntityMapper;
 
     @Override
     public UserInfoResult getProfile(String uid) {
-        return userEntityMapper.findByUid(uid);
+
+        //return userEntityMapper.findByUid(uid);
+        return null;
     }
 
     @Override
@@ -48,8 +54,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public List<FocusedFandomResult> getFollowedFandoms(String uid) {
-        UserInfoResult user = userEntityMapper.findByUid(uid);
-        return fandomMapper.findFandomByIds(user.get);
+        //UserEntity user = fandomFollowEntityMapper.findFandomsByUserId();
+        return null;
+                //fandomMapper.findFandomByIds(user.getId());
     }
 
     @Override

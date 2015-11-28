@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * 关系服务
  */
+@Path("/relations")
 public interface FriendShipApi {
     /**
      * 获取用户关注的fandoms

@@ -4,9 +4,11 @@
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomMapper.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java
+/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomPostWholeEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRelationEntityMapper.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserAlbumMapper.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/utils/ShortUUIDGenerator.java
+/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/tools/VerifyCodeGenerator.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserAlbumEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostLikeEntityMapper.java
@@ -17,11 +19,10 @@
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomFollowEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ContactsProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java
-/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostWholeEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ContactsServiceImpl.java
-/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/PostCommentEntityMapper.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FriendShipProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/model/VerifyCode.java
+/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/repository/PostCommentEntityMapper.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/CommentProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/model/SmsMessage.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/Main.java
@@ -40,11 +41,11 @@
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/ProfileService.java
+/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomWholeEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/ContactsService.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostLikeEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/PostCommentEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java
-/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomWholeEntity.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java

@@ -15,7 +15,6 @@ import javax.ws.rs.core.Response;
  * 评论接口类
  * Created by root on 15-11-4.
  */
-@Service
 @Component("commentProvider")
 public class CommentProvider implements CommentApi{
 

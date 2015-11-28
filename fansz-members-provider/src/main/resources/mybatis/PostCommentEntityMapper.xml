@@ -14,14 +14,14 @@
     id, post_id, commentator_id, comment_content, comment_time
   </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from feeds_member_post_comment
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from feeds_member_post_comment
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -30,7 +30,7 @@
         insert into feeds_member_post_comment (post_id, commentator_id, comment_content, comment_time)
         values (#{postId,jdbcType=BIGINT}, #{commentatorId,jdbcType=BIGINT},
         #{commentContent,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP})
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
@@ -64,7 +64,7 @@
                 #{commentTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>

@@ -1,131 +1,137 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fansz.members.api.repository.FandomPostEntityMapper" >
-  <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomPostEntity" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="fandom_id" property="fandomId" jdbcType="INTEGER" />
-    <result column="post_content" property="postContent" jdbcType="VARCHAR" />
-    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
-  </resultMap>
+<mapper namespace="com.fansz.members.api.repository.FandomPostEntityMapper">
 
-  <resultMap id="WholeResultMap" type="com.fansz.members.api.entity.FandomPostWholeEntity" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="member_id" property="memberId" jdbcType="INTEGER" />
-    <result column="fandom_id" property="fandomId" jdbcType="INTEGER" />
-    <result column="post_content" property="postContent" jdbcType="VARCHAR" />
-    <result column="post_time" property="postTime" jdbcType="TIMESTAMP" />
-    <result column="likeCount" property="fandomId" jdbcType="INTEGER" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomPostEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="WholeResultMap" type="com.fansz.members.api.model.FandomPostWholeEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="likeCount" property="fandomId" jdbcType="BIGINT"/>
+    </resultMap>
 
 
-  <sql id="Base_Column_List" >
+    <sql id="Base_Column_List">
     id, member_id, fandom_id, post_content, post_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from feeds_member_post_fandom
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_post_fandom
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
-  <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer" >
+    <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
 
-    select
-      <include refid="Base_Column_List" />, likeCount
-    from feeds_member_post_fandom post,
-    (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
-    where post.id = post_count.post_id
-    and   post.fandom_id = #{id,jdbcType=INTEGER}
-    order by post.post_time DESC
-  </select>
+        select
+        <include refid="Base_Column_List"/>, likeCount
+        from feeds_member_post_fandom post,
+        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+        where post.id = post_count.post_id
+        and post.fandom_id = #{id,jdbcType=BIGINT}
+        order by post.post_time DESC
+    </select>
 
-  <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from feeds_member_post_fandom
-    where fandom_id = #{id,jdbcType=INTEGER}
+    <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_post_fandom
+        where fandom_id = #{id,jdbcType=BIGINT}
 
-    select <include refid="Base_Column_List" /> , likeCount
-    from feeds_member_post_fandom post,
-    (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
-    where post.id = post_count.post_id
-    and   post.fandom_id = #{id,jdbcType=INTEGER}
-    order by likeCount DESC
-  </select>
+        select
+        <include refid="Base_Column_List"/>
+        , likeCount
+        from feeds_member_post_fandom post,
+        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+        where post.id = post_count.post_id
+        and post.fandom_id = #{id,jdbcType=BIGINT}
+        order by likeCount DESC
+    </select>
 
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from feeds_member_post_fandom
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
-    insert into feeds_member_post_fandom (id, member_id, fandom_id, 
-      post_content, post_time)
-    values (#{id,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{fandomId,jdbcType=INTEGER}, 
-      #{postContent,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
-    insert into feeds_member_post_fandom
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="memberId != null" >
-        member_id,
-      </if>
-      <if test="fandomId != null" >
-        fandom_id,
-      </if>
-      <if test="postContent != null" >
-        post_content,
-      </if>
-      <if test="postTime != null" >
-        post_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="memberId != null" >
-        #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="fandomId != null" >
-        #{fandomId,jdbcType=INTEGER},
-      </if>
-      <if test="postContent != null" >
-        #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="postTime != null" >
-        #{postTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
+
+    <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        insert into feeds_member_post_fandom (member_id, fandom_id, post_content, post_time)
+        values (#{memberId,jdbcType=BIGINT}, #{fandomId,jdbcType=BIGINT},
+        #{postContent,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        insert into feeds_member_post_fandom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="fandomId != null">
+                fandom_id,
+            </if>
+            <if test="postContent != null">
+                post_content,
+            </if>
+            <if test="postTime != null">
+                post_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                #{memberId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomId != null">
+                #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="postContent != null">
+                #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                #{postTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        update feeds_member_post_fandom
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomId != null">
+                fandom_id = #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="postContent != null">
+                post_content = #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                post_time = #{postTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomPostEntity">
     update feeds_member_post_fandom
-    <set >
-      <if test="memberId != null" >
-        member_id = #{memberId,jdbcType=INTEGER},
-      </if>
-      <if test="fandomId != null" >
-        fandom_id = #{fandomId,jdbcType=INTEGER},
-      </if>
-      <if test="postContent != null" >
-        post_content = #{postContent,jdbcType=VARCHAR},
-      </if>
-      <if test="postTime != null" >
-        post_time = #{postTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomPostEntity" >
-    update feeds_member_post_fandom
-    set member_id = #{memberId,jdbcType=INTEGER},
-      fandom_id = #{fandomId,jdbcType=INTEGER},
+    set member_id = #{memberId,jdbcType=BIGINT},
+      fandom_id = #{fandomId,jdbcType=BIGINT},
       post_content = #{postContent,jdbcType=VARCHAR},
       post_time = #{postTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

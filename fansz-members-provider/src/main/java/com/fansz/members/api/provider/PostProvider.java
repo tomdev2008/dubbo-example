@@ -22,9 +22,6 @@ public class PostProvider implements PostApi{
     @Autowired
     private PostService postService;
 
-    @Autowired
-    private ProfileService profileService;
-
     /**
      * 发帖子接口
      * @param form 帖子信息

@@ -33,7 +33,7 @@ public interface UserEntityMapper {
 
     UserEntity findByMoblie(String mobile);
 
-    UserInfoResult findByUid(String uid);
+    UserEntity findByUid(String uid);
 
     UserEntity findByAccount(String loginAccount);
 

@@ -23,14 +23,14 @@
     <sql id="Base_Column_List">
     id, member_id, fandom_id, post_content, post_time
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from feeds_member_post_fandom
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer">
+    <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
 
         select
         <include refid="Base_Column_List"/>, likeCount
@@ -41,7 +41,7 @@
         order by post.post_time DESC
     </select>
 
-    <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Integer">
+    <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from feeds_member_post_fandom
@@ -58,7 +58,7 @@
     </select>
 
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from feeds_member_post_fandom
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -67,7 +67,7 @@
         insert into feeds_member_post_fandom (member_id, fandom_id, post_content, post_time)
         values (#{memberId,jdbcType=BIGINT}, #{fandomId,jdbcType=BIGINT},
         #{postContent,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
@@ -102,7 +102,7 @@
                 #{postTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
-        <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
