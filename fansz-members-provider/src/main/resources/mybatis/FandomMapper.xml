@@ -3,24 +3,24 @@
 <mapper namespace="com.fansz.members.api.repository.FandomMapper">
 
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
-        <result column="fandom_parent_id" property="fandomParentId" jdbcType="INTEGER"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="INTEGER"/>
-        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="INTEGER"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
+        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="ResultMap" type="com.fansz.members.api.entity.FandomEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
-        <result column="fandom_parent_id" property="fandomParentId" jdbcType="INTEGER"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="INTEGER"/>
-        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="INTEGER"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
+        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
-        <result column="followCount" property="followCount" jdbcType="INTEGER"/>
+        <result column="followCount" property="followCount" jdbcType="BIGINT"/>
     </resultMap>
 
 
@@ -33,26 +33,26 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_fandom
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from feeds_fandom
-        where fandom_parent_id = #{id,jdbcType=INTEGER}
+        where fandom_parent_id = #{id,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from feeds_fandom
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomEntity">
         insert into feeds_fandom (fandom_name,fandom_parent_id,fandom_admin_id,
         fandom_creator_id,fandom_avatar_url,fandom_intro)
-        values (#{fandomName,jdbcType=VARCHAR}, #{fandomParentId,jdbcType=INTEGER},
-        #{fandomAdminId,jdbcType=INTEGER}, #{fandomCreatorId,jdbcType=INTEGER}, #{fandomAvatarUrl,jdbcType=VARCHAR},
+        values (#{fandomName,jdbcType=VARCHAR}, #{fandomParentId,jdbcType=BIGINT},
+        #{fandomAdminId,jdbcType=BIGINT}, #{fandomCreatorId,jdbcType=BIGINT}, #{fandomAvatarUrl,jdbcType=VARCHAR},
         #{fandomIntro,jdbcType=VARCHAR})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
@@ -86,13 +86,13 @@
                 #{fandomName,jdbcType=VARCHAR},
             </if>
             <if test="fandomParentId != null">
-                #{fandomParentId,jdbcType=INTEGER},
+                #{fandomParentId,jdbcType=BIGINT},
             </if>
             <if test="fandomAdminId != null">
-                #{fandomAdminId,jdbcType=INTEGER},
+                #{fandomAdminId,jdbcType=BIGINT},
             </if>
             <if test="fandomCreatorId != null">
-                #{fandomCreatorId,jdbcType=INTEGER},
+                #{fandomCreatorId,jdbcType=BIGINT},
             </if>
             <if test="fandomAvatarUrl != null">
                 #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -112,13 +112,13 @@
                 fandom_name = #{fandomName,jdbcType=VARCHAR},
             </if>
             <if test="fandomParentId != null">
-                fandom_parent_id = #{fandomParentId,jdbcType=INTEGER},
+                fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
             <if test="fandomAdminId != null">
-                fandom_admin_id = #{fandomAdminId,jdbcType=INTEGER},
+                fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
             </if>
             <if test="fandomCreatorId != null">
-                fandom_creator_id = #{fandomCreatorId,jdbcType=INTEGER},
+                fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -127,18 +127,18 @@
                 fandom_intro = #{fandomIntro,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomEntity">
     update feeds_fandom
     set fandom_name = #{fandomName,jdbcType=VARCHAR},
-      fandom_parent_id = #{fandomParentId,jdbcType=INTEGER},
-      fandom_admin_id = #{fandomAdminId,jdbcType=INTEGER},
-      fandom_creator_id = #{fandomCreatorId,jdbcType=INTEGER},
+      fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
+      fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
+      fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
       fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
       fandom_intro = #{fandomIntro,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
     <select id="getRecommendFandom" resultMap="ResultMap" parameterType="java.lang.Integer">
@@ -153,5 +153,14 @@
 
     </select>
 
+    <select id="findFandomByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_fandom a
+        where a.id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>

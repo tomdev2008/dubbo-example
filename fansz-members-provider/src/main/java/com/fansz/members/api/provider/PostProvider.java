@@ -111,7 +111,7 @@ public class PostProvider implements PostApi{
 //        Post post = null;
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //
 //            PostParam postParam = new PostParam(form);
 //
@@ -146,7 +146,7 @@ public class PostProvider implements PostApi{
 //        Vector<ErrorMessage> errorMessages = new Vector<>();
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //            postService.removePost(id);
 //        } catch (IllegalArgumentException iae) {
 //            errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -174,7 +174,7 @@ public class PostProvider implements PostApi{
 //        Post post = null;
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //            post = postService.getPost(appUserDetails.getUser(), id);
 //        } catch (IllegalArgumentException iae) {
 //            errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -202,7 +202,7 @@ public class PostProvider implements PostApi{
 //        Vector<ErrorMessage> errorMessages = new Vector<>();
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //            postService.likePost(appUserDetails.getUser(), id);
 //        } catch (IllegalArgumentException iae) {
 //            errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -229,7 +229,7 @@ public class PostProvider implements PostApi{
 //        Vector<ErrorMessage> errorMessages = new Vector<>();
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //            postService.unlikePost(appUserDetails.getUser(), id);
 //        } catch (IllegalArgumentException iae) {
 //            errorMessages.add(errorParser.phase(iae.getMessage()));
@@ -257,7 +257,7 @@ public class PostProvider implements PostApi{
 //        List<Post> posts = null;
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //
 //            posts = postService.getFriendPosts(appUserDetails.getUser(), friendId);
 //        } catch (IllegalArgumentException iae) {
@@ -288,7 +288,7 @@ public class PostProvider implements PostApi{
 //
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //
 //            posts = postService.getFriendsPosts(appUserDetails.getUser(), pagePara);
 //
@@ -321,7 +321,7 @@ public class PostProvider implements PostApi{
 //
 //        try {
 //            AppUserDetails appUserDetails = (AppUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//            Assert.notNull(appUserDetails, "error.user.null");
+//            Assert.notNull(appUserDetails, "error.profile.null");
 //
 //            posts = postService.getAllFandomPosts(appUserDetails.getUser(), pagePara);
 //

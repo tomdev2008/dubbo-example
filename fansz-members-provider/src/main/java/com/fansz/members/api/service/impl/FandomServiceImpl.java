@@ -63,7 +63,7 @@ public class FandomServiceImpl implements FandomService {
 
         FandomInfoResult fandom = new FandomInfoResult();
         //fandom.setPosts(posts);
-//        fandom.setFollowed(fandomMapper.isfollowedFandom(user, id));
+//        fandom.setFollowed(fandomMapper.isfollowedFandom(profile, id));
         return fandom;
     }
 
@@ -102,7 +102,7 @@ public class FandomServiceImpl implements FandomService {
 //        // 设置我是否已关注这些fandom
 //        if (null != fandoms)
 //        {
-//            User userNew = profileMapper.getProfile(user.getId());
+//            User userNew = profileMapper.getProfile(profile.getId());
 //            if (null != userNew && !StringUtils.isEmpty(userNew.getFandomIds()))
 //            {
 //                StringUtils.setFollowedFandom(fandoms, userNew.getFandomIds());
@@ -147,10 +147,10 @@ public class FandomServiceImpl implements FandomService {
 //        // 设置我是否已关注这些fandom
 //        if (null != fandoms)
 //        {
-//            User user = profileMapper.getProfile(id);
-//            if (null != user && !StringUtils.isEmpty(user.getFandomIds()))
+//            User profile = profileMapper.getProfile(id);
+//            if (null != profile && !StringUtils.isEmpty(profile.getFandomIds()))
 //            {
-//                StringUtils.setFollowedFandom(fandoms, user.getFandomIds());
+//                StringUtils.setFollowedFandom(fandoms, profile.getFandomIds());
 //            }
 //        }
 

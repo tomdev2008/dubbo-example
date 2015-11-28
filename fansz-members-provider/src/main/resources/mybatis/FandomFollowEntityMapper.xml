@@ -3,9 +3,9 @@
 <mapper namespace="com.fansz.members.api.repository.FandomFollowEntityMapper">
 
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomFollowEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
-        <result column="fandom_id" property="fandomId" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
         <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
@@ -17,7 +17,7 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_member_fandom
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="selectBySelective" resultMap="BaseResultMap"
@@ -27,13 +27,13 @@
         from feeds_member_fandom
         where
         <if test="id != null">
-            id = #{id,jdbcType=INTEGER}
+            id = #{id,jdbcType=BIGINT}
         </if>
         <if test="memberId != null">
-            member_id = #{memberId,jdbcType=INTEGER},
+            member_id = #{memberId,jdbcType=BIGINT},
         </if>
         <if test="fandomId != null">
-            fandom_id = #{fandomId,jdbcType=INTEGER},
+            fandom_id = #{fandomId,jdbcType=BIGINT},
         </if>
         <if test="joinTime != null">
             join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -42,12 +42,12 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from feeds_member_fandom
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomFollowEntity">
         insert into feeds_member_fandom (member_id, fandom_id,join_time)
-        values (#{memberId,jdbcType=INTEGER}, #{fandomId,jdbcType=INTEGER},#{joinTime,jdbcType=TIMESTAMP})
+        values (#{memberId,jdbcType=BIGINT}, #{fandomId,jdbcType=BIGINT},#{joinTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -68,10 +68,10 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="memberId != null">
-                #{memberId,jdbcType=INTEGER},
+                #{memberId,jdbcType=BIGINT},
             </if>
             <if test="fandomId != null">
-                #{fandomId,jdbcType=INTEGER},
+                #{fandomId,jdbcType=BIGINT},
             </if>
             <if test="joinTime != null">
                 #{joinTime,jdbcType=TIMESTAMP},
@@ -85,24 +85,24 @@
         update feeds_member_fandom
         <set>
             <if test="memberId != null">
-                member_id = #{memberId,jdbcType=INTEGER},
+                member_id = #{memberId,jdbcType=BIGINT},
             </if>
             <if test="fandomId != null">
-                fandom_id = #{fandomId,jdbcType=INTEGER},
+                fandom_id = #{fandomId,jdbcType=BIGINT},
             </if>
             <if test="joinTime != null">
                 join_time = #{joinTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomFollowEntity">
     update feeds_member_fandom
-    set member_id = #{memberId,jdbcType=INTEGER},
-      fandom_id = #{fandomId,jdbcType=INTEGER},
+    set member_id = #{memberId,jdbcType=BIGINT},
+      fandom_id = #{fandomId,jdbcType=BIGINT},
       join_time = #{joinTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
 </mapper>

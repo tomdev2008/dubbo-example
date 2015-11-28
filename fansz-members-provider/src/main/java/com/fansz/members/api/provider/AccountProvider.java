@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Component("accountProvider")
 public class AccountProvider implements AccountApi {
 
-
     @Autowired
     private AccountService accountService;
 
@@ -30,12 +29,8 @@ public class AccountProvider implements AccountApi {
     public CommonResult<RegisterResult> register(RegisterParam registerParam) {
         CommonResult<RegisterResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
-        try {
-            RegisterResult registerResult = accountService.register(registerParam);
-            result.setResult(registerResult);
-        } catch (Exception e) {
-            result.setStatus(Constants.FAIL);
-        }
+        RegisterResult registerResult = accountService.register(registerParam);
+        result.setResult(registerResult);
         return result;
     }
 
@@ -47,12 +42,8 @@ public class AccountProvider implements AccountApi {
      */
     public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
-        try {
-            accountService.resetPassword(resetPasswordParam);
-        } catch (Exception iae) {
-            result.setStatus("1");
-        }
+        result.setStatus(Constants.SUCCESS);
+        accountService.resetPassword(resetPasswordParam);
         return result;
     }
 
@@ -65,23 +56,37 @@ public class AccountProvider implements AccountApi {
      */
     public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus("0");
-
-        try {
-            accountService.changePassword(changePasswordParam);
-        } catch (Exception iae) {
-            result.setStatus("1");
-        }
+        result.setStatus(Constants.SUCCESS);
+        accountService.changePassword(changePasswordParam);
         return result;
     }
 
+    /**
+     * 用户登陆
+     *
+     * @param loginParam
+     * @return
+     */
     @Override
     public CommonResult<LoginResult> login(LoginParam loginParam) {
-        return null;
+        CommonResult<LoginResult> result = new CommonResult<>();
+        result.setStatus(Constants.SUCCESS);
+        LoginResult loginResult = accountService.login(loginParam);
+        result.setResult(loginResult);
+        return result;
     }
 
+    /**
+     * 用户退出登陆
+     *
+     * @param uid 修改密码对象
+     * @return
+     */
     @Override
     public CommonResult<NullResult> logout(String uid) {
-        return null;
+        CommonResult<NullResult> result = new CommonResult<>();
+        result.setStatus(Constants.SUCCESS);
+        accountService.logout(uid);
+        return result;
     }
 }

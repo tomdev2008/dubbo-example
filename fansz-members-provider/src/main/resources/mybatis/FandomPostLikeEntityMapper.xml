@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fansz.members.api.repository.FandomPostLikeEntityMapper">
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomPostLikeEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
-        <result column="post_id" property="postId" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="post_id" property="postId" jdbcType="BIGINT"/>
         <result column="like_time" property="likeTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
@@ -16,17 +16,17 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_member_post_like
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from feeds_member_post_like
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostLikeEntity">
         insert into feeds_member_post_like (member_id, post_id, like_time)
-        values (#{memberId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER},#{likeTime,jdbcType=TIMESTAMP})
+        values (#{memberId,jdbcType=BIGINT}, #{postId,jdbcType=BIGINT},#{likeTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -47,10 +47,10 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="memberId != null">
-                #{memberId,jdbcType=INTEGER},
+                #{memberId,jdbcType=BIGINT},
             </if>
             <if test="postId != null">
-                #{postId,jdbcType=INTEGER},
+                #{postId,jdbcType=BIGINT},
             </if>
             <if test="likeTime != null">
                 #{likeTime,jdbcType=TIMESTAMP},
@@ -65,23 +65,23 @@
         update feeds_member_post_like
         <set>
             <if test="memberId != null">
-                member_id = #{memberId,jdbcType=INTEGER},
+                member_id = #{memberId,jdbcType=BIGINT},
             </if>
             <if test="postId != null">
-                post_id = #{postId,jdbcType=INTEGER},
+                post_id = #{postId,jdbcType=BIGINT},
             </if>
             <if test="likeTime != null">
                 like_time = #{likeTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomPostLikeEntity">
     update feeds_member_post_like
-    set member_id = #{memberId,jdbcType=INTEGER},
-      post_id = #{postId,jdbcType=INTEGER},
+    set member_id = #{memberId,jdbcType=BIGINT},
+      post_id = #{postId,jdbcType=BIGINT},
       like_time = #{likeTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

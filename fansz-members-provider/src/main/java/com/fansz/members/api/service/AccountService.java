@@ -2,6 +2,8 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.ChangePasswordParam;
+import com.fansz.members.model.account.LoginParam;
+import com.fansz.members.model.account.LoginResult;
 import com.fansz.members.model.account.RegisterParam;
 
 /**
@@ -25,4 +27,19 @@ public interface AccountService {
      * @param resetPasswordParam 重置密码对象
      */
     void resetPassword(com.fansz.members.model.account.ResetPasswordParam resetPasswordParam);
+
+    /**
+     * 用户登陆
+     *
+     * @param loginParam
+     * @return
+     */
+    LoginResult login(LoginParam loginParam);
+
+    /**
+     * 退出登陆
+     *
+     * @param uid
+     */
+    void logout(String uid);
 }

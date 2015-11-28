@@ -1,4 +1,4 @@
-package com.fansz.members.model.user;
+package com.fansz.members.model.profile;
 
 import java.util.Date;
 
@@ -6,8 +6,6 @@ import java.util.Date;
  * Created by allan on 15/11/26.
  */
 public class UserInfoResult {
-    private Long id;
-
     private String sn;
 
     private String loginname;
@@ -34,13 +32,6 @@ public class UserInfoResult {
 
     private String memberStatus;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getSn() {
         return sn;

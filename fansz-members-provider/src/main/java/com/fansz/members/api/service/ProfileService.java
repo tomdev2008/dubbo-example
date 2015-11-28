@@ -1,9 +1,9 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.user.UserInfoResult;
-import com.fansz.members.model.user.FriendResult;
-import com.fansz.members.model.user.ModifyProfileParam;
+import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.model.profile.FriendResult;
+import com.fansz.members.model.profile.ModifyProfileParam;
 
 import java.util.List;
 

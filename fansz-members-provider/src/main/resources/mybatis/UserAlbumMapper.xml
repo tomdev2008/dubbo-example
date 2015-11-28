@@ -3,8 +3,8 @@
 <mapper namespace="com.fansz.members.api.repository.UserAlbumMapper">
 
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.UserAlbumEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="member_id" property="memberId" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
         <result column="source" property="source" jdbcType="VARCHAR"/>
         <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP"/>
@@ -14,22 +14,22 @@
     id, member_id, img_url, source, upload_time
   </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.BIGINT">
         select
         <include refid="Base_Column_List"/>
         from member_album
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.BIGINT">
     delete from member_album
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserAlbumEntity">
         insert into member_album (member_id, img_url,
         source, upload_time)
-        values (#{memberId,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR},
+        values (#{memberId,jdbcType=BIGINT}, #{imgUrl,jdbcType=VARCHAR},
         #{source,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
@@ -54,7 +54,7 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="memberId != null">
-                #{memberId,jdbcType=INTEGER},
+                #{memberId,jdbcType=BIGINT},
             </if>
             <if test="imgUrl != null">
                 #{imgUrl,jdbcType=VARCHAR},
@@ -75,7 +75,7 @@
         update member_album
         <set>
             <if test="memberId != null">
-                member_id = #{memberId,jdbcType=INTEGER},
+                member_id = #{memberId,jdbcType=BIGINT},
             </if>
             <if test="imgUrl != null">
                 img_url = #{imgUrl,jdbcType=VARCHAR},
@@ -87,15 +87,15 @@
                 upload_time = #{uploadTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.UserAlbumEntity">
     update member_album
-    set member_id = #{memberId,jdbcType=INTEGER},
+    set member_id = #{memberId,jdbcType=BIGINT},
       img_url = #{imgUrl,jdbcType=VARCHAR},
       source = #{source,jdbcType=VARCHAR},
       upload_time = #{uploadTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

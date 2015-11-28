@@ -5,13 +5,11 @@ import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.user.ModifyProfileParam;
-import com.fansz.members.model.user.QueryUserParam;
-import com.fansz.members.model.user.UserInfoResult;
+import com.fansz.members.model.profile.ModifyProfileParam;
+import com.fansz.members.model.profile.QueryProfileParam;
+import com.fansz.members.model.profile.UserInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * 配置服务提供者
@@ -30,7 +28,7 @@ public class ProfileProvider implements ProfileApi {
      * @return
      */
     @Override
-    public CommonResult<UserInfoResult> getProfile(QueryUserParam queryUserParam) {
+    public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
         CommonResult<UserInfoResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
         try {

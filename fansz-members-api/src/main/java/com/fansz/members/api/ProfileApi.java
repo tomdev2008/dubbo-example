@@ -3,9 +3,9 @@ package com.fansz.members.api;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.user.UserInfoResult;
-import com.fansz.members.model.user.ModifyProfileParam;
-import com.fansz.members.model.user.QueryUserParam;
+import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.model.profile.ModifyProfileParam;
+import com.fansz.members.model.profile.QueryProfileParam;
 
 import javax.ws.rs.*;
 
@@ -23,10 +23,10 @@ public interface ProfileApi {
     @Path("/show")
     @GET
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    public CommonResult<UserInfoResult> getProfile(QueryUserParam queryUserParam);
+     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
 
     /**
-     * 修改当前用户的配置
+     * 修改当前用户的信息
      *
      * @param modifyProfileParam
      * @return
@@ -35,6 +35,7 @@ public interface ProfileApi {
     @Path("/modify")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
+     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
+
 
 }

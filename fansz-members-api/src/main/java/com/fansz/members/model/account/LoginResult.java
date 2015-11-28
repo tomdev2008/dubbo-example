@@ -13,7 +13,7 @@ public class LoginResult implements Serializable {
 
     private long expiresAt;//accessToken的失效时间,为距离1970年1月1日0点的ms
 
-    private long uid;
+    private String uid;
 
     public String getAccessToken() {
         return accessToken;
@@ -39,11 +39,11 @@ public class LoginResult implements Serializable {
         this.expiresAt = expiresAt;
     }
 
-    public long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 }

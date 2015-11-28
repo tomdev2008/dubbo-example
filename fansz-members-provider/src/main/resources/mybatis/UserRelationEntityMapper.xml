@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fansz.members.api.repository.UserRelationEntityMapper">
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.UserRelationEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="my_member_id" property="myMemberId" jdbcType="INTEGER"/>
-        <result column="freind_member_id" property="freindMemberId" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="my_member_id" property="myMemberId" jdbcType="BIGINT"/>
+        <result column="freind_member_id" property="freindMemberId" jdbcType="BIGINT"/>
         <result column="relation_status" property="relationStatus" jdbcType="VARCHAR"/>
     </resultMap>
 
@@ -12,20 +12,20 @@
     id, my_member_id, freind_member_id, relation_status
   </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>
         from connects_member_relation
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-      delete from connects_member_relation where id = #{id,jdbcType=INTEGER}
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.BIGINT">
+      delete from connects_member_relation where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserRelationEntity">
         insert into connects_member_relation (my_member_id, freind_member_id,relation_status)
-        values (#{myMemberId,jdbcType=INTEGER}, #{freindMemberId,jdbcType=INTEGER},#{relationStatus,jdbcType=VARCHAR})
+        values (#{myMemberId,jdbcType=BIGINT}, #{freindMemberId,jdbcType=BIGINT},#{relationStatus,jdbcType=VARCHAR})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -46,10 +46,10 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="myMemberId != null">
-                #{myMemberId,jdbcType=INTEGER},
+                #{myMemberId,jdbcType=BIGINT},
             </if>
             <if test="freindMemberId != null">
-                #{freindMemberId,jdbcType=INTEGER},
+                #{freindMemberId,jdbcType=BIGINT},
             </if>
             <if test="relationStatus != null">
                 #{relationStatus,jdbcType=VARCHAR},
@@ -64,24 +64,24 @@
         update connects_member_relation
         <set>
             <if test="myMemberId != null">
-                my_member_id = #{myMemberId,jdbcType=INTEGER},
+                my_member_id = #{myMemberId,jdbcType=BIGINT},
             </if>
             <if test="freindMemberId != null">
-                freind_member_id = #{freindMemberId,jdbcType=INTEGER},
+                freind_member_id = #{freindMemberId,jdbcType=BIGINT},
             </if>
             <if test="relationStatus != null">
                 relation_status = #{relationStatus,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.UserRelationEntity">
     update connects_member_relation
-    set my_member_id = #{myMemberId,jdbcType=INTEGER},
-      freind_member_id = #{freindMemberId,jdbcType=INTEGER},
+    set my_member_id = #{myMemberId,jdbcType=BIGINT},
+      freind_member_id = #{freindMemberId,jdbcType=BIGINT},
       relation_status = #{relationStatus,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 
 </mapper>

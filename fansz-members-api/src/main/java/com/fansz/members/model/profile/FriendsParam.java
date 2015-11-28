@@ -1,4 +1,4 @@
-package com.fansz.members.model.user;
+package com.fansz.members.model.profile;
 
 
 import java.io.Serializable;

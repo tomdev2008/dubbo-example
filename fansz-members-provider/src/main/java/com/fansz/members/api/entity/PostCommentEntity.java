@@ -3,37 +3,37 @@ package com.fansz.members.api.entity;
 import java.util.Date;
 
 public class PostCommentEntity {
-    private Integer id;
+    private Long id;
 
-    private Integer postId;
+    private Long postId;
 
-    private Integer commentatorId;
+    private Long commentatorId;
 
     private String commentContent;
 
     private Date commentTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(Integer postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 
-    public Integer getCommentatorId() {
+    public Long getCommentatorId() {
         return commentatorId;
     }
 
-    public void setCommentatorId(Integer commentatorId) {
+    public void setCommentatorId(Long commentatorId) {
         this.commentatorId = commentatorId;
     }
 

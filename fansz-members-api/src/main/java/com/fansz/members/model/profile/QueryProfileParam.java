@@ -1,9 +1,9 @@
-package com.fansz.members.model.user;
+package com.fansz.members.model.profile;
 
 /**
- * Created by allan on 15/11/26.
+ * 查询登陆用户详细信息
  */
-public class QueryUserParam {
+public class QueryProfileParam {
     private String uid;
 
     private String accessToken;

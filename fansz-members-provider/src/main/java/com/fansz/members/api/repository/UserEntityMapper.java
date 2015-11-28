@@ -2,7 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.user.UserInfoResult;
+import com.fansz.members.model.profile.UserInfoResult;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Service;
@@ -35,9 +35,11 @@ public interface UserEntityMapper {
 
     UserInfoResult findByUid(String uid);
 
-    List<FocusedFandomResult> findFandomById(Long id);
+    UserEntity findByAccount(String loginAccount);
+
 
     List<UserInfoResult> findByMobiles(List<String> mobiles);
+
     List<UserEntity> getFandomFollowers(Integer id);
 
 }

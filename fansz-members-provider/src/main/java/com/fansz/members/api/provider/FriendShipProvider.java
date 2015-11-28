@@ -6,8 +6,8 @@ import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.friendship.FocusedFandomParam;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.user.FriendResult;
-import com.fansz.members.model.user.FriendsParam;
+import com.fansz.members.model.profile.FriendResult;
+import com.fansz.members.model.profile.FriendsParam;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

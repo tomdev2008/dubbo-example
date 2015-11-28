@@ -4,8 +4,8 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.friendship.FocusedFandomParam;
 import com.fansz.members.model.friendship.FocusedFandomResult;
-import com.fansz.members.model.user.FriendResult;
-import com.fansz.members.model.user.FriendsParam;
+import com.fansz.members.model.profile.FriendResult;
+import com.fansz.members.model.profile.FriendsParam;
 
 import javax.ws.rs.*;
 import java.util.List;

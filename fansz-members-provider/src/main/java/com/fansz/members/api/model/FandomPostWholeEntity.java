@@ -1,4 +1,4 @@
-package com.fansz.members.api.entity;
+package com.fansz.members.api.model;
 
 import java.util.Date;
 

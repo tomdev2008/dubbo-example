@@ -3,9 +3,9 @@ package com.fansz.members.api.entity;
 import java.util.Date;
 
 public class UserAlbumEntity {
-    private Integer id;
+    private Long id;
 
-    private Integer memberId;
+    private Long memberId;
 
     private String imgUrl;
 
@@ -13,19 +13,19 @@ public class UserAlbumEntity {
 
     private Date uploadTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 

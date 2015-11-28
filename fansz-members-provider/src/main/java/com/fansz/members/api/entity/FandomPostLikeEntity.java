@@ -3,35 +3,35 @@ package com.fansz.members.api.entity;
 import java.util.Date;
 
 public class FandomPostLikeEntity {
-    private Integer id;
+    private Long id;
 
-    private Integer memberId;
+    private Long memberId;
 
-    private Integer postId;
+    private Long postId;
 
     private Date likeTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
-    public Integer getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(Integer postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 

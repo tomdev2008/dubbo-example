@@ -2,158 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c02aafb6-1a82-48b1-9959-afb412bdd98a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/ApplicationExceptionMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/PageParam.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomByCategory.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/NormalFandomPara.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/friendship/UsersInfoParam.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/post/GetPostsParam.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomFollowEntity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostWholeEntity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomWholeEntity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomFollowEntityMapper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/tools/VerifyCodeGenerator.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/UserParameters.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/CategoryParam.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/FandomFollowers.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/FandomParam.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/PagePara.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/RegisterPara.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/RefreshParameters.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/RefreshResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/UserParameters.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/comment/CommentPagePara.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/CategoryParam.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/FandomFollowers.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/FandomParam.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/NullResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/PagePara.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/RegisterPara.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/param/UserInfoResult.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-api/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/MessageService.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/MessageService.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/fansz-members-provider/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/comment/CommentPagePara.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/comment/CommentPagedParam.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/NullResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/NullResult.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/UserInfoResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/UserInfoResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/AccountApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/AccountApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/CommentApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/CommentApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/FandomApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/FandomApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/PostApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/PostApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/ProfileApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/ProfileApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/VerifyCodeApi.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/api/VerifyCodeApi.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/extension/MembersSerialOptimizerImpl.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/extension/MembersSerialOptimizerImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/CommonResult.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/CommonResult.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/account/LoginResult.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/account/LoginResult.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/FandomFollowers.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/FandomFollowers.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/FandomParam.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/FandomParam.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/PostsQueryParam.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/fandom/PostsQueryParam.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/friendship/FocusedFandomResult.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/friendship/FocusedFandomResult.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/post/PostInfoResult.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/post/PostInfoResult.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/user/FriendResult.class" afterPath="$PROJECT_DIR$/fansz-members-api/target/classes/com/fansz/members/model/user/FriendResult.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/members-api-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/fansz-members-api/target/members-api-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/AccountProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/AccountProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/CommentProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/CommentProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/ContactsProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/ContactsProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/FriendShipProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/FriendShipProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/PostProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/PostProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/ProfileProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/ProfileProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/VerifyCodeProvider.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/provider/VerifyCodeProvider.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/FandomMapper.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/FandomMapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/FandomPostEntityMapper.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/FandomPostEntityMapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserAlbumMapper.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserAlbumMapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserEntityMapper.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserEntityMapper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserRepository.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/repository/UserRepository.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/CommentService.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/CommentService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/ContactsService.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/ContactsService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/FandomService.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/FandomService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/PostService.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/PostService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/ProfileService.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/ProfileService.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/AccountServiceImpl.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/AccountServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/CommentServiceImpl.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/CommentServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/FandomServiceImpl.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/FandomServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/PostServiceImpl.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/PostServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/ProfileServiceImpl.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/service/impl/ProfileServiceImpl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/utils/Constants.class" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/com/fansz/members/api/utils/Constants.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/members-provider-1.0-SNAPSHOT-bin.zip" afterPath="$PROJECT_DIR$/fansz-members-provider/target/members-provider-1.0-SNAPSHOT-bin.zip" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/members-provider-1.0-SNAPSHOT.jar" afterPath="$PROJECT_DIR$/fansz-members-provider/target/members-provider-1.0-SNAPSHOT.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/FriendResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/FriendResult.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/FriendsParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/FriendsParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/ModifyProfileParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/ModifyProfileParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/QueryUserParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/QueryProfileParam.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/UserInfoResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/UserInfoResult.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostWholeEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomPostWholeEntity.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomWholeEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomWholeEntity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" afterPath="$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/members-api.iml" afterPath="$PROJECT_DIR$/fansz-members-api/members-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/AccountApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/AccountApi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/CommentApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/CommentApi.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ContactsApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ContactsApi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FriendShipApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FriendShipApi.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ProfileApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ProfileApi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/VerifyCodeApi.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/VerifyCodeApi.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/MembersSerialOptimizerImpl.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/MembersSerialOptimizerImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomFollowers.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomFollowers.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/PostsQueryParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/PostsQueryParam.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginResult.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/friendship/FocusedFandomResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/friendship/FocusedFandomResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/post/PostInfoResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/post/PostInfoResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/FriendResult.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/FriendResult.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/fansz-members-api/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/fansz-members-api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/fansz-members-api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" afterPath="$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/members-consumer.iml" afterPath="$PROJECT_DIR$/fansz-members-consumer/members-consumer.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/src/main/java/com/fansz/members/consumer/Main.java" afterPath="$PROJECT_DIR$/fansz-members-consumer/src/main/java/com/fansz/members/consumer/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/src/main/resources/applicationContext-consumer.xml" afterPath="$PROJECT_DIR$/fansz-members-consumer/src/main/resources/applicationContext-consumer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/target/classes/applicationContext-consumer.xml" afterPath="$PROJECT_DIR$/fansz-members-consumer/target/classes/applicationContext-consumer.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-consumer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/fansz-members-consumer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/fansz-members-provider.iml" afterPath="$PROJECT_DIR$/fansz-members-provider/fansz-members-provider.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/members-provider.iml" afterPath="$PROJECT_DIR$/fansz-members-provider/members-provider.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/mybatis-generator-config.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/mybatis-generator-config.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/pom.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/pom.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostEntity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostLikeEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostLikeEntity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/PostCommentEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/PostCommentEntity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserAlbumEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserAlbumEntity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserRelationEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserRelationEntity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/CommentProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/CommentProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ContactsProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ContactsProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FriendShipProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FriendShipProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/VerifyCodeProvider.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/VerifyCodeProvider.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomMapper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostEntityMapper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostEntityMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserAlbumMapper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserAlbumMapper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRelationEntityMapper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRelationEntityMapper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRepository.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRepository.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/CommentService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/CommentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ContactsService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ContactsService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/PostService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/PostService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ProfileService.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ProfileService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/CommentServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/CommentServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/VerifyCodeServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/VerifyCodeServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/JsonHelper.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/JsonHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/applicationContext-provider.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/applicationContext-provider.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserAlbumMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserAlbumMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserRelationEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserRelationEntityMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/spring/spring-dubbox.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/spring/spring-dubbox.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/applicationContext-provider.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/applicationContext-provider.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/FandomMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/FandomMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/FandomPostEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/FandomPostEntityMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/UserEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/target/classes/mybatis/UserEntityMapper.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/maven-archiver/pom.properties" afterPath="$PROJECT_DIR$/fansz-members-provider/target/maven-archiver/pom.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/fansz-members-provider/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterPath="$PROJECT_DIR$/fansz-members-provider/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-sms-sender/fansz-sms-sender.iml" afterPath="$PROJECT_DIR$/fansz-sms-sender/fansz-sms-sender.iml" />
     </list>
     <ignored path="fansz-members.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -188,111 +75,7 @@
     <favorites_list name="fansz-members" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="FandomFollowEntityMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.1538463">
-              <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding>
-                <marker date="1448625962000" expanded="true" signature="812:937" placeholder="select from ..feeds_member_fandom..." />
-                <marker date="1448625962000" expanded="true" signature="1689:1758" placeholder="delete from ..." />
-                <marker date="1448625962000" expanded="true" signature="1864:2075" placeholder="insert into feeds_member_fandom..." />
-                <marker date="1448625962000" expanded="true" signature="3252:3702" placeholder="update feeds..." />
-                <marker date="1448625962000" expanded="true" signature="3822:4033" placeholder="update feeds..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FandomMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1448617337000" expanded="true" signature="1858:1966" placeholder="select from ..feeds_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="2078:2199" placeholder="select from ..feeds_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="2287:2349" placeholder="delete from ..." />
-                <marker date="1448617337000" expanded="true" signature="2448:2851" placeholder="insert into feeds_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="4412:5173" placeholder="update feeds..." />
-                <marker date="1448617337000" expanded="true" signature="5284:5694" placeholder="update feeds..." />
-                <marker date="1448617337000" expanded="true" signature="5805:6079" placeholder="select , fol..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FandomPostEntityMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1448617337000" expanded="true" signature="1419:1539" placeholder="select from ..feeds_member_post_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="1656:1975" placeholder="select , lik..." />
-                <marker date="1448617337000" expanded="true" signature="2091:2217" placeholder="select from ..feeds_member_post_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="2223:2532" placeholder="select , lik..." />
-                <marker date="1448617337000" expanded="true" signature="2621:2695" placeholder="delete from ..." />
-                <marker date="1448617337000" expanded="true" signature="2798:3061" placeholder="insert into feeds_member_post_fandom..." />
-                <marker date="1448617337000" expanded="true" signature="4226:4720" placeholder="update feeds..." />
-                <marker date="1448617337000" expanded="true" signature="4835:5105" placeholder="update feeds..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FandomPostLikeEntityMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1448531721000" expanded="true" signature="788:906" placeholder="select from ..feeds_member_post_like..." />
-                <marker date="1448531721000" expanded="true" signature="993:1065" placeholder="delete from ..." />
-                <marker date="1448531721000" expanded="true" signature="1172:1382" placeholder="insert into feeds_member_post_like..." />
-                <marker date="1448531721000" expanded="true" signature="2380:2759" placeholder="update feeds..." />
-                <marker date="1448531721000" expanded="true" signature="2878:3088" placeholder="update feeds..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PostCommentEntityMapper.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1448531721000" expanded="true" signature="908:1029" placeholder="select from ..feeds_member_post_comment..." />
-                <marker date="1448531721000" expanded="true" signature="1116:1191" placeholder="delete from ..." />
-                <marker date="1448531721000" expanded="true" signature="1295:1577" placeholder="insert into feeds_member_post_comment..." />
-                <marker date="1448531721000" expanded="true" signature="2781:3303" placeholder="update feeds..." />
-                <marker date="1448531721000" expanded="true" signature="3419:3708" placeholder="update feeds..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserAlbumMapper.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserAlbumMapper.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6163194">
-              <caret line="91" column="4" selection-start-line="91" selection-start-column="4" selection-end-line="91" selection-end-column="4" />
-              <folding>
-                <marker date="1448638036000" expanded="true" signature="880:998" placeholder="select from ..member_album..." />
-                <marker date="1448638036000" expanded="true" signature="1089:1151" placeholder="delete from ..." />
-                <marker date="1448638036000" expanded="true" signature="1259:1477" placeholder="insert into member_album..." />
-                <marker date="1448638036000" expanded="true" signature="1568:1591" placeholder="select LAST_..." />
-                <marker date="1448638036000" expanded="true" signature="2756:2779" placeholder="select LAST_..." />
-                <marker date="1448638036000" expanded="true" signature="2931:3484" placeholder="update membe..." />
-                <marker date="1448638036000" expanded="true" signature="3606:3853" placeholder="update membe..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -314,28 +97,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ContactsService.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/CommentServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/CommentService.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/ProfileService.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/CatergoryServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomFollowers.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/param/CategoryParam.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/NullResult.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/UserInfoResult.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/NormalFandomPara.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/friendship/UsersInfoParam.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/comment/CommentPagePara.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/PageParam.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/comment/CommentPagedParam.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/PostService.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java" />
-        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/MembersSerialOptimizerImpl.java" />
         <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/PostsQueryParam.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/JsonHelper.java" />
@@ -343,7 +104,6 @@
         <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/CommentApi.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/CommentProvider.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ContactsProvider.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/CategoryService.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java" />
         <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/post/GetPostsParam.java" />
@@ -352,7 +112,6 @@
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java" />
         <option value="$PROJECT_DIR$/fansz-members-consumer/src/main/resources/applicationContext-consumer.xml" />
         <option value="$PROJECT_DIR$/fansz-members-consumer/src/main/java/com/fansz/members/consumer/Main.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml" />
         <option value="$MAVEN_REPOSITORY$/com/alibaba/dubbo/2.8.4/dubbo-2.8.4-sources.jar!/com/alibaba/dubbo/rpc/RpcException.java" />
         <option value="$MAVEN_REPOSITORY$/com/alibaba/dubbo/2.8.4/dubbo-2.8.4-sources.jar!/com/alibaba/dubbo/rpc/protocol/rest/RpcExceptionMapper.java" />
         <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/ApplicationExceptionMapper.java" />
@@ -360,11 +119,35 @@
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/VerifyCodeProvider.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/tools/VerifyCodeGenerator.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/applicationContext-provider.xml" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/VerifyCodeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginResult.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomWholeEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserRelationEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserAlbumEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/PostCommentEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostLikeEntity.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostEntity.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserRelationEntityMapper.xml" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserAlbumMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/QueryUserParam.java" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/UserInfoResult.java" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/user/ModifyProfileParam.java" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/QueryProfileParam.java" />
+        <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ProfileApi.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomMapper.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml" />
       </list>
     </option>
   </component>
@@ -646,6 +429,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fansz-members" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fansz-members" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fansz-members-provider" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -674,11 +483,11 @@
       <recent name="$PROJECT_DIR$/fansz-members-provider/src/main/resources/conf" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.fansz.members.api.model" />
       <recent name="com.fansz.members.model.friendship" />
       <recent name="com.fansz.members.model.fandom" />
       <recent name="com.fansz.members.model.user" />
       <recent name="com.fansz.members.model.post" />
-      <recent name="com.fansz.members.model" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.fansz.sms.sender" />
@@ -1215,12 +1024,12 @@
       <workItem from="1448349411179" duration="2198000" />
       <workItem from="1448360293154" duration="64000" />
       <workItem from="1448500691148" duration="4716000" />
-      <workItem from="1448602408628" duration="24733000" />
+      <workItem from="1448602408628" duration="30940000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97152000" />
+    <option name="totallyTimeSpent" value="103359000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1233,7 +1042,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="722" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1241,13 +1050,13 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32876712" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4032" sideWeight="0.509693" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.115508884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.115508884" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.715873" sideWeight="0.49030694" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.9777778" sideWeight="0.49676898" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.08723748" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21163167" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1268,7 +1077,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4032" sideWeight="0.509693" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15347335" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.115508884" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1284,10 +1093,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.715873" sideWeight="0.49030694" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.51428574" sideWeight="0.49676898" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24798061" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.9777778" sideWeight="0.49676898" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1987076" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32852563" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -1343,269 +1152,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/JsonHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39534885">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33222592">
-          <caret line="25" column="27" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33222592">
-          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/CommentProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4119601">
-          <caret line="50" column="49" selection-start-line="50" selection-start-column="49" selection-end-line="50" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#844#845#0" expanded="true" />
-            <element signature="e#871#872#0" expanded="true" />
-            <element signature="e#1034#1035#0" expanded="true" />
-            <element signature="e#1061#1062#0" expanded="true" />
-            <element signature="e#1229#1230#0" expanded="true" />
-            <element signature="e#1255#1256#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ContactsProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33222592">
-          <caret line="117" column="0" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8305648">
-          <caret line="42" column="1" selection-start-line="42" selection-start-column="1" selection-end-line="42" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomInfoResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14119601">
-          <caret line="5" column="29" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33222592">
-          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
-          <folding>
-            <element signature="e#387#388#0" expanded="false" />
-            <element signature="e#416#417#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38870433">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/post/GetPostsParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42358804">
-          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
-          <folding>
-            <element signature="e#337#338#0" expanded="false" />
-            <element signature="e#371#372#0" expanded="false" />
-            <element signature="e#399#400#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostEntityMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48006645">
-          <caret line="21" column="56" selection-start-line="21" selection-start-column="56" selection-end-line="21" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33222592">
-          <caret line="41" column="75" selection-start-line="41" selection-start-column="75" selection-end-line="41" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8189369">
-          <caret line="29" column="4" selection-start-line="29" selection-start-column="4" selection-end-line="29" selection-end-column="4" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-consumer/src/main/java/com/fansz/members/consumer/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50830567">
-          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-consumer/src/main/resources/applicationContext-consumer.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38368055">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ProfileApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22591361">
-          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/CommentApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77408636">
-          <caret line="44" column="49" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35049835">
-          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomFollowEntityMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16943522">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/MembersSerialOptimizerImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39534885">
-          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.049833886">
-          <caret line="55" column="59" selection-start-line="55" selection-start-column="53" selection-end-line="55" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/AccountApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31063122">
-          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25415283">
-          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/VerifyCodeApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6777409">
-          <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4150944">
-          <caret line="151" column="21" selection-start-line="147" selection-start-column="8" selection-end-line="151" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/alibaba/dubbo/2.8.4/dubbo-2.8.4-sources.jar!/com/alibaba/dubbo/rpc/RpcException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.31727573">
-          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/alibaba/dubbo/2.8.4/dubbo-2.8.4-sources.jar!/com/alibaba/dubbo/rpc/protocol/rest/RpcExceptionMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22591361">
-          <caret line="28" column="58" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/spring/spring-dubbox.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.265625">
-          <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/CommonResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19767442">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/extension/ApplicationExceptionMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1616,38 +1162,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31063122">
-          <caret line="11" column="41" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/tools/VerifyCodeGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
           <folding>
-            <element signature="e#799#800#0" expanded="true" />
-            <element signature="e#835#836#0" expanded="true" />
+            <element signature="e#799#800#0" expanded="false" />
+            <element signature="e#835#836#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomFollowEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11295681">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1671,22 +1193,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19767442">
           <caret line="7" column="53" selection-start-line="7" selection-start-column="53" selection-end-line="7" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31063122">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19767442">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1723,133 +1229,485 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml">
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/AccountService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.1538463">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6893688">
+          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.77408636">
+          <caret line="45" column="29" selection-start-line="45" selection-start-column="29" selection-end-line="45" selection-end-column="29" />
           <folding>
-            <marker date="1448625962000" expanded="true" signature="812:937" placeholder="select from ..feeds_member_fandom..." />
-            <marker date="1448625962000" expanded="true" signature="1689:1758" placeholder="delete from ..." />
-            <marker date="1448625962000" expanded="true" signature="1864:2075" placeholder="insert into feeds_member_fandom..." />
-            <marker date="1448625962000" expanded="true" signature="3252:3702" placeholder="update feeds..." />
-            <marker date="1448625962000" expanded="true" signature="3822:4033" placeholder="update feeds..." />
+            <element signature="e#919#920#0" expanded="false" />
+            <element signature="e#949#950#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml">
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="2.7508307">
+          <caret line="157" column="36" selection-start-line="157" selection-start-column="36" selection-end-line="157" selection-end-column="36" />
           <folding>
-            <marker date="1448617337000" expanded="true" signature="1858:1966" placeholder="select from ..feeds_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="2078:2199" placeholder="select from ..feeds_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="2287:2349" placeholder="delete from ..." />
-            <marker date="1448617337000" expanded="true" signature="2448:2851" placeholder="insert into feeds_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="4412:5173" placeholder="update feeds..." />
-            <marker date="1448617337000" expanded="true" signature="5284:5694" placeholder="update feeds..." />
-            <marker date="1448617337000" expanded="true" signature="5805:6079" placeholder="select , fol..." />
+            <element signature="e#6262#6263#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml">
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/utils/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.59302324">
+          <caret line="21" column="45" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserRepository.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25415283">
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/account/LoginParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33887044">
+          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomWholeEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14119601">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomPostWholeEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19767442">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserRelationEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24817519">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <marker date="1448617337000" expanded="true" signature="1419:1539" placeholder="select from ..feeds_member_post_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="1656:1975" placeholder="select , lik..." />
-            <marker date="1448617337000" expanded="true" signature="2091:2217" placeholder="select from ..feeds_member_post_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="2223:2532" placeholder="select , lik..." />
-            <marker date="1448617337000" expanded="true" signature="2621:2695" placeholder="delete from ..." />
-            <marker date="1448617337000" expanded="true" signature="2798:3061" placeholder="insert into feeds_member_post_fandom..." />
-            <marker date="1448617337000" expanded="true" signature="4226:4720" placeholder="update feeds..." />
-            <marker date="1448617337000" expanded="true" signature="4835:5105" placeholder="update feeds..." />
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#244#245#0" expanded="true" />
+            <element signature="e#278#279#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+            <element signature="e#341#342#0" expanded="true" />
+            <element signature="e#374#375#0" expanded="true" />
+            <element signature="e#424#425#0" expanded="true" />
+            <element signature="e#468#469#0" expanded="true" />
+            <element signature="e#507#508#0" expanded="true" />
+            <element signature="e#544#545#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml">
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserAlbumEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7390511">
+          <caret line="27" column="35" selection-start-line="27" selection-start-column="35" selection-end-line="27" selection-end-column="35" />
           <folding>
-            <marker date="1448531721000" expanded="true" signature="788:906" placeholder="select from ..feeds_member_post_like..." />
-            <marker date="1448531721000" expanded="true" signature="993:1065" placeholder="delete from ..." />
-            <marker date="1448531721000" expanded="true" signature="1172:1382" placeholder="insert into feeds_member_post_like..." />
-            <marker date="1448531721000" expanded="true" signature="2380:2759" placeholder="update feeds..." />
-            <marker date="1448531721000" expanded="true" signature="2878:3088" placeholder="update feeds..." />
+            <element signature="e#254#255#0" expanded="true" />
+            <element signature="e#279#280#0" expanded="true" />
+            <element signature="e#313#314#0" expanded="true" />
+            <element signature="e#341#342#0" expanded="true" />
+            <element signature="e#374#375#0" expanded="true" />
+            <element signature="e#405#406#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml">
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/PostCommentEntity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="1.0857664">
+          <caret line="35" column="40" selection-start-line="35" selection-start-column="40" selection-end-line="35" selection-end-column="40" />
           <folding>
-            <marker date="1448531721000" expanded="true" signature="908:1029" placeholder="select from ..feeds_member_post_comment..." />
-            <marker date="1448531721000" expanded="true" signature="1116:1191" placeholder="delete from ..." />
-            <marker date="1448531721000" expanded="true" signature="1295:1577" placeholder="insert into feeds_member_post_comment..." />
-            <marker date="1448531721000" expanded="true" signature="2781:3303" placeholder="update feeds..." />
-            <marker date="1448531721000" expanded="true" signature="3419:3708" placeholder="update feeds..." />
+            <element signature="e#268#269#0" expanded="true" />
+            <element signature="e#293#294#0" expanded="true" />
+            <element signature="e#327#328#0" expanded="true" />
+            <element signature="e#355#356#0" expanded="true" />
+            <element signature="e#386#387#0" expanded="true" />
+            <element signature="e#415#416#0" expanded="true" />
+            <element signature="e#457#458#0" expanded="true" />
+            <element signature="e#493#494#0" expanded="true" />
+            <element signature="e#531#532#0" expanded="true" />
+            <element signature="e#567#568#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostLikeEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0237226">
+          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
+          <folding>
+            <element signature="e#227#228#0" expanded="true" />
+            <element signature="e#252#253#0" expanded="true" />
+            <element signature="e#286#287#0" expanded="true" />
+            <element signature="e#314#315#0" expanded="true" />
+            <element signature="e#347#348#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
+            <element signature="e#424#425#0" expanded="true" />
+            <element signature="e#464#465#0" expanded="true" />
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#524#525#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomPostEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0857664">
+          <caret line="35" column="35" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+          <folding>
+            <element signature="e#258#259#0" expanded="true" />
+            <element signature="e#283#284#0" expanded="true" />
+            <element signature="e#317#318#0" expanded="true" />
+            <element signature="e#345#346#0" expanded="true" />
+            <element signature="e#378#379#0" expanded="true" />
+            <element signature="e#409#410#0" expanded="true" />
+            <element signature="e#455#456#0" expanded="true" />
+            <element signature="e#495#496#0" expanded="true" />
+            <element signature="e#528#529#0" expanded="true" />
+            <element signature="e#559#560#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserRelationEntityMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4166666">
-          <caret line="48" column="47" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+        <state vertical-scroll-proportion="2.7030652">
+          <caret line="83" column="36" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
           <folding>
-            <marker date="1448638036000" expanded="true" signature="856:986" placeholder="select from ..connects_member_relation..." />
-            <marker date="1448638036000" expanded="true" signature="1079:1149" placeholder="delete from ..." />
-            <marker date="1448638036000" expanded="true" signature="1260:1464" placeholder="insert into connects_member_relation..." />
-            <marker date="1448638036000" expanded="true" signature="1555:1578" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="2632:2655" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="2810:3307" placeholder="update conne..." />
-            <marker date="1448638036000" expanded="true" signature="3428:3672" placeholder="update conne..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6163194">
-          <caret line="272" column="12" selection-start-line="272" selection-start-column="12" selection-end-line="272" selection-end-column="12" />
-          <folding>
-            <marker date="1448638036000" expanded="true" signature="1702:1831" placeholder="select from ..connects_member_profile..." />
-            <marker date="1448638036000" expanded="true" signature="1942:2026" placeholder="select count..connects_member_profile..." />
-            <marker date="1448638036000" expanded="true" signature="2140:2217" placeholder="select * fro..connects_member_profile..." />
-            <marker date="1448638036000" expanded="true" signature="2359:2428" placeholder="select * fro..connects_member_profile..." />
-            <marker date="1448638036000" expanded="true" signature="2545:2876" placeholder="select profi..feeds_member_fandom..." />
-            <marker date="1448638036000" expanded="true" signature="2965:3034" placeholder="delete from ..." />
-            <marker date="1448638036000" expanded="true" signature="3137:3822" placeholder="insert into connects_member_profile..." />
-            <marker date="1448638036000" expanded="true" signature="3913:3936" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="6892:6915" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="7062:8728" placeholder="update conne..." />
-            <marker date="1448638036000" expanded="true" signature="8847:10415" placeholder="update conne..." />
-            <marker date="1448638036000" expanded="true" signature="10528:11249" placeholder="update conne..." />
-            <marker date="1448638036000" expanded="true" signature="11369:11486" placeholder="update conne..." />
-            <marker date="1448638036000" expanded="true" signature="11606:11840" placeholder="select a.id,..feeds_member_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="850:979" placeholder="select from ..connects_member_relation..." />
+            <marker date="1448640195000" expanded="true" signature="1071:1140" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="1251:1453" placeholder="insert into connects_member_relation..." />
+            <marker date="1448640195000" expanded="true" signature="1544:1567" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2619:2642" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2797:3291" placeholder="update conne..." />
+            <marker date="1448640195000" expanded="true" signature="3412:3653" placeholder="update conne..." />
+            <marker date="1448640195000" expanded="true" signature="3652:3653" placeholder="update conne..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserAlbumMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6163194">
-          <caret line="91" column="4" selection-start-line="91" selection-start-column="4" selection-end-line="91" selection-end-column="4" />
+        <state vertical-scroll-proportion="0.055555556">
+          <caret line="71" column="13" selection-start-line="71" selection-start-column="13" selection-end-line="71" selection-end-column="13" />
           <folding>
-            <marker date="1448638036000" expanded="true" signature="880:998" placeholder="select from ..member_album..." />
-            <marker date="1448638036000" expanded="true" signature="1089:1151" placeholder="delete from ..." />
-            <marker date="1448638036000" expanded="true" signature="1259:1477" placeholder="insert into member_album..." />
-            <marker date="1448638036000" expanded="true" signature="1568:1591" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="2756:2779" placeholder="select LAST_..." />
-            <marker date="1448638036000" expanded="true" signature="2931:3484" placeholder="update membe..." />
-            <marker date="1448638036000" expanded="true" signature="3606:3853" placeholder="update membe..." />
+            <marker date="1448640195000" expanded="true" signature="877:994" placeholder="select from ..member_album..." />
+            <marker date="1448640195000" expanded="true" signature="1084:1145" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="1253:1470" placeholder="insert into member_album..." />
+            <marker date="1448640195000" expanded="true" signature="1561:1584" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2748:2771" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2923:3474" placeholder="update membe..." />
+            <marker date="1448640195000" expanded="true" signature="3592:3837" placeholder="update membe..." />
+            <marker date="1448640195000" expanded="true" signature="3836:3837" placeholder="update membe..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/PostCommentEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.7030652">
+          <caret line="96" column="36" selection-start-line="96" selection-start-column="36" selection-end-line="96" selection-end-column="36" />
+          <folding>
+            <marker date="1448640195000" expanded="true" signature="931:1061" placeholder="select from ..feeds_member_post_comment..." />
+            <marker date="1448640195000" expanded="true" signature="1152:1226" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="1336:1586" placeholder="insert into feeds_member_post_comment..." />
+            <marker date="1448640195000" expanded="true" signature="1677:1700" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2934:2957" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="3111:3717" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="3837:4123" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="4122:4123" placeholder="update feeds..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostLikeEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7394636">
+          <caret line="84" column="36" selection-start-line="84" selection-start-column="36" selection-end-line="84" selection-end-column="36" />
+          <folding>
+            <marker date="1448640195000" expanded="true" signature="807:934" placeholder="select from ..feeds_member_post_like..." />
+            <marker date="1448640195000" expanded="true" signature="1025:1096" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="1209:1378" placeholder="insert into feeds_member_post_like..." />
+            <marker date="1448640195000" expanded="true" signature="1469:1492" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2480:2503" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="2660:3104" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="3227:3434" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="3433:3434" placeholder="update feeds..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7394636">
+          <caret line="134" column="36" selection-start-line="134" selection-start-column="36" selection-end-line="134" selection-end-column="36" />
+          <folding>
+            <marker date="1448640195000" expanded="true" signature="1456:1585" placeholder="select from ..feeds_member_post_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="1709:2046" placeholder="select , lik..." />
+            <marker date="1448640195000" expanded="true" signature="2169:2305" placeholder="select from ..feeds_member_post_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="2315:2656" placeholder="select , lik..." />
+            <marker date="1448640195000" expanded="true" signature="2748:2821" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="2930:3161" placeholder="insert into feeds_member_post_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="3252:3275" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="4472:4495" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="4648:5226" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="5345:5612" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="5611:5612" placeholder="update feeds..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomFollowEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.3869731">
+          <caret line="104" column="36" selection-start-line="104" selection-start-column="36" selection-end-line="104" selection-end-column="36" />
+          <folding>
+            <marker date="1448640195000" expanded="true" signature="810:934" placeholder="select from ..feeds_member_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="1683:1751" placeholder="delete from ..." />
+            <marker date="1448640195000" expanded="true" signature="1862:2031" placeholder="insert into feeds_member_fandom..." />
+            <marker date="1448640195000" expanded="true" signature="2122:2145" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="3136:3159" placeholder="select LAST_..." />
+            <marker date="1448640195000" expanded="true" signature="3313:3760" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="3881:4089" placeholder="update feeds..." />
+            <marker date="1448640195000" expanded="true" signature="4088:4089" placeholder="update feeds..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7906977">
+          <caret line="79" column="13" selection-start-line="79" selection-start-column="13" selection-end-line="79" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35049835">
+          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ContactsApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.028239202">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/VerifyCodeApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15282393">
+          <caret line="16" column="32" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/AccountApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4401994">
+          <caret line="63" column="11" selection-start-line="63" selection-start-column="11" selection-end-line="63" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/spring/spring-dubbox.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.2534722">
+          <caret line="15" column="89" selection-start-line="15" selection-start-column="89" selection-end-line="15" selection-end-column="89" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/CommonResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53654486">
+          <caret line="19" column="31" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/PageParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36710963">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/tools/MembersConstant.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14119601">
+          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/UserInfoResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43521595">
+          <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/UserEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.59302324">
+          <caret line="23" column="31" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/QueryProfileParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.50830567">
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/profile/ModifyProfileParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62126243">
+          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/ProfileApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49169436">
+          <caret line="28" column="16" selection-start-line="28" selection-start-column="16" selection-end-line="28" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08471761">
+          <caret line="3" column="19" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="19" />
+          <folding>
+            <element signature="e#1109#1110#0" expanded="true" />
+            <element signature="e#1163#1164#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomFollowEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11295681">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomFollowEntityMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25415283">
+          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/UserEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8229167">
+          <caret line="281" column="0" selection-start-line="281" selection-start-column="0" selection-end-line="281" selection-end-column="0" />
+          <folding>
+            <marker date="1448685392000" expanded="true" signature="1700:1828" placeholder="select from ..connects_member_profile..." />
+            <marker date="1448685392000" expanded="true" signature="1938:2022" placeholder="select count..connects_member_profile..." />
+            <marker date="1448685392000" expanded="true" signature="2136:2213" placeholder="select * fro..connects_member_profile..." />
+            <marker date="1448685392000" expanded="true" signature="2358:2427" placeholder="select * fro..connects_member_profile..." />
+            <marker date="1448685392000" expanded="true" signature="2543:2873" placeholder="select profi..feeds_member_fandom..." />
+            <marker date="1448685392000" expanded="true" signature="2961:3029" placeholder="delete from ..." />
+            <marker date="1448685392000" expanded="true" signature="3132:3817" placeholder="insert into connects_member_profile..." />
+            <marker date="1448685392000" expanded="true" signature="3908:3931" placeholder="select LAST_..." />
+            <marker date="1448685392000" expanded="true" signature="6887:6910" placeholder="select LAST_..." />
+            <marker date="1448685392000" expanded="true" signature="7057:8722" placeholder="update conne..." />
+            <marker date="1448685392000" expanded="true" signature="8841:10409" placeholder="update conne..." />
+            <marker date="1448685392000" expanded="true" signature="10522:11242" placeholder="update conne..." />
+            <marker date="1448685392000" expanded="true" signature="11362:11478" placeholder="update conne..." />
+            <marker date="1448685392000" expanded="true" signature="11477:11478" placeholder="update conne..." />
+            <marker date="1448685392000" expanded="true" signature="11592:11738" placeholder="select from ..connects_member_profile..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/ProfileServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29401994">
+          <caret line="50" column="62" selection-start-line="50" selection-start-column="62" selection-end-line="50" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60465115">
+          <caret line="53" column="40" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5277778">
+          <caret line="155" column="31" selection-start-line="155" selection-start-column="16" selection-end-line="155" selection-end-column="31" />
+          <folding>
+            <marker date="1448685392000" expanded="true" signature="1907:2024" placeholder="select from ..feeds_fandom..." />
+            <marker date="1448685392000" expanded="true" signature="2143:2274" placeholder="select from ..feeds_fandom..." />
+            <marker date="1448685392000" expanded="true" signature="2365:2426" placeholder="delete from ..." />
+            <marker date="1448685392000" expanded="true" signature="2531:2899" placeholder="insert into feeds_fandom..." />
+            <marker date="1448685392000" expanded="true" signature="2990:3013" placeholder="select LAST_..." />
+            <marker date="1448685392000" expanded="true" signature="4685:4708" placeholder="select LAST_..." />
+            <marker date="1448685392000" expanded="true" signature="4856:5738" placeholder="update feeds..." />
+            <marker date="1448685392000" expanded="true" signature="5853:6259" placeholder="update feeds..." />
+            <marker date="1448685392000" expanded="true" signature="6258:6259" placeholder="update feeds..." />
+            <marker date="1448685392000" expanded="true" signature="6374:6682" placeholder="select , fol..." />
+            <marker date="1448685392000" expanded="true" signature="6798:6891" placeholder="select a.id,..feeds_fandom..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/UserEntityMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6893688">
+          <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.14119601">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="29" />
+          <folding />
         </state>
       </provider>
     </entry>

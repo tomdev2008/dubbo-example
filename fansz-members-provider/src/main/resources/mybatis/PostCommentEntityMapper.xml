@@ -3,9 +3,9 @@
 <mapper namespace="com.fansz.members.api.repository.PostCommentEntityMapper">
 
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.PostCommentEntity">
-        <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="post_id" property="postId" jdbcType="INTEGER"/>
-        <result column="commentator_id" property="commentatorId" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="post_id" property="postId" jdbcType="BIGINT"/>
+        <result column="commentator_id" property="commentatorId" jdbcType="BIGINT"/>
         <result column="comment_content" property="commentContent" jdbcType="VARCHAR"/>
         <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -18,17 +18,17 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_member_post_comment
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from feeds_member_post_comment
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.PostCommentEntity">
         insert into feeds_member_post_comment (post_id, commentator_id, comment_content, comment_time)
-        values (#{postId,jdbcType=INTEGER}, #{commentatorId,jdbcType=INTEGER},
+        values (#{postId,jdbcType=BIGINT}, #{commentatorId,jdbcType=BIGINT},
         #{commentContent,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lng.Long" order="AFTER">
             select LAST_INSERT_ID()
@@ -52,10 +52,10 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="postId != null">
-                #{postId,jdbcType=INTEGER},
+                #{postId,jdbcType=BIGINT},
             </if>
             <if test="commentatorId != null">
-                #{commentatorId,jdbcType=INTEGER},
+                #{commentatorId,jdbcType=BIGINT},
             </if>
             <if test="commentContent != null">
                 #{commentContent,jdbcType=VARCHAR},
@@ -73,10 +73,10 @@
         update feeds_member_post_comment
         <set>
             <if test="postId != null">
-                post_id = #{postId,jdbcType=INTEGER},
+                post_id = #{postId,jdbcType=BIGINT},
             </if>
             <if test="commentatorId != null">
-                commentator_id = #{commentatorId,jdbcType=INTEGER},
+                commentator_id = #{commentatorId,jdbcType=BIGINT},
             </if>
             <if test="commentContent != null">
                 comment_content = #{commentContent,jdbcType=VARCHAR},
@@ -85,15 +85,15 @@
                 comment_time = #{commentTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=BIGINT}
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.PostCommentEntity">
     update feeds_member_post_comment
-    set post_id = #{postId,jdbcType=INTEGER},
-      commentator_id = #{commentatorId,jdbcType=INTEGER},
+    set post_id = #{postId,jdbcType=BIGINT},
+      commentator_id = #{commentatorId,jdbcType=BIGINT},
       comment_content = #{commentContent,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

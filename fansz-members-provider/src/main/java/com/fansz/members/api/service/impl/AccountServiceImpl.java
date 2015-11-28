@@ -9,9 +9,7 @@ import com.fansz.members.api.utils.Constants;
 import com.fansz.members.api.utils.VerifyCodeType;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.RegisterResult;
-import com.fansz.members.model.account.ChangePasswordParam;
-import com.fansz.members.model.account.RegisterParam;
-import com.fansz.members.model.account.ResetPasswordParam;
+import com.fansz.members.model.account.*;
 import com.fansz.members.tools.DateTools;
 import com.fansz.members.tools.MembersConstant;
 import com.fansz.members.tools.SecurityTools;
@@ -62,11 +60,11 @@ public class AccountServiceImpl implements AccountService {
         UserEntity user = new UserEntity();
         BeanUtils.copyProperties(registerParam, user);
         user.setSn(UUIDTools.getUniqueId());
-        logger.info("Begin to add user " + user);
+        logger.info("Begin to add profile " + user);
 
         //Save User Info
         userEntityMapper.insertSelective(user);
-        logger.info("user saved:" + user);
+        logger.info("profile saved:" + user);
         RegisterResult registerResult = new RegisterResult();
         registerResult.setUid(user.getSn());
         putSessionInRedis(registerResult);
@@ -127,5 +125,37 @@ public class AccountServiceImpl implements AccountService {
 
         //更新密码
         userEntityMapper.updatePassword(userEntity.getId(), encodedPwd);
+    }
+
+    @Override
+    public LoginResult login(LoginParam loginParam) {
+        UserEntity user = userEntityMapper.findByAccount(loginParam.getLoginAccount());
+        if (user == null) {
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
+        }
+        String pswdInDb = user.getPassword();
+        String encodedPswd = SecurityTools.encode(loginParam.getPassword());
+        if (!pswdInDb.equals(encodedPswd)) {
+            throw new ApplicationException(Constants.PASSWORD_WRONG, "密码错误");
+        }
+
+        String accessKey = UUIDTools.getUniqueId();
+        String refreshKey = UUIDTools.getUniqueId();
+        LoginResult result = new LoginResult();
+        result.setAccessToken(accessKey);
+        result.setRefreshToken(refreshKey);
+        result.setUid(user.getSn());
+        result.setExpiresAt(-1);
+
+        Map<String, String> keyMap = new HashMap<>();
+        keyMap.put("accessKey", accessKey);
+        keyMap.put("refreshKey", refreshKey);
+        redisTemplate.boundHashOps("sessions:" + user.getSn()).putAll(keyMap);
+        return result;
+    }
+
+    @Override
+    public void logout(String uid) {
+        redisTemplate.delete("sessions:" + uid);
     }
 }

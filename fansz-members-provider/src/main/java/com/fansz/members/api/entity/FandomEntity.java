@@ -1,25 +1,25 @@
 package com.fansz.members.api.entity;
 
 public class FandomEntity {
-    private Integer id;
+    private Long id;
 
     private String fandomName;
 
-    private Integer fandomParentId;
+    private Long fandomParentId;
 
-    private Integer fandomAdminId;
+    private Long fandomAdminId;
 
-    private Integer fandomCreatorId;
+    private Long fandomCreatorId;
 
     private String fandomAvatarUrl;
 
     private String fandomIntro;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -31,27 +31,27 @@ public class FandomEntity {
         this.fandomName = fandomName == null ? null : fandomName.trim();
     }
 
-    public Integer getFandomParentId() {
+    public Long getFandomParentId() {
         return fandomParentId;
     }
 
-    public void setFandomParentId(Integer fandomParentId) {
+    public void setFandomParentId(Long fandomParentId) {
         this.fandomParentId = fandomParentId;
     }
 
-    public Integer getFandomAdminId() {
+    public Long getFandomAdminId() {
         return fandomAdminId;
     }
 
-    public void setFandomAdminId(Integer fandomAdminId) {
+    public void setFandomAdminId(Long fandomAdminId) {
         this.fandomAdminId = fandomAdminId;
     }
 
-    public Integer getFandomCreatorId() {
+    public Long getFandomCreatorId() {
         return fandomCreatorId;
     }
 
-    public void setFandomCreatorId(Integer fandomCreatorId) {
+    public void setFandomCreatorId(Long fandomCreatorId) {
         this.fandomCreatorId = fandomCreatorId;
     }
 

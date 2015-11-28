@@ -15,7 +15,9 @@ public class Constants {
 
     public final static String USER_NOT_FOUND = "20001";//用户不存在
 
-    public final static String MOBILE_NOT_FOUND="20002";//手机号码不存在
+    public final static String MOBILE_NOT_FOUND = "20002";//手机号码不存在
 
-    public final static String MOBILE_IS_USED="20003";//手机号码已经被使用
+    public final static String MOBILE_IS_USED = "20003";//手机号码已经被使用
+
+    public final static String PASSWORD_WRONG = "20003";//密码错误
 }

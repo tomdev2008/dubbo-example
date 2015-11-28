@@ -1,4 +1,4 @@
-package com.fansz.members.model.user;
+package com.fansz.members.model.profile;
 
 
 import java.io.Serializable;
@@ -19,6 +19,8 @@ public class ModifyProfileParam implements Serializable{
     private String birthday;
 
     private String gender;
+
+    private String memberAvatar;
 
     public String getUid() {
         return uid;
@@ -58,5 +60,13 @@ public class ModifyProfileParam implements Serializable{
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getMemberAvatar() {
+        return memberAvatar;
+    }
+
+    public void setMemberAvatar(String memberAvatar) {
+        this.memberAvatar = memberAvatar;
     }
 }

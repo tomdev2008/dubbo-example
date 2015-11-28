@@ -75,7 +75,7 @@ public interface ContactsApi {
      * @return resp 返回对象
      */
     @GET
-    @Path("/user/{id}")
+    @Path("/profile/{id}")
     @Produces("application/json")
     public Response getUserProfile(@PathParam("id") String id);
 

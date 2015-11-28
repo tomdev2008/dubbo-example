@@ -1,4 +1,4 @@
-package com.fansz.members.api.entity;
+package com.fansz.members.api.model;
 
 /**
  * Created by root on 15-11-27.

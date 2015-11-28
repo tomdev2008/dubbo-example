@@ -1,35 +1,35 @@
 package com.fansz.members.api.entity;
 
 public class UserRelationEntity {
-    private Integer id;
+    private Long id;
 
-    private Integer myMemberId;
+    private Long myMemberId;
 
-    private Integer freindMemberId;
+    private Long freindMemberId;
 
     private String relationStatus;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMyMemberId() {
+    public Long getMyMemberId() {
         return myMemberId;
     }
 
-    public void setMyMemberId(Integer myMemberId) {
+    public void setMyMemberId(Long myMemberId) {
         this.myMemberId = myMemberId;
     }
 
-    public Integer getFreindMemberId() {
+    public Long getFreindMemberId() {
         return freindMemberId;
     }
 
-    public void setFreindMemberId(Integer freindMemberId) {
+    public void setFreindMemberId(Long freindMemberId) {
         this.freindMemberId = freindMemberId;
     }
 
