@@ -1,7 +1,6 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.friendship.FocusedFandomResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
@@ -29,14 +28,11 @@ public interface UserEntityMapper {
 
     int isExists(String mobile);
 
-    int updatePassword(@Param("uid") Long uid, @Param("newPassword") String newPassword);
+    UserEntity findByMoblie(@Param("mobile") String mobile);
 
-    UserEntity findByMoblie(String mobile);
-
-    UserEntity findByUid(String uid);
+    UserEntity selectByUid(String uid);
 
     UserEntity findByAccount(String loginAccount);
-
 
     List<UserInfoResult> findByMobiles(List<String> mobiles);
 

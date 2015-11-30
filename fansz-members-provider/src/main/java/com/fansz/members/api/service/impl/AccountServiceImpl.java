@@ -1,18 +1,17 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.api.model.VerifyCode;
+import com.fansz.members.api.model.SessionModel;
+import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.api.utils.VerifyCodeType;
 import com.fansz.members.exception.ApplicationException;
-import com.fansz.members.model.RegisterResult;
 import com.fansz.members.model.account.*;
-import com.fansz.members.tools.DateTools;
-import com.fansz.members.tools.MembersConstant;
 import com.fansz.members.tools.SecurityTools;
+import com.fansz.members.tools.StringTools;
 import com.fansz.members.tools.UUIDTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by root on 15-11-3.
+ * 会员服务逻辑实现类
  */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -46,39 +45,52 @@ public class AccountServiceImpl implements AccountService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public RegisterResult register(RegisterParam registerParam) {
+    public UserEntity register(RegisterParam registerParam) {
         //验证码校验
-        VerifyCode verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
+        VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        if (verifyCode == null || verifyCode.getVerifyCode().equals(registerParam.getVerifyCode())) {
+        if (verifyCode == null || !verifyCode.getVerifyCode().equals(registerParam.getVerifyCode())) {
+            throw new ApplicationException(Constants.VERIFY_ERROR, "验证码错误");
+        }
+        if (!verifyCodeService.isValid(verifyCode)) {
             throw new ApplicationException(Constants.VERIFY_ERROR, "验证码错误");
         }
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
+        UserEntity existedUser = userEntityMapper.findByAccount(registerParam.getLoginname());
+        if (existedUser != null) {
+            throw new ApplicationException(Constants.USER_EXISTS, "User exists");
+        }
         //Create User
+        String encodedPwd = SecurityTools.encode(registerParam.getPassword());
         UserEntity user = new UserEntity();
         BeanUtils.copyProperties(registerParam, user);
         user.setSn(UUIDTools.getUniqueId());
+        user.setProfileCreatetime(new Date());
+        user.setProfileUpdatetime(new Date());
+        user.setPassword(encodedPwd);
+        user.setMemberStatus(Constants.USER_STATUS_OK);
         logger.info("Begin to add profile " + user);
 
         //Save User Info
         userEntityMapper.insertSelective(user);
         logger.info("profile saved:" + user);
-        RegisterResult registerResult = new RegisterResult();
-        registerResult.setUid(user.getSn());
-        putSessionInRedis(registerResult);
-        return registerResult;
+
+        return user;
     }
 
-    private void putSessionInRedis(RegisterResult registerResult) {
-        String key = "session:" + registerResult.getUid();
+    private void putSessionInRedis(String accessToken, UserEntity user) {
+        String key = "session:" + accessToken;
         Map<String, String> session = new HashMap<>();
         session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
         session.put("accessToken", UUIDTools.getUniqueId());
         session.put("refreshToken", UUIDTools.getUniqueId());
-        Date expiresAt = DateTools.wrapDate(new Date(), "m+" + MembersConstant.EXPIRED_PERIOD);
-        session.put("expiredAt", String.valueOf(expiresAt.getTime()));
+        session.put("id", String.valueOf(user.getId()));
+        session.put("sn", user.getSn());
+        //Date expiresAt = DateTools.wrapDate(new Date(), "m+" + MembersConstant.EXPIRED_PERIOD);
+        //session.put("expiredAt", String.valueOf(expiresAt.getTime()));
+        session.put("expiredAt", "-1");
         redisTemplate.boundHashOps(key).putAll(session);
     }
 
@@ -92,13 +104,19 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(changePasswordPara.getOldPassword());
 
         //Get User Info
-        UserEntity user = userEntityMapper.selectByPrimaryKey(changePasswordPara.getUid());
-        if (user == null || !user.getPassword().equals(encodedPwd)) {
-            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
+        UserEntity user = userEntityMapper.selectByUid(changePasswordPara.getUid());
+        if (user == null) {
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
+        }
+        if (!user.getPassword().equals(encodedPwd)) {
+            throw new ApplicationException(Constants.PASSWORD_WRONG, "Wrong password");
         }
         //Update New Password
         String encodedNewPwd = SecurityTools.encode(changePasswordPara.getNewPassword());
-        userEntityMapper.updatePassword(changePasswordPara.getUid(), encodedNewPwd);
+        UserEntity changeParam = new UserEntity();
+        changeParam.setId(user.getId());
+        changeParam.setPassword(encodedNewPwd);
+        userEntityMapper.updateByPrimaryKeySelective(changeParam);
     }
 
     /**
@@ -108,28 +126,34 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-        UserEntity userEntity = userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
-        if (userEntity == null) {//用户不存在
+        UserEntity user = userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
+        if (user == null) {//用户不存在
             throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
         }
 
         //验证码校验
-        VerifyCode verifyCode = verifyCodeService.queryVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
+        VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
 
         if (verifyCode == null || !verifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())) {
             throw new ApplicationException(Constants.VERIFY_ERROR, "校验码错误");
+        }
+        if (!verifyCodeService.isValid(verifyCode)) {
+            throw new ApplicationException(Constants.VERIFY_ERROR, "验证码错误");
         }
         //删除验证码
         verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
         String encodedPwd = SecurityTools.encode(resetPasswordParam.getPassword());
 
         //更新密码
-        userEntityMapper.updatePassword(userEntity.getId(), encodedPwd);
+        UserEntity changeParam = new UserEntity();
+        changeParam.setId(user.getId());
+        changeParam.setPassword(encodedPwd);
+        userEntityMapper.updateByPrimaryKeySelective(changeParam);
     }
 
     @Override
     public LoginResult login(LoginParam loginParam) {
-        UserEntity user = userEntityMapper.findByAccount(loginParam.getLoginAccount());
+        UserEntity user = userEntityMapper.findByAccount(loginParam.getLoginname());
         if (user == null) {
             throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
         }
@@ -147,15 +171,28 @@ public class AccountServiceImpl implements AccountService {
         result.setUid(user.getSn());
         result.setExpiresAt(-1);
 
-        Map<String, String> keyMap = new HashMap<>();
-        keyMap.put("accessKey", accessKey);
-        keyMap.put("refreshKey", refreshKey);
-        redisTemplate.boundHashOps("sessions:" + user.getSn()).putAll(keyMap);
+        putSessionInRedis(accessKey, user);
         return result;
     }
 
     @Override
-    public void logout(String uid) {
-        redisTemplate.delete("sessions:" + uid);
+    public void logout(LogoutParam logoutParam) {
+        redisTemplate.delete("sessions:" + logoutParam.getAccessToken());
+    }
+
+    @Override
+    public SessionModel getSession(String accessToken) {
+        String key = "session:" + accessToken;
+        Map<Object, Object> sessionMap = redisTemplate.boundHashOps(key).entries();
+        if (sessionMap != null) {
+            String id = (String) sessionMap.get("id");
+            String sn = (String) sessionMap.get("sn");
+            String refreshToken = (String) sessionMap.get("refreshToken");
+            String lastAccessTime = (String) sessionMap.get("lastAccessTime");
+
+            SessionModel verifyCodeEntity = new SessionModel(Long.valueOf(id), sn, accessToken, refreshToken, Long.valueOf(lastAccessTime));
+            return verifyCodeEntity;
+        }
+        return null;
     }
 }

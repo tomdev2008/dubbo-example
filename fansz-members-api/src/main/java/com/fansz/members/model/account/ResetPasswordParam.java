@@ -1,6 +1,8 @@
 package com.fansz.members.model.account;
 
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -15,6 +17,7 @@ public class ResetPasswordParam implements Serializable {
 
     private String password;
 
+    @JsonProperty("verify_code")
     private String verifyCode;
 
     public String getMobile() {

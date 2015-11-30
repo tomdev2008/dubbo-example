@@ -1,11 +1,17 @@
 package com.fansz.members.model.profile;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by allan on 15/11/26.
+ * 用户详细信息
  */
-public class UserInfoResult {
+public class UserInfoResult implements Serializable {
+
+    private static final long serialVersionUID = 8448691870030409834L;
+
     private String sn;
 
     private String loginname;
@@ -22,14 +28,19 @@ public class UserInfoResult {
 
     private String birthday;
 
+    @JsonProperty("member_avatar")
     private String memberAvatar;
 
+    @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
+    @JsonProperty("profile_updatetime")
     private Date profileUpdatetime;
 
+    @JsonProperty("member_type")
     private String memberType;
 
+    @JsonProperty("member_status")
     private String memberStatus;
 
 

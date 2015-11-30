@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="members-service-consumer" owner="members" organization="fansz"/>
+
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <!--uncomment this if you want to test dubbo's monitor-->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+    <dubbo:reference id="userService" interface="com.fansz.members.api.AccountApi" protocol="rest"/>
+
+    <!-- directly connect to provider to simulate the access to non-dubbo rest services -->
+    <!--<dubbo:reference id="userService2" interface="com.fansz.members.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
+
+</beans>

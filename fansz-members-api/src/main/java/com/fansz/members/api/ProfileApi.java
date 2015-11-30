@@ -15,7 +15,7 @@ import javax.ws.rs.*;
 @Path("/profiles")
 public interface ProfileApi {
     /**
-     * 获得当前登陆用户的详细信息
+     * 查询用户的详细信息
      *
      * @param queryUserParam
      * @return
@@ -23,7 +23,7 @@ public interface ProfileApi {
     @Path("/show")
     @GET
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
+    CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
 
     /**
      * 修改当前用户的信息
@@ -32,10 +32,10 @@ public interface ProfileApi {
      * @return
      */
     @POST
-    @Path("/modify")
+    @Path("/change")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
+    CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
 
 }

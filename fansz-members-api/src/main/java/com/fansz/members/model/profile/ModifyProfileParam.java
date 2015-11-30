@@ -1,25 +1,30 @@
 package com.fansz.members.model.profile;
 
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
  * Created by root on 15-11-3.
  */
-public class ModifyProfileParam implements Serializable{
+public class ModifyProfileParam implements Serializable {
 
     private static final long serialVersionUID = -2028355548744485358L;
 
+    @JsonProperty("sn")
     private String uid;
 
+    @JsonProperty("access_token")
     private String accessToken;
 
-    private String nickName;
+    private String nickname;
 
     private String birthday;
 
     private String gender;
 
+    @JsonProperty("member_avatar")
     private String memberAvatar;
 
     public String getUid() {
@@ -38,12 +43,12 @@ public class ModifyProfileParam implements Serializable{
         this.accessToken = accessToken;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getBirthday() {

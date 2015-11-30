@@ -1,6 +1,6 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.api.model.VerifyCode;
+import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.utils.VerifyCodeType;
 
 /**
@@ -22,7 +22,7 @@ public interface VerifyCodeService {
      * @param verifyCodeType
      * @return
      */
-    VerifyCode queryVerifyCode(String mobile, VerifyCodeType verifyCodeType);
+    VerifyCodeModel queryVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
     /**
      * 删除验证码
@@ -31,5 +31,13 @@ public interface VerifyCodeService {
      * @param verifyCodeType
      */
     void removeVerifyCode(String mobile, VerifyCodeType verifyCodeType);
+
+    /**
+     * 验证码是否有效
+     *
+     * @param verifyCodeEntity
+     * @return
+     */
+    boolean isValid(VerifyCodeModel verifyCodeEntity);
 
 }

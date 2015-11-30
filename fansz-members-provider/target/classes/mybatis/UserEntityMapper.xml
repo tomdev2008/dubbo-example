@@ -29,16 +29,16 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Long">
+    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
-    <select id="findByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
+    <select id="findByMoblie" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR} and member_status='1'
     </select>
 
-    <select id="findByUid" parameterType="java.lang.String" resultType="com.fansz.members.model.profile.UserInfoResult">
-        select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR}
+    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR} and member_status='1'
     </select>
 
     <select id="getFandomFollowers" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -266,11 +266,6 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <update id="updatePassword" parameterType="com.fansz.members.model.account.ChangePasswordParam">
-     update connects_member_profile
-     set password=#{newPassword,jdbcType=VARCHAR}
-     wher id=#{uid,jdbcType=BIGINT}
-   </update>
 
     <select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

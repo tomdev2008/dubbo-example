@@ -8,6 +8,23 @@
         <result column="relation_status" property="relationStatus" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="UserResultMap" type="com.fansz.members.model.profile.UserInfoResult">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="loginname" jdbcType="VARCHAR" property="loginname"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
+        <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
+        <result column="profile_updatetime" jdbcType="TIMESTAMP" property="profileUpdatetime"/>
+        <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
+        <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
     id, my_member_id, freind_member_id, relation_status
   </sql>
@@ -84,4 +101,9 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+    <select id="findFriends" parameterType="java.lang.Long" resultMap="UserResultMap">
+        SELECT b.* FROM connects_member_relation a,connects_member_profile b
+         WHERE a.my_member_id=#{myMemberId,jdbcType=BIGINT}
+        AND a.freind_member_id=b.id
+    </select>
 </mapper>
