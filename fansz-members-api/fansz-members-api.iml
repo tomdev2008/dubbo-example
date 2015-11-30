@@ -34,5 +34,6 @@
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.12" level="project" />
   </component>
 </module>

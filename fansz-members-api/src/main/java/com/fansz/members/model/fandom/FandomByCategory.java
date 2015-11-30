@@ -7,7 +7,7 @@ public class FandomByCategory {
 
     private Integer userId;
 
-    private Integer categoryId;
+    private Long categoryId;
 
     public Integer getUserId() {
         return userId;
@@ -17,11 +17,11 @@ public class FandomByCategory {
         this.userId = userId;
     }
 
-    public Integer getCategoryId() {
+    public Long getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
 }

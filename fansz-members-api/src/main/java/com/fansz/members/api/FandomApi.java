@@ -2,12 +2,8 @@ package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.fandom.FandomFollowers;
-import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.fandom.PostsQueryParam;
+import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.PostInfoResult;
-import com.fansz.members.model.fandom.FandomParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class ProfileProvider implements ProfileApi {
 
 
-    //@Autowired
+    @Autowired
     private ProfileService profileService;
 
     /**
@@ -31,12 +31,8 @@ public class ProfileProvider implements ProfileApi {
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
         CommonResult<UserInfoResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
-        try {
-            UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
-            result.setResult(userInfoResult);
-        } catch (Exception iae) {
-            result.setStatus(Constants.FAIL);
-        }
+        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
+        result.setResult(userInfoResult);
         return result;
     }
 
@@ -50,11 +46,7 @@ public class ProfileProvider implements ProfileApi {
     public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
-        try {
-            profileService.modifyProfile(modifyProfileParam);
-        } catch (Exception e) {
-            result.setStatus(Constants.FAIL);
-        }
+        profileService.modifyProfile(modifyProfileParam);
         return result;
     }
 

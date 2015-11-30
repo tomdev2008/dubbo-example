@@ -1,17 +1,15 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.model.RegisterResult;
-import com.fansz.members.model.account.ChangePasswordParam;
-import com.fansz.members.model.account.LoginParam;
-import com.fansz.members.model.account.LoginResult;
-import com.fansz.members.model.account.RegisterParam;
+import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.model.SessionModel;
+import com.fansz.members.model.account.*;
 
 /**
  * Created by root on 15-11-3.
  */
 public interface AccountService {
 
-    public RegisterResult register(RegisterParam registerParam);
+    UserEntity register(RegisterParam registerParam);
 
 
     /**
@@ -39,7 +37,14 @@ public interface AccountService {
     /**
      * 退出登陆
      *
-     * @param uid
+     * @param logoutParam
      */
-    void logout(String uid);
+    void logout(LogoutParam logoutParam);
+
+    /**
+     * 根据accessToken返回session信息
+     * @param accessToken
+     * @return
+     */
+    SessionModel getSession(String accessToken);
 }

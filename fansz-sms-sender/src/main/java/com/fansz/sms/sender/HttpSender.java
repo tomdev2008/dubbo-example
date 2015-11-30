@@ -16,34 +16,32 @@ import java.net.URLDecoder;
 public class HttpSender {
 
 	/**
-	 * 
-	 * @param url 应用地址，类似于http://ip:port/msg/
+	 *
+	 * @param uri 应用地址，类似于http://ip:port/msg/
 	 * @param account 账号
 	 * @param pswd 密码
-	 * @param mobile 手机号码，多个号码使用","分割
-	 * @param msg 短信内容
+	 * @param mobiles 手机号码，多个号码使用","分割
+	 * @param content 短信内容
 	 * @param needstatus 是否需要状态报告，需要true，不需要false
-	 * @param product 产品
-	 * @param extno 扩展编号
 	 * @return 返回值定义参见HTTP协议文档
-	 * @throws Exception 异常
+	 * @throws Exception
 	 */
-	public static String send(String url, String account, String pswd, String mobile, String msg,
-			boolean needstatus, String product, String extno) throws Exception {
+	public static String send(String uri, String account, String pswd, String mobiles, String content,
+							  boolean needstatus, String product, String extno) throws Exception {
 		HttpClient client = new HttpClient();
 		GetMethod method = new GetMethod();
 		try {
-			URI base = new URI(url, false);
+			URI base = new URI(uri, false);
 			method.setURI(new URI(base, "HttpSendSM", false));
-			method.setQueryString(new NameValuePair[] { 
+			method.setQueryString(new NameValuePair[] {
 					new NameValuePair("account", account),
 					new NameValuePair("pswd", pswd),
-					new NameValuePair("mobile", mobile),
+					new NameValuePair("mobile", mobiles),
 					new NameValuePair("needstatus", String.valueOf(needstatus)),
-					new NameValuePair("msg", msg),
+					new NameValuePair("msg", content),
 					new NameValuePair("product", product),
 					new NameValuePair("extno", extno),
-				});
+			});
 			int result = client.executeMethod(method);
 			if (result == HttpStatus.SC_OK) {
 				InputStream in = method.getResponseBodyAsStream();
@@ -64,34 +62,32 @@ public class HttpSender {
 	}
 
 	/**
-	 * 
-	 * @param url 应用地址，类似于http://ip:port/msg/
+	 *
+	 * @param uri 应用地址，类似于http://ip:port/msg/
 	 * @param account 账号
 	 * @param pswd 密码
-	 * @param mobile 手机号码，多个号码使用","分割
-	 * @param msg 短信内容
+	 * @param mobiles 手机号码，多个号码使用","分割
+	 * @param content 短信内容
 	 * @param needstatus 是否需要状态报告，需要true，不需要false
-	 * @param product 产品
-	 * @param extno 扩展号码
 	 * @return 返回值定义参见HTTP协议文档
-	 * @throws Exception 异常
+	 * @throws Exception
 	 */
-	public static String batchSend(String url, String account, String pswd, String mobile, String msg,
-			boolean needstatus, String product, String extno) throws Exception {
+	public static String batchSend(String uri, String account, String pswd, String mobiles, String content,
+								   boolean needstatus, String product, String extno) throws Exception {
 		HttpClient client = new HttpClient();
 		GetMethod method = new GetMethod();
 		try {
-			URI base = new URI(url, false);
+			URI base = new URI(uri, false);
 			method.setURI(new URI(base, "HttpBatchSendSM", false));
-			method.setQueryString(new NameValuePair[] { 
+			method.setQueryString(new NameValuePair[] {
 					new NameValuePair("account", account),
-					new NameValuePair("pswd", pswd), 
-					new NameValuePair("mobile", mobile),
-					new NameValuePair("needstatus", String.valueOf(needstatus)), 
-					new NameValuePair("msg", msg),
+					new NameValuePair("pswd", pswd),
+					new NameValuePair("mobile", mobiles),
+					new NameValuePair("needstatus", String.valueOf(needstatus)),
+					new NameValuePair("msg", content),
 					new NameValuePair("product", product),
-					new NameValuePair("extno", extno), 
-				});
+					new NameValuePair("extno", extno),
+			});
 			int result = client.executeMethod(method);
 			if (result == HttpStatus.SC_OK) {
 				InputStream in = method.getResponseBodyAsStream();

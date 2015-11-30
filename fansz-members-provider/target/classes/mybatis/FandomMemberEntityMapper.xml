@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.members.api.repository.FandomMemberEntityMapper">
+
+    <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomMemberEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, member_id, fandom_id, join_time
+  </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_fandom
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectBySelective" resultMap="BaseResultMap"
+            parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_fandom
+        where
+        <if test="id != null">
+            id = #{id,jdbcType=BIGINT}
+        </if>
+        <if test="memberId != null">
+            member_id = #{memberId,jdbcType=BIGINT},
+        </if>
+        <if test="fandomId != null">
+            fandom_id = #{fandomId,jdbcType=BIGINT},
+        </if>
+        <if test="joinTime != null">
+            join_time = #{joinTime,jdbcType=TIMESTAMP},
+        </if>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from feeds_member_fandom
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+        insert into feeds_member_fandom (member_id, fandom_id,join_time)
+        values (#{memberId,jdbcType=BIGINT}, #{fandomId,jdbcType=BIGINT},#{joinTime,jdbcType=TIMESTAMP})
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+        insert into feeds_member_fandom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                member_id,
+            </if>
+            <if test="fandomId != null">
+                fandom_id,
+            </if>
+            <if test="joinTime != null">
+                join_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                #{memberId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomId != null">
+                #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+        update feeds_member_fandom
+        <set>
+            <if test="memberId != null">
+                member_id = #{memberId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomId != null">
+                fandom_id = #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+    update feeds_member_fandom
+    set member_id = #{memberId,jdbcType=BIGINT},
+      fandom_id = #{fandomId,jdbcType=BIGINT},
+      join_time = #{joinTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findFandomsByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select fandom_id from feeds_member_fandom where member_id = #{memberId,jdbcType=BIGINT}
+    </select>
+</mapper>

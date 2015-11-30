@@ -1,32 +1,32 @@
 package com.fansz.members.model.account;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
  * 用户注册参数
  */
 
-
 public class RegisterParam implements Serializable {
 
     private static final long serialVersionUID = -4004586460484111481L;
 
-    private String loginAccount;
+    private String loginname;
 
     private String password;
 
     private String mobile;
 
-    private String email;
-
+    @JsonProperty("verify_code")
     private String verifyCode;
 
-    public String getLoginAccount() {
-        return loginAccount;
+    public String getLoginname() {
+        return loginname;
     }
 
-    public void setLoginAccount(String loginAccount) {
-        this.loginAccount = loginAccount;
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
     }
 
     public String getPassword() {
@@ -43,14 +43,6 @@ public class RegisterParam implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getVerifyCode() {
