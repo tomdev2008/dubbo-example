@@ -1,10 +1,14 @@
 package com.fansz.members.api;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.NullResult;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 /**
@@ -14,15 +18,21 @@ import javax.ws.rs.core.Response;
 public interface CommentApi {
 
     /**
-     * 发布评论接口
+     * 发布帖子评论接口
      * @param commentPara 评论信息
      * @return resp 返回对象
      */
     @POST
     @Path("/create")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response addComment(CommentParam commentPara);
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> addPostComment(CommentParam commentPara);
+
+    @POST
+    @Path("/reply")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> replyComment(CommentParam commentPara);
 
     /**
      * 删除评论接口
@@ -31,8 +41,9 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
-    @Produces("application/json")
-    public Response removeCommet(CommentDelParam commentDelParam);
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
     /**
      * 获取评论详细信息接口
@@ -42,5 +53,5 @@ public interface CommentApi {
     @GET
     @Path("/post")
     @Produces("application/json")
-    public Response getComments(CommentPagedParam commentPagePara);
+    public CommonResult<NullResult> getComments(CommentPagedParam commentPagePara);
 }

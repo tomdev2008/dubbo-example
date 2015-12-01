@@ -26,7 +26,18 @@ public class FandomProvider implements FandomApi{
 
     @Override
     public Response addFandom(FandomParam form) {
-        return null;
+        Response response = null;
+        try{
+            if(form != null){
+                FandomInfoResult result =  fandomService.addFandom(form);
+
+            }else{
+                //打印错误日志 封装返回信息
+            }
+        }catch(Exception e){
+
+        }
+        return response;
     }
 
     @Override

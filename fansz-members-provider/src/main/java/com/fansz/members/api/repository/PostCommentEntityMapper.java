@@ -5,7 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 
 @MapperScan
 public interface PostCommentEntityMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(PostCommentEntity record);
 

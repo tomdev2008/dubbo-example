@@ -39,10 +39,10 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public FandomInfoResult addFandom(FandomParam fandomParam) {
         FandomEntity entity = new FandomEntity();
-        entity.setFandomCreatorId(Long.valueOf(fandomParam.getUserId()));
-        entity.setFandomName(fandomParam.getTitle());
-        entity.setFandomIntro(fandomParam.getDescription());
-        entity.setFandomAvatarUrl(fandomParam.getAvatar());
+        entity.setFandomCreatorId(fandomParam.getFandomCreatorId());
+        entity.setFandomName(fandomParam.getFandomName());
+        entity.setFandomIntro(fandomParam.getFandomIntro());
+        entity.setFandomAvatarUrl(fandomParam.getFandomAvatarUrl());
         //entity.setFandomParentId(fandomParam.getCategoryId());
 
         //Save fandom
