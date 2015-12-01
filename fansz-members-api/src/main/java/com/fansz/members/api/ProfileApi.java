@@ -15,27 +15,27 @@ import javax.ws.rs.*;
 @Path("/profiles")
 public interface ProfileApi {
     /**
-     * 获得当前登陆用户的详细信息
+     * 查询用户的详细信息
      *
      * @param queryUserParam
      * @return
      */
     @Path("/show")
-    @GET
+    @POST
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
+    CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
 
     /**
-     * 修改当前用户的信息
+     * 修改会员信息
      *
      * @param modifyProfileParam
      * @return
      */
     @POST
-    @Path("/modify")
+    @Path("/change")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
+    CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
 
 }

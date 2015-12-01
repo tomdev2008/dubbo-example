@@ -3,22 +3,26 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.Constants;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.model.profile.QueryProfileParam;
 import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.tools.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * 配置服务提供者
+ * TODO:后续需要进行重构,统一处理过程,分为权限控制,参数检查,调用服务等
  */
 @Component("profileProvider")
 public class ProfileProvider implements ProfileApi {
 
+    private final static NullResult PRESENCE = new NullResult();
 
-    //@Autowired
+    @Autowired
     private ProfileService profileService;
 
     /**
@@ -31,12 +35,9 @@ public class ProfileProvider implements ProfileApi {
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
         CommonResult<UserInfoResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
-        try {
-            UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
-            result.setResult(userInfoResult);
-        } catch (Exception iae) {
-            result.setStatus(Constants.FAIL);
-        }
+        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
+        result.setResult(userInfoResult);
+        result.setMessage("Get profile successfully");
         return result;
     }
 
@@ -48,13 +49,14 @@ public class ProfileProvider implements ProfileApi {
      */
     @Override
     public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
+        if (StringTools.isBlank(modifyProfileParam.getAccessToken())) {
+            throw new ApplicationException(Constants.PARAMETERS_ERROR, "Param error, see doc for more info");
+        }
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
-        try {
-            profileService.modifyProfile(modifyProfileParam);
-        } catch (Exception e) {
-            result.setStatus(Constants.FAIL);
-        }
+        result.setMessage("Change profile successfully");
+        profileService.modifyProfile(modifyProfileParam);
+        result.setResult(PRESENCE);
         return result;
     }
 

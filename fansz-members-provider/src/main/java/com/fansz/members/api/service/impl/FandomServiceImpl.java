@@ -8,8 +8,8 @@ import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.GetPostsParam;
 import org.springframework.stereotype.Service;
 
-import com.fansz.members.api.entity.FandomFollowEntity;
-import com.fansz.members.api.repository.FandomFollowEntityMapper;
+import com.fansz.members.api.entity.FandomMemberEntity;
+import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
@@ -34,7 +34,7 @@ public class FandomServiceImpl implements FandomService {
     private UserEntityMapper userEntityMapper;
 
     @Autowired
-    private FandomFollowEntityMapper fandomFollowEntityMapper;
+    private FandomMemberEntityMapper fandomFollowEntityMapper;
 
     @Override
     public FandomInfoResult addFandom(FandomParam fandomParam) {
@@ -119,10 +119,10 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public void followFandom(NormalFandomPara fandomPara)
     {
-        FandomFollowEntity fandomFollowEntity = new FandomFollowEntity();
+        FandomMemberEntity fandomFollowEntity = new FandomMemberEntity();
 
-        fandomFollowEntity.setMemberId(fandomPara.getUserId());
-        fandomFollowEntity.setFandomId(fandomPara.getFandomId());
+        fandomFollowEntity.setMemberSn(fandomPara.getMemberSn());
+        fandomFollowEntity.setFandomSn(String.valueOf(fandomPara.getFandomId()));
         fandomFollowEntity.setJoinTime(new Date());
 
         fandomFollowEntityMapper.insert(fandomFollowEntity);
@@ -133,7 +133,7 @@ public class FandomServiceImpl implements FandomService {
      * @param id 关注圈子id
      */
     @Override
-    public void unfollowFandom(Integer id)
+    public void unfollowFandom(Long id)
     {
         fandomFollowEntityMapper.deleteByPrimaryKey(id);
     }
@@ -142,7 +142,7 @@ public class FandomServiceImpl implements FandomService {
     public List<FandomInfoResult> getRecommendFandom(String id)
     {
         // 获取推荐的fandom
-        List<FandomEntity> fandoms = fandomMapper.getRecommendFandom();
+        //List<FandomEntity> fandoms = fandomMapper.getRecommendFandom();
 
 //        // 设置我是否已关注这些fandom
 //        if (null != fandoms)

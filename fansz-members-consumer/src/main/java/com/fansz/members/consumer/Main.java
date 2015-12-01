@@ -12,7 +12,7 @@ public class Main {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-consumer.xml");
         AccountApi us = ac.getBean(AccountApi.class);
         RegisterParam userParameters=new RegisterParam();
-        userParameters.setLoginAccount("demo");
+        userParameters.setLoginname("demo");
         userParameters.setPassword("demo");
         userParameters.setVerifyCode("demo");
         us.register(userParameters);

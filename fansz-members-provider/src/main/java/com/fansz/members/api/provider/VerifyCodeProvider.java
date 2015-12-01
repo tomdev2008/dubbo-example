@@ -19,6 +19,8 @@ import javax.ws.rs.PathParam;
 @Component("verifyCodeProvider")
 public class VerifyCodeProvider implements VerifyCodeApi {
 
+    private final static NullResult PRESENCE=new NullResult();
+
     @Autowired
     private VerifyCodeService verifyCodeService;
 
@@ -30,8 +32,10 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      */
     public CommonResult<NullResult> getVerifyCodeForReset(@PathParam("mobile") String mobile) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
         verifyCodeService.createVerifyCode(mobile, VerifyCodeType.RESET);
+        result.setStatus(Constants.SUCCESS);
+        result.setMessage("Get verify code successfully");
+        result.setResult(PRESENCE);
         return result;
 
     }
@@ -44,8 +48,10 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      */
     public CommonResult<NullResult> getVerifyCodeForRegister(@PathParam("mobile") String mobile) {
         CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
         verifyCodeService.createVerifyCode(mobile, VerifyCodeType.REGISTER);
+        result.setStatus(Constants.SUCCESS);
+        result.setMessage("Get verify code successfully");
+        result.setResult(PRESENCE);
         return result;
     }
 

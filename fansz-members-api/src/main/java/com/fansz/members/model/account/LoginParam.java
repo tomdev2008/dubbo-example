@@ -8,16 +8,16 @@ import java.io.Serializable;
 public class LoginParam implements Serializable {
     private static final long serialVersionUID = 7339771245324989539L;
 
-    private String loginAccount;
+    private String loginname;
 
     private String password;
 
-    public String getLoginAccount() {
-        return loginAccount;
+    public String getLoginname() {
+        return loginname;
     }
 
-    public void setLoginAccount(String loginAccount) {
-        this.loginAccount = loginAccount;
+    public void setLoginname(String loginname) {
+        this.loginname = loginname;
     }
 
     public String getPassword() {

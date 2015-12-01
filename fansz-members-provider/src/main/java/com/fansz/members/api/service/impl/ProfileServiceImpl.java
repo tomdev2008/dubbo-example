@@ -1,77 +1,41 @@
 package com.fansz.members.api.service.impl;
 
-import com.alibaba.dubbo.config.annotation.Service;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.api.repository.FandomFollowEntityMapper;
-import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.model.friendship.FocusedFandomResult;
+import com.fansz.members.api.utils.Constants;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.profile.UserInfoResult;
-import com.fansz.members.model.profile.FriendResult;
 import com.fansz.members.model.profile.ModifyProfileParam;
-import org.springframework.beans.BeanUtils;
+import com.fansz.members.tools.BeanTools;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 
 /**
- * 配置服务实现层
+ * 用户配置信息服务实现层
  */
-@Service
+@Service()
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private UserEntityMapper userEntityMapper;
 
-    @Autowired
-    private FandomMapper fandomMapper;
-
-    @Autowired
-    private FandomFollowEntityMapper fandomFollowEntityMapper;
-
     @Override
     public UserInfoResult getProfile(String uid) {
-
-        //return userEntityMapper.findByUid(uid);
-        return null;
+        UserEntity user = userEntityMapper.selectByUid(uid);
+        UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
+        return result;
     }
 
     @Override
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
-        UserEntity user = new UserEntity();
-        user.setSn(modifyProfilePara.getUid());
-        user.setBirthday(modifyProfilePara.getBirthday());
-        user.setGender(modifyProfilePara.getGender());
-        user.setNickname(modifyProfilePara.getNickName());
-        user.setMemberAvatar(modifyProfilePara.getMemberAvatar());
-        userEntityMapper.updateByUidSelective(user);
-    }
-
-    @Override
-    public List<FocusedFandomResult> getFollowedFandoms(String uid) {
-        //UserEntity user = fandomFollowEntityMapper.findFandomsByUserId();
-        return null;
-                //fandomMapper.findFandomByIds(user.getId());
-    }
-
-    @Override
-    public List<FriendResult> getFriendsInfo(String mobiles) {
-        List<String> mobileList = Arrays.asList(mobiles.split(","));
-
-        List<UserInfoResult> users = userEntityMapper.findByMobiles(mobileList);
-
-        List<FriendResult> friendList = new ArrayList<>();
-        for (UserInfoResult userInfo : users) {
-            FriendResult friend = new FriendResult();
-            BeanUtils.copyProperties(userInfo, friend);
-            friendList.add(friend);
+        UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
+        user.setProfileUpdatetime(new Date());
+        int updated=userEntityMapper.updateByUid(user);
+        if(updated!=1){
+            throw new ApplicationException(Constants.USER_NOT_FOUND,"User does't exist");
         }
-        return friendList;
-
     }
 }

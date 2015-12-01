@@ -1,20 +1,20 @@
 package com.fansz.members.model.profile;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by allan on 15/11/26.
+ * 用户详细信息
  */
-public class UserInfoResult {
-    private String sn;
+public class UserInfoResult implements Serializable {
 
-    private String loginname;
-
-    private String password;
-
-    private String mobile;
+    private static final long serialVersionUID = 8448691870030409834L;
 
     private String email;
+
+    private String mobile;
 
     private String nickname;
 
@@ -22,40 +22,15 @@ public class UserInfoResult {
 
     private String birthday;
 
+    @JsonProperty("member_avatar")
     private String memberAvatar;
 
+    @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
-    private Date profileUpdatetime;
 
+    @JsonProperty("member_type")
     private String memberType;
-
-    private String memberStatus;
-
-
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
-
-    public String getLoginname() {
-        return loginname;
-    }
-
-    public void setLoginname(String loginname) {
-        this.loginname = loginname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getMobile() {
         return mobile;
@@ -63,14 +38,6 @@ public class UserInfoResult {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNickname() {
@@ -113,12 +80,12 @@ public class UserInfoResult {
         this.profileCreatetime = profileCreatetime;
     }
 
-    public Date getProfileUpdatetime() {
-        return profileUpdatetime;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProfileUpdatetime(Date profileUpdatetime) {
-        this.profileUpdatetime = profileUpdatetime;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMemberType() {
@@ -127,13 +94,5 @@ public class UserInfoResult {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
-    }
-
-    public String getMemberStatus() {
-        return memberStatus;
-    }
-
-    public void setMemberStatus(String memberStatus) {
-        this.memberStatus = memberStatus;
     }
 }

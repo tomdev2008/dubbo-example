@@ -1,33 +1,44 @@
 package com.fansz.members.model.profile;
 
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
  * Created by root on 15-11-3.
  */
-public class ModifyProfileParam implements Serializable{
+public class ModifyProfileParam implements Serializable {
 
     private static final long serialVersionUID = -2028355548744485358L;
 
-    private String uid;
+    private String sn;
 
+    @JsonProperty("access_token")
     private String accessToken;
 
-    private String nickName;
+    private String nickname;
 
     private String birthday;
 
+    private String mobile;
+
+    private String email;
+
     private String gender;
 
+    @JsonProperty("member_avatar")
     private String memberAvatar;
 
-    public String getUid() {
-        return uid;
+    @JsonProperty("member_type")
+    private String memberType;
+
+    public String getSn() {
+        return sn;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setSn(String sn) {
+        this.sn = sn;
     }
 
     public String getAccessToken() {
@@ -38,12 +49,12 @@ public class ModifyProfileParam implements Serializable{
         this.accessToken = accessToken;
     }
 
-    public String getNickName() {
-        return nickName;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getBirthday() {
@@ -68,5 +79,29 @@ public class ModifyProfileParam implements Serializable{
 
     public void setMemberAvatar(String memberAvatar) {
         this.memberAvatar = memberAvatar;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(String memberType) {
+        this.memberType = memberType;
     }
 }

@@ -1,6 +1,7 @@
 package com.fansz.members;
 
-import org.springframework.context.ApplicationContext;
+import com.fansz.members.api.utils.JacksonConfig;
+import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -10,5 +11,6 @@ public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-provider.xml");
         ac.start();
+        ResteasyProviderFactory.getInstance().register(JacksonConfig.class);
     }
 }

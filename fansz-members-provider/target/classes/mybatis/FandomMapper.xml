@@ -12,7 +12,7 @@
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="ResultMap" type="com.fansz.members.api.entity.FandomEntity">
+    <resultMap id="FavoriteFandomResult" type="com.fansz.members.api.entity.FandomEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
@@ -20,7 +20,6 @@
         <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
-        <result column="followCount" property="followCount" jdbcType="BIGINT"/>
     </resultMap>
 
 
@@ -141,25 +140,13 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="getRecommendFandom" resultMap="ResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        , followCount
-        from feeds_fandom fandom ,
-        (select count(1) followCount, fandom_id from feeds_member_fandom group by fandom_id) fandom_count
-        where fandom.id = fandom_count.fandom_id
-        order by fandom.count
-        limit 3
-
-    </select>
-
-    <select id="findFandomByIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    <select id="findFandomByIds" parameterType="java.util.List" resultMap="FavoriteFandomResult">
         select
         <include refid="Base_Column_List"/>
         from feeds_fandom a
-        where a.id in
+        where a.fandom_sn in
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item}
+            #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
 

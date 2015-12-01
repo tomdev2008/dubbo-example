@@ -1,22 +1,25 @@
 package com.fansz.members.model.profile;
 
 
+import com.fansz.members.model.PageParam;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
-public class FriendsParam implements Serializable {
+public class FriendsParam extends PageParam implements Serializable {
 
-    private Long uid;
+    @JsonProperty("sn")
+    private String uid;
 
+    @JsonProperty("access_token")
     private String accessToken;
 
-    private String mobiles;
 
-
-    public Long getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(Long uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
@@ -28,11 +31,5 @@ public class FriendsParam implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public String getMobiles() {
-        return mobiles;
-    }
 
-    public void setMobiles(String mobiles) {
-        this.mobiles = mobiles;
-    }
 }
