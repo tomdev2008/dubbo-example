@@ -33,20 +33,21 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="connects_member_profile" domainObjectName="UserEntity"
+        <!--<table tableName="connects_member_profile" domainObjectName="UserEntity"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <!--<columnRenamingRule searchString="^D_"
-                                replaceString=""/>-->
+            <columnRenamingRule searchString="^D_"
+                                replaceString=""/>
         </table>
+        -->
 
-
-        <table tableName="connects_member_relation" domainObjectName="UserRelationEntity"
+        <table tableName="connects_member_relation" domainObjectName="UserRelationEntity2"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
 
+        <!--
         <table tableName="feeds_fandom" domainObjectName="Fandom"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
@@ -81,5 +82,6 @@
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false"/>
+         -->
     </context>
 </generatorConfiguration>
