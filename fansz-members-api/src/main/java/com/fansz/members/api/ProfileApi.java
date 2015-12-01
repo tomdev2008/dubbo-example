@@ -21,12 +21,12 @@ public interface ProfileApi {
      * @return
      */
     @Path("/show")
-    @GET
+    @POST
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
 
     /**
-     * 修改当前用户的信息
+     * 修改会员信息
      *
      * @param modifyProfileParam
      * @return

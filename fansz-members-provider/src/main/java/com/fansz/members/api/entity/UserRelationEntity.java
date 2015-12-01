@@ -1,11 +1,14 @@
 package com.fansz.members.api.entity;
 
-public class UserRelationEntity {
+import java.io.Serializable;
+
+public class UserRelationEntity implements Serializable{
+
     private Long id;
 
-    private Long myMemberId;
+    private String myMemberSn;
 
-    private Long freindMemberId;
+    private String friendMemberSn;
 
     private String relationStatus;
 
@@ -17,20 +20,20 @@ public class UserRelationEntity {
         this.id = id;
     }
 
-    public Long getMyMemberId() {
-        return myMemberId;
+    public String getMyMemberSn() {
+        return myMemberSn;
     }
 
-    public void setMyMemberId(Long myMemberId) {
-        this.myMemberId = myMemberId;
+    public void setMyMemberSn(String myMemberSn) {
+        this.myMemberSn = myMemberSn == null ? null : myMemberSn.trim();
     }
 
-    public Long getFreindMemberId() {
-        return freindMemberId;
+    public String getFriendMemberSn() {
+        return friendMemberSn;
     }
 
-    public void setFreindMemberId(Long freindMemberId) {
-        this.freindMemberId = freindMemberId;
+    public void setFriendMemberSn(String friendMemberSn) {
+        this.friendMemberSn = friendMemberSn;
     }
 
     public String getRelationStatus() {

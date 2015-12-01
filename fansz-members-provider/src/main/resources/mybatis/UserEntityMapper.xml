@@ -266,6 +266,20 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+    <update id="updateByUid" parameterType="com.fansz.members.api.entity.UserEntity">
+        UPDATE
+          connects_member_profile
+        SET
+            mobile = #{mobile,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+            nickname = #{nickname,jdbcType=VARCHAR},
+            gender = #{gender,jdbcType=VARCHAR},
+            birthday = #{birthday,jdbcType=VARCHAR},
+            member_avatar = #{memberAvatar,jdbcType=VARCHAR},
+            profile_updatetime = #{profileUpdatetime,jdbcType=TIMESTAMP},
+            member_type = #{memberType,jdbcType=VARCHAR}
+        WHERE sn = #{sn,jdbcType=VARCHAR} and member_status='1'
+   </update>
 
     <select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
         select

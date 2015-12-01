@@ -5,6 +5,7 @@ com/fansz/members/api/service/AccountService.class
 com/fansz/members/api/repository/UserRepository.class
 com/fansz/members/api/entity/UserRelationEntity.class
 com/fansz/members/api/utils/FileOperator.class
+com/fansz/members/tools/RelationShip.class
 com/fansz/members/api/repository/FandomMapper.class
 com/fansz/members/api/entity/UserAlbumEntity.class
 com/fansz/members/api/model/SessionModel.class
