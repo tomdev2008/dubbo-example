@@ -24,6 +24,8 @@ public interface UserEntityMapper {
 
     int updateByUidSelective(UserEntity record);
 
+    int updateByUid(UserEntity record);
+
     int updateByPrimaryKey(UserEntity record);
 
     int isExists(String mobile);

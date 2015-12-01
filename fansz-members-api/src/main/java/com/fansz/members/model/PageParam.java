@@ -1,5 +1,7 @@
 package com.fansz.members.model;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -9,9 +11,11 @@ public class PageParam implements Serializable {
 
     private static final long serialVersionUID = 2149367388124720438L;
 
-    private int limit;
+    @JsonProperty("page_size")
+    private Integer limit;
 
-    private int offset;
+    @JsonProperty("page_num")
+    private Integer offset;
 
     public int getLimit() {
         return limit;

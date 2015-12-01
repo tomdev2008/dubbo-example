@@ -56,6 +56,7 @@
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/ProfileProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/AccountServiceImpl.java
+/Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/tools/RelationShip.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/CommentServiceImpl.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/provider/AccountProvider.java
 /Users/allan/Work/backend/fansz-members/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java

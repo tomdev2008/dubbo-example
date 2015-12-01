@@ -12,15 +12,9 @@ public class UserInfoResult implements Serializable {
 
     private static final long serialVersionUID = 8448691870030409834L;
 
-    private String sn;
-
-    private String loginname;
-
-    private String password;
+    private String email;
 
     private String mobile;
-
-    private String email;
 
     private String nickname;
 
@@ -34,39 +28,9 @@ public class UserInfoResult implements Serializable {
     @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
-    @JsonProperty("profile_updatetime")
-    private Date profileUpdatetime;
 
     @JsonProperty("member_type")
     private String memberType;
-
-    @JsonProperty("member_status")
-    private String memberStatus;
-
-
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
-
-    public String getLoginname() {
-        return loginname;
-    }
-
-    public void setLoginname(String loginname) {
-        this.loginname = loginname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getMobile() {
         return mobile;
@@ -74,14 +38,6 @@ public class UserInfoResult implements Serializable {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getNickname() {
@@ -124,12 +80,12 @@ public class UserInfoResult implements Serializable {
         this.profileCreatetime = profileCreatetime;
     }
 
-    public Date getProfileUpdatetime() {
-        return profileUpdatetime;
+    public String getEmail() {
+        return email;
     }
 
-    public void setProfileUpdatetime(Date profileUpdatetime) {
-        this.profileUpdatetime = profileUpdatetime;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getMemberType() {
@@ -138,13 +94,5 @@ public class UserInfoResult implements Serializable {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
-    }
-
-    public String getMemberStatus() {
-        return memberStatus;
-    }
-
-    public void setMemberStatus(String memberStatus) {
-        this.memberStatus = memberStatus;
     }
 }

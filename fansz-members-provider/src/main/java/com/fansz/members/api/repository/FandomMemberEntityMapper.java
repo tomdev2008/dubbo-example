@@ -7,6 +7,7 @@ import java.util.List;
 
 @MapperScan
 public interface FandomMemberEntityMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(FandomMemberEntity record);
