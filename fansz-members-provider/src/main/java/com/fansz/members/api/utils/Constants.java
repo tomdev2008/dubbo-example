@@ -38,6 +38,9 @@ public class Constants {
 
     public final static String RELATION_IS_NOT_FRIEND="20204";//不是好友,无法添加特殊好友
 
+    public final static String RELATION_IS_IN_FANDOM="20205";//用户已经关注fandom
+
+    public final static String RELATION_IS_NOT_IN_FANDOM="20206";//用户未关注fandom
 
     public final static String USER_STATUS_OK = "1";
 

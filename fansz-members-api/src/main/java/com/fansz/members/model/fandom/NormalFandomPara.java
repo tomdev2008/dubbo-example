@@ -5,23 +5,23 @@ package com.fansz.members.model.fandom;
  */
 public class NormalFandomPara {
 
-    private Integer userId;
+    private String memberSn;
 
-    private Integer fandomId;
+    private Long fandomId;
 
-    public Integer getUserId() {
-        return userId;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
-    public Integer getFandomId() {
+    public Long getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(Integer fandomId) {
+    public void setFandomId(Long fandomId) {
         this.fandomId = fandomId;
     }
 }

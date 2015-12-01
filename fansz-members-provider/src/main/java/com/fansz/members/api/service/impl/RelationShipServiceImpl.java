@@ -1,5 +1,6 @@
 package com.fansz.members.api.service.impl;
 
+import com.fansz.members.api.entity.FandomMemberEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.repository.FandomMapper;
@@ -11,9 +12,7 @@ import com.fansz.members.api.utils.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
-import com.fansz.members.model.relationship.AddFriendParam;
-import com.fansz.members.model.relationship.FriendInfoResult;
-import com.fansz.members.model.relationship.OpRequestParam;
+import com.fansz.members.model.relationship.*;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.RelationShip;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -44,8 +43,7 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public List<FandomInfoResult> findFandomsByUid(String uid) {
-        UserEntity user = userEntityMapper.selectByUid(uid);
-        List<Long> fandomIds = fandomMemberEntityMapper.findFandomsByUserId(user.getId());
+        List<String> fandomIds = fandomMemberEntityMapper.findFandomsByUserSn(uid);
         return fandomMapper.findFandomByIds(fandomIds);
     }
 
@@ -96,5 +94,27 @@ public class RelationShipServiceImpl implements RelationShipService {
         oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
         userRelationEntityMapper.updateByPrimaryKeySelective(oldRelation);
         return true;
+    }
+
+    @Override
+    public boolean joinFandom(JoinFandomParam joinFandomParam) {
+        FandomMemberEntity fandomMemberEntity = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMemberEntity);
+        if (exist != null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
+        }
+        fandomMemberEntityMapper.insert(fandomMemberEntity);
+        return false;
+    }
+
+    @Override
+    public boolean exitFandom(ExitFandomParam joinFandomParam) {
+        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
+        if (exist == null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
+        }
+        fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
+        return false;
     }
 }

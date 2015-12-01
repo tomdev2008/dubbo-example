@@ -4,13 +4,13 @@
 
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomMemberEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
-        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="member_sn" property="memberSn" jdbcType="VARCHAR"/>
+        <result column="fandom_sn" property="fandomSn" jdbcType="VARCHAR"/>
         <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, member_id, fandom_id, join_time
+    id, member_sn, fandom_sn, join_time
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -30,10 +30,10 @@
             id = #{id,jdbcType=BIGINT}
         </if>
         <if test="memberId != null">
-            member_id = #{memberId,jdbcType=BIGINT},
+            member_sn = #{memberSn,jdbcType=VARCHAR},
         </if>
         <if test="fandomId != null">
-            fandom_id = #{fandomId,jdbcType=BIGINT},
+            fandom_sn = #{fandomSn,jdbcType=VARCHAR},
         </if>
         <if test="joinTime != null">
             join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -46,8 +46,8 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
-        insert into feeds_member_fandom (member_id, fandom_id,join_time)
-        values (#{memberId,jdbcType=BIGINT}, #{fandomId,jdbcType=BIGINT},#{joinTime,jdbcType=TIMESTAMP})
+        insert into feeds_member_fandom (member_sn, fandom_sn,join_time)
+        values (#{memberSn,jdbcType=VARCHAR}, #{fandomSn,jdbcType=VARCHAR},#{joinTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -57,10 +57,10 @@
         insert into feeds_member_fandom
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="memberId != null">
-                member_id,
+                member_sn,
             </if>
             <if test="fandomId != null">
-                fandom_id,
+                fandom_sn,
             </if>
             <if test="joinTime != null">
                 join_time,
@@ -68,10 +68,10 @@
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="memberId != null">
-                #{memberId,jdbcType=BIGINT},
+                #{memberSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomId != null">
-                #{fandomId,jdbcType=BIGINT},
+                #{fandomSn,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 #{joinTime,jdbcType=TIMESTAMP},
@@ -85,10 +85,10 @@
         update feeds_member_fandom
         <set>
             <if test="memberId != null">
-                member_id = #{memberId,jdbcType=BIGINT},
+                member_sn = #{memberSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomId != null">
-                fandom_id = #{fandomId,jdbcType=BIGINT},
+                fandom_sn = #{fandomSn,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -99,13 +99,20 @@
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
     update feeds_member_fandom
-    set member_id = #{memberId,jdbcType=BIGINT},
-      fandom_id = #{fandomId,jdbcType=BIGINT},
+    set member_sn = #{memberSn,jdbcType=VARCHAR},
+      fandom_sn = #{fandomSn,jdbcType=VARCHAR},
       join_time = #{joinTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="findFandomsByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
-        select fandom_id from feeds_member_fandom where member_id = #{memberId,jdbcType=BIGINT}
+    <select id="findFandomsByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+        select fandom_sn from feeds_member_fandom where member_sn = #{memberSn,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByMemberAndFandom" parameterType="com.fansz.members.api.entity.FandomMemberEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_fandom
+        where member_sn = #{memberSn,jdbcType=VARCHAR} and fandom_sn=#{fandomSn,jdbcType=VARCHAR}
     </select>
 </mapper>

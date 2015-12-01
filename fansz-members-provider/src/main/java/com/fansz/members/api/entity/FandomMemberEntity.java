@@ -4,36 +4,36 @@ import java.util.Date;
 
 public class FandomMemberEntity {
 
-    private Integer id;
+    private Long id;
 
-    private Integer memberId;
+    private String memberSn;
 
-    private Integer fandomId;
+    private String fandomSn;
 
     private Date joinTime;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
-    public Integer getFandomId() {
-        return fandomId;
+    public String getFandomSn() {
+        return fandomSn;
     }
 
-    public void setFandomId(Integer fandomId) {
-        this.fandomId = fandomId;
+    public void setFandomSn(String fandomSn) {
+        this.fandomSn = fandomSn;
     }
 
     public Date getJoinTime() {

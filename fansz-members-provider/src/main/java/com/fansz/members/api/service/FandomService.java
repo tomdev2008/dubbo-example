@@ -24,7 +24,7 @@ public interface FandomService {
 
     void followFandom(NormalFandomPara fandomPara);
 
-    void unfollowFandom(Integer id);
+    void unfollowFandom(Long id);
 
     List<FandomInfoResult> getRecommendFandom(String id);
 

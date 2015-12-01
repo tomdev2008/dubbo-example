@@ -8,13 +8,13 @@ import java.util.List;
 @MapperScan
 public interface FandomMemberEntityMapper {
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(FandomMemberEntity record);
 
     int insertSelective(FandomMemberEntity record);
 
-    FandomMemberEntity selectByPrimaryKey(Integer id);
+    FandomMemberEntity selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(FandomMemberEntity record);
 
@@ -22,6 +22,8 @@ public interface FandomMemberEntityMapper {
 
     List<FandomMemberEntity> selectBySelective(FandomMemberEntity record);
 
-    List<Long> findFandomsByUserId(Long id);
+    List<String> findFandomsByUserSn(String userSn);
+
+    FandomMemberEntity selectByMemberAndFandom(FandomMemberEntity record);
 
 }

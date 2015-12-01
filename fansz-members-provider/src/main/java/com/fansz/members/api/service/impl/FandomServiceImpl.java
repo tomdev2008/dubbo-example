@@ -121,8 +121,8 @@ public class FandomServiceImpl implements FandomService {
     {
         FandomMemberEntity fandomFollowEntity = new FandomMemberEntity();
 
-        fandomFollowEntity.setMemberId(fandomPara.getUserId());
-        fandomFollowEntity.setFandomId(fandomPara.getFandomId());
+        fandomFollowEntity.setMemberSn(fandomPara.getMemberSn());
+        fandomFollowEntity.setFandomSn(String.valueOf(fandomPara.getFandomId()));
         fandomFollowEntity.setJoinTime(new Date());
 
         fandomFollowEntityMapper.insert(fandomFollowEntity);
@@ -133,7 +133,7 @@ public class FandomServiceImpl implements FandomService {
      * @param id 关注圈子id
      */
     @Override
-    public void unfollowFandom(Integer id)
+    public void unfollowFandom(Long id)
     {
         fandomFollowEntityMapper.deleteByPrimaryKey(id);
     }

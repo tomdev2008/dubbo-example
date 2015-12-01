@@ -2,9 +2,7 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
-import com.fansz.members.model.relationship.AddFriendParam;
-import com.fansz.members.model.relationship.FriendInfoResult;
-import com.fansz.members.model.relationship.OpRequestParam;
+import com.fansz.members.model.relationship.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
@@ -21,8 +19,11 @@ public interface RelationShipService {
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
 
-    boolean dealSpecialFriend(AddFriendParam addFriendParam,boolean add);
+    boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add);
 
-    boolean dealFriendRequest(OpRequestParam opRequestParam,boolean agree);
+    boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
 
+    boolean joinFandom(JoinFandomParam joinFandomParam);
+
+    boolean exitFandom(ExitFandomParam joinFandomParam);
 }
