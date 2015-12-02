@@ -5,6 +5,7 @@ import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.Constants;
 import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.tools.BeanTools;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户配置信息服务实现层
@@ -37,5 +39,11 @@ public class ProfileServiceImpl implements ProfileService {
         if(updated!=1){
             throw new ApplicationException(Constants.USER_NOT_FOUND,"User does't exist");
         }
+    }
+
+    @Override
+    public List<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
+        userEntityMapper.getProfileByNickname(modifyProfileParam.getNickname());
+        return null;
     }
 }

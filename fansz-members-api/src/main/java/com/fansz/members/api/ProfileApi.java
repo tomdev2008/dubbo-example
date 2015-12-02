@@ -37,5 +37,10 @@ public interface ProfileApi {
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
+    @POST
+    @Path("/getProfileBykeyword")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam);
 
 }

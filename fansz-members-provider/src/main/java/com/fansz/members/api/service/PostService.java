@@ -2,7 +2,11 @@ package com.fansz.members.api.service;
 
 
 import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.FandomPostLikeEntity;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.post.PostLikeInfoResult;
+import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import org.springframework.stereotype.Service;
@@ -22,7 +26,7 @@ public interface PostService {
 
     FandomPostEntity getPost(UserEntity user, String id);
 
-    void likePost(UserEntity user, String id);
+    List<PostLikeInfoResult> likePost(PostParam postParam);
 
     void unlikePost(UserEntity user, String id);
 

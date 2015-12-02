@@ -2,12 +2,19 @@ package com.fansz.members.api.service.impl;
 
 
 import com.fansz.members.api.entity.FandomPostEntity;
+import com.fansz.members.api.entity.FandomPostLikeEntity;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
+import com.fansz.members.model.profile.UserInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +23,8 @@ import java.util.List;
 @Service
 public class PostServiceImpl implements PostService {
 
+    @Autowired
+    private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
 
     @Override
     public FandomPostEntity addPost(UserEntity user, PostParam postParam) {
@@ -34,9 +43,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void likePost(UserEntity user, String id) {
-
-
+    public List<PostLikeInfoResult> likePost(PostParam postParam) {
+        List<PostLikeInfoResult> list = fandomPostLikeEntityMapper.likePost(postParam.getPostId());
+        return list;
     }
 
     @Override
