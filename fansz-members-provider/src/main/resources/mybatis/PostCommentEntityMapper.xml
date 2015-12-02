@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.PostCommentEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="post_id" property="postId" jdbcType="BIGINT"/>
-        <result column="commentator_id" property="commentatorId" jdbcType="BIGINT"/>
+        <result column="commentator_sn" property="commentatorSn" jdbcType="BIGINT"/>
         <result column="comment_content" property="commentContent" jdbcType="VARCHAR"/>
         <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -96,4 +96,10 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="getCommentsByPostidFromFandom" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_post_comment
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 </mapper>

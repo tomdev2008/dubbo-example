@@ -2,9 +2,11 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.CommentApi;
 import com.fansz.members.api.service.CommentService;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
+import com.fansz.members.model.comment.CommentQueryFromFandom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -43,12 +45,16 @@ public class CommentProvider implements CommentApi{
     }
 
     /**
-     * 获取评论详细信息接口
-     * @param commentPagePara 评论参数
-     * @return resp 返回对象
+     *
+     * @param commentQueryFromFandom
+     * @return
      */
-    public Response getComments(CommentPagedParam commentPagePara)
-    {
-       return null;
-    }
+    public Response getCommentsByPostidFromFandom(CommentQueryFromFandom commentQueryFromFandom) throws ApplicationException{
+
+
+        return null;
+    };
+
+
+    public Response getCommentsByPostidFromNewsfeed(CommentQueryFromFandom commentQueryFromFandom){return null;};
 }

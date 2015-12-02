@@ -4,6 +4,8 @@ import com.fansz.members.api.entity.PostCommentEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
+import com.fansz.members.model.comment.CommentQueryFromFandom;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,5 +20,7 @@ public interface CommentService {
 
     void removeComment(String id);
 
-    List<PostCommentEntity> getComments( CommentPagedParam commentPagePara);
+    PageList<PostCommentEntity> getCommentsByPostidFromFandom(CommentQueryFromFandom centQueryFromFandom);
+
+
 }

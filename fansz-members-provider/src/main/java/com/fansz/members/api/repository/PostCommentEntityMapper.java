@@ -3,6 +3,8 @@ package com.fansz.members.api.repository;
 import com.fansz.members.api.entity.PostCommentEntity;
 import org.mybatis.spring.annotation.MapperScan;
 
+import java.util.List;
+
 @MapperScan
 public interface PostCommentEntityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +18,7 @@ public interface PostCommentEntityMapper {
     int updateByPrimaryKeySelective(PostCommentEntity record);
 
     int updateByPrimaryKey(PostCommentEntity record);
+
+    List getCommentsByPostidFromFandom(Integer postId);
+
 }
