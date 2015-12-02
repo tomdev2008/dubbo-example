@@ -13,20 +13,5 @@ import java.util.List;
  */
 public interface FandomService {
 
-    FandomInfoResult addFandom(FandomParam fandomParam);
-
-    FandomInfoResult getFandom(NormalFandomPara fandomPara);
-
-    List<FandomPostEntity> getPostsByFandom(GetPostsParam param);
-
-
-    List<FandomInfoResult> getFandomsByCategoryId(FandomByCategory fandomByCategory);
-
-    void followFandom(NormalFandomPara fandomPara);
-
-    void unfollowFandom(Long id);
-
-    List<FandomInfoResult> getRecommendFandom(String id);
-
-    List<UserEntity> followerOfFandom(FandomFollowers fandomFollowers);
+    List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
 }

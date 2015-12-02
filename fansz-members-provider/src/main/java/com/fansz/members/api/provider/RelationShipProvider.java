@@ -6,10 +6,9 @@ import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.profile.FriendsQueryParam;
+import com.fansz.members.model.relationship.FriendsQueryParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Created by allan on 15/11/26.
+ * 关系provider
  */
 @Component("relationShipProvider")
 public class RelationShipProvider implements RelationShipApi {
@@ -28,11 +27,12 @@ public class RelationShipProvider implements RelationShipApi {
     private RelationShipService relationShipService;
 
     @Override
-    public CommonResult<List<FandomInfoResult>> getFandoms(FavoriteFandomParam fandomParam) {
+    public CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam) {
         CommonResult<List<FandomInfoResult>> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
         // 获得我关注的fandom
-        List<FandomInfoResult> fandoms = relationShipService.findFandomsByUid(fandomParam.getUid());
+        PageBounds pageBounds = new PageBounds(fandomParam.getOffset(), fandomParam.getLimit());
+        List<FandomInfoResult> fandoms = relationShipService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
         result.setResult(fandoms);
         return result;
     }

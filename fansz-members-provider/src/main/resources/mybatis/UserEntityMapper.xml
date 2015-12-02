@@ -17,6 +17,17 @@
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
         <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
     </resultMap>
+    <resultMap id="userInfoResultMap" type="com.fansz.members.model.profile.UserInfoResult">
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
+        <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
+        <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, 
     profile_createtime, profile_updatetime, member_type, member_status

@@ -3,8 +3,10 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.post.PostInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,9 +28,7 @@ public interface PostService {
 
     void unlikePost(UserEntity user, String id);
 
-    List<FandomPostEntity> getFriendPosts(UserEntity user, String friendId);
+    PageList<PostInfoResult> getFriendsPosts(String memberSn,PageBounds pageBounds);
 
-    List<FandomPostEntity> getFriendsPosts(UserEntity user, PageBounds pagePara);
-
-    List<FandomPostEntity> getAllFandomPosts(UserEntity user, PageBounds pagePara);
+    PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn,PageBounds pageBounds);
 }

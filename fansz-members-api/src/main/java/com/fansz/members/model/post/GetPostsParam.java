@@ -1,27 +1,32 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.PageParam;
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /**
  * Created by allan on 15/11/27.
  */
-public class GetPostsParam {
-    private String kind;
+public class GetPostsParam extends PageParam{
 
-    private Long id;
+    @JsonProperty("access_token")
+    private String accessToken;
 
+    @JsonProperty("member_sn")
+    private String memberSn;
 
-    public String getKind() {
-        return kind;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setKind(String kind) {
-        this.kind = kind;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public Long getId() {
-        return id;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 }

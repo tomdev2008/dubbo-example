@@ -3,9 +3,13 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +20,8 @@ import java.util.List;
 @Service
 public class PostServiceImpl implements PostService {
 
+    @Autowired
+    private FandomPostEntityMapper  fandomPostEntityMapper;
 
     @Override
     public FandomPostEntity addPost(UserEntity user, PostParam postParam) {
@@ -51,13 +57,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<FandomPostEntity> getFriendsPosts(UserEntity user, PageBounds pagePara) {
-        return null;
+    public PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn,PageBounds pageBounds) {
+        return fandomPostEntityMapper.findPostsOfMyFandoms(memberSn,pageBounds);
     }
 
     @Override
-    public List<FandomPostEntity> getAllFandomPosts(UserEntity user, PageBounds pagePara) {
-        return null;
+    public List<FandomPostEntity> getFriendsPosts(UserEntity user, PageBounds pagePara) {
+       return null;
     }
+
+
 
 }

@@ -3,6 +3,7 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.FandomApi;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.api.utils.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.GetPostsParam;
@@ -19,64 +20,18 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 @Component("fandomProvider")
-public class FandomProvider implements FandomApi{
+public class FandomProvider implements FandomApi {
 
     @Autowired
     private FandomService fandomService;
 
     @Override
-    public Response addFandom(FandomParam form) {
-        return null;
-    }
-
-    @Override
-    public CommonResult<FandomInfoResult> getFandom(FandomQueryParam fandomQueryParam) {
-        return null;
-    }
-
-    @Override
-    public CommonResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
-        return null;
-    }
-
-    @Override
-    public CommonResult<List<FandomInfoResult>> getFandomsByCategory(String categoryId) {
-        return null;
-    }
-
-    @Override
-    public Response followFandom(String id) {
-        return null;
-    }
-
-    @Override
-    public Response unfollowFandom(String id) {
-        return null;
-    }
-
-    @Override
-    public Response getRecommendFandom() {
-        return null;
-    }
-
-    @Override
-    public Response getSubCategory(String id) {
-        return null;
-    }
-
-    @Override
-    public Response getCategory() {
-        return null;
-    }
-
-    @Override
-    public Response getFandomsBySubCategory(String id) {
-        return null;
-    }
-
-    @Override
-    public Response followerOfFandom(FandomFollowers fandomFollowers) {
-        return null;
+    public CommonResult<List<FandomInfoResult>> listFandoms(FandomQueryParam fandomQueryParam) {
+        CommonResult<List<FandomInfoResult>> result = new CommonResult<List<FandomInfoResult>>();
+        result.setStatus(Constants.SUCCESS);
+        result.setResult(fandomService.listFandom(fandomQueryParam));
+        result.setMessage("List fandoms successfully");
+        return result;
     }
 }
 

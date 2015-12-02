@@ -36,15 +36,11 @@ public class RelationShipServiceImpl implements RelationShipService {
     private UserEntityMapper userEntityMapper;
 
     @Autowired
-    private FandomMapper fandomMapper;
-
-    @Autowired
     private UserRelationEntityMapper userRelationEntityMapper;
 
     @Override
-    public List<FandomInfoResult> findFandomsByUid(String uid) {
-        List<String> fandomIds = fandomMemberEntityMapper.findFandomsByUserSn(uid);
-        return fandomMapper.findFandomByIds(fandomIds);
+    public List<FandomInfoResult> findFandomsByMemberSn(String sn,PageBounds pageBounds) {
+        return fandomMemberEntityMapper.findFandomsByMemberSn(sn,pageBounds);
     }
 
     @Override

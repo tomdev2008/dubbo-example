@@ -12,6 +12,8 @@ public class UserInfoResult implements Serializable {
 
     private static final long serialVersionUID = 8448691870030409834L;
 
+    private String sn;
+
     private String email;
 
     private String mobile;
@@ -31,6 +33,14 @@ public class UserInfoResult implements Serializable {
 
     @JsonProperty("member_type")
     private String memberType;
+
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
     public String getMobile() {
         return mobile;

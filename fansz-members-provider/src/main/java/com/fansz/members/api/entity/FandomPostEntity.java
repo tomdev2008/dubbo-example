@@ -3,13 +3,18 @@ package com.fansz.members.api.entity;
 import java.util.Date;
 
 public class FandomPostEntity {
+
     private Long id;
 
-    private Long memberId;
+    private String memberSn;
 
     private Long fandomId;
 
+    private String postTitle;
+
     private String postContent;
+
+    private String postNewsfeeds;
 
     private Date postTime;
 
@@ -21,12 +26,12 @@ public class FandomPostEntity {
         this.id = id;
     }
 
-    public Long getMemberId() {
-        return memberId;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
     public Long getFandomId() {
@@ -37,12 +42,28 @@ public class FandomPostEntity {
         this.fandomId = fandomId;
     }
 
+    public String getPostTitle() {
+        return postTitle;
+    }
+
+    public void setPostTitle(String postTitle) {
+        this.postTitle = postTitle;
+    }
+
     public String getPostContent() {
         return postContent;
     }
 
     public void setPostContent(String postContent) {
         this.postContent = postContent == null ? null : postContent.trim();
+    }
+
+    public String getPostNewsfeeds() {
+        return postNewsfeeds;
+    }
+
+    public void setPostNewsfeeds(String postNewsfeeds) {
+        this.postNewsfeeds = postNewsfeeds;
     }
 
     public Date getPostTime() {

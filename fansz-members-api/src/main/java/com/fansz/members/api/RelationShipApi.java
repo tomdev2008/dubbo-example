@@ -4,10 +4,9 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.profile.FriendsQueryParam;
+import com.fansz.members.model.relationship.FriendsQueryParam;
 
 import javax.ws.rs.*;
 import java.util.List;
@@ -26,7 +25,7 @@ public interface RelationShipApi {
     @Path("/fandoms")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<List<FandomInfoResult>> getFandoms(FavoriteFandomParam fandomParam);
+    CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam);
 
     /**
      * 获取用户的好友列表
@@ -87,17 +86,27 @@ public interface RelationShipApi {
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
 
-
+    /**
+     * 加入fandom
+     * @param joinFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/join")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
 
-
+    /**
+     * 退出fandom
+     * @param exitFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/exit")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
+
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface RelationShipService {
 
-    List<FandomInfoResult> findFandomsByUid(String uid);
+    List<FandomInfoResult> findFandomsByMemberSn(String sn,PageBounds pageBounds);
 
     PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds);
 
