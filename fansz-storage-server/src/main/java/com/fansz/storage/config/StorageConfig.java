@@ -12,6 +12,7 @@ public interface StorageConfig {
     public static final String FILE_DEFAULT_AUTHOR 	= "Diandi";
 
     public static final String PROTOCOL = "http://";
+
     public static final String SEPARATOR = "/";
 
     public static final String TRACKER_NGNIX_PORT 	= "8080";

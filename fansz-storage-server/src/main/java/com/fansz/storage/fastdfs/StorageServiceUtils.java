@@ -48,10 +48,9 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
     public static String upload(FastDFSFile file) {
         logger.info("File Name: " + file.getName() + "		File Length: " + file.getContent().length);
 
-        NameValuePair[] meta_list = new NameValuePair[3];
-        meta_list[0] = new NameValuePair("width", "120");
-        meta_list[1] = new NameValuePair("heigth", "120");
-        meta_list[2] = new NameValuePair("author", "Diandi");
+        NameValuePair[] meta_list = new NameValuePair[2];
+        meta_list[0] = new NameValuePair("real_file_name", file.getName());
+        meta_list[1] = new NameValuePair("size", String.valueOf(file.getContent().length));
 
         long startTime = System.currentTimeMillis();
         String[] uploadResults = null;
@@ -72,7 +71,7 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
         String remoteFileName = uploadResults[1];
 
         String fileAbsolutePath = PROTOCOL + trackerServer.getInetSocketAddress().getHostName()
-                + SEPARATOR
+                + ":"
                 + TRACKER_NGNIX_PORT
                 + SEPARATOR
                 + groupName
