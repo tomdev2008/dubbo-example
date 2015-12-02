@@ -32,6 +32,7 @@ public class FandomProvider implements FandomApi {
         result.setResult(fandomService.listFandom(fandomQueryParam));
         result.setMessage("List fandoms successfully");
         return result;
+
     }
 }
 

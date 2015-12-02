@@ -30,7 +30,6 @@ public class UserInfoResult implements Serializable {
     @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
-
     @JsonProperty("member_type")
     private String memberType;
 
@@ -41,6 +40,7 @@ public class UserInfoResult implements Serializable {
     public void setSn(String sn) {
         this.sn = sn;
     }
+
 
     public String getMobile() {
         return mobile;
@@ -105,4 +105,5 @@ public class UserInfoResult implements Serializable {
     public void setMemberType(String memberType) {
         this.memberType = memberType;
     }
+
 }

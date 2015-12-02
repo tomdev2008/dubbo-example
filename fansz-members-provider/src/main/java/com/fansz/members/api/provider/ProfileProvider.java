@@ -60,4 +60,9 @@ public class ProfileProvider implements ProfileApi {
         return result;
     }
 
+    @Override
+    public CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
+        profileService.getProfileByNickname(modifyProfileParam);
+        return null;
+    }
 }

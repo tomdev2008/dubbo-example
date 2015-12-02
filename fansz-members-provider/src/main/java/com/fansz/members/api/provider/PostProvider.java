@@ -2,19 +2,20 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.PostApi;
 import com.fansz.members.api.service.PostService;
-import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.api.utils.Constants;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonPagedResult;
-import com.fansz.members.model.PageParam;
+import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.post.GetPostsParam;
 import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.*;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
@@ -67,11 +68,24 @@ public class PostProvider implements PostApi {
     /**
      * 帖子点赞接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子id
      * @return resp 返回对象
      */
-    public Response likePost(@PathParam("id") String id) {
-        return null;
+    public CommonResult<List<PostLikeInfoResult>> likePost(PostParam postParam) {
+        CommonResult<List<PostLikeInfoResult>> commonResult = new CommonResult<List<PostLikeInfoResult>>();
+        try {
+            if (null != postParam) {
+                List<PostLikeInfoResult> result = postService.likePost(postParam);
+                commonResult.setResult(result);
+                commonResult.setStatus(Constants.SUCCESS);
+            } else {
+                commonResult.setStatus(Constants.FAIL);
+                commonResult.setMessage("json is null");
+            }
+        } catch (Exception e) {
+            throw new ApplicationException("", e.getMessage());
+        }
+        return commonResult;
     }
 
     /**

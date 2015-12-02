@@ -10,9 +10,11 @@ public class CommentDelParam implements Serializable{
     private static final long serialVersionUID = 7097767369484809045L;
     private Long commentId;
 
-    private String accessKey;
+    private String accessToken;
 
-    private String uid;
+    private Long postId;
+
+    private String commentatorSn;
 
     public Long getCommentId() {
         return commentId;
@@ -22,19 +24,27 @@ public class CommentDelParam implements Serializable{
         this.commentId = commentId;
     }
 
-    public String getAccessKey() {
-        return accessKey;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public String getUid() {
-        return uid;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
+    public String getCommentatorSn() {
+        return commentatorSn;
+    }
+
+    public void setCommentatorSn(String commentatorSn) {
+        this.commentatorSn = commentatorSn;
     }
 }

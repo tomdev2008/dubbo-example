@@ -6,8 +6,8 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
-        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminId" jdbcType="BIGINT"/>
+        <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
@@ -16,8 +16,8 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
-        <result column="fandom_creator_id" property="fandomCreatorId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminId" jdbcType="BIGINT"/>
+        <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
@@ -48,8 +48,8 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomEntity">
-        insert into feeds_fandom (fandom_name,fandom_parent_id,fandom_admin_id,
-        fandom_creator_id,fandom_avatar_url,fandom_intro)
+        insert into feeds_fandom (fandom_name,fandom_parent_id,fandom_admin_sn,
+        fandom_creator_sn,fandom_avatar_url,fandom_intro)
         values (#{fandomName,jdbcType=VARCHAR}, #{fandomParentId,jdbcType=BIGINT},
         #{fandomAdminId,jdbcType=BIGINT}, #{fandomCreatorId,jdbcType=BIGINT}, #{fandomAvatarUrl,jdbcType=VARCHAR},
         #{fandomIntro,jdbcType=VARCHAR})

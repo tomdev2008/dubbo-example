@@ -1,9 +1,13 @@
 package com.fansz.members.api;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.PageParam;
 import com.fansz.members.model.post.GetPostsParam;
 import com.fansz.members.model.post.PostInfoResult;
+
+import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
 
 import javax.ws.rs.*;
@@ -53,14 +57,14 @@ public interface PostApi {
 
     /**
      * 帖子点赞接口
-     *
-     * @param id 帖子id
+
      * @return resp 返回对象
      */
     @POST
-    @Path("/{id}/like")
-    @Produces("application/json")
-    Response likePost(@PathParam("id") String id);
+    @Path("/like")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<List<PostLikeInfoResult>> likePost(PostParam postParam);
 
     /**
      * 取消帖子点赞接口

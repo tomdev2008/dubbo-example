@@ -1,6 +1,8 @@
 package com.fansz.members.model.comment;
 
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,25 +10,66 @@ import java.io.Serializable;
  */
 public class CommentParam implements Serializable{
 
-    private static final long serialVersionUID = 7165927018098624209L;
+    private static final long serialVersionUID = -3591993766050206164L;
 
-    private String content;
+    @JsonProperty("commentator_sn")
+    private String commentatorSn;
+    @JsonProperty("access_token")
+    private String accessToken;
+    @JsonProperty("comment_source")
+    private String commentSource;
+    @JsonProperty("comment_content")
+    private String commentContent;
+    @JsonProperty("post_id")
+    private Long postId;
+    @JsonProperty("comment_parent_id")
+    private Long commentParentId;
 
-    private String postId;
-
-    public String getContent() {
-        return content;
+    public String getCommentatorSn() {
+        return commentatorSn;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setCommentatorSn(String commentatorSn) {
+        this.commentatorSn = commentatorSn;
     }
 
-    public String getPostId() {
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getCommentSource() {
+        return commentSource;
+    }
+
+    public void setCommentSource(String commentSource) {
+        this.commentSource = commentSource;
+    }
+
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
+    }
+
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(String postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public Long getCommentParentId() {
+        return commentParentId;
+    }
+
+    public void setCommentParentId(Long commentParentId) {
+        this.commentParentId = commentParentId;
     }
 }

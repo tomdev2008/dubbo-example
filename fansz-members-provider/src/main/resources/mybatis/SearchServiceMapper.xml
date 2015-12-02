@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.members.api.repository.PostCommentEntityMapper">
+
+    <resultMap id="userInfoResult" type="com.fansz.members.model.profile.UserInfoResult">
+        <result column="sn" property="memberSn" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="member_avatar" property="memberAvatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="postInfoResult" type="com.fansz.members.model.post.PostInfoResult">
+        <result column="sn" property="memberSn" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="member_avatar" property="memberAvatar" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="searchMember" resultMap="BaseResultMap" parameterType="java.lang.String">
+      select
+       sn,
+       nickname,
+        member_avatar
+      from connects_member_profile
+        where loginname like CONCAT('%',#{keyWord},'%')
+    </select>
+
+    <select id="searchPost" resultMap="postInfoResult" parameterType="java.lang.String">
+      select f.post_title,f.post_content,f.post_newsfeeds,f.post_time,p.sn,p.nickname,p.member_avatar from feeds_member_post_fandom f left JOIN connects_member_profile p
+      on f.member_sn = p.sn where f.post_title like CONCAT('%','123','%') or f.post_content like CONCAT('%','123','%') or p.nickname like CONCAT('%','123','%')
+    </select>
+
+</mapper>
