@@ -224,6 +224,27 @@
                 <artifactId>cglib-nodep</artifactId>
                 <version>2.2</version>
             </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>hessian-lite</artifactId>
+                <version>${hessian_lite_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>${hessian_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${tomcat_embed_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-logging-juli</artifactId>
+                <version>${tomcat_embed_version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -248,5 +269,8 @@
         <jdk.version>1.7</jdk.version>
         <spring.version>3.2.9.RELEASE</spring.version>
         <resteasy.version>3.0.7.Final</resteasy.version>
+        <hessian_version>4.0.7</hessian_version>
+        <hessian_lite_version>3.2.1-fixed-2</hessian_lite_version>
+        <tomcat_embed_version>8.0.11</tomcat_embed_version>
     </properties>
 </project>

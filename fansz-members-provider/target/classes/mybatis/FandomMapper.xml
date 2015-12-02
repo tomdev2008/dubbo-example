@@ -144,9 +144,9 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_fandom a
-        where a.id in
+        where a.fandom_sn in
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item}
+            #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
 

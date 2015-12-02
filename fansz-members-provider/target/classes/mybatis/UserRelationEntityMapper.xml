@@ -1,18 +1,15 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fansz.members.api.repository.UserRelationEntityMapper">
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.UserRelationEntity">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="my_member_id" property="myMemberId" jdbcType="BIGINT"/>
-        <result column="freind_member_id" property="freindMemberId" jdbcType="BIGINT"/>
-        <result column="relation_status" property="relationStatus" jdbcType="VARCHAR"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="my_member_sn" jdbcType="VARCHAR" property="myMemberSn"/>
+        <result column="friend_member_sn" jdbcType="VARCHAR" property="friendMemberSn"/>
+        <result column="relation_status" jdbcType="VARCHAR" property="relationStatus"/>
     </resultMap>
-
-    <resultMap id="UserResultMap" type="com.fansz.members.model.profile.UserInfoResult">
+    <resultMap id="UserResultMap" type="com.fansz.members.api.entity.UserEntity">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="loginname" jdbcType="VARCHAR" property="loginname"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
@@ -24,25 +21,27 @@
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
         <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
     </resultMap>
-
     <sql id="Base_Column_List">
-    id, my_member_id, freind_member_id, relation_status
-  </sql>
+        id, my_member_sn, friend_member_sn, relation_status
+    </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from connects_member_relation
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=INTEGER}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-      delete from connects_member_relation where id = #{id,jdbcType=BIGINT}
-  </delete>
+        delete from connects_member_relation
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.UserRelationEntity">
-        insert into connects_member_relation (my_member_id, freind_member_id,relation_status)
-        values (#{myMemberId,jdbcType=BIGINT}, #{freindMemberId,jdbcType=BIGINT},#{relationStatus,jdbcType=VARCHAR})
+        insert into connects_member_relation (my_member_sn, friend_member_sn,
+        relation_status)
+        values (#{myMemberSn,jdbcType=VARCHAR}, #{friendMemberSn,jdbcType=VARCHAR},
+        #{relationStatus,jdbcType=VARCHAR})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -51,22 +50,22 @@
     <insert id="insertSelective" parameterType="com.fansz.members.api.entity.UserRelationEntity">
         insert into connects_member_relation
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="myMemberId != null">
-                my_member_id,
+            <if test="myMemberSn != null">
+                my_member_sn,
             </if>
-            <if test="freindMemberId != null">
-                freind_member_id,
+            <if test="friendMemberSn != null">
+                friend_member_sn,
             </if>
             <if test="relationStatus != null">
                 relation_status,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="myMemberId != null">
-                #{myMemberId,jdbcType=BIGINT},
+            <if test="myMemberSn != null">
+                #{myMemberSn,jdbcType=VARCHAR},
             </if>
-            <if test="freindMemberId != null">
-                #{freindMemberId,jdbcType=BIGINT},
+            <if test="friendMemberSn != null">
+                #{friendMemberSn,jdbcType=VARCHAR},
             </if>
             <if test="relationStatus != null">
                 #{relationStatus,jdbcType=VARCHAR},
@@ -76,34 +75,40 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
-
     <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.UserRelationEntity">
         update connects_member_relation
         <set>
-            <if test="myMemberId != null">
-                my_member_id = #{myMemberId,jdbcType=BIGINT},
+            <if test="myMemberSn != null">
+                my_member_sn = #{myMemberSn,jdbcType=VARCHAR},
             </if>
-            <if test="freindMemberId != null">
-                freind_member_id = #{freindMemberId,jdbcType=BIGINT},
+            <if test="friendMemberSn != null">
+                friend_member_sn = #{friendMemberSn,jdbcType=VARCHAR},
             </if>
             <if test="relationStatus != null">
                 relation_status = #{relationStatus,jdbcType=VARCHAR},
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.UserRelationEntity">
+        update connects_member_relation
+        set my_member_sn = #{myMemberSn,jdbcType=VARCHAR},
+        friend_member_sn = #{friendMemberSn,jdbcType=VARCHAR},
+        relation_status = #{relationStatus,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.UserRelationEntity">
-    update connects_member_relation
-    set my_member_id = #{myMemberId,jdbcType=BIGINT},
-      freind_member_id = #{freindMemberId,jdbcType=BIGINT},
-      relation_status = #{relationStatus,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-
-    <select id="findFriends" parameterType="java.lang.Long" resultMap="UserResultMap">
+    <select id="findFriends" parameterType="java.lang.String" resultType="com.fansz.members.model.relationship.FriendInfoResult">
         SELECT b.* FROM connects_member_relation a,connects_member_profile b
-         WHERE a.my_member_id=#{myMemberId,jdbcType=BIGINT}
-        AND a.freind_member_id=b.id
+        WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
+        AND a.friend_member_sn=b.sn
+    </select>
+
+    <select id="findRelationBySns" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM connects_member_relation
+        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR}
+        AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
     </select>
 </mapper>
