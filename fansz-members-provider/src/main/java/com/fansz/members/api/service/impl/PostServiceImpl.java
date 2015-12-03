@@ -4,10 +4,10 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.FandomPostEntityMapper;
+import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
 import com.fansz.members.api.service.PostService;
 import com.fansz.members.model.post.AddPostParam;
 import com.fansz.members.model.post.PostInfoResult;
-import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
 import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
 import com.fansz.members.tools.BeanTools;
@@ -41,8 +41,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public FandomPostEntity getPost(UserEntity user, String id) {
-        return null;
+    public PostInfoResult getPost(PostParam postParam) {
+        PostInfoResult postInfoResult = fandomPostEntityMapper.getPost(postParam);
+
+        return postInfoResult;
     }
 
     @Override

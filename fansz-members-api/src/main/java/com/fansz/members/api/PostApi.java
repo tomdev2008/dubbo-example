@@ -42,13 +42,14 @@ public interface PostApi {
     /**
      * 获取帖子信息接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子
      * @return resp 返回对象
      */
-    @GET
-    @Path("/{id}")
+    @POST
+    @Path("/get")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces("application/json")
-    Response getPost(@PathParam("id") String id);
+    CommonResult<PostInfoResult> getPost(PostParam postParam);
 
 
     /**

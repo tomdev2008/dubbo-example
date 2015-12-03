@@ -56,12 +56,29 @@ public class PostProvider implements PostApi {
     /**
      * 获取帖子信息接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子
      * @return resp 返回对象
      */
-    public Response getPost(@PathParam("id") String id) {
-        return null;
+    public CommonResult<PostInfoResult> getPost(PostParam postParam) {
+        CommonResult<PostInfoResult> commonResult = new CommonResult<>();
 
+        try{
+            if (postParam != null)
+            {
+                PostInfoResult postInfoResult = postService.getPost(postParam);
+                commonResult.setResult(postInfoResult);
+                commonResult.setStatus(Constants.SUCCESS);
+            }else {
+                commonResult.setStatus(Constants.FAIL);
+                commonResult.setMessage("json is null");
+            }
+
+        } catch (Exception e)
+        {
+            throw new ApplicationException("", e.getMessage());
+        }
+
+        return commonResult;
     }
 
     /**
