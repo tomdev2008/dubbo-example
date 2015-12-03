@@ -1,7 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.api.model.VerifyCodeModel;
-import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.tools.VerifyCodeType;
 
 /**
  * Created by allan on 15/11/26.

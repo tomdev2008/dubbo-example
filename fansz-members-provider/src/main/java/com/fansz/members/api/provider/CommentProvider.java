@@ -2,17 +2,13 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.CommentApi;
 import com.fansz.members.api.service.CommentService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.comment.CommentDelParam;
-import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import javax.ws.rs.core.Response;
 
 /**
  * 评论接口类
@@ -79,15 +75,5 @@ public class CommentProvider implements CommentApi{
             result.setStatus(Constants.FAIL);
         }
         return result;
-    }
-
-    /**
-     * 获取评论详细信息接口
-     * @param commentPagePara 评论参数
-     * @return resp 返回对象
-     */
-    public CommonResult<NullResult> getComments(CommentPagedParam commentPagePara)
-    {
-       return null;
     }
 }

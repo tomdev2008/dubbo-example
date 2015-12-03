@@ -2,8 +2,8 @@ package com.fansz.members.api.service;
 
 
 import com.fansz.members.api.entity.FandomPostEntity;
-import com.fansz.members.api.entity.FandomPostLikeEntity;
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.model.post.AddPostParam;
 import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public interface PostService {
 
-    FandomPostEntity addPost(UserEntity user, com.fansz.members.model.post.PostParam postParam);
+    FandomPostEntity addPost(AddPostParam addPostParam);
 
     void removePost(String id);
 

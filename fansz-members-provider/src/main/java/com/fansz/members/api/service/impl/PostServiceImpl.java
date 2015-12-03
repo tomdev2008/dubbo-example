@@ -2,23 +2,20 @@ package com.fansz.members.api.service.impl;
 
 
 import com.fansz.members.api.entity.FandomPostEntity;
-import com.fansz.members.api.entity.FandomPostLikeEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.model.post.AddPostParam;
 import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
-import com.fansz.members.api.service.PostService;
-import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.post.PostParam;
-import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.tools.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,13 +25,14 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     @Autowired
-    private FandomPostEntityMapper  fandomPostEntityMapper;
+    private FandomPostEntityMapper fandomPostEntityMapper;
     private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
 
     @Override
-    public FandomPostEntity addPost(UserEntity user, PostParam postParam) {
-    return null;
-
+    public FandomPostEntity addPost(AddPostParam addPostParam) {
+        FandomPostEntity fandomPostEntity = BeanTools.copyAs(addPostParam, FandomPostEntity.class);
+        fandomPostEntityMapper.insert(fandomPostEntity);
+        return fandomPostEntity;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public FandomPostEntity getPost(UserEntity user, String id) {
-     return null;
+        return null;
     }
 
     @Override
@@ -60,12 +58,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn,PageBounds pageBounds) {
-        return fandomPostEntityMapper.findPostsOfMyFandoms(memberSn,pageBounds);
+    public PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds) {
+        return fandomPostEntityMapper.findPostsOfMyFandoms(memberSn, pageBounds);
     }
 
     @Override
     public PageList<PostInfoResult> getFriendsPosts(String memberSn, PageBounds pageBounds) {
-        return fandomPostEntityMapper.findPostsOfMyFriends(memberSn,pageBounds);
+        return fandomPostEntityMapper.findPostsOfMyFriends(memberSn, pageBounds);
     }
 }

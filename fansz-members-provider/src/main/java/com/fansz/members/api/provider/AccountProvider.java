@@ -3,7 +3,7 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.AccountApi;
 import com.fansz.members.api.service.AccountService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.account.*;
 import com.fansz.members.model.NullResult;

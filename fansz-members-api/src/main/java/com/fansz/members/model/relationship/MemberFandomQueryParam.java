@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * Created by allan on 15/12/2.
+ * 获取用户关注的fandom请求参数模型
  */
 public class MemberFandomQueryParam extends PageParam implements Serializable {
 

@@ -6,6 +6,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
 
+/**
+ * 查询好友请求参数模型
+ */
 public class FriendsQueryParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = 1170651723025637518L;

@@ -5,15 +5,17 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * Created by allan on 15/11/27.
+ * 用户点赞,传入参数模型
  */
 public class PostParam implements Serializable {
 
     private static final long serialVersionUID = -1772542305173463716L;
     @JsonProperty("post_id")
     private Long postId;
+
     @JsonProperty("sn")
     private String memberSn;
+
     @JsonProperty("access_token")
     private String accessToken;
 

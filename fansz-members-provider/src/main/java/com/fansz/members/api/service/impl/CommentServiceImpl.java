@@ -2,11 +2,9 @@ package com.fansz.members.api.service.impl;
 
 
 import com.fansz.members.api.entity.PostCommentEntity;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.PostCommentEntityMapper;
 import com.fansz.members.api.service.CommentService;
 import com.fansz.members.model.comment.CommentDelParam;
-import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +37,5 @@ public class CommentServiceImpl implements CommentService {
         postCommentEntityMapper.deleteByPrimaryKey(commentDelParam.getCommentId());
     }
 
-    @Override
-    public List<PostCommentEntity> getComments(CommentPagedParam commentPagePara) {
-        return null;
-    }
+
 }

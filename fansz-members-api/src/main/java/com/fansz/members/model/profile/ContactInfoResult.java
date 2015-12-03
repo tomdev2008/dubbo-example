@@ -1,4 +1,4 @@
-package com.fansz.members.model.relationship;
+package com.fansz.members.model.profile;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -6,11 +6,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 好友信息模型
+ * 联系人信息模型
  */
-public class FriendInfoResult implements Serializable {
+public class ContactInfoResult  implements Serializable{
+    private static final long serialVersionUID = 7417881167063440681L;
 
-    private static final long serialVersionUID = -7836389133676995846L;
+    private String sn;
 
     private String email;
 
@@ -28,9 +29,26 @@ public class FriendInfoResult implements Serializable {
     @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
-
     @JsonProperty("member_type")
     private String memberType;
+
+    private String relationship;
+
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getMobile() {
         return mobile;
@@ -80,19 +98,19 @@ public class FriendInfoResult implements Serializable {
         this.profileCreatetime = profileCreatetime;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getMemberType() {
         return memberType;
     }
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }

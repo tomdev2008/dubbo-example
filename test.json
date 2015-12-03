@@ -1,0 +1,30 @@
+request:
+{
+"header": {
+"local": "ZH_cn",
+"terminal_type": "IOS"
+},
+"request": [
+{
+"method": "getVerifyCodeForRegister",
+"params": {
+"mobile": "13467876787"
+}
+}
+]
+}
+response: {
+"header": {
+"local": "ZH_cn",
+"terminal_type": "IOS"
+},
+"response": [
+{
+"method": "getverifyCodeForRegister",
+"status": "0",
+"error": null,
+"result": {
+}
+}
+]
+}

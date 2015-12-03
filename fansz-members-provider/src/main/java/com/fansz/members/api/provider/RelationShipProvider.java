@@ -2,7 +2,7 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.RelationShipApi;
 import com.fansz.members.api.service.RelationShipService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;

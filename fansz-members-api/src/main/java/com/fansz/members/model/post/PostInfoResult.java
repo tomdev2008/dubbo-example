@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by allan on 15/11/27.
+ * POST信息模型
  */
 public class PostInfoResult implements Serializable {
 

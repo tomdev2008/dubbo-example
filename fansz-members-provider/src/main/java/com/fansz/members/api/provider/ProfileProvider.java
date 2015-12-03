@@ -2,16 +2,16 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.profile.ModifyProfileParam;
-import com.fansz.members.model.profile.QueryProfileParam;
-import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.model.profile.*;
 import com.fansz.members.tools.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 配置服务提供者
@@ -64,5 +64,14 @@ public class ProfileProvider implements ProfileApi {
     public CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
         profileService.getProfileByNickname(modifyProfileParam);
         return null;
+    }
+
+    @Override
+    public CommonResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam) {
+        CommonResult<List<ContactInfoResult>> result = new CommonResult<>();
+        List<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
+        result.setResult(dataResult);
+        result.setStatus(Constants.SUCCESS);
+        return result;
     }
 }

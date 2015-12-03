@@ -7,17 +7,20 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by dell on 2015/12/2.
+ *
  */
 public class PostLikeInfoResult implements Serializable {
 
     private static final long serialVersionUID = -8769041146051550921L;
     @JsonProperty("access_token")
     private String accessToken;
+
     @JsonProperty("like_id")
     private Long likeId;
+
     @JsonProperty("like_time")
     private Date likeTime;
+
     @JsonProperty("like_member")
     private UserInfoResult likeMember;
 

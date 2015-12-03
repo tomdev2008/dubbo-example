@@ -17,7 +17,7 @@ public class ApplicationExceptionMapper implements ExceptionMapper<RuntimeExcept
     public Response toResponse(RuntimeException e) {
         CommonResult<NullResult> result=new CommonResult<>();
         result.setResult(PRESENCE);
-        result.setMessage(e.getMessage());
+        result.setMessage("System Error");
         if(e instanceof  ApplicationException) {
             ApplicationException ae=(ApplicationException)e;
             result.setStatus(ae.getCode());

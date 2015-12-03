@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.fansz.members.api.utils.Constants;
 import com.fansz.members.exception.ApplicationException;
 import net.sf.cglib.beans.BeanCopier;
 

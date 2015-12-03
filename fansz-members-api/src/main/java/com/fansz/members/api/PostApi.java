@@ -3,12 +3,8 @@ package com.fansz.members.api;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.PageParam;
-import com.fansz.members.model.post.GetPostsParam;
-import com.fansz.members.model.post.PostInfoResult;
-
-import com.fansz.members.model.post.PostLikeInfoResult;
-import com.fansz.members.model.post.PostParam;
+import com.fansz.members.model.NullResult;
+import com.fansz.members.model.post.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -23,14 +19,14 @@ public interface PostApi {
     /**
      * 发帖子接口
      *
-     * @param postParam 帖子信息
+     * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
     @POST
     @Path("/add")
     @Consumes("multipart/form-data")
     @Produces("application/json")
-    Response addPost(PostParam postParam);
+    CommonResult<NullResult> addPost(AddPostParam addPostParam);
 
     /**
      * 删除帖子接口

@@ -4,9 +4,9 @@ import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * Created by allan on 15/11/27.
+ * 分页查询用户所有fandom的post信息
  */
-public class GetPostsParam extends PageParam{
+public class GetPostsParam extends PageParam {
 
     @JsonProperty("access_token")
     private String accessToken;

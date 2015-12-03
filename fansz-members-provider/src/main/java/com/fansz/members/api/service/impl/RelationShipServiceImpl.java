@@ -1,23 +1,19 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
-import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.RelationShipService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.RelationShip;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.mortbay.component.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

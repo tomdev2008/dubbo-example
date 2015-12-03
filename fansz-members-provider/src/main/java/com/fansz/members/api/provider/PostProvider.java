@@ -2,14 +2,12 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.PostApi;
 import com.fansz.members.api.service.PostService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.post.GetPostsParam;
-import com.fansz.members.model.post.PostInfoResult;
-import com.fansz.members.model.post.PostLikeInfoResult;
-import com.fansz.members.model.post.PostParam;
+import com.fansz.members.model.NullResult;
+import com.fansz.members.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +24,23 @@ import java.util.List;
 @Component("postProvider")
 public class PostProvider implements PostApi {
 
+    private final static NullResult PRESENCE = new NullResult();
+
     @Autowired
     private PostService postService;
 
     /**
      * 发帖子接口
      *
-     * @param form 帖子信息
+     * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
-    public Response addPost(PostParam form) {
-        try {
-            PostInfoResult postParam = new PostInfoResult();
-        } catch (Exception iae) {
-
-        }
-        return null;
+    public CommonResult<NullResult> addPost(AddPostParam addPostParam) {
+        postService.addPost(addPostParam);
+        CommonResult<NullResult> result = new CommonResult<NullResult>();
+        result.setResult(PRESENCE);
+        result.setStatus(Constants.SUCCESS);
+        return result;
     }
 
     /**

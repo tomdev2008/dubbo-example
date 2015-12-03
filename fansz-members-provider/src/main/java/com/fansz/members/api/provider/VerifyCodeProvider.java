@@ -2,8 +2,8 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.VerifyCodeApi;
 import com.fansz.members.api.service.VerifyCodeService;
-import com.fansz.members.api.utils.Constants;
-import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.VerifyCodeType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;

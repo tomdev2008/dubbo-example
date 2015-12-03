@@ -2,13 +2,17 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
-import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.profile.ContactInfoResult;
+import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.tools.BeanTools;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private UserEntityMapper userEntityMapper;
+
+    @Autowired
+    private UserRelationEntityMapper userRelationEntityMapper;
 
     @Override
     public UserInfoResult getProfile(String uid) {
@@ -45,5 +52,11 @@ public class ProfileServiceImpl implements ProfileService {
     public List<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
         userEntityMapper.getProfileByNickname(modifyProfileParam.getNickname());
         return null;
+    }
+
+    @Override
+    public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
+        PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
+        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam,pageBounds);
     }
 }

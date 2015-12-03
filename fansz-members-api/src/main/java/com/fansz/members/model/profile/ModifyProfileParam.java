@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * Created by root on 15-11-3.
+ *  修改用户profile参数模型
  */
 public class ModifyProfileParam implements Serializable {
 
