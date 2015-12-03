@@ -2,6 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface FandomMapper {
     List<FandomInfoResult> findFandomByIds(List<String> snList);
 
     List<FandomInfoResult> listByCondition(FandomEntity param);
+
+    List<FandomInfoResult> getRecommendFandom(PageBounds pageBounds);
+
 }

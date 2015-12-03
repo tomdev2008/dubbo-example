@@ -1,5 +1,6 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
@@ -26,4 +27,11 @@ public interface RelationShipService {
     boolean joinFandom(JoinFandomParam joinFandomParam);
 
     boolean exitFandom(ExitFandomParam joinFandomParam);
+
+
+    List<UserEntity> getFollowers(FriendsQueryParam param);
+
+    List<UserEntity> getRequesters(FriendsQueryParam param);
+
+    List<UserEntity> getSpecialFriend(FriendsQueryParam param);
 }

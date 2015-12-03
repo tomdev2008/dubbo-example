@@ -1,5 +1,8 @@
 package com.fansz.members.api;
 
+import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.relationship.FriendsQueryParam;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 
@@ -80,12 +83,4 @@ public interface ContactsApi {
     @Produces("application/json")
     public Response getUserProfile(@PathParam("id") String id);
 
-    /**
-     * 获取所有候选人接口
-     * @return resp 返回对象
-     */
-    @GET
-    @Path("/follower")
-    @Produces("application/json")
-    public Response getFollowRequest();
 }

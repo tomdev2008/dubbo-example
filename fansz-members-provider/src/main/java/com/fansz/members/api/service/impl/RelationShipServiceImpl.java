@@ -1,6 +1,7 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
@@ -108,5 +109,26 @@ public class RelationShipServiceImpl implements RelationShipService {
         }
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
         return false;
+    }
+
+    @Override
+    public List<UserEntity> getFollowers(FriendsQueryParam param) {
+        param.setRelation("1");
+        List<UserEntity> entities = userRelationEntityMapper.getRelationPerson(param);
+        return entities;
+    }
+
+    @Override
+    public List<UserEntity> getRequesters(FriendsQueryParam param) {
+        param.setRelation("2");
+        List<UserEntity> entities = userRelationEntityMapper.getRelationPerson(param);
+        return entities;
+    }
+
+    @Override
+    public List<UserEntity> getSpecialFriend(FriendsQueryParam param) {
+        param.setRelation("6");
+        List<UserEntity> entities = userRelationEntityMapper.getRelationPerson(param);
+        return entities;
     }
 }

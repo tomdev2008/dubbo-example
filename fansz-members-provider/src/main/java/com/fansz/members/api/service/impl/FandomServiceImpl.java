@@ -7,6 +7,7 @@ import com.fansz.members.api.service.FandomService;
 import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.GetPostsParam;
 import com.fansz.members.tools.BeanTools;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.stereotype.Service;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
@@ -38,5 +39,11 @@ public class FandomServiceImpl implements FandomService {
     public List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam) {
         FandomEntity param = BeanTools.copyAs(fandomQueryParam, FandomEntity.class);
         return fandomMapper.listByCondition(param);
+    }
+
+    @Override
+    public List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
+        PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getCount());
+        return fandomMapper.getRecommendFandom(pageBounds);
     }
 }

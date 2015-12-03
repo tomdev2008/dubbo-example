@@ -22,6 +22,17 @@
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
 
+    <resultMap id="fandomInfoMap" type="com.fansz.members.model.fandom.FandomInfoResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+    </resultMap>
+
+
 
     <sql id="Base_Column_List">
     id, fandom_name, fandom_parent_id, fandom_admin_id, fandom_creator_id, fandom_avatar_url, 
@@ -176,4 +187,11 @@
         </where>
     </select>
 
+    <select id="getRecommendFandom" resultMap="fandomInfoMap">
+            SELECT  f.*,m.count,p.member_avatar,p.sn,p.nickname
+            from feeds_fandom  f, (select  count(1)  count, fandom_id from feeds_member_fandom  group by fandom_id)  m,connects_member_profile p
+            where f.id = m.fandom_id
+            and   f.fandom_creator_sn = p.sn
+            order by m.count desc
+    </select>
 </mapper>

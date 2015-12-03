@@ -30,8 +30,10 @@
         <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
         <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
+        <result column="profile_updatetime" jdbcType="TIMESTAMP" property="profileUpdatetime"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
-        <result column="b.relation_status" jdbcType="VARCHAR" property="relationship"/>
+        <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
+        <result column="relation_status" jdbcType="VARCHAR" property="relationship"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, my_member_sn, friend_member_sn, relation_status
@@ -133,4 +135,13 @@
             #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
+
+    <select id="getRelationPerson" parameterType="com.fansz.members.model.relationship.FriendsQueryParam" resultMap="contactInfoMap">
+        SELECT m.*,r.relation_status
+        FROM   connects_member_profile m  , connects_member_relation r
+        WHERE  r.friend_member_sn=m.sn
+        AND    r.my_member_sn= #{sn,jdbcType=VARCHAR}
+        and    r.relation_status = #{relation,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

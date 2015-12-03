@@ -14,4 +14,6 @@ import java.util.List;
 public interface FandomService {
 
     List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
+
+    List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 }

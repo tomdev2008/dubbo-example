@@ -2,6 +2,7 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.UserEntity;
 
+import com.fansz.members.model.relationship.FriendsQueryParam;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

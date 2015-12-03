@@ -1,11 +1,18 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.ContactsApi;
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.ContactsService;
+import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.post.PostLikeInfoResult;
+import com.fansz.members.model.relationship.FriendsQueryParam;
+import com.fansz.members.tools.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * 好友关系接口类
@@ -120,18 +127,4 @@ public class ContactsProvider implements ContactsApi{
         return null;
     }
 
-    /**
-     * 获取所有候选人接口
-     * @return resp 返回对象
-     */
-    public Response getFollowRequest()
-    {
-        try {
-
-             contactsService.getCandidates(null);
-        } catch (Exception iae) {
-
-        }
-        return null;
-    }
 }

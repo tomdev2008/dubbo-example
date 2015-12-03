@@ -2,6 +2,7 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.ContactsService;
+import com.fansz.members.model.relationship.FriendsQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -48,4 +49,5 @@ public class ContactsServiceImpl implements ContactsService {
     public UserEntity getFriend(String myId, String id) {
         return null;
     }
+
 }

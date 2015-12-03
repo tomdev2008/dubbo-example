@@ -109,4 +109,33 @@ public interface RelationShipApi {
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 
 
+    /**
+     * 获取所有候选人接口
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/follower")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult getFollowers(FriendsQueryParam param);
+
+    /**
+     * 获取所有候选人接口
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/requester")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult getRequesters(FriendsQueryParam param);
+
+    /**
+     * 获取所有候选人接口
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/sprcial")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult getSpecialFriend(FriendsQueryParam param);
 }
