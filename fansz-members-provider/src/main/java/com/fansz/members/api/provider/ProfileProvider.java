@@ -2,11 +2,11 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

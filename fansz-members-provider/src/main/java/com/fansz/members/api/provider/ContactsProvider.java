@@ -1,11 +1,13 @@
 package com.fansz.members.api.provider;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.api.ContactsApi;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.ContactsService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.post.PostLikeInfoResult;
+import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.relationship.FriendsQueryParam;
 import com.fansz.members.tools.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +127,33 @@ public class ContactsProvider implements ContactsApi{
 
         }
         return null;
+    }
+
+    /**
+     * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
+     */
+    @POST
+    @Path("/album")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) {
+        CommonResult<List<String>> commonResult = new CommonResult<>();
+
+        try {
+            if (contractQueryParam != null)
+            {
+                List<String> images = contactsService.getImages(contractQueryParam);
+                commonResult.setResult(images);
+                commonResult.setStatus(Constants.SUCCESS);
+            } else {
+                commonResult.setStatus(Constants.FAIL);
+                commonResult.setMessage("json is null");
+            }
+
+        } catch (Exception e) {
+            throw new ApplicationException("Get special friend fail", e.getMessage());
+        }
+        return commonResult;
     }
 
 }

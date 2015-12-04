@@ -1,11 +1,11 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.MemberAlbumEntityMapper;
 import com.fansz.members.api.service.ContactsService;
-import com.fansz.members.model.relationship.FriendsQueryParam;
+import com.fansz.members.model.profile.ContactQueryParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -14,6 +14,9 @@ import java.util.List;
  */
 @Service
 public class ContactsServiceImpl implements ContactsService {
+
+    @Autowired
+    MemberAlbumEntityMapper memberAlbumEntityMapper;
 
     @Override
     public void addFriend(String id, String followId) {
@@ -48,6 +51,11 @@ public class ContactsServiceImpl implements ContactsService {
     @Override
     public UserEntity getFriend(String myId, String id) {
         return null;
+    }
+
+    @Override
+    public List<String> getImages(ContactQueryParam contractQueryParam) {
+        return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());
     }
 
 }

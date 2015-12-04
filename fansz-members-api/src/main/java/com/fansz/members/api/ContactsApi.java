@@ -1,10 +1,13 @@
 package com.fansz.members.api;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.relationship.FriendsQueryParam;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by root on 15-11-26.
@@ -83,4 +86,13 @@ public interface ContactsApi {
     @Produces("application/json")
     public Response getUserProfile(@PathParam("id") String id);
 
+
+    /**
+     * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
+     */
+    @POST
+    @Path("/album")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
 }

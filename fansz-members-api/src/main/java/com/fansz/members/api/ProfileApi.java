@@ -51,4 +51,5 @@ public interface ProfileApi {
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<List<ContactInfoResult>>  getContactInfo(ContactQueryParam contractQueryParam);
+
 }

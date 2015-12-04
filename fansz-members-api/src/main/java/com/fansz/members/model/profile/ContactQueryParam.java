@@ -21,6 +21,12 @@ public class ContactQueryParam extends PageParam implements Serializable {
 
     private String sn;
 
+    @JsonProperty("member_sn")
+    private String memberSn;
+
+    @JsonProperty("friend_sn")
+    private String friendSn;
+
     public List<String> getMobileList() {
         return mobileList;
     }
@@ -43,5 +49,21 @@ public class ContactQueryParam extends PageParam implements Serializable {
 
     public void setSn(String sn) {
         this.sn = sn;
+    }
+
+    public String getMemberSn() {
+        return memberSn;
+    }
+
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
+    }
+
+    public String getFriendSn() {
+        return friendSn;
+    }
+
+    public void setFriendSn(String friendSn) {
+        this.friendSn = friendSn;
     }
 }
