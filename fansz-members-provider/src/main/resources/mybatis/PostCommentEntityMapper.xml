@@ -99,4 +99,9 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!-- 删除我的评论 -->
+    <delete id="deleteMyComment">
+        DELETE FROM feeds_member_post_comment WHERE id = #{id} AND commentator_sn = #{sn}
+    </delete>
 </mapper>

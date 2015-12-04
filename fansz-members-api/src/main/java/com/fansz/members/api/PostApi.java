@@ -6,8 +6,10 @@ import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.post.*;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import java.util.List;
 
 /**
@@ -55,18 +57,18 @@ public interface PostApi {
      * @return resp 返回对象
      */
     @POST
-    @Path("/vote")
-    CommonResult<List<NullResult>> votePost(PostParam postParam);
+    @Path("/like")
+    CommonResult<NullResult> addLike(AddLikeParam addLikeParam);
 
     /**
      * 取消帖子点赞接口
      *
-     * @param postParam 帖子id
+     * @param deleteLikeParam
      * @return resp 返回对象
      */
     @POST
-    @Path("/removeVote")
-    CommonResult<List<NullResult>> removeVote(PostParam postParam);
+    @Path("/deleteLike")
+    CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam);
 
     /**
      * 查询POST的点赞信息
@@ -95,4 +97,13 @@ public interface PostApi {
     @POST
     @Path("/fandoms")
     CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam);
+
+    /**
+     * 查询某人在某个fandom的所有帖子列表
+     * @param getMemberFandomPostsParam
+     * @return
+     */
+    @POST
+    @Path("/memberPosts")
+    CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
 }

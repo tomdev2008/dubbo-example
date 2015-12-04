@@ -47,6 +47,14 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return renderSuccess(PRESENCE, "Exit fandom successfully");
     }
 
+    @Override
+    public CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
+
+        SingleFandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
+
+        return renderSuccess(result);
+    }
+
 
     @Override
     public CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam) {

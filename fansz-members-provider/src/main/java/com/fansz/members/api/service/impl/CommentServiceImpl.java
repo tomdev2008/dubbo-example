@@ -6,10 +6,8 @@ import com.fansz.members.api.repository.PostCommentEntityMapper;
 import com.fansz.members.api.service.CommentService;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by root on 15-11-4.
@@ -32,9 +30,13 @@ public class CommentServiceImpl implements CommentService {
       return null;
     }
 
+    /**
+     * 删除评论
+     * @param commentDelParam
+     */
     @Override
     public void removeComment(CommentDelParam commentDelParam) {
-        postCommentEntityMapper.deleteByPrimaryKey(commentDelParam.getCommentId());
+        postCommentEntityMapper.deleteMyComment(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
     }
 
 

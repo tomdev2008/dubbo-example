@@ -1,7 +1,9 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -24,4 +26,6 @@ public interface FandomMapper {
     List<FandomEntity> selectByParentId(Long id);
 
     List<FandomInfoResult> listByCondition(FandomEntity param);
+
+    SingleFandomEntity findFandomInfo(@Param("id") long id);
 }

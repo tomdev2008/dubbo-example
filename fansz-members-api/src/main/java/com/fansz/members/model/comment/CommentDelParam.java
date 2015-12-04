@@ -1,5 +1,7 @@
 package com.fansz.members.model.comment;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 import java.io.Serializable;
 
 /**
@@ -8,12 +10,17 @@ import java.io.Serializable;
 public class CommentDelParam implements Serializable{
 
     private static final long serialVersionUID = 7097767369484809045L;
+
+    @JsonProperty("comment_id")
     private Long commentId;
 
+    @JsonProperty("access_token")
     private String accessToken;
 
+    @JsonProperty("post_id")
     private Long postId;
 
+    @JsonProperty("commentator_sn")
     private String commentatorSn;
 
     public Long getCommentId() {

@@ -39,8 +39,8 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostLikeEntity">
-        insert into feeds_member_post_like (member_id, post_id, like_time)
-        values (#{memberId,jdbcType=BIGINT}, #{postId,jdbcType=BIGINT},#{likeTime,jdbcType=TIMESTAMP})
+        insert into feeds_member_post_like (member_sn, post_id, like_time)
+        values (#{memberSn,jdbcType=BIGINT}, #{postId,jdbcType=BIGINT},#{likeTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -111,4 +111,7 @@
         where  l.post_id =  #{postId,jdbcType=BIGINT}
   </select>
 
+    <delete id="deleteMyLike">
+        DELETE FROM feeds_member_post_like WHERE post_id = #{postId} AND member_sn = #{sn}
+    </delete>
 </mapper>

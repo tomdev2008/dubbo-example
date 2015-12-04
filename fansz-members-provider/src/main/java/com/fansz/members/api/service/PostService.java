@@ -3,10 +3,7 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.post.AddPostParam;
-import com.fansz.members.model.post.PostInfoResult;
-import com.fansz.members.model.post.PostLikeInfoResult;
-import com.fansz.members.model.post.PostParam;
+import com.fansz.members.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -29,9 +26,13 @@ public interface PostService {
 
     List<PostLikeInfoResult> listPostVotes(PostParam postParam);
 
-    void unlikePost(UserEntity user, String id);
-
     PageList<PostInfoResult> getFriendsPosts(String memberSn, PageBounds pageBounds);
 
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
+
+    void addLike(AddLikeParam addLikeParam);
+
+    void deleteLike(DeleteLikeParam deleteLikeParam);
+
+    PageList<MemberPostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam);
 }
