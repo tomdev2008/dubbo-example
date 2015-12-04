@@ -1,14 +1,13 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.PostCommentEntity;
-import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.model.comment.CommentPagedParam;
+import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandom;
+import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentQueryFromFandomResult;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by root on 15-11-4.
@@ -16,11 +15,10 @@ import java.util.List;
 @Service
 public interface CommentService {
 
-    PostCommentEntity addComment(UserEntity user, CommentParam commentPara);
+    PostCommentEntity addComment(CommentParam commentPara);
 
-    void removeComment(String id);
+    void removeComment(CommentDelParam commentDelParam);
 
-    PageList<PostCommentEntity> getCommentsByPostidFromFandom(CommentQueryFromFandom centQueryFromFandom);
-
+    PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram centQueryFromFandom, PageBounds pageBounds);
 
 }

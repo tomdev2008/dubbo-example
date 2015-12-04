@@ -7,11 +7,15 @@ public class PostCommentEntity {
 
     private Long postId;
 
-    private Long commentatorId;
+    private Long commentParentId;
 
-    private String commentContent;
+    private String commentatorSn;
+
+    private String  commentContent;
 
     private Date commentTime;
+
+    private String commentSource;
 
     public Long getId() {
         return id;
@@ -29,12 +33,20 @@ public class PostCommentEntity {
         this.postId = postId;
     }
 
-    public Long getCommentatorId() {
-        return commentatorId;
+    public Long getCommentParentId() {
+        return commentParentId;
     }
 
-    public void setCommentatorId(Long commentatorId) {
-        this.commentatorId = commentatorId;
+    public void setCommentParentId(Long commentParentId) {
+        this.commentParentId = commentParentId;
+    }
+
+    public String getCommentatorSn() {
+        return commentatorSn;
+    }
+
+    public void setCommentatorSn(String commentatorSn) {
+        this.commentatorSn = commentatorSn;
     }
 
     public String getCommentContent() {
@@ -42,7 +54,7 @@ public class PostCommentEntity {
     }
 
     public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent == null ? null : commentContent.trim();
+        this.commentContent = commentContent == null?"":commentContent.trim();
     }
 
     public Date getCommentTime() {
@@ -51,5 +63,13 @@ public class PostCommentEntity {
 
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
+    }
+
+    public String getCommentSource() {
+        return commentSource;
+    }
+
+    public void setCommentSource(String commentSource) {
+        this.commentSource = commentSource;
     }
 }

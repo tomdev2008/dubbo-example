@@ -5,9 +5,11 @@
     <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.PostCommentEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="post_id" property="postId" jdbcType="BIGINT"/>
-        <result column="commentator_id" property="commentatorId" jdbcType="BIGINT"/>
+        <result column="comment_parent_id" property="commentParentId" jdbcType="BIGINT"/>
+        <result column="commentator_sn" property="commentatorSn" jdbcType="VARCHAR"/>
         <result column="comment_content" property="commentContent" jdbcType="VARCHAR"/>
         <result column="comment_time" property="commentTime" jdbcType="TIMESTAMP"/>
+        <result column="comment_source" property="commentSource" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -27,13 +29,14 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.PostCommentEntity">
-        insert into feeds_member_post_comment (post_id, commentator_id, comment_content, comment_time)
-        values (#{postId,jdbcType=BIGINT}, #{commentatorId,jdbcType=BIGINT},
-        #{commentContent,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP})
+        insert into feeds_member_post_comment (post_id,comment_parent_id,commentator_sn, comment_content, comment_time,comment_source)
+        values (#{postId,jdbcType=BIGINT}, #{commentParentId,jdbcType=BIGINT},#{commentatorSn,jdbcType=VARCHAR},
+        #{commentContent,jdbcType=VARCHAR}, #{commentTime,jdbcType=TIMESTAMP},#{commentSource,jdbcType=VARCHAR})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
+
     <insert id="insertSelective" parameterType="com.fansz.members.api.entity.PostCommentEntity">
         insert into feeds_member_post_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -96,4 +99,26 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <select id="getCommentsByPostidFromFandom" resultMap="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Long">
+ SELECT
+	t.id,
+	t.post_id,
+	t.comment_content,
+	t.commentator_sn,
+	m.nickname commentator_nickname,
+	t.comment_time,
+	m.member_avatar commentator_avatar,
+	p.commentator_sn orgin_sn,
+	p.comment_content orgin_content,
+	p.comment_time orgin_time,
+	q.nickname orgin_nickname,
+	q.member_avatar orgin_avatar
+FROM
+	feeds_member_post_comment t
+LEFT JOIN connects_member_profile m ON m.sn = t.commentator_sn
+LEFT JOIN feeds_member_post_comment p ON t.comment_parent_id = p.id
+LEFT JOIN connects_member_profile q ON p.commentator_sn = q.sn
+WHERE
+	t.post_id = #{id,jdbcType=BIGINT} AND t.comment_source='T';
+    </select>
 </mapper>

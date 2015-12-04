@@ -3,69 +3,84 @@ package com.fansz.members.model.fandom;
 import org.springframework.util.Assert;
 
 import java.io.InputStream;
+import java.util.Date;
 
 /**
  * Created by root on 15-11-4.
  */
 public class FandomParam {
 
-    private String userId;
+    private Long id;
+    private String fandomName;
+    private Long fandomParentId;
+    private Long fandomAdminId;
+    private Long fandomCreatorId;
+    private String fandomAvatarUrl;
+    private String fandomIntro;
+    private Date fandomCreateTime;
 
-    private String title;
-
-    private String categoryId;
-
-    private String description;
-
-    private String avatar;
-
-    private String backImage;
-
-    public String getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getFandomName() {
+        return fandomName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setFandomName(String fandomName) {
+        this.fandomName = fandomName;
     }
 
-    public String getCategoryId() {
-        return categoryId;
+    public Long getFandomParentId() {
+        return fandomParentId;
     }
 
-    public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+    public void setFandomParentId(Long fandomParentId) {
+        this.fandomParentId = fandomParentId;
     }
 
-    public String getDescription() {
-        return description;
+    public Long getFandomAdminId() {
+        return fandomAdminId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setFandomAdminId(Long fandomAdminId) {
+        this.fandomAdminId = fandomAdminId;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public Long getFandomCreatorId() {
+        return fandomCreatorId;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setFandomCreatorId(Long fandomCreatorId) {
+        this.fandomCreatorId = fandomCreatorId;
     }
 
-    public String getBackImage() {
-        return backImage;
+    public String getFandomAvatarUrl() {
+        return fandomAvatarUrl;
     }
 
-    public void setBackImage(String backImage) {
-        this.backImage = backImage;
+    public void setFandomAvatarUrl(String fandomAvatarUrl) {
+        this.fandomAvatarUrl = fandomAvatarUrl;
     }
+
+    public String getFandomIntro() {
+        return fandomIntro;
+    }
+
+    public void setFandomIntro(String fandomIntro) {
+        this.fandomIntro = fandomIntro;
+    }
+
+    public Date getFandomCreateTime() {
+        return fandomCreateTime;
+    }
+
+    public void setFandomCreateTime(Date fandomCreateTime) {
+        this.fandomCreateTime = fandomCreateTime;
+    }
+
 }

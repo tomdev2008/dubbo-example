@@ -1,12 +1,17 @@
 package com.fansz.members.api;
 
+import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.CommonResult;
+import com.fansz.members.model.NullResult;
 import com.fansz.members.model.comment.CommentDelParam;
-import com.fansz.members.model.comment.CommentPagedParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandom;
+import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 /**
  * Created by root on 15-11-26.
@@ -15,15 +20,21 @@ import javax.ws.rs.core.Response;
 public interface CommentApi {
 
     /**
-     * 发布评论接口
+     * 发布帖子评论接口
      * @param commentPara 评论信息
      * @return resp 返回对象
      */
     @POST
     @Path("/create")
-    @Consumes("application/json")
-    @Produces("application/json")
-    public Response addComment(CommentParam commentPara);
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> addPostComment(CommentParam commentPara);
+
+    @POST
+    @Path("/reply")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> replyComment(CommentParam commentPara);
 
     /**
      * 删除评论接口
@@ -32,8 +43,9 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
-    @Produces("application/json")
-    public Response removeCommet(CommentDelParam commentDelParam);
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
     /**
      * 查询帖子下所有的评论列表
@@ -42,8 +54,9 @@ public interface CommentApi {
      */
     @GET
     @Path("/post")
-    @Produces("application/json")
-    public Response getCommentsByPostidFromFandom(CommentQueryFromFandom commentQueryFromFandom);
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom);
 
     /**
      * 查看朋友圈里所有的
@@ -51,7 +64,9 @@ public interface CommentApi {
      * @return
      */
     @GET
-    @Path("/post")
-    @Produces("application/json")
-    public Response getCommentsByPostidFromNewsfeed(CommentQueryFromFandom commentQueryFromFandom);
+    @Path("/post2")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentQueryFromFandomPram commentQueryFromFandom);
+
 }

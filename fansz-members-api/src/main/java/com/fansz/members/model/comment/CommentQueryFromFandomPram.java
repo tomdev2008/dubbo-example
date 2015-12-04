@@ -1,11 +1,12 @@
 package com.fansz.members.model.comment;
 
+import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by xuyubiao on 15/12/1.
  */
-public class CommentQueryFromFandom {
+public class CommentQueryFromFandomPram extends PageParam{
 
     private String sn;
     @JsonProperty("access_token")
