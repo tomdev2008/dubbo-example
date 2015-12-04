@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface RelationShipService {
 
-    PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds);
+    PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds,boolean isSpecial);
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
 
@@ -21,4 +21,7 @@ public interface RelationShipService {
 
     boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
 
+    PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam);
+
+    PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam);
 }

@@ -69,7 +69,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
                             FileUpload file = (FileUpload) data;
                             String url = process(file);
 
-                            responder.sendJson(HttpResponseStatus.OK, String.format("{\"url\":\"%s\"}", url));
+                            responder.sendJson(HttpResponseStatus.OK, String.format("{\"status\":\"0\",\"message\":\"Success\",\"result\":{\"url\":\"%s\"}}", url));
                         }
                     }
                 }

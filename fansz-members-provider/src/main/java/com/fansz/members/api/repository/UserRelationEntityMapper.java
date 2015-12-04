@@ -27,9 +27,16 @@ public interface UserRelationEntityMapper {
 
     int updateByPrimaryKey(UserRelationEntity record);
 
-    UserRelationEntity findRelationBySns(@Param("memberSn")String memberSn,@Param("friendSn")String friendSn);
+    UserRelationEntity findRelationBySns(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
 
     PageList<FriendInfoResult> findFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
 
+    PageList<FriendInfoResult> findSpecialFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
+
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam, PageBounds pageBounds);
+
+    PageList<FriendInfoResult> listAddMeRequest(String memberSn, PageBounds pageBounds);
+
+    PageList<FriendInfoResult> listMySendRequest(String memberSn, PageBounds pageBounds);
+
 }

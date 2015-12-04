@@ -49,6 +49,14 @@ public interface FandomApi {
     @Path("/fandom/join")
     CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
 
+    @POST
+    @Path("/fandom/beSpecial")
+    CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
+
+    @POST
+    @Path("/fandom/notSpecial")
+    CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
+
     /**
      * 退出fandom
      *

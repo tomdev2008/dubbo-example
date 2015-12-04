@@ -60,9 +60,11 @@ public class FandomServiceImpl implements FandomService {
         if (exist != null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
         }
+        fandomMemberEntity.setInfatuation("0");//1表示特别关注
         fandomMemberEntityMapper.insert(fandomMemberEntity);
         return false;
     }
+
 
     @Override
     public boolean exitFandom(ExitFandomParam joinFandomParam) {
@@ -73,5 +75,27 @@ public class FandomServiceImpl implements FandomService {
         }
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
         return false;
+    }
+    @Override
+    public boolean markAsSpecial(JoinFandomParam joinFandomParam){
+        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
+        if (exist == null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
+        }
+        exist.setFandomSn("1");
+        fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+        return true;
+    }
+    @Override
+    public boolean unmarkAsSpecial(JoinFandomParam joinFandomParam){
+        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
+        if (exist == null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
+        }
+        exist.setFandomSn("0");
+        fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+        return true;
     }
 }

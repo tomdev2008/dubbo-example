@@ -24,4 +24,8 @@ public interface FandomService {
     boolean joinFandom(JoinFandomParam joinFandomParam);
 
     boolean exitFandom(ExitFandomParam joinFandomParam);
+
+     boolean markAsSpecial(JoinFandomParam joinFandomParam);
+
+    boolean unmarkAsSpecial(JoinFandomParam joinFandomParam);
 }

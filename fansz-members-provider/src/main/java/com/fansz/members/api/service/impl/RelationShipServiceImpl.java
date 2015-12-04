@@ -30,8 +30,13 @@ public class RelationShipServiceImpl implements RelationShipService {
 
 
     @Override
-    public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds) {
-        return userRelationEntityMapper.findFriends(uid, pageBounds);
+    public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds,boolean isSpecial) {
+        if(isSpecial){
+            return userRelationEntityMapper.findSpecialFriends(uid, pageBounds);
+        }
+        else {
+            return userRelationEntityMapper.findFriends(uid, pageBounds);
+        }
     }
 
     @Override
@@ -78,5 +83,15 @@ public class RelationShipServiceImpl implements RelationShipService {
         return true;
     }
 
+    @Override
+    public PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam) {
+        PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
+        return userRelationEntityMapper.listAddMeRequest(friendsQueryParam.getMemberSn(), pageBounds);
+    }
 
+    @Override
+    public PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam) {
+        PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
+        return userRelationEntityMapper.listMySendRequest(friendsQueryParam.getMemberSn(), pageBounds);
+    }
 }

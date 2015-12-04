@@ -18,6 +18,9 @@ public class FriendsQueryParam extends PageParam implements Serializable {
     @JsonProperty("access_token")
     private String accessToken;
 
+    @JsonProperty("member_sn")
+    private String memberSn;
+
     public String getSn() {
         return sn;
     }
@@ -34,5 +37,11 @@ public class FriendsQueryParam extends PageParam implements Serializable {
         this.accessToken = accessToken;
     }
 
+    public String getMemberSn() {
+        return memberSn;
+    }
 
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
+    }
 }

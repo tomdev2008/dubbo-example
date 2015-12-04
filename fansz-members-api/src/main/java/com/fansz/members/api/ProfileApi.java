@@ -33,9 +33,14 @@ public interface ProfileApi {
      * @param searchParam
      * @return
      */
-    @Path("/show")
+    @Path("/searchByKey")
     @POST
-    CommonPagedResult<UserInfoResult> searchMembers(SearchParam searchParam);
+    CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam);
+
+
+    @Path("/searchByType")
+    @POST
+    CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam);
 
     /**
      * 修改会员信息
@@ -49,8 +54,6 @@ public interface ProfileApi {
 
 
     @Path("/setMemberType")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam);
 
 

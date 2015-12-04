@@ -23,13 +23,12 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
     private static StorageServer storageServer;
     private static StorageClient storageClient;
 
-    // Initialize Fast DFS Client configurations
 
-    static {
+    public static void init(String baseDir){
         try {
-            String classPath = new File(StorageServiceUtils.class.getResource("/").getFile()).getCanonicalPath();
-            String fdfsClientConfigFilePath = classPath + File.separator + CLIENT_CONFIG_FILE;
 
+            String fdfsClientConfigFilePath = baseDir+"/conf/"  + CLIENT_CONFIG_FILE;
+            System.out.println("loading fastdfs configuration from "+fdfsClientConfigFilePath);
             logger.info("Fast DFS configuration file path:" + fdfsClientConfigFilePath);
             ClientGlobal.init(fdfsClientConfigFilePath);
 
@@ -43,7 +42,6 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
 
         }
     }
-
 
     public static String upload(FastDFSFile file) {
         logger.info("File Name: " + file.getName() + "		File Length: " + file.getContent().length);

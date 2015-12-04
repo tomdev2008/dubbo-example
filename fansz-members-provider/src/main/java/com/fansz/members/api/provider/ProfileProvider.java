@@ -42,9 +42,14 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembers(SearchParam searchParam) {
+    public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam) {
         PageList<UserInfoResult> data = profileService.searchMembers(searchParam);
         return renderPagedSuccess(data);
+    }
+
+    @Override
+    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam) {
+        return searchMembersByKey(searchParam);
     }
 
     /**

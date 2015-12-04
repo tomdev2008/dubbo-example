@@ -10,6 +10,8 @@ public class FandomMemberEntity {
 
     private String fandomSn;
 
+    private String infatuation;
+
     private Date joinTime;
 
     public Long getId() {
@@ -34,6 +36,14 @@ public class FandomMemberEntity {
 
     public void setFandomSn(String fandomSn) {
         this.fandomSn = fandomSn;
+    }
+
+    public String getInfatuation() {
+        return infatuation;
+    }
+
+    public void setInfatuation(String infatuation) {
+        this.infatuation = infatuation;
     }
 
     public Date getJoinTime() {

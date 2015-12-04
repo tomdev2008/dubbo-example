@@ -6,22 +6,12 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="member_sn" property="memberSn" jdbcType="VARCHAR"/>
         <result column="fandom_sn" property="fandomSn" jdbcType="VARCHAR"/>
+        <result column="infatuation" property="infatuation" jdbcType="VARCHAR"/>
         <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="fandomResultMap" type="com.fansz.members.model.fandom.FandomInfoResult">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
-        <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
-        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
-        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
-        <association property="post_member" javaType="com.fansz.members.model.profile.UserInfoResult"
-                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
-    </resultMap>
-
     <sql id="Base_Column_List">
-    id, member_sn, fandom_sn, join_time
+    id, member_sn, fandom_sn,infatuation, join_time
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -44,7 +34,10 @@
             member_sn = #{memberSn,jdbcType=VARCHAR},
         </if>
         <if test="fandomId != null">
-            fandom_sn = #{fandomSn,jdbcType=VARCHAR},
+            fandom_id = #{fandomId,jdbcType=VARCHAR},
+        </if>
+        <if test="infatuation != null">
+            infatuation = #{infatuation,jdbcType=VARCHAR},
         </if>
         <if test="joinTime != null">
             join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -57,8 +50,8 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
-        insert into feeds_member_fandom (member_sn, fandom_sn,join_time)
-        values (#{memberSn,jdbcType=VARCHAR}, #{fandomSn,jdbcType=VARCHAR},#{joinTime,jdbcType=TIMESTAMP})
+        insert into feeds_member_fandom (member_sn, fandom_sn,infatuation,join_time)
+        values (#{memberSn,jdbcType=VARCHAR}, #{fandomSn,jdbcType=VARCHAR},#{infatuation,jdbcType=VARCHAR},#{joinTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
@@ -70,8 +63,11 @@
             <if test="memberId != null">
                 member_sn,
             </if>
-            <if test="fandomId != null">
+            <if test="fandomSn != null">
                 fandom_sn,
+            </if>
+            <if test="infatuation != null">
+                infatuation = #{infatuation,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 join_time,
@@ -83,6 +79,9 @@
             </if>
             <if test="fandomId != null">
                 #{fandomSn,jdbcType=VARCHAR},
+            </if>
+            <if test="infatuation != null">
+                infatuation = #{infatuation,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 #{joinTime,jdbcType=TIMESTAMP},
@@ -100,6 +99,9 @@
             </if>
             <if test="fandomId != null">
                 fandom_sn = #{fandomSn,jdbcType=VARCHAR},
+            </if>
+            <if test="infatuation != null">
+                infatuation = #{infatuation,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 join_time = #{joinTime,jdbcType=TIMESTAMP},
@@ -128,7 +130,8 @@
         where member_sn = #{memberSn,jdbcType=VARCHAR} and fandom_sn=#{fandomSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="findFandomsByMemberSn" parameterType="java.lang.String" resultMap="fandomResultMap">
+    <select id="findFandomsByMemberSn" parameterType="java.lang.String"
+            resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap">
         SELECT b.fandom_name,b.fandom_parent_id,b.fandom_avatar_url,b.fandom_intro,c.*
         FROM feeds_member_fandom a,feeds_fandom b,connects_member_profile c
         WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR} and a.fandom_id=b.id and b.fandom_creator_sn=c.sn;
