@@ -13,7 +13,7 @@ public class PostParam implements Serializable {
     @JsonProperty("post_id")
     private Long postId;
 
-    @JsonProperty("sn")
+    @JsonProperty("member_sn")
     private String memberSn;
 
     @JsonProperty("access_token")

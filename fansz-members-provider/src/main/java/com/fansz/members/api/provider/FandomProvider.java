@@ -3,13 +3,16 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.FandomApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.FandomService;
+import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.fandom.FandomCategorys;
+import com.fansz.members.model.fandom.FandomInfoResult;
+import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
 import com.fansz.members.tools.Constants;
-import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.fandom.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,6 +38,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return result;
 
     }
+
     @Override
     public CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam) {
         fandomService.joinFandom(joinFandomParam);
@@ -47,6 +51,17 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return renderSuccess(PRESENCE, "Exit fandom successfully");
     }
 
+    @Override
+    public CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam) {
+        fandomService.markAsSpecial(joinFandomParam);
+        return renderSuccess(PRESENCE);
+    }
+
+    @Override
+    public CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam) {
+        fandomService.unmarkAsSpecial(joinFandomParam);
+        return renderSuccess(PRESENCE);
+    }
 
     @Override
     public CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam) {
@@ -54,6 +69,45 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         PageBounds pageBounds = new PageBounds(fandomParam.getOffset(), fandomParam.getLimit());
         List<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
         return renderSuccess(fandoms);
+    }
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomInfoResult>> 返回对象
+     */
+    public CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam) {
+
+        List<FandomInfoResult> result = fandomService.getRecommendFandom(fandomQueryParam);
+
+        return super.renderSuccess(result);
+    }
+
+    /**
+     * 获取fandom大小分类接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @Override
+    public CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam) {
+        List<FandomCategorys> result = fandomService.getFandomCategory(fandomQueryParam);
+
+        return super.renderSuccess(result);
+    }
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @Override
+    public CommonResult<List<ContactInfoResult>> getFandomMembers(FandomQueryParam fandomQueryParam) {
+        List<ContactInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
+
+        return super.renderSuccess(result);
     }
 }
 

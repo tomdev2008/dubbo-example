@@ -41,11 +41,11 @@ public interface PostApi {
     /**
      * 获取帖子信息接口
      *
-     * @param postParam 帖子id
+     * @param postParam 帖子
      * @return resp 返回对象
      */
     @POST
-    @Path("/show")
+    @Path("/get")
     CommonResult<PostInfoResult> getPost(PostParam postParam);
 
 

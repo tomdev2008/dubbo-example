@@ -28,6 +28,17 @@
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
     </resultMap>
+    <resultMap id="friendInfoResultMap" type="com.fansz.members.model.relationship.FriendInfoResult">
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
+        <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
+        <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
+        <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
+    </resultMap>
     <sql id="Base_Column_List">
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, 
     profile_createtime, profile_updatetime, member_type, member_status
@@ -304,15 +315,18 @@
         <include refid="Base_Column_List"/>
         FROM connects_member_profile
         <where>
-        <if test="email != null">
-            email = #{email,jdbcType=VARCHAR},
-        </if>
-        <if test="nickname != null">
-            nickname = #{nickname,jdbcType=VARCHAR},
-        </if>
-        <if test="mobile != null">
-            mobile = #{mobile,jdbcType=VARCHAR},
-        </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="memberType != null">
+                member_type = #{memberType,jdbcType=VARCHAR},
+            </if>
         </where>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">

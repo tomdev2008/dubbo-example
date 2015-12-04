@@ -1,18 +1,15 @@
 package com.fansz.members.model.fandom;
 
-import com.fansz.members.model.profile.UserInfoResult;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import javax.ws.rs.DefaultValue;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
- * 用户关注的fandom信息
+ * Created by root on 15-12-4.
  */
-public class FandomInfoResult implements Serializable {
-
-    private static final long serialVersionUID = -6948988720607403742L;
+public class FandomCategorys implements Serializable {
 
     private Long id;
 
@@ -21,7 +18,6 @@ public class FandomInfoResult implements Serializable {
 
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
-
 
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
@@ -32,8 +28,8 @@ public class FandomInfoResult implements Serializable {
     @JsonProperty("fandom_create_time")
     private Date fandomCreateTime;
 
-    @JsonProperty("fandom_creator")
-    private UserInfoResult creator;
+    @JsonProperty("child")
+    List<FandomInfoResult> childCategory;
 
     public Long getId() {
         return id;
@@ -59,8 +55,6 @@ public class FandomInfoResult implements Serializable {
         this.fandomParentId = fandomParentId;
     }
 
-
-
     public String getFandomAvatarUrl() {
         return fandomAvatarUrl;
     }
@@ -77,19 +71,19 @@ public class FandomInfoResult implements Serializable {
         this.fandomIntro = fandomIntro;
     }
 
-    public UserInfoResult getCreator() {
-        return creator;
-    }
-
-    public void setCreator(UserInfoResult creator) {
-        this.creator = creator;
-    }
-
     public Date getFandomCreateTime() {
         return fandomCreateTime;
     }
 
     public void setFandomCreateTime(Date fandomCreateTime) {
         this.fandomCreateTime = fandomCreateTime;
+    }
+
+    public List<FandomInfoResult> getChildCategory() {
+        return childCategory;
+    }
+
+    public void setChildCategory(List<FandomInfoResult> childCategory) {
+        this.childCategory = childCategory;
     }
 }

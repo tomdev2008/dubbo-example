@@ -33,9 +33,14 @@ public interface ProfileApi {
      * @param searchParam
      * @return
      */
-    @Path("/show")
+    @Path("/searchByKey")
     @POST
-    CommonPagedResult<UserInfoResult> searchMembers(SearchParam searchParam);
+    CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam);
+
+
+    @Path("/searchByType")
+    @POST
+    CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam);
 
     /**
      * 修改会员信息
@@ -49,11 +54,16 @@ public interface ProfileApi {
 
 
     @Path("/setMemberType")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam);
 
-
+    /**
+     * 查询用户相册
+     */
+    @POST
+    @Path("/album")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
     /**
      * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
      */

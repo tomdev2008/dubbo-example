@@ -25,4 +25,6 @@ public interface ProfileService {
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 
     PageList<UserInfoResult> searchMembers(SearchParam searchParam);
+
+    List<String> getImages(ContactQueryParam contractQueryParam);
 }

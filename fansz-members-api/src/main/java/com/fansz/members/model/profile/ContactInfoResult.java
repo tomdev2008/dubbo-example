@@ -2,6 +2,7 @@ package com.fansz.members.model.profile;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.ws.rs.DefaultValue;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,8 +30,12 @@ public class ContactInfoResult  implements Serializable{
     @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
+    private Date profileUpdatetime;
+
     @JsonProperty("member_type")
     private String memberType;
+
+    private String memberStatus;
 
     private String relationship;
 
@@ -112,5 +117,21 @@ public class ContactInfoResult  implements Serializable{
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
+    }
+
+    public Date getProfileUpdatetime() {
+        return profileUpdatetime;
+    }
+
+    public void setProfileUpdatetime(Date profileUpdatetime) {
+        this.profileUpdatetime = profileUpdatetime;
+    }
+
+    public String getMemberStatus() {
+        return memberStatus;
+    }
+
+    public void setMemberStatus(String memberStatus) {
+        this.memberStatus = memberStatus;
     }
 }

@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.relationship.FriendsQueryParam;
@@ -28,6 +29,15 @@ public interface RelationShipApi {
     @POST
     @Path("/friends/show")
     CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
+
+    /**
+     * 获取特别用户好友列表
+     *
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/specialFriends/show")
+    CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam);
 
     /**
      * 请求添加为好友
@@ -68,5 +78,14 @@ public interface RelationShipApi {
     @POST
     @Path("/friends/agree")
     CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
+
+
+    /**
+     * 获取添加我的好友请求
+     *
+     * @param friendsQueryParam
+     * @return
+     */
+    CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
 }

@@ -13,6 +13,8 @@ import javax.ws.rs.*;
  * Created by root on 15-11-26.
  */
 @Path("/comments")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface CommentApi {
 
     /**
@@ -23,14 +25,11 @@ public interface CommentApi {
      */
     @POST
     @Path("/create")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+
     public CommonResult<NullResult> addPostComment(CommentParam commentPara);
 
     @POST
     @Path("/reply")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<NullResult> replyComment(CommentParam commentPara);
 
     /**
@@ -41,8 +40,6 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
 }

@@ -20,6 +20,9 @@ public class SearchParam extends PageParam implements Serializable {
     @JsonProperty("search_val")
     private String searchVal;
 
+    @JsonProperty("member_type")
+    private String memberType;
+
     public String getMemberSn() {
         return memberSn;
     }
@@ -43,4 +46,16 @@ public class SearchParam extends PageParam implements Serializable {
     public void setSearchVal(String searchVal) {
         this.searchVal = searchVal;
     }
+<<<<<<< HEAD
 }
+=======
+
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(String memberType) {
+        this.memberType = memberType;
+    }
+}
+>>>>>>> origin/master

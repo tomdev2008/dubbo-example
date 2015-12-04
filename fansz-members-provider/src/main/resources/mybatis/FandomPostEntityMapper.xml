@@ -20,17 +20,19 @@
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
-        <result column="likeCount" property="fandomId" jdbcType="BIGINT"/>
+        <result column="likeCount" property="likeCount" jdbcType="BIGINT"/>
     </resultMap>
 
-    <resultMap id="postInfoResultMap" type="com.fansz.members.model.post.PostInfoResult">
+    <resultMap id="postInfoMap" type="com.fansz.members.model.post.PostInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="member_sn" property="memberSn" jdbcType="BIGINT"/>
         <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
         <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="followed" property="followed" jdbcType="VARCHAR"/>
+        <result column="likes" property="likes" jdbcType="BIGINT"/>
+        <result column="comments" property="comments" jdbcType="BIGINT"/>
         <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
         <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
@@ -178,7 +180,8 @@
         (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
         FROM feeds_member_post_fandom a,connects_member_profile b,feeds_member_fandom c
         WHERE c.member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND a.fandom_id=c.fandom_id AND a.member_sn=b.sn
+        AND a.fandom_id=c.fandom_id
+        AND a.member_sn=b.sn
     </select>
 
     <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
@@ -193,6 +196,7 @@
         AND a.fandom_id is null
     </select>
 
+<<<<<<< HEAD
     <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
         SELECT
             f.post_title,
@@ -210,4 +214,15 @@
         or f.post_content LIKE '%'||#{searchVal}||'%'
     </select>
 
+=======
+    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="postInfoMap">
+        SELECT p.id,p.fandom_id, p.post_title, p.post_content, p.post_newsfeeds, p.post_time,
+               m.sn,m.nickname,m.member_avatar, if(l.id is null,'0','1') followed,
+        (SELECT count(1) FROM feeds_member_post_like where post_id=p.id) likes,
+        (SELECT count(1) FROM feeds_member_post_comment where post_id=p.id) comments
+        FROM connects_member_profile m,feeds_member_post_fandom p LEFT JOIN feeds_member_post_like l on p.id = l.post_id and l.member_sn = #{memberSn,jdbcType=VARCHAR}
+        WHERE  p.id = #{postId,jdbcType=VARCHAR}
+        AND p.member_sn=m.sn
+    </select>
+>>>>>>> origin/master
 </mapper>

@@ -10,22 +10,45 @@
         <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <resultMap id="fandomInfoResultMap" type="com.fansz.members.model.fandom.FandomInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_sn" property="fandomAdminId" jdbcType="BIGINT"/>
-        <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <association property="post_member" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
 
+    <resultMap id="fandomInfoMap" type="com.fansz.members.model.fandom.FandomInfoResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
+        <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+    </resultMap>
+
+    <resultMap id="fandomCategoryMap" type="com.fansz.members.model.fandom.FandomCategorys">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
+        <association property="childCategory" javaType="com.fansz.members.model.fandom.FandomInfoResult"
+                     resultMap="fandomInfoMap"/>
+    </resultMap>
 
     <sql id="Base_Column_List">
-    id, fandom_name, fandom_parent_id, fandom_admin_id, fandom_creator_id, fandom_avatar_url, 
-    fandom_intro
+    id, fandom_name, fandom_parent_id, fandom_admin_sn, fandom_creator_sn, fandom_avatar_url,
+    fandom_intro, fandom_create_time
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -141,7 +164,8 @@
   </update>
 
 
-    <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity" resultMap="com.fansz.members.api.repository.FandomMemberEntityMapper.fandomResultMap">
+    <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
+            resultMap="com.fansz.members.api.repository.FandomMemberEntityMapper.fandomResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM feeds_fandom
@@ -167,4 +191,29 @@
         </where>
     </select>
 
+    <select id="getRecommendFandom" resultMap="fandomInfoMap">
+            SELECT  f.*,m.count,p.member_avatar,p.sn,p.nickname
+            from feeds_fandom  f, (select  count(1)  count, fandom_id from feeds_member_fandom  group by fandom_id)  m,connects_member_profile p
+            where f.id = m.fandom_id
+            and   f.fandom_creator_sn = p.sn
+            order by m.count desc
+    </select>
+
+    <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_fandom a
+        where a.fandom_parent_id = #{id,jdbcType=BIGINT}
+        order by a.id
+    </select>
+
+    <select id="getFandomMembers" parameterType="com.fansz.members.model.fandom.FandomQueryParam"
+            resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
+
+        select a.*,r.relation_status
+        from (select  p.*
+        from  feeds_member_fandom m, connects_member_profile  p
+        where m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
+    </select>
 </mapper>
