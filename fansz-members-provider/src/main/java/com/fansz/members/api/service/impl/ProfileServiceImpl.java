@@ -1,6 +1,7 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.repository.MemberAlbumEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
@@ -31,6 +32,9 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
     private UserRelationEntityMapper userRelationEntityMapper;
+
+    @Autowired
+    private MemberAlbumEntityMapper memberAlbumEntityMapper;
 
     @Override
     public UserInfoResult getProfile(String uid) {
@@ -65,5 +69,9 @@ public class ProfileServiceImpl implements ProfileService {
     public PageList<UserInfoResult> searchMembers(SearchParam searchParam){
         PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
         return userEntityMapper.searchMembers(searchParam,pageBounds);
+    }
+    @Override
+    public List<String> getImages(ContactQueryParam contractQueryParam) {
+        return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());
     }
 }

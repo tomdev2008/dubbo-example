@@ -25,7 +25,7 @@ public interface PostService {
 
     void removePost(String id);
 
-    FandomPostEntity getPost(UserEntity user, String id);
+    PostInfoResult getPost(PostParam postParam);
 
     List<PostLikeInfoResult> listPostVotes(PostParam postParam);
 

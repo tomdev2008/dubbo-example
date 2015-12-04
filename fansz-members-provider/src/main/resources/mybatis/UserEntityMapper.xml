@@ -28,7 +28,7 @@
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
     </resultMap>
-    <resultMap id="friendInfoResultMap" type="com.fansz.members.model.profile.FriendInfoResult">
+    <resultMap id="friendInfoResultMap" type="com.fansz.members.model.relationship.FriendInfoResult">
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>

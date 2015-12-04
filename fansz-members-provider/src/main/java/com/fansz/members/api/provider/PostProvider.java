@@ -61,13 +61,20 @@ public class PostProvider extends AbstractProvider implements PostApi {
 
     @Override
     public CommonResult<NullResult> removePost(PostParam postParam) {
-        return null;
+        return null;//TODO:need to implement
     }
 
-    @Override
+    /**
+     * 获取帖子信息接口
+     *
+     * @param postParam 帖子
+     * @return resp 返回对象
+     */
     public CommonResult<PostInfoResult> getPost(PostParam postParam) {
-        return null;
+        PostInfoResult postInfoResult = postService.getPost(postParam);
+        return renderSuccess(postInfoResult);
     }
+
 
     @Override
     public CommonResult<List<NullResult>> votePost(PostParam postParam) {

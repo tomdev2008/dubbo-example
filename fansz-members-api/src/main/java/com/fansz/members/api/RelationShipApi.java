@@ -88,12 +88,4 @@ public interface RelationShipApi {
      */
     CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
-    /**
-     * 获取我添加的好友请求
-     *
-     * @param friendsQueryParam
-     * @return
-     */
-    CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);
-
 }

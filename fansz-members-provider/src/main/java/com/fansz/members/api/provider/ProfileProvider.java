@@ -4,13 +4,11 @@ import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.model.CommonPagedResult;
-import com.fansz.members.model.search.SearchParam;
-import com.fansz.members.tools.Constants;
-import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
-import com.fansz.members.tools.StringTools;
+import com.fansz.members.model.search.SearchParam;
+import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -64,7 +62,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return renderSuccess(PRESENCE, "Change profile successfully");
     }
 
-    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam){
+    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam) {
 
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
@@ -78,5 +76,12 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     public CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam) {
         PageList<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
         return super.renderPagedSuccess(dataResult);
+    }
+
+
+    @Override
+    public CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) {
+        List<String> images = profileService.getImages(contractQueryParam);
+        return super.renderSuccess(images);
     }
 }

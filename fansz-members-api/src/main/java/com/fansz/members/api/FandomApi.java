@@ -8,6 +8,7 @@ import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -67,4 +68,33 @@ public interface FandomApi {
     @Path("/fandom/exit")
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomInfoResult>> 返回对象
+     */
+    @POST
+    @Path("/recommend")
+    CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam);
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @POST
+    @Path("/category")
+    CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @POST
+    @Path("/members")
+    CommonResult<List<ContactInfoResult>> getFandomMembers(FandomQueryParam fandomQueryParam);
 }

@@ -13,13 +13,13 @@ public class FriendsQueryParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = 1170651723025637518L;
 
+    @JsonProperty("member_sn")
     private String sn;
 
     @JsonProperty("access_token")
     private String accessToken;
 
-    @JsonProperty("member_sn")
-    private String memberSn;
+    private String relation;
 
     public String getSn() {
         return sn;
@@ -37,11 +37,8 @@ public class FriendsQueryParam extends PageParam implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public String getMemberSn() {
-        return memberSn;
-    }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 }

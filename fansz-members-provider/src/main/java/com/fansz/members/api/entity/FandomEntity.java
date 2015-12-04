@@ -1,5 +1,7 @@
 package com.fansz.members.api.entity;
 
+import java.util.Date;
+
 public class FandomEntity {
     private Long id;
 
@@ -14,6 +16,8 @@ public class FandomEntity {
     private String fandomAvatarUrl;
 
     private String fandomIntro;
+
+    private Date fandomCreateTime;
 
     public Long getId() {
         return id;
@@ -69,5 +73,13 @@ public class FandomEntity {
 
     public void setFandomIntro(String fandomIntro) {
         this.fandomIntro = fandomIntro == null ? null : fandomIntro.trim();
+    }
+
+    public Date getFandomCreateTime() {
+        return fandomCreateTime;
+    }
+
+    public void setFandomCreateTime(Date fandomCreateTime) {
+        this.fandomCreateTime = fandomCreateTime;
     }
 }

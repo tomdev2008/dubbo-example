@@ -1,5 +1,6 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
@@ -24,4 +25,5 @@ public interface RelationShipService {
     PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam);
 
     PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam);
+
 }

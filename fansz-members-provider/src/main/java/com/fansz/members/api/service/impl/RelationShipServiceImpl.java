@@ -1,6 +1,7 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
@@ -86,12 +87,13 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam) {
         PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
-        return userRelationEntityMapper.listAddMeRequest(friendsQueryParam.getMemberSn(), pageBounds);
+        return userRelationEntityMapper.listAddMeRequest(friendsQueryParam.getSn(), pageBounds);
     }
 
     @Override
     public PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam) {
         PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
-        return userRelationEntityMapper.listMySendRequest(friendsQueryParam.getMemberSn(), pageBounds);
+        return userRelationEntityMapper.listMySendRequest(friendsQueryParam.getSn(), pageBounds);
     }
+
 }
