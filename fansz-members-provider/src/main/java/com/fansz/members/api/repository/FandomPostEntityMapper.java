@@ -6,12 +6,10 @@ import com.fansz.members.model.post.PostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @MapperScan
-@Service
 public interface FandomPostEntityMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -33,5 +31,6 @@ public interface FandomPostEntityMapper {
 
     PageList<PostInfoResult> findPostsOfMyFriends(String memberSn, PageBounds pageBounds);
 
+    PageList<PostInfoResult> searchPosts(String searchVal, PageBounds pageBounds);
     PostInfoResult getPost(PostParam postParam);
 }

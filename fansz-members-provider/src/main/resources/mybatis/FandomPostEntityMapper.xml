@@ -196,6 +196,25 @@
         AND a.fandom_id is null
     </select>
 
+<<<<<<< HEAD
+    <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            f.post_title,
+            f.post_content,
+            f.post_newsfeeds,
+            f.post_time,
+            p.sn,
+            p.nickname,
+            p.member_avatar
+        FROM
+            feeds_member_post_fandom f
+        LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
+        WHERE
+            f.post_title LIKE '%'||#{searchVal}||'%'
+        or f.post_content LIKE '%'||#{searchVal}||'%'
+    </select>
+
+=======
     <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="postInfoMap">
         SELECT p.id,p.fandom_id, p.post_title, p.post_content, p.post_newsfeeds, p.post_time,
                m.sn,m.nickname,m.member_avatar, if(l.id is null,'0','1') followed,
@@ -205,4 +224,5 @@
         WHERE  p.id = #{postId,jdbcType=VARCHAR}
         AND p.member_sn=m.sn
     </select>
+>>>>>>> origin/master
 </mapper>
