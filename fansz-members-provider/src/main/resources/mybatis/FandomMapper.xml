@@ -10,6 +10,7 @@
         <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <resultMap id="FavoriteFandomResult" type="com.fansz.members.api.entity.FandomEntity">
@@ -28,15 +29,27 @@
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
         <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+    </resultMap>
+
+    <resultMap id="fandomCategoryMap" type="com.fansz.members.model.fandom.FandomCategorys">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
+        <association property="childCategory" javaType="com.fansz.members.model.fandom.FandomInfoResult"
+                     resultMap="fandomInfoMap"/>
     </resultMap>
 
 
 
     <sql id="Base_Column_List">
-    id, fandom_name, fandom_parent_id, fandom_admin_id, fandom_creator_id, fandom_avatar_url, 
-    fandom_intro
+    id, fandom_name, fandom_parent_id, fandom_admin_sn, fandom_creator_sn, fandom_avatar_url,
+    fandom_intro, fandom_create_time
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -193,5 +206,13 @@
             where f.id = m.fandom_id
             and   f.fandom_creator_sn = p.sn
             order by m.count desc
+    </select>
+
+    <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomInfoMap">
+        select
+        <include refid="Base_Column_List"/>
+        from  feeds_fandom a
+        where a.fandom_parent_id = #{id,jdbcType=BIGINT}
+        order by a.id
     </select>
 </mapper>

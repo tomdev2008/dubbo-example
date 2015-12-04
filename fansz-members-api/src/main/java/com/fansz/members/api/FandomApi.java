@@ -40,4 +40,16 @@ public interface FandomApi {
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam);
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @POST
+    @Path("/category")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
 }

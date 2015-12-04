@@ -1,6 +1,7 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.model.fandom.FandomCategorys;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.mybatis.spring.annotation.MapperScan;
@@ -30,4 +31,5 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getRecommendFandom(PageBounds pageBounds);
 
+    List<FandomInfoResult> getFandomCategory(Long id);
 }

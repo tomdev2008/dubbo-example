@@ -16,4 +16,7 @@ public interface FandomService {
     List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
 
     List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
+
+
+    List<FandomCategorys> getFandomCategory(FandomQueryParam fandomQueryParam);
 }

@@ -110,14 +110,14 @@ public interface RelationShipApi {
 
 
     /**
-     * 获取所有候选人接口
+     * 获取添加我的好友请求列表
      * @return resp 返回对象
      */
     @POST
     @Path("/follower")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    public CommonResult getFollowers(FriendsQueryParam param);
+    public CommonResult getFriendRequesters(FriendsQueryParam param);
 
     /**
      * 获取所有候选人接口

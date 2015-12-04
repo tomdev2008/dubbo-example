@@ -118,7 +118,7 @@ public class RelationShipProvider implements RelationShipApi {
      * @param param 用户
      * @return resp 返回对象
      */
-    public CommonResult getFollowers(FriendsQueryParam param) {
+    public CommonResult getFriendRequesters(FriendsQueryParam param) {
         CommonResult<List<UserEntity>> commonResult = new CommonResult<>();
 
         try {
@@ -133,7 +133,7 @@ public class RelationShipProvider implements RelationShipApi {
             }
 
         } catch (Exception e) {
-            throw new ApplicationException("", e.getMessage());
+            throw new ApplicationException("Get friend requesters fail!", e.getMessage());
         }
         return commonResult;
     }
@@ -158,7 +158,7 @@ public class RelationShipProvider implements RelationShipApi {
             }
 
         } catch (Exception e) {
-            throw new ApplicationException("", e.getMessage());
+            throw new ApplicationException("Get requesters fail!", e.getMessage());
         }
         return commonResult;
     }
@@ -183,7 +183,7 @@ public class RelationShipProvider implements RelationShipApi {
             }
 
         } catch (Exception e) {
-            throw new ApplicationException("", e.getMessage());
+            throw new ApplicationException("Get special friend fail", e.getMessage());
         }
         return commonResult;
     }

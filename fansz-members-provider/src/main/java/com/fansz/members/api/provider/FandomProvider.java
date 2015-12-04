@@ -60,5 +60,29 @@ public class FandomProvider implements FandomApi {
         }
         return commonResult;
     }
+
+    /**
+     * 获取fandom大小分类接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @Override
+    public CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam) {
+        CommonResult<List<FandomCategorys>> commonResult = new CommonResult<List<FandomCategorys>>();
+        try {
+            if (null != fandomQueryParam) {
+                List<FandomCategorys> result = fandomService.getFandomCategory(fandomQueryParam);
+                commonResult.setResult(result);
+                commonResult.setStatus(Constants.SUCCESS);
+            } else {
+                commonResult.setStatus(Constants.FAIL);
+                commonResult.setMessage("json is null");
+            }
+        } catch (Exception e) {
+            throw new ApplicationException("", e.getMessage());
+        }
+        return commonResult;
+    }
 }
 
