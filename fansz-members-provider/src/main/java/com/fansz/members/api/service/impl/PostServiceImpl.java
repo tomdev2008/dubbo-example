@@ -46,8 +46,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostLikeInfoResult> likePost(PostParam postParam) {
-        List<PostLikeInfoResult> list = fandomPostLikeEntityMapper.likePost(postParam.getPostId());
+    public List<PostLikeInfoResult> listPostVotes(PostParam postParam) {
+        List<PostLikeInfoResult> list = fandomPostLikeEntityMapper.listPostVotes(postParam.getPostId());
         return list;
     }
 

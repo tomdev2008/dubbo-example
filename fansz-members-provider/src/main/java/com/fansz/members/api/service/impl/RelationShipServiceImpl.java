@@ -26,18 +26,8 @@ import java.util.List;
 public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
-    private FandomMemberEntityMapper fandomMemberEntityMapper;
-
-    @Autowired
-    private UserEntityMapper userEntityMapper;
-
-    @Autowired
     private UserRelationEntityMapper userRelationEntityMapper;
 
-    @Override
-    public List<FandomInfoResult> findFandomsByMemberSn(String sn,PageBounds pageBounds) {
-        return fandomMemberEntityMapper.findFandomsByMemberSn(sn,pageBounds);
-    }
 
     @Override
     public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds) {
@@ -88,25 +78,5 @@ public class RelationShipServiceImpl implements RelationShipService {
         return true;
     }
 
-    @Override
-    public boolean joinFandom(JoinFandomParam joinFandomParam) {
-        FandomMemberEntity fandomMemberEntity = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
-        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMemberEntity);
-        if (exist != null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
-        }
-        fandomMemberEntityMapper.insert(fandomMemberEntity);
-        return false;
-    }
 
-    @Override
-    public boolean exitFandom(ExitFandomParam joinFandomParam) {
-        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
-        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
-        if (exist == null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
-        }
-        fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
-        return false;
-    }
 }

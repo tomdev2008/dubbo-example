@@ -1,13 +1,16 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.ProfileApi;
+import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
 import com.fansz.members.tools.StringTools;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +21,7 @@ import java.util.List;
  * TODO:后续需要进行重构,统一处理过程,分为权限控制,参数检查,调用服务等
  */
 @Component("profileProvider")
-public class ProfileProvider implements ProfileApi {
+public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
     private final static NullResult PRESENCE = new NullResult();
 
@@ -67,11 +70,8 @@ public class ProfileProvider implements ProfileApi {
     }
 
     @Override
-    public CommonResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam) {
-        CommonResult<List<ContactInfoResult>> result = new CommonResult<>();
-        List<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
-        result.setResult(dataResult);
-        result.setStatus(Constants.SUCCESS);
-        return result;
+    public CommonPagedResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam) {
+        PageList<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
+        return super.renderPagedSuccess(dataResult);
     }
 }

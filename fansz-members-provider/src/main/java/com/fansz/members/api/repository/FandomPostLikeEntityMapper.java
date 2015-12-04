@@ -20,6 +20,6 @@ public interface FandomPostLikeEntityMapper {
 
     int updateByPrimaryKey(FandomPostLikeEntity record);
 
-    List<PostLikeInfoResult> likePost(Long id);
+    List<PostLikeInfoResult> listPostVotes(Long id);
 
 }

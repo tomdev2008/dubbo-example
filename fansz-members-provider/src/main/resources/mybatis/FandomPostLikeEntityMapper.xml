@@ -99,7 +99,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="likePost" resultMap="postLikeInfoResult" parameterType="java.lang.Long">
+    <select id="listPostVotes" resultMap="postLikeInfoResult" parameterType="java.lang.Long">
          select
             l.id,
             l.like_time,

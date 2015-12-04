@@ -15,17 +15,10 @@ import java.util.List;
  * 关系服务
  */
 @Path("/relationships")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface RelationShipApi {
-    /**
-     * 获取用户关注的fandoms
-     *
-     * @return resp 返回对象
-     */
-    @POST
-    @Path("/fandoms")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam);
+
 
     /**
      * 获取用户的好友列表
@@ -34,8 +27,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/show")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonPagedResult<List<FriendInfoResult>> getFriends(FriendsQueryParam friendsParam);
 
     /**
@@ -46,8 +37,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/add")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam);
 
     /**
@@ -58,8 +47,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/add")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -70,8 +57,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/cancel")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -82,31 +67,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/agree")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
-
-    /**
-     * 加入fandom
-     * @param joinFandomParam
-     * @return
-     */
-    @POST
-    @Path("/fandom/join")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
-
-    /**
-     * 退出fandom
-     * @param exitFandomParam
-     * @return
-     */
-    @POST
-    @Path("/fandom/exit")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
-
 
 }

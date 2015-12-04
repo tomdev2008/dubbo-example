@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -28,6 +29,12 @@ public class PostInfoResult implements Serializable {
 
     private Long comments;
 
+    private Date postTime;
+
+    @JsonProperty("fandom_info")
+    private FandomInfoResult  fandomInfoResult;
+
+    @JsonProperty("post_member")
     private UserInfoResult userInfoResult;
 
     public Long getId() {
@@ -95,6 +102,14 @@ public class PostInfoResult implements Serializable {
         this.userInfoResult = userInfoResult;
     }
 
+    public FandomInfoResult getFandomInfoResult() {
+        return fandomInfoResult;
+    }
+
+    public void setFandomInfoResult(FandomInfoResult fandomInfoResult) {
+        this.fandomInfoResult = fandomInfoResult;
+    }
+
     public Date getPostTime() {
         return postTime;
     }
@@ -103,5 +118,5 @@ public class PostInfoResult implements Serializable {
         this.postTime = postTime;
     }
 
-    private Date postTime;
+
 }

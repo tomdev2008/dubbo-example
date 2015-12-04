@@ -1,5 +1,5 @@
 #!/bin/sh
-MAIN_CLASS="com.fansz.members.Main"
+MAIN_CLASS="com.fansz.storage.Main"
   
 #  
 cd `dirname $0`/..  
@@ -18,7 +18,7 @@ JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
   
 JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"  
 JAVA_OPTS="$JAVA_OPTS -Xloggc:$BASE_DIR/logs/gc.log"
-MEMBERS_PID="$BASE_DIR/logs/members.pid"
+STORAGE_PID="$BASE_DIR/logs/storage.pid"
 
 if [ ! -f "$JAVA_HOME/bin/java" ]; then  
   echo "please set JAVA_HOME"  
@@ -26,16 +26,16 @@ if [ ! -f "$JAVA_HOME/bin/java" ]; then
 fi  
   
 LOG_PATH="$BASE_DIR/logs" 
-MEMBERS_OUT="$LOG_PATH/members.out"
+STORAGE_OUT="$LOG_PATH/storage.out"
   
 if [ ! -d "$LOG_PATH" ]; then                                                                                                                                                   
     mkdir $LOG_PATH  
 fi  
 
 #star member server
-nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configurationFile="$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$MEMBERS_OUT" 2>&1 &
+nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configurationFile="$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$STORAGE_OUT" 2>&1 &
 
-echo $! > "$MEMBERS_PID"
+echo $! > "$STORAGE_PID"
 
 
 

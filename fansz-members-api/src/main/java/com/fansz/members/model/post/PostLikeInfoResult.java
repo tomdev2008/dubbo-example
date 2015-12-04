@@ -12,8 +12,6 @@ import java.util.Date;
 public class PostLikeInfoResult implements Serializable {
 
     private static final long serialVersionUID = -8769041146051550921L;
-    @JsonProperty("access_token")
-    private String accessToken;
 
     @JsonProperty("like_id")
     private Long likeId;
@@ -24,13 +22,6 @@ public class PostLikeInfoResult implements Serializable {
     @JsonProperty("like_member")
     private UserInfoResult likeMember;
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public Long getLikeId() {
         return likeId;

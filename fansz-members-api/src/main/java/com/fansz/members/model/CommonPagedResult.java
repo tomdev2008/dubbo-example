@@ -7,36 +7,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class CommonPagedResult<T> extends CommonResult {
 
-    @JsonProperty("total_num")
-    private Integer totalNum;
+    private PageParam pager;
 
-    @JsonProperty("next_curson")
-    private Integer nextCursor;
-
-    @JsonProperty("previous_cursor")
-    private Integer previousCursor;
-
-    public Integer getPreviousCursor() {
-        return previousCursor;
+    public PageParam getPager() {
+        return pager;
     }
 
-    public void setPreviousCursor(Integer previousCursor) {
-        this.previousCursor = previousCursor;
-    }
-
-    public Integer getNextCursor() {
-        return nextCursor;
-    }
-
-    public void setNextCursor(Integer nextCursor) {
-        this.nextCursor = nextCursor;
-    }
-
-    public Integer getTotalNum() {
-        return totalNum;
-    }
-
-    public void setTotalNum(Integer totalNum) {
-        this.totalNum = totalNum;
+    public void setPager(PageParam pager) {
+        this.pager = pager;
     }
 }

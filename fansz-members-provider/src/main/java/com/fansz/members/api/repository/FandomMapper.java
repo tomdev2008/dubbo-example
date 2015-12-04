@@ -23,7 +23,5 @@ public interface FandomMapper {
 
     List<FandomEntity> selectByParentId(Long id);
 
-    List<FandomInfoResult> findFandomByIds(List<String> snList);
-
     List<FandomInfoResult> listByCondition(FandomEntity param);
 }

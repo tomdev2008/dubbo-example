@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * 用户点赞,传入参数模型
+ * 用户点赞/查询单个POST详细信息,传入参数模型
  */
 public class PostParam implements Serializable {
 

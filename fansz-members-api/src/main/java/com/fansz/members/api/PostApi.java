@@ -14,6 +14,8 @@ import java.util.List;
  * Created by root on 15-11-26.
  */
 @Path("/posts")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface PostApi {
 
     /**
@@ -24,65 +26,56 @@ public interface PostApi {
      */
     @POST
     @Path("/add")
-    @Consumes("multipart/form-data")
-    @Produces("application/json")
     CommonResult<NullResult> addPost(AddPostParam addPostParam);
 
     /**
      * 删除帖子接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子id
      * @return resp 返回对象
      */
     @POST
-    @Path("/{id}/remove")
-    @Produces("application/json")
-    Response removePost(@PathParam("id") String id);
+    @Path("/remove")
+    CommonResult<NullResult> removePost(PostParam postParam);
 
     /**
      * 获取帖子信息接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子id
      * @return resp 返回对象
      */
-    @GET
-    @Path("/{id}")
+    @POST
+    @Path("/show")
     @Produces("application/json")
-    Response getPost(@PathParam("id") String id);
+    CommonResult<PostInfoResult> getPost(PostParam postParam);
 
 
     /**
      * 帖子点赞接口
-
+     *
      * @return resp 返回对象
      */
     @POST
-    @Path("/like")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    public CommonResult<List<PostLikeInfoResult>> likePost(PostParam postParam);
+    @Path("/vote")
+    CommonResult<List<NullResult>> votePost(PostParam postParam);
 
     /**
      * 取消帖子点赞接口
      *
-     * @param id 帖子id
+     * @param postParam 帖子id
      * @return resp 返回对象
      */
     @POST
-    @Path("/{id}/unlike")
-    @Produces("application/json")
-    Response unlikePost(@PathParam("id") String id);
+    @Path("/removeVote")
+    CommonResult<List<NullResult>> removeVote(PostParam postParam);
 
     /**
-     * 获得好友的所有帖子接口
+     * 查询POST的点赞信息
      *
-     * @param friendId 好友id
-     * @return resp 返回对象
+     * @param postParam
+     * @return
      */
-    @GET
-    @Path("/friend/{id}")
-    @Produces("application/json")
-    Response getFriendPosts(@PathParam("id") String friendId);
+    CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam);
 
     /**
      * 获得所有好友的所有帖子接口
@@ -91,9 +84,7 @@ public interface PostApi {
      * @return resp 返回对象
      */
     @POST
-    @Path("/friend")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Path("/friends")
     CommonPagedResult<List<PostInfoResult>> getFriendsPosts(GetPostsParam getPostsParam);
 
     /**
@@ -103,8 +94,6 @@ public interface PostApi {
      * @return resp 返回对象
      */
     @POST
-    @Path("/fandom")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Path("/fandoms")
     CommonPagedResult<List<PostInfoResult>> getFandomPosts(GetPostsParam getPostsParam);
 }

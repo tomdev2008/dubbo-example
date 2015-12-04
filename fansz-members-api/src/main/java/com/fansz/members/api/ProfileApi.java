@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
@@ -50,5 +51,5 @@ public interface ProfileApi {
     @Path("/contact/match")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<List<ContactInfoResult>>  getContactInfo(ContactQueryParam contractQueryParam);
+    CommonPagedResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam);
 }

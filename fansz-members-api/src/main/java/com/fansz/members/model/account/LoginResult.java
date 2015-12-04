@@ -1,13 +1,15 @@
 package com.fansz.members.model.account;
 
+import com.fansz.members.model.profile.UserInfoResult;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by allan on 15/11/20.
  */
-public class LoginResult implements Serializable {
+public class LoginResult extends UserInfoResult implements Serializable {
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -17,9 +19,6 @@ public class LoginResult implements Serializable {
 
     @JsonProperty("expires_at")
     private long expiresAt;//accessToken的失效时间,为距离1970年1月1日0点的ms
-
-    @JsonProperty("sn")
-    private String uid;
 
     public String getAccessToken() {
         return accessToken;
@@ -43,13 +42,5 @@ public class LoginResult implements Serializable {
 
     public void setExpiresAt(long expiresAt) {
         this.expiresAt = expiresAt;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
     }
 }

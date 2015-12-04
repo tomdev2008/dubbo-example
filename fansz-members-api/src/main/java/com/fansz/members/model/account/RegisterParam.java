@@ -2,6 +2,7 @@ package com.fansz.members.model.account;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -12,12 +13,16 @@ public class RegisterParam implements Serializable {
 
     private static final long serialVersionUID = -4004586460484111481L;
 
+    @Size(min=1,max=20)
     private String loginname;
 
+    @Size(min=1,max=20)
     private String password;
 
+    @Size(min=1,max=20)
     private String mobile;
 
+    @Size(min=1,max=6)
     @JsonProperty("verify_code")
     private String verifyCode;
 

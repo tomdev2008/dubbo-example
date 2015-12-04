@@ -24,7 +24,7 @@ while [ -h "$PRG" ] ; do
 done
 
 PRGDIR=`dirname "$PRG"`
-EXECUTABLE=sms-server.sh
+EXECUTABLE=storage-server.sh
 
 # Check that target executable exists
 if $os400; then

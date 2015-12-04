@@ -33,6 +33,8 @@
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
         <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+        <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
+                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -170,8 +172,8 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoMap">
-        SELECT a.*,b.sn,b.nickname,b.member_avatar,
+    <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT a.*,b.sn,b.nickname,b.member_avatar,c.*
         (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
         (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
         FROM feeds_member_post_fandom a,connects_member_profile b,feeds_member_fandom c
@@ -179,7 +181,7 @@
         AND a.fandom_id=c.fandom_id AND a.member_sn=b.sn
     </select>
 
-    <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoMap">
+    <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
         SELECT a.*,b.sn,b.nickname,b.member_avatar,
         (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
         (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
@@ -188,5 +190,6 @@
         AND a.fandom_id=c.fandom_id
         AND a.member_sn=b.sn
         AND a.post_newsfeeds='1'
+        AND a.fandom_id is null
     </select>
 </mapper>

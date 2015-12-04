@@ -2,6 +2,7 @@ package com.fansz.members.api.provider;
 
 
 import com.fansz.members.api.AccountApi;
+import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
@@ -14,9 +15,8 @@ import org.springframework.stereotype.Component;
  * 账户服务
  */
 @Component("accountProvider")
-public class AccountProvider implements AccountApi {
+public class AccountProvider extends AbstractProvider implements AccountApi {
 
-    private final static NullResult PRESENCE = new NullResult();
 
     @Autowired
     private AccountService accountService;
@@ -28,12 +28,8 @@ public class AccountProvider implements AccountApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> register(RegisterParam registerParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Register successfully");
-        result.setResult(PRESENCE);
         accountService.register(registerParam);
-        return result;
+        return renderSuccess(PRESENCE, "Register successfully");
     }
 
     /**
@@ -43,12 +39,8 @@ public class AccountProvider implements AccountApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Reset password successfully");
-        result.setResult(PRESENCE);
         accountService.resetPassword(resetPasswordParam);
-        return result;
+        return renderSuccess(PRESENCE, "Reset password successfully");
     }
 
 
@@ -59,12 +51,8 @@ public class AccountProvider implements AccountApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setResult(PRESENCE);
-        result.setMessage("Change password successfully");
         accountService.changePassword(changePasswordParam);
-        return result;
+        return renderSuccess(PRESENCE, "Change password successfully");
     }
 
     /**
@@ -75,12 +63,8 @@ public class AccountProvider implements AccountApi {
      */
     @Override
     public CommonResult<LoginResult> login(LoginParam loginParam) {
-        CommonResult<LoginResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Login successfully");
         LoginResult loginResult = accountService.login(loginParam);
-        result.setResult(loginResult);
-        return result;
+        return renderSuccess(loginResult, "Login successfully");
     }
 
     /**
@@ -91,11 +75,7 @@ public class AccountProvider implements AccountApi {
      */
     @Override
     public CommonResult<NullResult> logout(LogoutParam logoutParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Logout successfully");
-        result.setResult(PRESENCE);
         accountService.logout(logoutParam);
-        return result;
+        return renderSuccess(PRESENCE, "Logout successfully");
     }
 }
