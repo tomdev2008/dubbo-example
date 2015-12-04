@@ -16,7 +16,7 @@ public class ContactQueryParam extends PageParam implements Serializable {
     @JsonProperty("mobile_list")
     private List<String> mobileList;
 
-    @JsonProperty("accessToken")
+    @JsonProperty("access_Token")
     private String accessToken;
 
     private String sn;
