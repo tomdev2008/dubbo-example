@@ -13,6 +13,8 @@ import java.util.List;
  * 用户服务
  */
 @Path("/profiles")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface ProfileApi {
     /**
      * 查询用户的详细信息
@@ -22,8 +24,17 @@ public interface ProfileApi {
      */
     @Path("/show")
     @POST
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
+
+    /**
+     * 根据昵称、账号、手机号码搜索会员
+     *
+     * @param queryUserParam
+     * @return
+     */
+    @Path("/show")
+    @POST
+    CommonPagedResult<UserInfoResult> searchMembers(QueryProfileParam queryUserParam);
 
     /**
      * 修改会员信息
@@ -33,14 +44,10 @@ public interface ProfileApi {
      */
     @POST
     @Path("/change")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
     @POST
     @Path("/getProfileBykeyword")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam);
 
 
@@ -48,8 +55,6 @@ public interface ProfileApi {
      * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
      */
     @POST
-    @Path("/contact/match")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonPagedResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam);
+    @Path("/contacts/match")
+    CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
 }

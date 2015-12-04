@@ -27,7 +27,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/show")
-    CommonPagedResult<List<FriendInfoResult>> getFriends(FriendsQueryParam friendsParam);
+    CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
 
     /**
      * 请求添加为好友

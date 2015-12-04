@@ -299,4 +299,21 @@
         where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
 
+    <select id="searchMembers" parameterType="" resultMap="userInfoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM connects_member_profile
+        <where>
+        <if test="email != null">
+            email = #{email,jdbcType=VARCHAR},
+        </if>
+        <if test="nickname != null">
+            nickname = #{nickname,jdbcType=VARCHAR},
+        </if>
+        <if test="mobile != null">
+            mobile = #{mobile,jdbcType=VARCHAR},
+        </if>
+        </where>
+    </select>
+
 </mapper>

@@ -44,6 +44,11 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return result;
     }
 
+    @Override
+    public CommonPagedResult<UserInfoResult> searchMembers(QueryProfileParam queryUserParam) {
+        return null;
+    }
+
     /**
      * 修改当前用户的配置信息
      *
@@ -70,7 +75,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     }
 
     @Override
-    public CommonPagedResult<List<ContactInfoResult>> getContactInfo(ContactQueryParam contractQueryParam) {
+    public CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam) {
         PageList<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
         return super.renderPagedSuccess(dataResult);
     }

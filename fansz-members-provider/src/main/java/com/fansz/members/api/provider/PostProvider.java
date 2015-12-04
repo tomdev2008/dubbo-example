@@ -85,7 +85,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<List<PostInfoResult>> getFriendsPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> getFriendsPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
         PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getMemberSn(), pageBounds);
         return renderPagedSuccess(dataResult);
@@ -97,7 +97,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<List<PostInfoResult>> getFandomPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
         PageList<PostInfoResult> dataResult = postService.findPostsOfMyFandoms(getPostsParam.getMemberSn(), pageBounds);
         return renderPagedSuccess(dataResult);

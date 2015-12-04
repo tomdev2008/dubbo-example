@@ -28,19 +28,15 @@ public abstract class AbstractProvider {
         return result;
     }
 
-    protected <T> CommonPagedResult<List<T>> renderPagedSuccess(PageList<T> data, String message) {
-        CommonPagedResult<List<T>> result = new CommonPagedResult<>();
-        result.setResult(data);
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage(message);
+    protected <T> CommonPagedResult<T> renderPagedSuccess(PageList<T> data, String message) {
         PageParam pager = new PageParam();
         pager.setLimit(data.getPaginator().getLimit());
         pager.setOffset(data.getPaginator().getPage());
-        result.setPager(pager);
+        CommonPagedResult<T> result = new CommonPagedResult<>(Constants.SUCCESS,message,pager,data);
         return result;
     }
 
-    protected <T> CommonPagedResult<List<T>> renderPagedSuccess(PageList<T> data) {
+    protected <T> CommonPagedResult<T> renderPagedSuccess(PageList<T> data) {
         return renderPagedSuccess(data, "Success");
     }
 

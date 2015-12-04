@@ -26,7 +26,7 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
 
 
     @Override
-    public CommonPagedResult<List<FriendInfoResult>> getFriends(FriendsQueryParam friendsParam) {
+    public CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam) {
         // 获得好友详细信息
         PageBounds pageBounds = new PageBounds(friendsParam.getOffset(), friendsParam.getLimit());
         PageList<FriendInfoResult> friends = relationShipService.getFriends(friendsParam.getSn(), pageBounds);

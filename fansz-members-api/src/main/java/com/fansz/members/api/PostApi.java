@@ -46,7 +46,6 @@ public interface PostApi {
      */
     @POST
     @Path("/show")
-    @Produces("application/json")
     CommonResult<PostInfoResult> getPost(PostParam postParam);
 
 
@@ -85,7 +84,7 @@ public interface PostApi {
      */
     @POST
     @Path("/friends")
-    CommonPagedResult<List<PostInfoResult>> getFriendsPosts(GetPostsParam getPostsParam);
+    CommonPagedResult<PostInfoResult> getFriendsPosts(GetPostsParam getPostsParam);
 
     /**
      * 获得我所关注的所有fandom的所有帖子接口
@@ -95,5 +94,5 @@ public interface PostApi {
      */
     @POST
     @Path("/fandoms")
-    CommonPagedResult<List<PostInfoResult>> getFandomPosts(GetPostsParam getPostsParam);
+    CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam);
 }
