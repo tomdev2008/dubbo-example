@@ -31,12 +31,12 @@ public interface PostApi {
     /**
      * 删除帖子接口
      *
-     * @param postParam 帖子id
+     * @param removePostrParam 帖子id
      * @return resp 返回对象
      */
     @POST
-    @Path("/remove")
-    CommonResult<NullResult> removePost(PostParam postParam);
+    @Path("/deletePost")
+    CommonResult<NullResult> removePost(RemovePostParam removePostrParam);
 
     /**
      * 获取帖子信息接口
@@ -95,4 +95,9 @@ public interface PostApi {
     @POST
     @Path("/fandoms")
     CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam);
+
+    @POST
+    @Path("/searchPosts")
+    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+
 }

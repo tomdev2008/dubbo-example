@@ -5,11 +5,9 @@ import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.service.PostService;
-import com.fansz.members.model.post.AddPostParam;
-import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.post.*;
 import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
-import com.fansz.members.model.post.PostLikeInfoResult;
-import com.fansz.members.model.post.PostParam;
 import com.fansz.members.tools.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -36,8 +34,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void removePost(String id) {
-
+    public void removePost(RemovePostParam removePostrParam) {
+        fandomPostEntityMapper.deleteByPrimaryKey(removePostrParam.getPostId());
     }
 
     @Override
@@ -65,5 +63,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageList<PostInfoResult> getFriendsPosts(String memberSn, PageBounds pageBounds) {
         return fandomPostEntityMapper.findPostsOfMyFriends(memberSn, pageBounds);
+    }
+
+    @Override
+    public PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
+        PageBounds pageBounds = new PageBounds(searchPostParam.getOffset(), searchPostParam.getLimit(),false);
+        return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(),pageBounds);
     }
 }

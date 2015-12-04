@@ -2,6 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.post.SearchPostParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.mybatis.spring.annotation.MapperScan;
@@ -31,4 +32,6 @@ public interface FandomPostEntityMapper {
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
     PageList<PostInfoResult> findPostsOfMyFriends(String memberSn, PageBounds pageBounds);
+
+    PageList<PostInfoResult> searchPosts(String searchVal, PageBounds pageBounds);
 }

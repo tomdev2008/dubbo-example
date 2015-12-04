@@ -60,8 +60,12 @@ public class PostProvider extends AbstractProvider implements PostApi {
     }
 
     @Override
-    public CommonResult<NullResult> removePost(PostParam postParam) {
-        return null;
+    public CommonResult<NullResult> removePost(RemovePostParam removePostrParam) {
+        CommonResult<NullResult> result = new CommonResult<NullResult>();
+        postService.removePost(removePostrParam);
+        result.setResult(PRESENCE);
+        result.setStatus(Constants.SUCCESS);
+        return result;
     }
 
     @Override
@@ -76,6 +80,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
 
     @Override
     public CommonResult<List<NullResult>> removeVote(PostParam postParam) {
+
         return null;
     }
 
@@ -103,4 +108,9 @@ public class PostProvider extends AbstractProvider implements PostApi {
         return renderPagedSuccess(dataResult);
     }
 
+    @Override
+    public CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
+        PageList<PostInfoResult> dataResult = postService.searchPosts(searchPostParam);
+            return renderPagedSuccess(dataResult);
+    }
 }

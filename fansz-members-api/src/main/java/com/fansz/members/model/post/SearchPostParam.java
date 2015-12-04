@@ -1,4 +1,4 @@
-package com.fansz.members.model.search;
+package com.fansz.members.model.post;
 
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
@@ -6,17 +6,15 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * Created by dell on 2015/12/2.
+ * Created by dell on 2015/12/4.
  */
-public class SearchParam extends PageParam implements Serializable {
+public class SearchPostParam extends PageParam implements Serializable{
 
-    private static final long serialVersionUID = -3581758642463346451L;
-    @JsonProperty("sn")
+    private static final long serialVersionUID = -2377621602540990816L;
+    @JsonProperty("member_sn")
     private String memberSn;
-
     @JsonProperty("access_token")
     private String accessToken;
-
     @JsonProperty("search_val")
     private String searchVal;
 
@@ -43,4 +41,5 @@ public class SearchParam extends PageParam implements Serializable {
     public void setSearchVal(String searchVal) {
         this.searchVal = searchVal;
     }
+
 }

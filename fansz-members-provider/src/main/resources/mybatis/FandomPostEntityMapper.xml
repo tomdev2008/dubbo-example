@@ -192,4 +192,22 @@
         AND a.post_newsfeeds='1'
         AND a.fandom_id is null
     </select>
+
+    <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            f.post_title,
+            f.post_content,
+            f.post_newsfeeds,
+            f.post_time,
+            p.sn,
+            p.nickname,
+            p.member_avatar
+        FROM
+            feeds_member_post_fandom f
+        LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
+        WHERE
+            f.post_title LIKE '%'||#{searchVal}||'%'
+        or f.post_content LIKE '%'||#{searchVal}||'%'
+    </select>
+
 </mapper>
