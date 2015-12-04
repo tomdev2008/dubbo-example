@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Created by allan on 15/12/1.
+ * FastDFS访问工具
  */
 public class StorageServiceUtils implements StorageConfig, Serializable {
 
@@ -24,27 +24,24 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
     private static StorageClient storageClient;
 
 
-    public static void init(String baseDir){
+    public static void init(String baseDir) {
         try {
 
-            String fdfsClientConfigFilePath = baseDir+"/conf/"  + CLIENT_CONFIG_FILE;
-            System.out.println("loading fastdfs configuration from "+fdfsClientConfigFilePath);
-            logger.info("Fast DFS configuration file path:" + fdfsClientConfigFilePath);
-            ClientGlobal.init(fdfsClientConfigFilePath);
-
+            String configFile = baseDir + "/conf/" + CLIENT_CONFIG_FILE;
+            System.out.println("loading fastdfs configuration from " + configFile);
+            logger.info("Fast DFS configuration file path:{}", configFile);
+            ClientGlobal.init(configFile);
             trackerClient = new TrackerClient();
             trackerServer = trackerClient.getConnection();
-
             storageClient = new StorageClient(trackerServer, storageServer);
-
         } catch (Exception e) {
-            logger.error("initial fastdfs client error", e);
+            logger.error("initialize fastdfs client error", e);
 
         }
     }
 
     public static String upload(FastDFSFile file) {
-        logger.info("File Name: " + file.getName() + "		File Length: " + file.getContent().length);
+        logger.info("File Name: {},File Length: {}", file.getName(), file.getContent().length);
 
         NameValuePair[] meta_list = new NameValuePair[2];
         meta_list[0] = new NameValuePair("real_file_name", file.getName());
@@ -54,43 +51,34 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
         String[] uploadResults = null;
         try {
             uploadResults = storageClient.upload_file(file.getContent(), file.getExt(), meta_list);
-        } catch (IOException e) {
-            logger.error("IO Exception when uploadind the file: " + file.getName(), e);
         } catch (Exception e) {
-            logger.error("Non IO Exception when uploadind the file: " + file.getName(), e);
+            logger.error(String.format("Exception when uploadind the file: %s", file.getName()), e);
         }
-        logger.info("upload_file time used: " + (System.currentTimeMillis() - startTime) + " ms");
+        logger.info("upload_file time used: {}  ms", System.currentTimeMillis() - startTime);
 
         if (uploadResults == null) {
-            logger.error("upload file fail, error code: " + storageClient.getErrorCode());
+            logger.error("upload file fail, error code: {}", storageClient.getErrorCode());
+            return null;
         }
 
-        String groupName = uploadResults[0];
-        String remoteFileName = uploadResults[1];
-
-        String fileAbsolutePath = PROTOCOL + trackerServer.getInetSocketAddress().getHostName()
-                + ":"
-                + TRACKER_NGNIX_PORT
-                + SEPARATOR
-                + groupName
-                + SEPARATOR
-                + remoteFileName;
-
-
-        logger.info("upload file successfully!!!  " + "group_name: " + groupName + ", remoteFileName:"
-                + " " + remoteFileName);
-
-        return fileAbsolutePath;
+        /**String fileAbsolutePath = PROTOCOL + trackerServer.getInetSocketAddress().getHostName()
+         + ":"
+         + TRACKER_NGNIX_PORT
+         + SEPARATOR
+         + groupName
+         + SEPARATOR
+         + remoteFileName;**/
+        String url = SEPARATOR + uploadResults[0] + SEPARATOR + uploadResults[1];
+        logger.info("Upload file successfully,file url is {}", url);
+        return url;
 
     }
 
     public static FileInfo getFile(String groupName, String remoteFileName) {
         try {
             return storageClient.get_file_info(groupName, remoteFileName);
-        } catch (IOException e) {
-            logger.error("IO Exception: Get File from Fast DFS failed", e);
         } catch (Exception e) {
-            logger.error("Non IO Exception: Get File from Fast DFS failed", e);
+            logger.error("Exception: Get File from Fast DFS failed", e);
         }
         return null;
     }
