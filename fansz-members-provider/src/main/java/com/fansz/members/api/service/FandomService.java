@@ -5,6 +5,9 @@ import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.fandom.*;
 
 import com.fansz.members.model.post.GetPostsParam;
+import com.fansz.members.model.relationship.ExitFandomParam;
+import com.fansz.members.model.relationship.JoinFandomParam;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 import java.util.List;
 
@@ -13,20 +16,12 @@ import java.util.List;
  */
 public interface FandomService {
 
-    FandomInfoResult addFandom(FandomParam fandomParam);
-
-    FandomInfoResult getFandom(NormalFandomPara fandomPara);
-
-    List<FandomPostEntity> getPostsByFandom(GetPostsParam param);
+    List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
 
 
-    List<FandomInfoResult> getFandomsByCategoryId(FandomByCategory fandomByCategory);
+    List<FandomInfoResult> findFandomsByMemberSn(String sn,PageBounds pageBounds);
 
-    void followFandom(NormalFandomPara fandomPara);
+    boolean joinFandom(JoinFandomParam joinFandomParam);
 
-    void unfollowFandom(Long id);
-
-    List<FandomInfoResult> getRecommendFandom(String id);
-
-    List<UserEntity> followerOfFandom(FandomFollowers fandomFollowers);
+    boolean exitFandom(ExitFandomParam joinFandomParam);
 }

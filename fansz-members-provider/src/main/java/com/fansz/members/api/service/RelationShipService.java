@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface RelationShipService {
 
-    List<FandomInfoResult> findFandomsByUid(String uid);
-
     PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds);
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
@@ -23,7 +21,4 @@ public interface RelationShipService {
 
     boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
 
-    boolean joinFandom(JoinFandomParam joinFandomParam);
-
-    boolean exitFandom(ExitFandomParam joinFandomParam);
 }

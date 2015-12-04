@@ -1,42 +1,83 @@
 package com.fansz.members.model;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * Created by allan on 15/11/30.
  */
-public class CommonPagedResult<T> extends CommonResult {
+public class CommonPagedResult<T> implements Serializable {
 
-    @JsonProperty("total_num")
-    private Integer totalNum;
+    private static final long serialVersionUID = 4199421899377849539L;
 
-    @JsonProperty("next_curson")
-    private Integer nextCursor;
+    private String status;
 
-    @JsonProperty("previous_cursor")
-    private Integer previousCursor;
+    private String message;
 
-    public Integer getPreviousCursor() {
-        return previousCursor;
+    private PagedResult result;
+
+    public CommonPagedResult() {
+        result = new PagedResult();
     }
 
-    public void setPreviousCursor(Integer previousCursor) {
-        this.previousCursor = previousCursor;
+    public CommonPagedResult(String status, String message) {
+        this.status = status;
+        this.message = message;
+        result = new PagedResult();
     }
 
-    public Integer getNextCursor() {
-        return nextCursor;
+    public CommonPagedResult(String status, String message, PageParam pager,PageList<T> data) {
+        this.status = status;
+        this.message = message;
+        result = new PagedResult();
+        result.setPager(pager);
+        result.setData(data);
     }
 
-    public void setNextCursor(Integer nextCursor) {
-        this.nextCursor = nextCursor;
+    public String getStatus() {
+        return status;
     }
 
-    public Integer getTotalNum() {
-        return totalNum;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setTotalNum(Integer totalNum) {
-        this.totalNum = totalNum;
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public PagedResult getResult() {
+        return result;
+    }
+
+    public void setResult(PagedResult result) {
+        this.result = result;
+    }
+
+    class PagedResult {
+        private PageList<T> data;
+        private PageParam pager;
+
+        public PageList<T> getData() {
+            return data;
+        }
+
+        public void setData(PageList<T> data) {
+            this.data = data;
+        }
+
+        public PageParam getPager() {
+            return pager;
+        }
+
+        public void setPager(PageParam pager) {
+            this.pager = pager;
+        }
     }
 }

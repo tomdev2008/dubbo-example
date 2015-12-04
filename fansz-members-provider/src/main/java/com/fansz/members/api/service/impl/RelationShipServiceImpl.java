@@ -1,23 +1,19 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
-import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.RelationShipService;
-import com.fansz.members.api.utils.Constants;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.RelationShip;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.mortbay.component.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,22 +26,8 @@ import java.util.List;
 public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
-    private FandomMemberEntityMapper fandomMemberEntityMapper;
-
-    @Autowired
-    private UserEntityMapper userEntityMapper;
-
-    @Autowired
-    private FandomMapper fandomMapper;
-
-    @Autowired
     private UserRelationEntityMapper userRelationEntityMapper;
 
-    @Override
-    public List<FandomInfoResult> findFandomsByUid(String uid) {
-        List<String> fandomIds = fandomMemberEntityMapper.findFandomsByUserSn(uid);
-        return fandomMapper.findFandomByIds(fandomIds);
-    }
 
     @Override
     public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds) {
@@ -96,25 +78,5 @@ public class RelationShipServiceImpl implements RelationShipService {
         return true;
     }
 
-    @Override
-    public boolean joinFandom(JoinFandomParam joinFandomParam) {
-        FandomMemberEntity fandomMemberEntity = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
-        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMemberEntity);
-        if (exist != null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
-        }
-        fandomMemberEntityMapper.insert(fandomMemberEntity);
-        return false;
-    }
 
-    @Override
-    public boolean exitFandom(ExitFandomParam joinFandomParam) {
-        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
-        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
-        if (exist == null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
-        }
-        fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
-        return false;
-    }
 }

@@ -21,6 +21,7 @@ public interface CommentApi {
 
     /**
      * 发布帖子评论接口
+     *
      * @param commentPara 评论信息
      * @return resp 返回对象
      */
@@ -38,6 +39,7 @@ public interface CommentApi {
 
     /**
      * 删除评论接口
+     *
      * @param commentDelParam 评论id
      * @return resp 返回对象
      */
@@ -52,11 +54,11 @@ public interface CommentApi {
      * @param commentQueryFromFandom
      * @return
      */
-    @GET
+    @POST
     @Path("/post")
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom);
+    public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom);
 
     /**
      * 查看朋友圈里所有的

@@ -1,6 +1,6 @@
 package com.fansz.members;
 
-import com.fansz.members.api.utils.JacksonConfig;
+import com.fansz.members.tools.JacksonConfig;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

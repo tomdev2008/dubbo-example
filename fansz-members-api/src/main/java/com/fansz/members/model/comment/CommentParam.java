@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 public class CommentParam implements Serializable{
 
-    private static final long serialVersionUID = 7165927018098624209L;
+    private static final long serialVersionUID = -3591993766050206164L;
 
     @JsonProperty("commentator_sn")
     private String commentatorSn;

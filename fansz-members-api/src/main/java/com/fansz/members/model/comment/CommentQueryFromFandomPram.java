@@ -14,7 +14,7 @@ public class CommentQueryFromFandomPram extends PageParam{
     @JsonProperty("comment_source")
     private String commentSource;
     @JsonProperty("post_id")
-    private int postId;
+    private Long postId;
 
     public String getSn() {
         return sn;
@@ -40,11 +40,11 @@ public class CommentQueryFromFandomPram extends PageParam{
         this.commentSource = commentSource;
     }
 
-    public int getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 }

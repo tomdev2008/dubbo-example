@@ -1,9 +1,7 @@
 package com.fansz.members.model.comment;
 
 
-/**
- * Created by root on 15-11-4.
- */
+
 public class CommentPagedParam {
 
     private Long postId;

@@ -5,7 +5,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * Created by allan on 15/11/30.
+ * 添加好友请求参数模型
  */
 public class AddFriendParam implements Serializable {
     private static final long serialVersionUID = 8278115962641637973L;

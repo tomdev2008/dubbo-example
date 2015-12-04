@@ -2,8 +2,9 @@ package com.fansz.members.api.provider;
 
 import com.fansz.members.api.VerifyCodeApi;
 import com.fansz.members.api.service.VerifyCodeService;
-import com.fansz.members.api.utils.Constants;
-import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.model.verifycode.VerifyCodeParam;
+import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.VerifyCodeType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class VerifyCodeProvider implements VerifyCodeApi {
     /**
      * 获取忘记密码验证码接口
      *
-     * @param mobile 手机号码
+     * @param verifyCodeParam 手机号码
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> getVerifyCodeForReset(@PathParam("mobile") String mobile) {
+    public CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam) {
         CommonResult<NullResult> result = new CommonResult<>();
-        verifyCodeService.createVerifyCode(mobile, VerifyCodeType.RESET);
+        verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.RESET);
         result.setStatus(Constants.SUCCESS);
         result.setMessage("Get verify code successfully");
         result.setResult(PRESENCE);
@@ -43,12 +44,12 @@ public class VerifyCodeProvider implements VerifyCodeApi {
     /**
      * 获取注册验证码接口
      *
-     * @param mobile 手机号码
+     * @param verifyCodeParam 手机号码
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> getVerifyCodeForRegister(@PathParam("mobile") String mobile) {
+    public CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam) {
         CommonResult<NullResult> result = new CommonResult<>();
-        verifyCodeService.createVerifyCode(mobile, VerifyCodeType.REGISTER);
+        verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.REGISTER);
         result.setStatus(Constants.SUCCESS);
         result.setMessage("Get verify code successfully");
         result.setResult(PRESENCE);

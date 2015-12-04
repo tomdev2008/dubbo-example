@@ -10,16 +10,27 @@ import java.util.Date;
  */
 public class CommentQueryFromFandomResult {
 
+    @JsonProperty("id")
     private long id;
+    @JsonProperty("post_id")
     private int postId;
+    @JsonProperty("comment_content")
     private String commentContent;
+    @JsonProperty("commentator_sn")
     private String commentatorSn;
+    @JsonProperty("commentator_nickname")
     private String commentatorNickname;
+    @JsonProperty("comment_time")
     private Date commentTime;
+    @JsonProperty("commentator_avatar")
     private String commentatorAvatar;
+    @JsonProperty("orgin_sn")
     private String orginSn;
+    @JsonProperty("orgin_content")
     private String orginContent;
-    private Date orginNickname;
+    @JsonProperty("orgin_nickname")
+    private String orginNickname;
+    @JsonProperty("orgin_avatar")
     private String orginAvatar;
 
     public long getId() {
@@ -94,11 +105,11 @@ public class CommentQueryFromFandomResult {
         this.orginContent = orginContent;
     }
 
-    public Date getOrginNickname() {
+    public String getOrginNickname() {
         return orginNickname;
     }
 
-    public void setOrginNickname(Date orginNickname) {
+    public void setOrginNickname(String orginNickname) {
         this.orginNickname = orginNickname;
     }
 

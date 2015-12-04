@@ -4,10 +4,9 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.profile.FriendsQueryParam;
+import com.fansz.members.model.relationship.FriendsQueryParam;
 
 import javax.ws.rs.*;
 import java.util.List;
@@ -16,17 +15,10 @@ import java.util.List;
  * 关系服务
  */
 @Path("/relationships")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface RelationShipApi {
-    /**
-     * 获取用户关注的fandoms
-     *
-     * @return resp 返回对象
-     */
-    @POST
-    @Path("/fandoms")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<List<FandomInfoResult>> getFandoms(FavoriteFandomParam fandomParam);
+
 
     /**
      * 获取用户的好友列表
@@ -35,9 +27,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/show")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonPagedResult<List<FriendInfoResult>> getFriends(FriendsQueryParam friendsParam);
+    CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
 
     /**
      * 请求添加为好友
@@ -47,8 +37,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/add")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam);
 
     /**
@@ -59,8 +47,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/add")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -71,8 +57,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/cancel")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -83,21 +67,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/agree")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
 
-
-    @POST
-    @Path("/fandom/join")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
-
-
-    @POST
-    @Path("/fandom/exit")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 }

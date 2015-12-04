@@ -1,7 +1,7 @@
 package com.fansz.members.model.relationship;
 
 /**
- * Created by allan on 15/12/1.
+ * 取消关注fandom传入参数模型
  */
 public class ExitFandomParam  extends JoinFandomParam{
 }

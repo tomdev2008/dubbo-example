@@ -1,17 +1,19 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.FandomApi;
+import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.FandomService;
-import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.model.NullResult;
+import com.fansz.members.model.relationship.ExitFandomParam;
+import com.fansz.members.model.relationship.JoinFandomParam;
+import com.fansz.members.model.relationship.MemberFandomQueryParam;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.fandom.*;
-import com.fansz.members.model.post.GetPostsParam;
-import com.fansz.members.model.post.PostInfoResult;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -19,75 +21,39 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 @Component("fandomProvider")
-public class FandomProvider implements FandomApi{
+public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Autowired
     private FandomService fandomService;
 
     @Override
-    public Response addFandom(FandomParam form) {
-        Response response = null;
-        try{
-            if(form != null){
-                FandomInfoResult result =  fandomService.addFandom(form);
+    public CommonResult<List<FandomInfoResult>> listFandoms(FandomQueryParam fandomQueryParam) {
+        CommonResult<List<FandomInfoResult>> result = new CommonResult<List<FandomInfoResult>>();
+        result.setStatus(Constants.SUCCESS);
+        result.setResult(fandomService.listFandom(fandomQueryParam));
+        result.setMessage("List fandoms successfully");
+        return result;
 
-            }else{
-                //打印错误日志 封装返回信息
-            }
-        }catch(Exception e){
-
-        }
-        return response;
+    }
+    @Override
+    public CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam) {
+        fandomService.joinFandom(joinFandomParam);
+        return renderSuccess(PRESENCE, "Join fandom successfully");
     }
 
     @Override
-    public CommonResult<FandomInfoResult> getFandom(FandomQueryParam fandomQueryParam) {
-        return null;
+    public CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam) {
+        fandomService.exitFandom(exitFandomParam);
+        return renderSuccess(PRESENCE, "Exit fandom successfully");
     }
 
-    @Override
-    public CommonResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
-        return null;
-    }
 
     @Override
-    public CommonResult<List<FandomInfoResult>> getFandomsByCategory(String categoryId) {
-        return null;
-    }
-
-    @Override
-    public Response followFandom(String id) {
-        return null;
-    }
-
-    @Override
-    public Response unfollowFandom(String id) {
-        return null;
-    }
-
-    @Override
-    public Response getRecommendFandom() {
-        return null;
-    }
-
-    @Override
-    public Response getSubCategory(String id) {
-        return null;
-    }
-
-    @Override
-    public Response getCategory() {
-        return null;
-    }
-
-    @Override
-    public Response getFandomsBySubCategory(String id) {
-        return null;
-    }
-
-    @Override
-    public Response followerOfFandom(FandomFollowers fandomFollowers) {
-        return null;
+    public CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam) {
+        // 获得我关注的fandom
+        PageBounds pageBounds = new PageBounds(fandomParam.getOffset(), fandomParam.getLimit());
+        List<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
+        return renderSuccess(fandoms);
     }
 }
 

@@ -3,17 +3,20 @@ package com.fansz.members.model.profile;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Created by root on 15-11-3.
+ *  修改用户profile参数模型
  */
 public class ModifyProfileParam implements Serializable {
 
     private static final long serialVersionUID = -2028355548744485358L;
 
+    @JsonProperty("member_sn")
     private String sn;
 
+    @Size(min=1)
     @JsonProperty("access_token")
     private String accessToken;
 
@@ -32,6 +35,9 @@ public class ModifyProfileParam implements Serializable {
 
     @JsonProperty("member_type")
     private String memberType;
+
+    @JsonProperty("sn")
+    private String operatorSn;
 
     public String getSn() {
         return sn;
@@ -103,5 +109,13 @@ public class ModifyProfileParam implements Serializable {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
+    }
+
+    public String getOperatorSn() {
+        return operatorSn;
+    }
+
+    public void setOperatorSn(String operatorSn) {
+        this.operatorSn = operatorSn;
     }
 }

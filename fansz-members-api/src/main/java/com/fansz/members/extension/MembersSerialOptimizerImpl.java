@@ -16,8 +16,6 @@ public class MembersSerialOptimizerImpl implements SerializationOptimizer {
         List<Class> classes = new LinkedList<Class>();
         classes.add(CommonResult.class);
         classes.add(LoginResult.class);
-        classes.add(RefreshResult.class);
-        classes.add(RefreshParameters.class);
         return classes;
     }
 }

@@ -6,13 +6,9 @@ import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.VerifyCodeService;
-import com.fansz.members.api.utils.Constants;
-import com.fansz.members.api.utils.VerifyCodeType;
+import com.fansz.members.tools.*;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.account.*;
-import com.fansz.members.tools.SecurityTools;
-import com.fansz.members.tools.StringTools;
-import com.fansz.members.tools.UUIDTools;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -155,20 +151,19 @@ public class AccountServiceImpl implements AccountService {
     public LoginResult login(LoginParam loginParam) {
         UserEntity user = userEntityMapper.findByAccount(loginParam.getLoginname());
         if (user == null) {
-            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "User not exist");
         }
         String pswdInDb = user.getPassword();
         String encodedPswd = SecurityTools.encode(loginParam.getPassword());
         if (!pswdInDb.equals(encodedPswd)) {
-            throw new ApplicationException(Constants.PASSWORD_WRONG, "密码错误");
+            throw new ApplicationException(Constants.PASSWORD_WRONG, "Password is wrong");
         }
 
         String accessKey = UUIDTools.getUniqueId();
         String refreshKey = UUIDTools.getUniqueId();
-        LoginResult result = new LoginResult();
+        LoginResult result = BeanTools.copyAs(user, LoginResult.class);
         result.setAccessToken(accessKey);
         result.setRefreshToken(refreshKey);
-        result.setUid(user.getSn());
         result.setExpiresAt(-1);
 
         putSessionInRedis(accessKey, user);

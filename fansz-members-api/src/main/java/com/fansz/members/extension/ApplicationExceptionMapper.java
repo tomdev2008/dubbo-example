@@ -15,17 +15,19 @@ public class ApplicationExceptionMapper implements ExceptionMapper<RuntimeExcept
 
     private final static NullResult PRESENCE=new NullResult();
     public Response toResponse(RuntimeException e) {
+        e.printStackTrace();
         CommonResult<NullResult> result=new CommonResult<>();
         result.setResult(PRESENCE);
-        result.setMessage(e.getMessage());
+        result.setMessage("System Error");
         if(e instanceof  ApplicationException) {
             ApplicationException ae=(ApplicationException)e;
             result.setStatus(ae.getCode());
+            result.setMessage(ae.getMessage());
         }
         else{
             result.setStatus("10001");
         }
         // 采用json输出代替xml输出
-        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(result).type(ContentType.APPLICATION_JSON_UTF_8).build();
+        return Response.status(Response.Status.OK).entity(result).type(ContentType.APPLICATION_JSON_UTF_8).build();
     }
 }

@@ -41,9 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom, PageBounds pageBounds) {
-        int postId = commentQueryFromFandom.getPostId();
-        return postCommentEntityMapper.getCommentsByPostidFromFandom(postId,pageBounds);
+        return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(),pageBounds);
     }
-
 
 }

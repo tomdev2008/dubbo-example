@@ -2,15 +2,20 @@ package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.account.*;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.account.*;
 
-import javax.ws.rs.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 /**
  * 账户服务
  */
 @Path("/accounts")
+@Consumes(ContentType.APPLICATION_JSON_UTF_8)
+@Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface AccountApi {
     /**
      * 用户注册
@@ -20,10 +25,17 @@ public interface AccountApi {
      */
     @POST
     @Path("/register")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> register(RegisterParam registerParam);
 
+    /**
+     * 用户登陆
+     *
+     * @param loginParam
+     * @return
+     */
+    @POST
+    @Path("/login")
+    CommonResult<LoginResult> login(LoginParam loginParam);
     /**
      * 重置密码接口
      *
@@ -32,8 +44,6 @@ public interface AccountApi {
      */
     @POST
     @Path("/password/reset")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam);
 
 
@@ -45,21 +55,9 @@ public interface AccountApi {
      */
     @POST
     @Path("/password/change")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam);
 
-    /**
-     * 用户登陆
-     *
-     * @param loginParam
-     * @return
-     */
-    @POST
-    @Path("/login")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
-    CommonResult<LoginResult> login(LoginParam loginParam);
+
 
     /**
      * 用户登出
@@ -68,9 +66,7 @@ public interface AccountApi {
      * @param logoutParam 修改密码对象
      * @return resp 返回对象
      */
-    @GET
+    @POST
     @Path("/logout")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<NullResult> logout(LogoutParam logoutParam);
 }

@@ -4,6 +4,7 @@ package com.fansz.members.exception;
  * Created by allan on 15/11/27.
  */
 public class ApplicationException extends RuntimeException {
+
     private String code;
 
     public ApplicationException() {

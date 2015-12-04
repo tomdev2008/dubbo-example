@@ -6,9 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by allan on 15/11/30.
+ * 好友信息模型
  */
-public class FriendInfoResult implements Serializable{
+public class FriendInfoResult implements Serializable {
 
     private static final long serialVersionUID = -7836389133676995846L;
 

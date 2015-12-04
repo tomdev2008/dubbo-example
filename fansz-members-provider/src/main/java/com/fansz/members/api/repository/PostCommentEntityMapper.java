@@ -16,12 +16,12 @@ public interface PostCommentEntityMapper {
 
     int insertSelective(PostCommentEntity record);
 
-    PostCommentEntity selectByPrimaryKey(Integer id);
+    PostCommentEntity selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(PostCommentEntity record);
 
     int updateByPrimaryKey(PostCommentEntity record);
 
-     PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(Integer postId, PageBounds pageBounds);
+     PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(Long postId, PageBounds pageBounds);
 
 }

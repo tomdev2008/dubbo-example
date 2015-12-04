@@ -4,8 +4,14 @@ import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.service.FandomService;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.GetPostsParam;
+import com.fansz.members.model.relationship.ExitFandomParam;
+import com.fansz.members.model.relationship.JoinFandomParam;
+import com.fansz.members.tools.BeanTools;
+import com.fansz.members.tools.Constants;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.stereotype.Service;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
@@ -19,7 +25,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by root on 15-11-4.
+ * fandom服务实现类
  */
 @Service
 public class FandomServiceImpl implements FandomService {
@@ -27,163 +33,45 @@ public class FandomServiceImpl implements FandomService {
     @Autowired
     private FandomMapper fandomMapper;
 
-    @Autowired
-    private FandomPostEntityMapper postEntityMapper;
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
-
-    @Autowired
-    private FandomMemberEntityMapper fandomFollowEntityMapper;
-
-    @Override
-    public FandomInfoResult addFandom(FandomParam fandomParam) {
-        FandomEntity entity = new FandomEntity();
-        entity.setFandomCreatorId(fandomParam.getFandomCreatorId());
-        entity.setFandomName(fandomParam.getFandomName());
-        entity.setFandomIntro(fandomParam.getFandomIntro());
-        entity.setFandomAvatarUrl(fandomParam.getFandomAvatarUrl());
-        //entity.setFandomParentId(fandomParam.getCategoryId());
-
-        //Save fandom
-        fandomMapper.insert(entity);
-
-        FandomInfoResult fandom = new FandomInfoResult();
-
-        return fandom;
-    }
-
-    @Override
-    public FandomInfoResult getFandom(NormalFandomPara fandomPara) {
-        FandomEntity entity = fandomMapper.selectByPrimaryKey(fandomPara.getFandomId());
-        GetPostsParam param = new GetPostsParam();
-        //param.setId(fandomPara.getFandomId());
-        //param.setKind("1");
-        //List<Post> posts = getPostsByFandom(param);
-
-        FandomInfoResult fandom = new FandomInfoResult();
-        //fandom.setPosts(posts);
-//        fandom.setFollowed(fandomMapper.isfollowedFandom(profile, id));
-        return fandom;
-    }
-
-    @Override
-    public List<FandomPostEntity> getPostsByFandom(GetPostsParam param) {
-        List<FandomPostEntity> posts = null;
-
-        if ("1".equals(param.getKind()))
-        {
-            posts = postEntityMapper.selectHotByFandomId(param.getId());
-        }
-        else
-        {
-            posts = postEntityMapper.selectNewByFandomId(param.getId());
-        }
-
-        /**List<Post> postList = new ArrayList<>();
-
-        if (posts != null && posts.size() > 0)
-        {
-            for (FandomPostEntity entity1 : posts)
-            {
-                postList.add(StringUtils.changeFandom(entity1));
-            }
-        }
-
-        return postList;
-         * */
-         return posts;
-    }
-
-    @Override
-    public List<FandomInfoResult> getFandomsByCategoryId(FandomByCategory fandomByCategory) {
-        List<FandomEntity> fandoms = fandomMapper.selectByParentId(fandomByCategory.getCategoryId());
-
-//        // 设置我是否已关注这些fandom
-//        if (null != fandoms)
-//        {
-//            User userNew = profileMapper.getProfile(profile.getId());
-//            if (null != userNew && !StringUtils.isEmpty(userNew.getFandomIds()))
-//            {
-//                StringUtils.setFollowedFandom(fandoms, userNew.getFandomIds());
-//            }
-//        }
-
-        return null;
-    }
+    private FandomMemberEntityMapper fandomMemberEntityMapper;
 
     /**
-     * 关注圈子
-     * @param fandomPara 圈子id
+     * 根据前台传入参数,查询符合条件的fandom列表
+     *
+     * @param fandomQueryParam
+     * @return
      */
     @Override
-    public void followFandom(NormalFandomPara fandomPara)
-    {
-        FandomMemberEntity fandomFollowEntity = new FandomMemberEntity();
-
-        fandomFollowEntity.setMemberSn(fandomPara.getMemberSn());
-        fandomFollowEntity.setFandomSn(String.valueOf(fandomPara.getFandomId()));
-        fandomFollowEntity.setJoinTime(new Date());
-
-        fandomFollowEntityMapper.insert(fandomFollowEntity);
-    }
-
-    /**
-     * 取消关注圈子
-     * @param id 关注圈子id
-     */
-    @Override
-    public void unfollowFandom(Long id)
-    {
-        fandomFollowEntityMapper.deleteByPrimaryKey(id);
+    public List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam) {
+        FandomEntity param = BeanTools.copyAs(fandomQueryParam, FandomEntity.class);
+        return fandomMapper.listByCondition(param);
     }
 
     @Override
-    public List<FandomInfoResult> getRecommendFandom(String id)
-    {
-        // 获取推荐的fandom
-        //List<FandomEntity> fandoms = fandomMapper.getRecommendFandom();
-
-//        // 设置我是否已关注这些fandom
-//        if (null != fandoms)
-//        {
-//            User profile = profileMapper.getProfile(id);
-//            if (null != profile && !StringUtils.isEmpty(profile.getFandomIds()))
-//            {
-//                StringUtils.setFollowedFandom(fandoms, profile.getFandomIds());
-//            }
-//        }
-
-        return null;
+    public List<FandomInfoResult> findFandomsByMemberSn(String sn,PageBounds pageBounds) {
+        return fandomMemberEntityMapper.findFandomsByMemberSn(sn,pageBounds);
+    }
+    @Override
+    public boolean joinFandom(JoinFandomParam joinFandomParam) {
+        FandomMemberEntity fandomMemberEntity = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMemberEntity);
+        if (exist != null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
+        }
+        fandomMemberEntityMapper.insert(fandomMemberEntity);
+        return false;
     }
 
     @Override
-    public List<UserEntity> followerOfFandom(FandomFollowers fandomFollowers) {
-
-//        FandomFollowers pageParam = (FandomFollowers)StringUtils.setPageParam(fandomFollowers);
-
-        //List<UserEntity> users = userEntityMapper.getFandomFollowers(fandomFollowers.get());
-
-//        int size = users.size();
-//        int start = fandomFollowers.getPageStart();
-//        int end = fandomFollowers.getPageStart() + fandomFollowers.getCount();
-//
-//        if (start > size)
-//        {
-//            return null;
-//        }
-//        else if (start <= size && size <= end)
-//        {
-//            return users.subList(start, size);
-//        }
-//        else
-//        {
-//            return users.subList(start, end);
-//        }
-
-        //return StringUtils.changeUsers(users);
-        return null;
+    public boolean exitFandom(ExitFandomParam joinFandomParam) {
+        FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
+        if (exist == null) {
+            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
+        }
+        fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
+        return false;
     }
-
-
 }

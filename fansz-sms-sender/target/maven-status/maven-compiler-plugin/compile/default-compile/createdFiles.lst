@@ -1,4 +1,0 @@
-com/fansz/sms/Main.class
-com/fansz/sms/sender/HttpSender.class
-com/fansz/sms/listener/SmsQueueListener.class
-com/fansz/sms/model/SmsMessage.class

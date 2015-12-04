@@ -12,7 +12,7 @@
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap id="FavoriteFandomResult" type="com.fansz.members.api.entity.FandomEntity">
+    <resultMap id="fandomInfoResultMap" type="com.fansz.members.model.fandom.FandomInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
@@ -140,14 +140,31 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="findFandomByIds" parameterType="java.util.List" resultMap="FavoriteFandomResult">
-        select
+
+    <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity" resultMap="com.fansz.members.api.repository.FandomMemberEntityMapper.fandomResultMap">
+        SELECT
         <include refid="Base_Column_List"/>
-        from feeds_fandom a
-        where a.fandom_sn in
-        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #{item,jdbcType=VARCHAR}
-        </foreach>
+        FROM feeds_fandom
+        <where>
+            <if test="fandomName != null">
+                fandom_name = #{fandomName,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomParentId != null">
+                fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomAdminId != null">
+                fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomCreatorId != null">
+                fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomAvatarUrl != null">
+                fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomIntro != null">
+                fandom_intro = #{fandomIntro,jdbcType=VARCHAR},
+            </if>
+        </where>
     </select>
 
 </mapper>

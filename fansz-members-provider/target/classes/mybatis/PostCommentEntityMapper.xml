@@ -99,26 +99,26 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <select id="getCommentsByPostidFromFandom" resultMap="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Long">
- SELECT
-	t.id,
-	t.post_id,
-	t.comment_content,
-	t.commentator_sn,
-	m.nickname commentator_nickname,
-	t.comment_time,
-	m.member_avatar commentator_avatar,
-	p.commentator_sn orgin_sn,
-	p.comment_content orgin_content,
-	p.comment_time orgin_time,
-	q.nickname orgin_nickname,
-	q.member_avatar orgin_avatar
-FROM
-	feeds_member_post_comment t
-LEFT JOIN connects_member_profile m ON m.sn = t.commentator_sn
-LEFT JOIN feeds_member_post_comment p ON t.comment_parent_id = p.id
-LEFT JOIN connects_member_profile q ON p.commentator_sn = q.sn
-WHERE
-	t.post_id = #{id,jdbcType=BIGINT} AND t.comment_source='T';
+    <select id="getCommentsByPostidFromFandom" resultType="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Long">
+         SELECT
+            t.id,
+            t.post_id postId,
+            t.comment_content commentContent,
+            t.commentator_sn commentatorSn,
+            m.nickname commentatorNickname,
+            t.comment_time commentTime,
+            m.member_avatar commentatorAvatar,
+            p.commentator_sn orginSn,
+            p.comment_content orginContent,
+            p.comment_time orginTime,
+            q.nickname orginNickname,
+            q.member_avatar orginAvatar
+        FROM
+            feeds_member_post_comment t
+        LEFT JOIN connects_member_profile m ON m.sn = t.commentator_sn
+        LEFT JOIN feeds_member_post_comment p ON t.comment_parent_id = p.id
+        LEFT JOIN connects_member_profile q ON p.commentator_sn = q.sn
+        WHERE
+            t.post_id = #{id,jdbcType=BIGINT} AND t.comment_source='T';
     </select>
 </mapper>

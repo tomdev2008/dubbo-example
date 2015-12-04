@@ -14,6 +14,7 @@
         <module>fansz-members-provider</module>
         <module>fansz-members-consumer</module>
         <module>fansz-sms-sender</module>
+        <module>fansz-storage-server</module>
     </modules>
     <distributionManagement>
         <repository>
@@ -245,6 +246,26 @@
                 <artifactId>tomcat-embed-logging-juli</artifactId>
                 <version>${tomcat_embed_version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.csource</groupId>
+                <artifactId>fastdfs</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.6.1</version>
+            </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>5.0.0.Alpha2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate_validator_version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>
@@ -260,6 +281,21 @@
                         <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.4</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>2.2.1</version>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -272,5 +308,7 @@
         <hessian_version>4.0.7</hessian_version>
         <hessian_lite_version>3.2.1-fixed-2</hessian_lite_version>
         <tomcat_embed_version>8.0.11</tomcat_embed_version>
+        <hibernate_validator_version>4.2.0.Final</hibernate_validator_version>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
 </project>

@@ -2,6 +2,6 @@
 /fansz-members-api/target
 /fansz-sms-sender/target
 /fansz-members-consumer/target
-target/*
+/fansz-members-provider/target/
+/fansz-storage-server/target/
 !.gitignore
-
