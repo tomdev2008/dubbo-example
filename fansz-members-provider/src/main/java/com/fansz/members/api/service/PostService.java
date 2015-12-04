@@ -35,4 +35,6 @@ public interface PostService {
     void deleteLike(DeleteLikeParam deleteLikeParam);
 
     PageList<MemberPostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam);
+
+    PageList<FandomPostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam);
 }

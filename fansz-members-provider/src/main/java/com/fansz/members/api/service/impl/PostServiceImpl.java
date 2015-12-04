@@ -109,4 +109,39 @@ public class PostServiceImpl implements PostService {
         return memberPostInfoResults;
     }
 
+    @Override
+    public PageList<FandomPostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam) {
+        List<MemberPostEntity> entities;
+        if ("new".equals(postsQueryParam.getType()))
+        {
+            entities =  fandomPostEntityMapper.newFandomPosts(postsQueryParam.getFandomId(), postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
+        } else {
+            entities = fandomPostEntityMapper.hotFandomPosts(postsQueryParam.getFandomId(), postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
+        }
+
+        int count = this.fandomPostEntityMapper.countFandomPosts(postsQueryParam.getFandomId());
+
+        Paginator paginator = new Paginator(postsQueryParam.getPageNum(), postsQueryParam.getPageSize(), count);
+        PageList<FandomPostInfoResult> fandomPostInfoResults = new PageList<>(paginator);
+
+        for (MemberPostEntity entity : entities) {
+            FandomPostInfoResult fandomPostInfoResult = new FandomPostInfoResult();
+            fandomPostInfoResult.setPostTitle(entity.getPostTitle());
+            fandomPostInfoResult.setPostContent(entity.getPostContent());
+            fandomPostInfoResult.setPostNewsfeeds(entity.getPostNewsfeeds());
+            fandomPostInfoResult.setPostTime(DateFormatUtils.format(entity.getPostTime(), "yyyy-MM-dd HH:mm:ss"));
+
+            FandomPostInfoResult.PostMember postMember = fandomPostInfoResult.new PostMember();
+            postMember.setSn(entity.getUserEntiy().getSn());
+            postMember.setNickname(entity.getUserEntiy().getNickname());
+            postMember.setMemberAvatar(entity.getUserEntiy().getMemberAvatar());
+
+            fandomPostInfoResult.setPostMember(postMember);
+
+            fandomPostInfoResults.add(fandomPostInfoResult);
+        }
+
+        return fandomPostInfoResults;
+    }
+
 }

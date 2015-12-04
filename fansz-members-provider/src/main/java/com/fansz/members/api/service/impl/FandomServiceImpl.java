@@ -7,10 +7,7 @@ import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.exception.ApplicationException;
-import com.fansz.members.model.fandom.FandomInfoParam;
-import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.fandom.SingleFandomInfoResult;
+import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.tools.BeanTools;
@@ -20,6 +17,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -96,5 +94,19 @@ public class FandomServiceImpl implements FandomService {
         result.setCreator(creator);
 
         return result;
+    }
+
+    @Override
+    public void addFandom(AddFandomParam addFandomParam) {
+        FandomEntity fandomEntity = new FandomEntity();
+        fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
+        fandomEntity.setFandomCreateTime(new Date());
+        fandomEntity.setFandomCreatorSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
+        fandomEntity.setFandomName(addFandomParam.getFandomName());
+        fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
+
+        this.fandomMapper.insert(fandomEntity);
     }
 }

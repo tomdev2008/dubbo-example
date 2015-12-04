@@ -1,9 +1,6 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.model.fandom.FandomInfoParam;
-import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.fandom.SingleFandomInfoResult;
+import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -25,5 +22,7 @@ public interface FandomService {
     boolean exitFandom(ExitFandomParam joinFandomParam);
 
     SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
+
+    void addFandom(AddFandomParam addFandomParam);
 
 }

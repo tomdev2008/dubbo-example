@@ -9,9 +9,9 @@ public class FandomEntity {
 
     private Long fandomParentId;
 
-    private Long fandomAdminId;
+    private String fandomAdminSn;
 
-    private Long fandomCreatorId;
+    private String fandomCreatorSn;
 
     private String fandomAvatarUrl;
 
@@ -43,20 +43,20 @@ public class FandomEntity {
         this.fandomParentId = fandomParentId;
     }
 
-    public Long getFandomAdminId() {
-        return fandomAdminId;
+    public String getFandomAdminSn() {
+        return fandomAdminSn;
     }
 
-    public void setFandomAdminId(Long fandomAdminId) {
-        this.fandomAdminId = fandomAdminId;
+    public void setFandomAdminSn(String fandomAdminSn) {
+        this.fandomAdminSn = fandomAdminSn;
     }
 
-    public Long getFandomCreatorId() {
-        return fandomCreatorId;
+    public String getFandomCreatorSn() {
+        return fandomCreatorSn;
     }
 
-    public void setFandomCreatorId(Long fandomCreatorId) {
-        this.fandomCreatorId = fandomCreatorId;
+    public void setFandomCreatorSn(String fandomCreatorSn) {
+        this.fandomCreatorSn = fandomCreatorSn;
     }
 
     public String getFandomAvatarUrl() {

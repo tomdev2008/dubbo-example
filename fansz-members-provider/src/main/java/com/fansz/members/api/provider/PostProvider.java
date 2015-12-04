@@ -123,4 +123,10 @@ public class PostProvider extends AbstractProvider implements PostApi {
         return renderPagedSuccess(memberPostInfoResults);
     }
 
+    @Override
+    public CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param) {
+        PageList<FandomPostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
+        return renderPagedSuccess(fandomPostInfoResults);
+    }
+
 }
