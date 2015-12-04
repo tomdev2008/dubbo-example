@@ -3,7 +3,7 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.repository.SearchServiceMapper;
 import com.fansz.members.api.service.SearchService;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.comment.SearchParam;
+import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.model.comment.SearchResult;
 import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;

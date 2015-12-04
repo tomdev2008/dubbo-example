@@ -4,6 +4,7 @@ import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.profile.ContactInfoResult;
@@ -58,5 +59,11 @@ public class ProfileServiceImpl implements ProfileService {
     public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
         PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
         return userRelationEntityMapper.findRelationByMobiles(contactQueryParam,pageBounds);
+    }
+
+    @Override
+    public PageList<UserInfoResult> searchMembers(SearchParam searchParam){
+        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+        return userEntityMapper.searchMembers(searchParam,pageBounds);
     }
 }

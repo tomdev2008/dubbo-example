@@ -4,6 +4,7 @@ import com.fansz.members.api.ProfileApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonResult;
@@ -36,17 +37,14 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
-        CommonResult<UserInfoResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
         UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
-        result.setResult(userInfoResult);
-        result.setMessage("Get profile successfully");
-        return result;
+        return renderSuccess(userInfoResult, "Get profile successfully");
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembers(QueryProfileParam queryUserParam) {
-        return null;
+    public CommonPagedResult<UserInfoResult> searchMembers(SearchParam searchParam) {
+        PageList<UserInfoResult> data = profileService.searchMembers(searchParam);
+        return renderPagedSuccess(data);
     }
 
     /**
@@ -57,15 +55,8 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
-        if (StringTools.isBlank(modifyProfileParam.getAccessToken())) {
-            throw new ApplicationException(Constants.PARAMETERS_ERROR, "Param error, see doc for more info");
-        }
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Change profile successfully");
         profileService.modifyProfile(modifyProfileParam);
-        result.setResult(PRESENCE);
-        return result;
+        return renderSuccess(PRESENCE, "Change profile successfully");
     }
 
     @Override

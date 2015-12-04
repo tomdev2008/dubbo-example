@@ -1,8 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.comment.SearchParam;
-import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 

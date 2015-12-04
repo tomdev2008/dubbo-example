@@ -5,6 +5,7 @@ import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchParam;
 
 import javax.ws.rs.*;
 import java.util.List;
@@ -29,12 +30,12 @@ public interface ProfileApi {
     /**
      * 根据昵称、账号、手机号码搜索会员
      *
-     * @param queryUserParam
+     * @param searchParam
      * @return
      */
     @Path("/show")
     @POST
-    CommonPagedResult<UserInfoResult> searchMembers(QueryProfileParam queryUserParam);
+    CommonPagedResult<UserInfoResult> searchMembers(SearchParam searchParam);
 
     /**
      * 修改会员信息
@@ -57,4 +58,6 @@ public interface ProfileApi {
     @POST
     @Path("/contacts/match")
     CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
+
+
 }

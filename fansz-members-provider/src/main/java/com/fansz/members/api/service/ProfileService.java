@@ -5,6 +5,7 @@ import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.profile.ModifyProfileParam;
+import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
@@ -22,4 +23,6 @@ public interface ProfileService {
     List<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam);
 
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
+
+    PageList<UserInfoResult> searchMembers(SearchParam searchParam);
 }

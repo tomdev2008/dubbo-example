@@ -2,10 +2,8 @@ package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.comment.SearchParam;
-import com.fansz.members.model.profile.UserInfoResult;
+import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.springframework.beans.support.PagedListHolder;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

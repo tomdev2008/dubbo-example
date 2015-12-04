@@ -299,7 +299,7 @@
         where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
 
-    <select id="searchMembers" parameterType="" resultMap="userInfoResultMap">
+    <select id="searchMembers" parameterType="com.fansz.members.model.search.SearchParam" resultMap="userInfoResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_profile

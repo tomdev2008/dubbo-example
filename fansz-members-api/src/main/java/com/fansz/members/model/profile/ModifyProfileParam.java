@@ -3,6 +3,7 @@ package com.fansz.members.model.profile;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -14,6 +15,7 @@ public class ModifyProfileParam implements Serializable {
 
     private String sn;
 
+    @Size(min=1)
     @JsonProperty("access_token")
     private String accessToken;
 

@@ -6,11 +6,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import java.io.Serializable;
 
 /**
- * 搜索参数模型定义
+ * Created by dell on 2015/12/2.
  */
 public class SearchParam extends PageParam implements Serializable {
-    private static final long serialVersionUID = -741980793572384170L;
-    private String sn;
+
+    private static final long serialVersionUID = -3581758642463346451L;
+    @JsonProperty("sn")
+    private String memberSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -18,12 +20,12 @@ public class SearchParam extends PageParam implements Serializable {
     @JsonProperty("search_val")
     private String searchVal;
 
-    public String getSn() {
-        return sn;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
     public String getAccessToken() {
