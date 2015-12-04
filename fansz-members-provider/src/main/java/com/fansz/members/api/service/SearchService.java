@@ -13,4 +13,7 @@ public interface SearchService {
 
     public CommonResult<PageList> keywordSearch(SearchParam searchParam,PageBounds pageBounds);
 
+    public CommonResult<PageList> keywordSearchMember(SearchParam searchParam,PageBounds pageBounds);
+
+
 }

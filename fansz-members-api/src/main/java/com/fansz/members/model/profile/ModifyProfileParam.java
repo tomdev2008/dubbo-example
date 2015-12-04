@@ -12,6 +12,7 @@ public class ModifyProfileParam implements Serializable {
 
     private static final long serialVersionUID = -2028355548744485358L;
 
+    @JsonProperty("member_sn")
     private String sn;
 
     @JsonProperty("access_token")
@@ -32,6 +33,9 @@ public class ModifyProfileParam implements Serializable {
 
     @JsonProperty("member_type")
     private String memberType;
+
+    @JsonProperty("sn")
+    private String operatorSn;
 
     public String getSn() {
         return sn;
@@ -103,5 +107,13 @@ public class ModifyProfileParam implements Serializable {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
+    }
+
+    public String getOperatorSn() {
+        return operatorSn;
+    }
+
+    public void setOperatorSn(String operatorSn) {
+        this.operatorSn = operatorSn;
     }
 }

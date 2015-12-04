@@ -3,6 +3,7 @@ package com.fansz.members.api;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.comment.SearchParam;
+import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.support.PagedListHolder;
@@ -29,5 +30,10 @@ public interface SearchApi {
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<PageList> keywordSearch(SearchParam searchParam);
 
+    @POST
+    @Path("/keywordSearchMember")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<PageList> getProfileByNickname(SearchParam searchParam);
 
 }

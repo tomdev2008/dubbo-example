@@ -299,4 +299,12 @@
         where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
 
+    <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">
+       UPDATE connects_member_profile
+        SET member_type = #{memberType,jdbcType=VARCHAR},
+         profile_updatetime = NOW()
+        WHERE
+            sn = #{sn,jdbcType=VARCHAR}
+    </update>
+
 </mapper>

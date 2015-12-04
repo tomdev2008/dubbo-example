@@ -170,23 +170,5 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoMap">
-        SELECT a.*,b.sn,b.nickname,b.member_avatar,
-        (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
-        (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
-        FROM feeds_member_post_fandom a,connects_member_profile b,feeds_member_fandom c
-        WHERE c.member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND a.fandom_id=c.fandom_id AND a.member_sn=b.sn
-    </select>
-
-    <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoMap">
-        SELECT a.*,b.sn,b.nickname,b.member_avatar,
-        (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
-        (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
-        FROM feeds_member_post_fandom a,connects_member_profile b,feeds_member_fandom c
-        WHERE c.member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND a.fandom_id=c.fandom_id
-        AND a.member_sn=b.sn
-        AND a.post_newsfeeds='1'
-    </select>
+    
 </mapper>

@@ -21,4 +21,14 @@ public class SearchProvider implements SearchApi{
         PageBounds pageBounds = new PageBounds(searchParam.getOffset(), searchParam.getLimit());
         return searchService.keywordSearch(searchParam,pageBounds);
     }
+
+    @Override
+    public CommonResult<PageList> getProfileByNickname(SearchParam searchParam) {
+        PageBounds pageBounds = new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+       // searchService.keywordSearchMember(searchParam.getSearchVal(),pageBounds);
+       // PageList list = new PageList();
+
+        return null;
+    }
+
 }

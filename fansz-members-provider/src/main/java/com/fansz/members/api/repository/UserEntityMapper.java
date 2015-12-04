@@ -40,8 +40,6 @@ public interface UserEntityMapper {
 
     List<UserEntity> getFandomFollowers(Integer id);
 
-    List<UserEntity> getProfileByNickname(String nickName);
-
-
+    int setMemberType(UserEntity record);
 
 }
