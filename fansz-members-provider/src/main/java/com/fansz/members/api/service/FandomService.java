@@ -5,6 +5,7 @@ import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.fandom.*;
 
 import com.fansz.members.model.post.GetPostsParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface FandomService {
 
 
     List<FandomCategorys> getFandomCategory(FandomQueryParam fandomQueryParam);
+
+    List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 }

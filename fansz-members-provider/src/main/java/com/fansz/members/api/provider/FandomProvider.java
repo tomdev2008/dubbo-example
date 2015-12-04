@@ -5,6 +5,7 @@ import com.fansz.members.api.FandomApi;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.post.PostLikeInfoResult;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.fandom.*;
@@ -73,6 +74,30 @@ public class FandomProvider implements FandomApi {
         try {
             if (null != fandomQueryParam) {
                 List<FandomCategorys> result = fandomService.getFandomCategory(fandomQueryParam);
+                commonResult.setResult(result);
+                commonResult.setStatus(Constants.SUCCESS);
+            } else {
+                commonResult.setStatus(Constants.FAIL);
+                commonResult.setMessage("json is null");
+            }
+        } catch (Exception e) {
+            throw new ApplicationException("", e.getMessage());
+        }
+        return commonResult;
+    }
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @Override
+    public CommonResult<List<ContactInfoResult>> getFandomMembers(FandomQueryParam fandomQueryParam) {
+        CommonResult<List<ContactInfoResult>> commonResult = new CommonResult<List<ContactInfoResult>>();
+        try {
+            if (null != fandomQueryParam) {
+                List<ContactInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
                 commonResult.setResult(result);
                 commonResult.setStatus(Constants.SUCCESS);
             } else {

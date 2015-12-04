@@ -3,6 +3,8 @@ package com.fansz.members.api.repository;
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.model.fandom.FandomCategorys;
 import com.fansz.members.model.fandom.FandomInfoResult;
+import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.mybatis.spring.annotation.MapperScan;
 
@@ -32,4 +34,7 @@ public interface FandomMapper {
     List<FandomInfoResult> getRecommendFandom(PageBounds pageBounds);
 
     List<FandomInfoResult> getFandomCategory(Long id);
+
+    List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
+//    List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
 }

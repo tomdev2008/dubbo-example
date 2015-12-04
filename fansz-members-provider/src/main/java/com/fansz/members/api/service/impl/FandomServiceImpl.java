@@ -6,6 +6,7 @@ import com.fansz.members.api.service.FandomService;
 import com.fansz.members.model.fandom.FandomCategorys;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.tools.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +68,12 @@ public class FandomServiceImpl implements FandomService {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
+//        PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getCount());
+//        return fandomMapper.getFandomMembers(fandomQueryParam, pageBounds);
+        return fandomMapper.getFandomMembers(fandomQueryParam);
     }
 }

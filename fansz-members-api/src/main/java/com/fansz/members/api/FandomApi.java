@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.post.PostInfoResult;
+import com.fansz.members.model.profile.ContactInfoResult;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -52,4 +53,16 @@ public interface FandomApi {
     @Consumes(ContentType.APPLICATION_JSON_UTF_8)
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
+
+    /**
+     * 获取圈子fandom接口
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomCategorys>> 返回对象
+     */
+    @POST
+    @Path("/members")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<List<ContactInfoResult>> getFandomMembers(FandomQueryParam fandomQueryParam);
 }

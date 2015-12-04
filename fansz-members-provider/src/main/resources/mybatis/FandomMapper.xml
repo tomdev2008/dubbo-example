@@ -215,4 +215,13 @@
         where a.fandom_parent_id = #{id,jdbcType=BIGINT}
         order by a.id
     </select>
+
+    <select id="getFandomMembers" parameterType="com.fansz.members.model.fandom.FandomQueryParam" resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
+
+        select a.*,r.relation_status
+        from (select  p.*
+        from  feeds_member_fandom m, connects_member_profile  p
+        where m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
+    </select>
 </mapper>
