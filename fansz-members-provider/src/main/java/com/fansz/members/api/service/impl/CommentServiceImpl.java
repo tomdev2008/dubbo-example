@@ -34,9 +34,13 @@ public class CommentServiceImpl implements CommentService {
         return null;
     }
 
+    /**
+     * 删除评论
+     * @param commentDelParam
+     */
     @Override
     public void removeComment(CommentDelParam commentDelParam) {
-        postCommentEntityMapper.deleteByPrimaryKey(commentDelParam.getCommentId());
+        postCommentEntityMapper.deleteMyComment(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
     }
 
     @Override

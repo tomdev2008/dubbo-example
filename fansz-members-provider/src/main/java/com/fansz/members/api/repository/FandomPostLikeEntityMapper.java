@@ -2,6 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomPostLikeEntity;
 import com.fansz.members.model.post.PostLikeInfoResult;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface FandomPostLikeEntityMapper {
     int updateByPrimaryKey(FandomPostLikeEntity record);
 
     List<PostLikeInfoResult> listPostVotes(Long id);
+
+    int deleteMyLike(@Param("sn") String sn, @Param("postId") long postId);
 
 }

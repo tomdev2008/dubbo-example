@@ -1,5 +1,6 @@
 package com.fansz.members.model.fandom;
 
+import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by allan on 15/11/26.
  */
-public class FandomQueryParam implements Serializable {
+public class FandomQueryParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = 6163860431759993812L;
 
@@ -23,11 +24,6 @@ public class FandomQueryParam implements Serializable {
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
 
-    @JsonProperty("page_num")
-    private int pageNum;
-
-    @JsonProperty("page_size")
-    private int count;
 
     public String getAccessKey() {
         return accessKey;
@@ -61,19 +57,5 @@ public class FandomQueryParam implements Serializable {
         this.fandomParentId = fandomParentId;
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
 
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 }

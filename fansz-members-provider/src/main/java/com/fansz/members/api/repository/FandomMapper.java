@@ -1,11 +1,13 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
-import com.fansz.members.model.fandom.FandomCategorys;
+import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
-//    List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
+    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
+
+    SingleFandomEntity findFandomInfo(@Param("id") long id);
 }

@@ -59,6 +59,13 @@
         <processorPath useClasspath="true" />
         <module name="members-provider" />
       </profile>
+      <profile default="false" name="Annotation profile for fansz-storage-server" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="fansz-storage-server" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
       <module name="fansz-members" target="1.5" />
@@ -66,6 +73,7 @@
       <module name="fansz-members-consumer" target="1.7" />
       <module name="fansz-members-provider" target="1.7" />
       <module name="fansz-sms-sender" target="1.7" />
+      <module name="fansz-storage-server" target="1.7" />
       <module name="members-provider" target="1.7" />
       <module name="parent" target="1.7" />
       <module name="storage-server" target="1.7" />

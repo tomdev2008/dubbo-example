@@ -121,4 +121,9 @@
         WHERE
             t.post_id = #{id,jdbcType=BIGINT} AND t.comment_source='T';
     </select>
+
+    <!-- 删除我的评论 -->
+    <delete id="deleteMyComment">
+        DELETE FROM feeds_member_post_comment WHERE id = #{id} AND commentator_sn = #{sn}
+    </delete>
 </mapper>

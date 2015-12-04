@@ -3,19 +3,16 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.PostApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.PostService;
-import com.fansz.members.tools.Constants;
-import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.post.*;
+import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -80,15 +77,25 @@ public class PostProvider extends AbstractProvider implements PostApi {
     }
 
 
+    /**
+     * 点赞
+     * @param addLikeParam
+     * @return
+     */
     @Override
-    public CommonResult<List<NullResult>> votePost(PostParam postParam) {
-        return null;
+    public CommonResult<NullResult> addLike(AddLikeParam addLikeParam) {
+        this.postService.addLike(addLikeParam);
+        return renderSuccess();
     }
 
-    @Override
-    public CommonResult<List<NullResult>> removeVote(PostParam postParam) {
-
-        return null;
+    /**
+     * 取消点赞
+     * @param deleteLikeParam
+     * @return
+     */
+    public CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam) {
+        this.postService.deleteLike(deleteLikeParam);
+        return renderSuccess();
     }
 
     /**
@@ -120,4 +127,15 @@ public class PostProvider extends AbstractProvider implements PostApi {
         PageList<PostInfoResult> dataResult = postService.searchPosts(searchPostParam);
             return renderPagedSuccess(dataResult);
     }
+    /**
+     * 查询某人在某个fandom的所有帖子列表
+     * @param getMemberFandomPostsParam
+     * @return
+     */
+    @Override
+    public CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
+        PageList<MemberPostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
+        return renderPagedSuccess(memberPostInfoResults);
+    }
+
 }

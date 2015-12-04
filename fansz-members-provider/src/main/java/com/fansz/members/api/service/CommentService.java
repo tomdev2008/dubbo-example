@@ -17,6 +17,10 @@ public interface CommentService {
 
     PostCommentEntity addComment(CommentParam commentPara);
 
+    /**
+     * 删除评论
+     * @param commentDelParam
+     */
     void removeComment(CommentDelParam commentDelParam);
 
     PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram centQueryFromFandom, PageBounds pageBounds);

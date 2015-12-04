@@ -1,34 +1,27 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomEntity;
+import com.fansz.members.api.entity.FandomMemberEntity;
+import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.api.repository.FandomMapper;
+import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.fandom.*;
-import com.fansz.members.model.post.GetPostsParam;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import org.springframework.stereotype.Service;
-
-import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.repository.FandomMemberEntityMapper;
-import com.fansz.members.api.repository.FandomMapper;
-import com.fansz.members.api.repository.FandomPostEntityMapper;
-import com.fansz.members.api.repository.UserEntityMapper;
-import com.fansz.members.model.fandom.FandomCategorys;
-import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.profile.ContactInfoResult;
-import com.fansz.members.tools.BeanTools;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * fandom服务实现类
@@ -38,7 +31,6 @@ public class FandomServiceImpl implements FandomService {
 
     @Autowired
     private FandomMapper fandomMapper;
-
 
     @Autowired
     private FandomMemberEntityMapper fandomMemberEntityMapper;
@@ -109,7 +101,7 @@ public class FandomServiceImpl implements FandomService {
     }
 
     public List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
-        PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getCount());
+        PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
         return fandomMapper.getRecommendFandom(pageBounds);
     }
 
@@ -140,7 +132,33 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public List<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
-        return fandomMapper.getFandomMembers(fandomQueryParam);
+    public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
+        PageBounds pageBounds=new PageBounds(fandomQueryParam.getOffset(),fandomQueryParam.getLimit());
+        return fandomMapper.getFandomMembers(fandomQueryParam,pageBounds);
+    }
+
+    public SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
+
+        SingleFandomEntity fandomEntity = this.fandomMapper.findFandomInfo(fandomInfoParam.getFandomId());
+
+        if (fandomEntity == null) {
+            return null;
+        }
+
+        SingleFandomInfoResult result = new SingleFandomInfoResult();
+
+        result.setFandomName(fandomEntity.getFandomName());
+        result.setFandomAvatarUrl(fandomEntity.getFandomAvatarUrl());
+        result.setFandomIntro(fandomEntity.getFandomIntro());
+        result.setFandomCreateTime(DateFormatUtils.format(fandomEntity.getFandomCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+
+        SingleFandomInfoResult.Creator creator = result.new Creator();
+        creator.setSn(fandomEntity.getUserEntity().getSn());
+        creator.setNickname(fandomEntity.getUserEntity().getNickname());
+        creator.setMemberAvatar(fandomEntity.getUserEntity().getMemberAvatar());
+
+        result.setCreator(creator);
+
+        return result;
     }
 }

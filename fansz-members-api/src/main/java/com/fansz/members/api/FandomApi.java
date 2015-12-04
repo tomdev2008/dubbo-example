@@ -1,17 +1,19 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.fandom.*;
-import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
 import com.fansz.members.model.profile.ContactInfoResult;
 
-import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import java.util.List;
 
 /**
@@ -96,5 +98,14 @@ public interface FandomApi {
      */
     @POST
     @Path("/members")
-    CommonResult<List<ContactInfoResult>> getFandomMembers(FandomQueryParam fandomQueryParam);
+    CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
+     /* 获取圈子信息接口
+     *
+     * @param fandomInfoParam 圈子id
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/info")
+    CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
+
 }

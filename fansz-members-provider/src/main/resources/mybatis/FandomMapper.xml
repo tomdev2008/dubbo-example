@@ -10,7 +10,7 @@
         <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
-        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="TIMESTAMP"/>
+        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
     </resultMap>
 
     <resultMap id="fandomInfoResultMap" type="com.fansz.members.model.fandom.FandomInfoResult">
@@ -45,6 +45,28 @@
         <association property="childCategory" javaType="com.fansz.members.model.fandom.FandomInfoResult"
                      resultMap="fandomInfoMap"/>
     </resultMap>
+    <resultMap id="findFandomInfo" type="com.fansz.members.api.entity.SingleFandomEntity">
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="VARCHAR"/>
+        <association property="userEntiy" javaType="com.fansz.members.api.entity.UserEntity">
+            <id column="m_id" property="id"/>
+            <result column="m_sn" property="sn"/>
+            <result column="m_nickname" property="nickname"/>
+            <result column="m_member_avatar" property="memberAvatar"/>
+        </association>
+    </resultMap>
+
+    <select id="findFandomInfo" resultMap="findFandomInfo" parameterType="java.lang.Long">
+        select
+        T1.fandom_name, T1.fandom_avatar_url, T1.fandom_intro, T1.fandom_create_time,
+        T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
+        from feeds_fandom T1
+        INNER JOIN connects_member_profile T2
+        ON T1.fandom_creator_sn = T2.sn
+        where T1.id = #{id,jdbcType=BIGINT}
+    </select>
 
     <sql id="Base_Column_List">
     id, fandom_name, fandom_parent_id, fandom_admin_sn, fandom_creator_sn, fandom_avatar_url,
@@ -165,7 +187,7 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="com.fansz.members.api.repository.FandomMemberEntityMapper.fandomResultMap">
+            resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM feeds_fandom

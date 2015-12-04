@@ -11,7 +11,6 @@ import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomPram;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
-import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,20 +36,8 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> addPostComment(CommentParam commentPara) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setResult(null);
-        try {
-            if (null != commentPara) {
-                commentService.addComment(commentPara);
-                result.setStatus(Constants.SUCCESS);
-            } else {
-                result.setStatus(Constants.FAIL);
-                result.setMessage("json is null");
-            }
-        } catch (Exception e) {
-            result.setStatus(Constants.FAIL);
-        }
-        return result;
+        commentService.addComment(commentPara);
+        return super.renderSuccess();
     }
 
     /**
@@ -70,20 +57,8 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setResult(null);
-        try {
-            if (null != commentDelParam) {
-                commentService.removeComment(commentDelParam);
-                result.setStatus(Constants.SUCCESS);
-            } else {
-                result.setStatus(Constants.FAIL);
-                result.setMessage("json is null");
-            }
-        } catch (Exception e) {
-            result.setStatus(Constants.FAIL);
-        }
-        return result;
+        commentService.removeComment(commentDelParam);
+        return renderSuccess();
     }
 
     /**

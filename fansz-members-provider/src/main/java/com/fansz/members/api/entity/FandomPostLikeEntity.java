@@ -5,7 +5,7 @@ import java.util.Date;
 public class FandomPostLikeEntity {
     private Long id;
 
-    private Long memberSn;
+    private String memberSn;
 
     private Long postId;
 
@@ -19,11 +19,11 @@ public class FandomPostLikeEntity {
         this.id = id;
     }
 
-    public Long getMemberSn() {
+    public String getMemberSn() {
         return memberSn;
     }
 
-    public void setMemberSn(Long memberSn) {
+    public void setMemberSn(String memberSn) {
         this.memberSn = memberSn;
     }
 
