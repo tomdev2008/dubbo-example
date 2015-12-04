@@ -1,5 +1,6 @@
 package com.fansz.members.api.repository;
 
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.post.PostLikeInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
@@ -14,8 +15,10 @@ import java.util.List;
 @MapperScan
 public interface SearchServiceMapper {
 
-    List<UserInfoResult> searchMember(String keyWord,PageBounds pageBounds);
+    List<UserInfoResult> searchFandom(String keyWord,PageBounds pageBounds);
 
     List<PostInfoResult> searchPost(String keyWord,PageBounds pageBounds);
+
+    List<UserInfoResult> searchMember(String nickName,PageBounds pageBounds);
 
 }

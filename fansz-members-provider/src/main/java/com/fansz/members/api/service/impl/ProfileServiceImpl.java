@@ -50,9 +50,9 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
-        userEntityMapper.getProfileByNickname(modifyProfileParam.getNickname());
-        return null;
+    public int setMemberType(ModifyProfileParam modifyProfileParam) {
+        UserEntity user = BeanTools.copyAs(modifyProfileParam, UserEntity.class);
+        return userEntityMapper.setMemberType(user);
     }
 
     @Override

@@ -59,10 +59,14 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return renderSuccess(PRESENCE, "Change profile successfully");
     }
 
-    @Override
-    public CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam) {
-        profileService.getProfileByNickname(modifyProfileParam);
-        return null;
+    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam){
+
+        CommonResult<NullResult> result = new CommonResult<>();
+        result.setStatus(Constants.SUCCESS);
+        result.setMessage("setMemberType profile successfully");
+        profileService.setMemberType(modifyProfileParam);
+        result.setResult(PRESENCE);
+        return result;
     }
 
     @Override

@@ -47,9 +47,11 @@ public interface ProfileApi {
     @Path("/change")
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
-    @POST
-    @Path("/getProfileBykeyword")
-    CommonResult<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam);
+
+    @Path("/setMemberType")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam);
 
 
     /**

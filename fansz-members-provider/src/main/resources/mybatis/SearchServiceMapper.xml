@@ -14,7 +14,7 @@
         <result column="member_avatar" property="memberAvatar" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="searchMember" resultMap="BaseResultMap" parameterType="java.lang.String">
+    <select id="searchFandom" resultMap="BaseResultMap" parameterType="java.lang.String">
       select
        sn,
        nickname,
@@ -26,6 +26,27 @@
     <select id="searchPost" resultMap="postInfoResult" parameterType="java.lang.String">
       select f.post_title,f.post_content,f.post_newsfeeds,f.post_time,p.sn,p.nickname,p.member_avatar from feeds_member_post_fandom f left JOIN connects_member_profile p
       on f.member_sn = p.sn where f.post_title like CONCAT('%','123','%') or f.post_content like CONCAT('%','123','%') or p.nickname like CONCAT('%','123','%')
+    </select>
+
+
+    <select id="searchMember" parameterType="java.lang.String" resultMap="userInfoResult">
+        SELECT
+        p.sn,
+        p.loginname,
+        p.mobile,
+        p.email,
+        p.nickname,
+        p.gender,
+        p.birthday,
+        p.member_avatar,
+        p.profile_createtime,
+        p.member_type
+        FROM
+        connects_member_profile p
+        WHERE
+        p.nickname = #{nickname,jdbcType=VARCHAR}
+        OR p.sn = #{nickname,jdbcType=VARCHAR}
+        and member_status = 'N';
     </select>
 
 </mapper>

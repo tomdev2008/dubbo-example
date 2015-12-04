@@ -20,7 +20,7 @@ public interface ProfileService {
 
     void modifyProfile(ModifyProfileParam modifyProfileParam);
 
-    List<UserInfoResult> getProfileByNickname(ModifyProfileParam modifyProfileParam);
+    public int setMemberType(ModifyProfileParam modifyProfileParam);
 
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 

@@ -27,5 +27,10 @@ public interface SearchApi {
     @Produces(ContentType.APPLICATION_JSON_UTF_8)
     public CommonResult<PageList> keywordSearch(SearchParam searchParam);
 
+    @POST
+    @Path("/keywordSearchMember")
+    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
+    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    public CommonResult<PageList> getProfileByNickname(SearchParam searchParam);
 
 }

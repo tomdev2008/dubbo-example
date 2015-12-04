@@ -23,7 +23,7 @@ public class SearchServiceImpl implements SearchService{
 
     @Override
     public CommonResult<PageList> keywordSearch(SearchParam searchParam,PageBounds pageBounds) {
-        List<UserInfoResult> memberList =  searchServiceMapper.searchMember(searchParam.getSearchVal(),pageBounds);
+        List<UserInfoResult> memberList =  searchServiceMapper.searchFandom(searchParam.getSearchVal(),pageBounds);
         List<PostInfoResult> postList = searchServiceMapper.searchPost(searchParam.getSearchVal(),pageBounds);
         SearchResult datas = new SearchResult();
         datas.setMemberList(memberList);
@@ -33,6 +33,12 @@ public class SearchServiceImpl implements SearchService{
         CommonResult<PageList> result  = new CommonResult<PageList>();
         result.setResult(list);
         return result;
+    }
+
+    @Override
+    public CommonResult<PageList> keywordSearchMember(SearchParam searchParam,PageBounds pageBounds) {
+        searchServiceMapper.searchMember(searchParam.getSearchVal(),pageBounds);
+        return null;
     }
 
 }

@@ -43,9 +43,9 @@ public interface UserEntityMapper {
 
     List<UserEntity> getFandomFollowers(Integer id);
 
-    List<UserEntity> getProfileByNickname(String nickName);
 
     PageList<UserInfoResult> searchMembers(SearchParam searchParam, PageBounds pageBounds);
 
+    int setMemberType(UserEntity record);
 
 }
