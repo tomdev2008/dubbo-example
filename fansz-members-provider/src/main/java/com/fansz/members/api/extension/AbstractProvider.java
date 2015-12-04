@@ -30,9 +30,11 @@ public abstract class AbstractProvider {
 
     protected <T> CommonPagedResult<T> renderPagedSuccess(PageList<T> data, String message) {
         PageParam pager = new PageParam();
-        pager.setLimit(data.getPaginator().getLimit());
-        pager.setOffset(data.getPaginator().getPage());
-        pager.setTotalNum(data.getPaginator().getTotalCount());
+        if(data.getPaginator()!=null) {
+            pager.setLimit(data.getPaginator().getLimit());
+            pager.setOffset(data.getPaginator().getPage());
+            pager.setTotalNum(data.getPaginator().getTotalCount());
+        }
         CommonPagedResult<T> result = new CommonPagedResult<>(Constants.SUCCESS,message,pager,data);
         return result;
     }

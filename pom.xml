@@ -266,6 +266,11 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate_validator_version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.20.0-GA</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

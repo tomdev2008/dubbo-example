@@ -30,8 +30,10 @@
         <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
         <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
+        <result column="profile_updatetime" jdbcType="TIMESTAMP" property="profileUpdatetime"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
-        <result column="b.relation_status" jdbcType="VARCHAR" property="relationship"/>
+        <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
+        <result column="relation_status" jdbcType="VARCHAR" property="relationship"/>
     </resultMap>
     <sql id="Base_Column_List">
         id, my_member_sn, friend_member_sn, relation_status
@@ -110,10 +112,20 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
-    <select id="findFriends" parameterType="java.lang.String" resultType="com.fansz.members.model.relationship.FriendInfoResult">
+    <select id="findFriends" parameterType="java.lang.String"
+            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
         SELECT b.* FROM connects_member_relation a,connects_member_profile b
         WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
         AND a.friend_member_sn=b.sn
+        AND a.relation_status IN('10','11')
+    </select>
+
+    <select id="findSpecialFriends" parameterType="java.lang.String"
+            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+        SELECT b.* FROM connects_member_relation a,connects_member_profile b
+        WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
+        AND a.friend_member_sn=b.sn
+        AND a.relation_status ='11'
     </select>
 
     <select id="findRelationBySns" parameterType="java.util.Map" resultMap="BaseResultMap">
@@ -124,13 +136,27 @@
         AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="findRelationByMobiles" parameterType="com.fansz.members.model.profile.ContactQueryParam" resultMap="contactInfoMap">
+    <select id="findRelationByMobiles" parameterType="com.fansz.members.model.profile.ContactQueryParam"
+            resultMap="contactInfoMap">
         SELECT b.relation_status ,a.*
         FROM connects_member_profile a
-        LEFT JOIN connects_member_relation b on  b.friend_member_sn=a.sn
+        LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
         AND b.my_member_sn= #{sn,jdbcType=VARCHAR} WHERE a.mobile IN
         <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
+
+    <select id="listAddMeRequest" parameterType="java.lang.String"
+            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+       SELECT a.* FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
+       WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR} and b.relation_status='00'
+    </select>
+
+    <select id="listMySendRequest" parameterType="java.lang.String"
+            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+     SELECT a.* FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
+       WHERE a.friend_member_sn=#{sn,jdbcType=VARCHAR} and b.relation_status='00'
+    </select>
+
 </mapper>

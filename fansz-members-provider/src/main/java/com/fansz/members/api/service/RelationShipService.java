@@ -1,5 +1,6 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.profile.UserInfoResult;
 import com.fansz.members.model.relationship.*;
@@ -13,12 +14,16 @@ import java.util.List;
  */
 public interface RelationShipService {
 
-    PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds);
+    PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds,boolean isSpecial);
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
 
     boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add);
 
     boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
+
+    PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam);
+
+    PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam);
 
 }
