@@ -66,9 +66,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public PageList<UserInfoResult> searchMembers(SearchParam searchParam){
-        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
-        return userEntityMapper.searchMembers(searchParam,pageBounds);
+    public PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds){
+        return userEntityMapper.searchMembers(searchParam.getNickname(),searchParam.getMobile(),searchParam.getMemberType(),pageBounds);
     }
     @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {

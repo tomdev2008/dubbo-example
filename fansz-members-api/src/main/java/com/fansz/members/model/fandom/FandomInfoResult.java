@@ -32,7 +32,16 @@ public class FandomInfoResult implements Serializable {
     @JsonProperty("fandom_create_time")
     private Date fandomCreateTime;
 
-    @JsonProperty("fandom_creator")
+    @JsonProperty("follower_count")
+    private int followerCount;
+
+    @JsonProperty("post_count")
+    private int postCount;
+
+    @JsonProperty("followed")
+    private int followed;
+
+    @JsonProperty("creator")
     private UserInfoResult creator;
 
     public Long getId() {
@@ -58,7 +67,6 @@ public class FandomInfoResult implements Serializable {
     public void setFandomParentId(Long fandomParentId) {
         this.fandomParentId = fandomParentId;
     }
-
 
 
     public String getFandomAvatarUrl() {
@@ -91,5 +99,29 @@ public class FandomInfoResult implements Serializable {
 
     public void setFandomCreateTime(Date fandomCreateTime) {
         this.fandomCreateTime = fandomCreateTime;
+    }
+
+    public int getFollowerCount() {
+        return followerCount;
+    }
+
+    public void setFollowerCount(int followerCount) {
+        this.followerCount = followerCount;
+    }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
+
+    public int getFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(int followed) {
+        this.followed = followed;
     }
 }

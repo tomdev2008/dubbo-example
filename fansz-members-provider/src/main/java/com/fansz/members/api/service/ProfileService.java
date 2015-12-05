@@ -1,5 +1,6 @@
 package com.fansz.members.api.service;
 
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.profile.ContactQueryParam;
@@ -24,7 +25,7 @@ public interface ProfileService {
 
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 
-    PageList<UserInfoResult> searchMembers(SearchParam searchParam);
+    PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds);
 
     List<String> getImages(ContactQueryParam contractQueryParam);
 }

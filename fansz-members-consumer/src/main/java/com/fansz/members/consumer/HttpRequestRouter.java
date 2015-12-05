@@ -1,35 +1,28 @@
-package com.fansz.storage.server;
+package com.fansz.members.consumer;
 
-import com.fansz.storage.fastdfs.StorageServiceUtils;
-import com.fansz.storage.model.FastDFSFile;
-import com.fansz.storage.tools.FileTools;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.FullHttpRequest;
-import io.netty.handler.codec.http.HttpHeaderUtil;
-import io.netty.handler.codec.http.HttpMethod;
-import io.netty.handler.codec.http.HttpResponseStatus;
-import io.netty.handler.codec.http.HttpVersion;
-import io.netty.handler.codec.http.multipart.FileUpload;
-import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
-import io.netty.handler.codec.http.multipart.InterfaceHttpData;
-
+import io.netty.handler.codec.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.net.URI;
+import java.nio.charset.Charset;
 
 /**
  * HTTP请求路由处理类，将HTTP请求分发给对应的Handler进行处理
  */
+@Component
 @Sharable
 public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpRequest> {
+
+    @Resource(name = "dubboInvoker")
+    private RpcInvoker rpcInvoker;
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestRouter.class);
 
@@ -60,32 +53,13 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
                 responder.sendStatus(HttpResponseStatus.FORBIDDEN);
             }
 
-            HttpPostRequestDecoder decoder = new HttpPostRequestDecoder(request);
-            try {
-                List<InterfaceHttpData> datas = decoder.getBodyHttpDatas();
-                if (datas != null) {
-                    for (InterfaceHttpData data : datas) {
-                        if (InterfaceHttpData.HttpDataType.FileUpload.equals(data.getHttpDataType())) {
-                            FileUpload file = (FileUpload) data;
-                            String url = process(file);
-                            if (url !=null && url.trim().length() > 0) {
-                                responder.sendJson(HttpResponseStatus.OK, String.format("{\"response\": [{\"status\":\"0\",\"message\":\"Success\",\"result\":{\"url\":\"%s\"}}]}", url));
-                            } else {
-                                responder.sendJson(HttpResponseStatus.OK, String.format("{\"response\": [{\"status\":\"10001\",\"message\":\"Fail\",\"result\":{\"url\":\"%s\"}}]}", ""));
-                            }
-                        }
-                    }
-                }
-            } finally {
-                decoder.destroy();
-            }
+            String url = URI.create(request.uri()).normalize().toString();
+            String body = request.content().toString(Charset.forName("UTF-8"));
+            String response = rpcInvoker.invoke(url, body);
+            responder.sendJson(HttpResponseStatus.OK, response);
         }
     }
 
-    private String process(FileUpload file) {
-        FastDFSFile fastDFSFile = new FastDFSFile(file.getFilename(), file.content().array(), FileTools.getExtension(file.getFilename()));
-        return StorageServiceUtils.upload(fastDFSFile);
-    }
 
     /**
      * 异常时，执行该方法，返回错误信息并关闭连接

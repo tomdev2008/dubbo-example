@@ -52,10 +52,20 @@ public interface FandomApi {
     @Path("/fandom/join")
     CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
 
+    /**
+     * 特殊关注fandom
+     * @param joinFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/beSpecial")
     CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
 
+    /**
+     * 取消特别关注fandom
+     * @param joinFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/notSpecial")
     CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
@@ -71,7 +81,7 @@ public interface FandomApi {
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 
     /**
-     * 获取圈子fandom接口
+     * 获取推荐的fandom接口
      *
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomInfoResult>> 返回对象
@@ -81,7 +91,7 @@ public interface FandomApi {
     CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
     /**
-     * 获取圈子fandom接口
+     * 获取圈子fandom分类接口
      *
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomCategorys>> 返回对象
@@ -91,7 +101,7 @@ public interface FandomApi {
     CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     /**
-     * 获取圈子fandom接口
+     * 获取圈子成员列表接口
      *
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomCategorys>> 返回对象
@@ -99,7 +109,8 @@ public interface FandomApi {
     @POST
     @Path("/members")
     CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
-     /* 获取圈子信息接口
+
+    /* 获取圈子信息接口
      *
      * @param fandomInfoParam 圈子id
      * @return resp 返回对象
@@ -108,8 +119,20 @@ public interface FandomApi {
     @Path("/info")
     CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
+
     @POST
     @Path("/fandom/search")
     CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+
+    /**
+     * 创建Fandom
+     *
+     * @param addFandomParam
+     * @return
+     */
+    @POST
+    @Path("/addFandom")
+    CommonResult<NullResult> addFandom(AddFandomParam addFandomParam);
+
 
 }

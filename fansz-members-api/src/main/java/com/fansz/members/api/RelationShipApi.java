@@ -86,6 +86,11 @@ public interface RelationShipApi {
      * @param friendsQueryParam
      * @return
      */
+    @POST
+    @Path("/friends/requestMe")
     CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
+    @POST
+    @Path("/friends/myRequest")
+    CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);
 }

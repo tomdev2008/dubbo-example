@@ -106,7 +106,7 @@
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity">
         insert into feeds_member_post_fandom (member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time)
-        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR}
+        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR},
         #{postContent,jdbcType=VARCHAR},#{postNewsfeeds,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
@@ -246,6 +246,7 @@
     </select>
 
 
+
     <select id="memberFandomPosts" resultMap="memberFandomPostsMap">
         SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
          T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
@@ -253,9 +254,38 @@
         INNER JOIN connects_member_profile T2
         ON T1.member_sn = T2.sn
         WHERE T1.fandom_id = #{fandomId} AND T1.member_sn = #{memberSn}
+        ORDER BY T1.post_time DESC
     </select>
 
     <select id="countMemberFandomPosts" resultType="int">
         SELECT COUNT(1) FROM feeds_member_post_fandom WHERE fandom_id = #{fandomId} AND member_sn = #{memberSn}
+    </select>
+
+    <select id="newFandomPosts" resultMap="memberFandomPostsMap">
+        SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
+        T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
+        FROM feeds_member_post_fandom T1
+        INNER JOIN connects_member_profile T2
+        ON T1.member_sn = T2.sn
+        WHERE T1.fandom_id = #{fandomId}
+        ORDER BY T1.post_time DESC
+        LIMIT ${(pageNum - 1)*pageSize},#{pageSize}
+    </select>
+
+    <select id="hotFandomPosts" resultMap="memberFandomPostsMap">
+        SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
+        T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
+        FROM feeds_member_post_fandom T1
+        INNER JOIN connects_member_profile T2
+        ON T1.member_sn = T2.sn
+        LEFT JOIN (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) T3
+        ON T1.fandom_id = T3.post_id
+        WHERE T1.fandom_id = #{fandomId}
+        ORDER BY T3.likeCount DESC
+        LIMIT ${(pageNum - 1)*pageSize},#{pageSize}
+    </select>
+
+    <select id="countFandomPosts" resultType="int">
+        SELECT COUNT(1) FROM feeds_member_post_fandom WHERE fandom_id = #{fandomId}
     </select>
 </mapper>

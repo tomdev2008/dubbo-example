@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.stereotype.Service;
 
+import javax.ws.rs.PathParam;
 import java.util.List;
 
 @MapperScan
@@ -44,7 +45,7 @@ public interface UserEntityMapper {
     List<UserEntity> getFandomFollowers(Integer id);
 
 
-    PageList<UserInfoResult> searchMembers(SearchParam searchParam, PageBounds pageBounds);
+    PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType, PageBounds pageBounds);
 
     int setMemberType(UserEntity record);
 

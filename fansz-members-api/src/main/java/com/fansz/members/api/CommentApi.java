@@ -52,9 +52,7 @@ public interface CommentApi {
      * @return
      */
     @POST
-    @Path("/post")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    @Path("/fandom/show")
     public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom);
 
     /**
@@ -62,10 +60,8 @@ public interface CommentApi {
      * @param commentQueryFromFandom
      * @return
      */
-    @GET
-    @Path("/post2")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
+    @POST
+    @Path("/newsfeed/show")
     public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentQueryFromFandomPram commentQueryFromFandom);
 
 }

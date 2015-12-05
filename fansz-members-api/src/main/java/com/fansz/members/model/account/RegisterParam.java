@@ -16,7 +16,7 @@ public class RegisterParam implements Serializable {
     @Size(min=1,max=20)
     private String loginname;
 
-    @Size(min=1,max=20)
+    @Size(min=1)
     private String password;
 
     @Size(min=1,max=20)
