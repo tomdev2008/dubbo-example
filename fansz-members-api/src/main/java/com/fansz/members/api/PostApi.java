@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.post.PostsQueryParam;
 import com.fansz.members.model.post.*;
 
 import javax.ws.rs.Consumes;
@@ -113,4 +114,14 @@ public interface PostApi {
     @POST
     @Path("/memberPosts")
     CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
+
+    /**
+     * 获取圈子里面的帖子信息接口
+     *
+     * @param param 圈子
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/posts")
+    CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param);
 }

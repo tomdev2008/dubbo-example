@@ -55,4 +55,29 @@ public interface FandomPostEntityMapper {
      */
     int countMemberFandomPosts(@Param("fandomId") long fandomId, @Param("memberSn") String memberSn);
 
+    /**
+     * 查询某人在某个fandom的所有帖子列表
+     * @param fandomId
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    List<MemberPostEntity> newFandomPosts(@Param("fandomId") long fandomId, @Param("pageSize") int pageSize, @Param("pageNum") int pageNum);
+
+    /**
+     * 查询某人在某个fandom的所有帖子列表
+     * @param fandomId
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    List<MemberPostEntity> hotFandomPosts(@Param("fandomId") long fandomId, @Param("pageSize") int pageSize, @Param("pageNum") int pageNum);
+
+    /**
+     * 查询某人在某个fandom的所有帖子列表总数
+     * @param fandomId
+     * @return
+     */
+    int countFandomPosts(@Param("fandomId") long fandomId);
+
 }

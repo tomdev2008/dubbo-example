@@ -43,7 +43,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
 
 
     /**
-     * 帖子点赞接口
+     * 查询帖子点赞接口
      *
      * @param postParam 帖子id
      * @return resp 返回对象
@@ -136,6 +136,12 @@ public class PostProvider extends AbstractProvider implements PostApi {
     public CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
         PageList<MemberPostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
         return renderPagedSuccess(memberPostInfoResults);
+    }
+
+    @Override
+    public CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param) {
+        PageList<FandomPostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
+        return renderPagedSuccess(fandomPostInfoResults);
     }
 
 }

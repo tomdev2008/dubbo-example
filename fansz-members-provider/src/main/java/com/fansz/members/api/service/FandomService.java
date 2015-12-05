@@ -36,4 +36,6 @@ public interface FandomService {
 
     SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
 
+    void addFandom(AddFandomParam addFandomParam);
+
 }

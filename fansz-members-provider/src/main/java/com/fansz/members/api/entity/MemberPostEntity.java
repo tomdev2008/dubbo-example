@@ -7,6 +7,8 @@ import java.util.Date;
  */
 public class MemberPostEntity {
 
+    private long id;
+
     private String postTitle;
 
     private String postContent;
@@ -16,6 +18,14 @@ public class MemberPostEntity {
     private Date postTime;
 
     private UserEntity userEntiy;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getPostTitle() {
         return postTitle;

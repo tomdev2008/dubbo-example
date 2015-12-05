@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -160,5 +161,19 @@ public class FandomServiceImpl implements FandomService {
         result.setCreator(creator);
 
         return result;
+    }
+
+    @Override
+    public void addFandom(AddFandomParam addFandomParam) {
+        FandomEntity fandomEntity = new FandomEntity();
+        fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
+        fandomEntity.setFandomCreateTime(new Date());
+        fandomEntity.setFandomCreatorSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
+        fandomEntity.setFandomName(addFandomParam.getFandomName());
+        fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
+
+        this.fandomMapper.insert(fandomEntity);
     }
 }

@@ -6,9 +6,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fansz.members.api.*;
 import com.fansz.members.consumer.utils.BeanTools;
-import com.fansz.members.model.account.LoginParam;
-import com.fansz.members.model.account.RegisterParam;
-import com.fansz.members.model.account.ResetPasswordParam;
+import com.fansz.members.model.account.*;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
 import org.springframework.stereotype.Component;
 
@@ -113,6 +111,14 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("resetPassword".equals(method)) {
             ResetPasswordParam resetPasswordParam = BeanTools.copyAs(params, ResetPasswordParam.class);
             result = accountApi.resetPassword(resetPasswordParam);
+        }
+        else if ("modifyPassword".equals(method)) {
+            ChangePasswordParam changePasswordParam = BeanTools.copyAs(params, ChangePasswordParam.class);
+            result = accountApi.changePassword(changePasswordParam);
+        }
+        else if ("logout".equals(method)) {
+            LogoutParam logoutParam = BeanTools.copyAs(params, LogoutParam.class);
+            result = accountApi.logout(logoutParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JSON.toJSONString(result);
     }
