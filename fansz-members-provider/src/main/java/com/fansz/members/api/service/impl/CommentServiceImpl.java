@@ -6,7 +6,7 @@ import com.fansz.members.api.repository.PostCommentEntityMapper;
 import com.fansz.members.api.service.CommentService;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom, PageBounds pageBounds) {
+    public PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom, PageBounds pageBounds) {
         return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(),pageBounds);
     }
 

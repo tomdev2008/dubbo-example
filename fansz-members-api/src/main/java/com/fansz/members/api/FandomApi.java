@@ -23,24 +23,16 @@ import java.util.List;
 @Consumes(ContentType.APPLICATION_JSON_UTF_8)
 @Produces(ContentType.APPLICATION_JSON_UTF_8)
 public interface FandomApi {
-    /**
-     * 获取用户关注的fandoms
-     *
-     * @return resp 返回对象
-     */
-    @POST
-    @Path("/myFndoms")
-    CommonResult<List<FandomInfoResult>> getMemberFandoms(MemberFandomQueryParam fandomParam);
 
     /**
-     * 获取圈子fandom接口
+     * 创建Fandom
      *
-     * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomInfoResult>> 返回对象
+     * @param addFandomParam
+     * @return
      */
     @POST
-    @Path("/list")
-    public CommonResult<List<FandomInfoResult>> listFandoms(FandomQueryParam fandomQueryParam);
+    @Path("/addFandom")
+    CommonResult<NullResult> addFandom(AddFandomParam addFandomParam);
 
     /**
      * 加入fandom
@@ -81,6 +73,26 @@ public interface FandomApi {
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 
     /**
+     * 获取用户关注的fandoms列表
+     *
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/myFndoms")
+    CommonResult<List<FandomInfoResult>> getMyFandoms(MemberFandomQueryParam fandomParam);
+
+    /**
+     * 查询所有的fandom
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomInfoResult>> 返回对象
+     */
+    @POST
+    @Path("/list")
+    public CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam);
+
+
+    /**
      * 获取推荐的fandom接口
      *
      * @param fandomQueryParam 查询参数
@@ -119,15 +131,6 @@ public interface FandomApi {
     @Path("/info")
     CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
-    /**
-     * 创建Fandom
-     *
-     * @param addFandomParam
-     * @return
-     */
-    @POST
-    @Path("/addFandom")
-    CommonResult<NullResult> addFandom(AddFandomParam addFandomParam);
 
 
 }

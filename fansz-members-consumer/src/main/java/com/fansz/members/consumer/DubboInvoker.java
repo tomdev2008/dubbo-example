@@ -7,6 +7,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.fansz.members.api.*;
 import com.fansz.members.consumer.utils.BeanTools;
 import com.fansz.members.model.account.*;
+import com.fansz.members.model.comment.CommentDelParam;
+import com.fansz.members.model.comment.CommentParam;
+import com.fansz.members.model.comment.CommentFromFandomQueryParam;
+import com.fansz.members.model.fandom.AddFandomParam;
+import com.fansz.members.model.fandom.FandomInfoParam;
+import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.post.*;
+import com.fansz.members.model.profile.ContactQueryParam;
+import com.fansz.members.model.profile.ModifyProfileParam;
+import com.fansz.members.model.profile.QueryProfileParam;
+import com.fansz.members.model.relationship.*;
+import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
 import org.springframework.stereotype.Component;
 
@@ -95,30 +107,182 @@ public class DubboInvoker implements RpcInvoker {
      */
     private String invokeRpc(String method, Map<String, Object> params) {
         Object result = null;
-        if ("getVerifyCodeForRegister".equals(method)) {
+        if ("getVerifyCodeForRegister".equals(method)) {//1
             VerifyCodeParam verifyCodeParam = BeanTools.copyAs(params, VerifyCodeParam.class);
             result = verifyCodeApi.getVerifyCodeForRegister(verifyCodeParam);
 
-        } else if ("getVerifyCodeForReset".equals(method)) {
+        } else if ("getVerifyCodeForReset".equals(method)) {//2
             VerifyCodeParam verifyCodeParam = BeanTools.copyAs(params, VerifyCodeParam.class);
             result = verifyCodeApi.getVerifyCodeForReset(verifyCodeParam);
-        } else if ("register".equals(method)) {
+        } else if ("register".equals(method)) {//3
             RegisterParam registerParam = BeanTools.copyAs(params, RegisterParam.class);
             result = accountApi.register(registerParam);
-        } else if ("login".equals(method)) {
+        } else if ("login".equals(method)) {//4
             LoginParam loginParam = BeanTools.copyAs(params, LoginParam.class);
             result = accountApi.login(loginParam);
-        } else if ("resetPassword".equals(method)) {
+        } else if ("resetPassword".equals(method)) {//5
             ResetPasswordParam resetPasswordParam = BeanTools.copyAs(params, ResetPasswordParam.class);
             result = accountApi.resetPassword(resetPasswordParam);
         }
-        else if ("modifyPassword".equals(method)) {
+        else if ("modifyPassword".equals(method)) {//6
             ChangePasswordParam changePasswordParam = BeanTools.copyAs(params, ChangePasswordParam.class);
             result = accountApi.changePassword(changePasswordParam);
         }
-        else if ("logout".equals(method)) {
+        else if ("logout".equals(method)) {//7
             LogoutParam logoutParam = BeanTools.copyAs(params, LogoutParam.class);
             result = accountApi.logout(logoutParam);
+        }
+        else if("modifyMyProfile".equals(method)){//8
+            ModifyProfileParam modifyProfileParam=BeanTools.copyAs(params, ModifyProfileParam.class);
+            result =  profileApi.modifyProfile(modifyProfileParam);
+        }
+        else if("getProfile".equals(method)){//9
+            QueryProfileParam queryProfileParam=BeanTools.copyAs(params, QueryProfileParam.class);
+            result =  profileApi.getProfile(queryProfileParam);
+        }
+        else if("getFriends".equals(method)){//10
+            FriendsQueryParam friendsQueryParam=BeanTools.copyAs(params, FriendsQueryParam.class);
+            result =  relationShipApi.getFriends(friendsQueryParam);
+        }
+        else if("searchContacts".equals(method)){//11
+            ContactQueryParam contactQueryParam=BeanTools.copyAs(params, ContactQueryParam.class);
+            result =  profileApi.getContactInfo(contactQueryParam);
+        }
+
+        else if("requestToBeFriends".equals(method)){//12
+            AddFriendParam addFriendParam=BeanTools.copyAs(params, AddFriendParam.class);
+            result =  relationShipApi.addFriendRequest(addFriendParam);
+        }
+
+        else if("agreeAddRequest".equals(method)){//13
+            OpRequestParam opRequestParam=BeanTools.copyAs(params, OpRequestParam.class);
+            result =  relationShipApi.agreeRequest(opRequestParam);
+        }
+
+        else if("beMySpecialFriend".equals(method)){//14
+            AddFriendParam addFriendParam=BeanTools.copyAs(params, AddFriendParam.class);
+            result =  relationShipApi.addSpecialFriend(addFriendParam);
+        }
+
+        else if("removeMySpecialFriend".equals(method)){//15
+            AddFriendParam addFriendParam=BeanTools.copyAs(params, AddFriendParam.class);
+            result =  relationShipApi.cancelSpecialFriend(addFriendParam);
+        }
+        else if("searchMembers".equals(method)){//16
+            SearchParam searchParam=BeanTools.copyAs(params, SearchParam.class);
+            result =  profileApi.searchMembersByKey(searchParam);
+        }
+        else if("setMemberType".equals(method)){//17
+            ModifyProfileParam modifyProfileParam=BeanTools.copyAs(params, ModifyProfileParam.class);
+            result =  profileApi.setMemberType(modifyProfileParam);
+        }
+        else if("getFriendRquests".equals(method)){//18
+            FriendsQueryParam friendsQueryParam=BeanTools.copyAs(params, FriendsQueryParam.class);
+            result =  relationShipApi.getFriendRquests(friendsQueryParam);
+        }
+        else if("getRequesters".equals(method)){//19
+            FriendsQueryParam friendsQueryParam=BeanTools.copyAs(params, FriendsQueryParam.class);
+            result =  relationShipApi.getRequesters(friendsQueryParam);
+        }
+        else if("getSpecialFriend".equals(method)){//20
+            FriendsQueryParam friendsQueryParam=BeanTools.copyAs(params, FriendsQueryParam.class);
+            result =  relationShipApi.getSpecialFriends(friendsQueryParam);
+        }
+        else if("getFamousers".equals(method)){//21
+            SearchParam searchParam=BeanTools.copyAs(params, SearchParam.class);
+            result =  profileApi.searchMembersByType(searchParam);
+        }//connects ends
+        else if("createFandom".equals(method)){//1
+            AddFandomParam addFandomParam=BeanTools.copyAs(params, AddFandomParam.class);
+            result =  fandomApi.addFandom(addFandomParam);
+        }
+        else if("joinFandom".equals(method)){//2
+            JoinFandomParam joinFandomParam=BeanTools.copyAs(params, JoinFandomParam.class);
+            result =  fandomApi.joinFandom(joinFandomParam);
+        }
+        else if("exitFandom".equals(method)){//3
+            ExitFandomParam exitFandomParam=BeanTools.copyAs(params, ExitFandomParam.class);
+            result =  fandomApi.exitFandom(exitFandomParam);
+        }
+        else if("getMyfandoms".equals(method)){//4
+            MemberFandomQueryParam memberFandomQueryParam=BeanTools.copyAs(params, MemberFandomQueryParam.class);
+            result =  fandomApi.getMyFandoms(memberFandomQueryParam);
+        }
+        else if("listMyFandomsPost".equals(method)){//5
+            GetPostsParam getPostsParam=BeanTools.copyAs(params, GetPostsParam.class);
+            result =  postApi.listMyFandomPosts(getPostsParam);
+        }
+        else if("listMyNewsfeeds".equals(method)){//6
+            GetPostsParam getPostsParam=BeanTools.copyAs(params, GetPostsParam.class);
+            result =  postApi.listFriendsPosts(getPostsParam);
+        }
+        else if("listPostInFandom".equals(method)){//7
+            GetMemberFandomPostsParam getMemberFandomPostsParam=BeanTools.copyAs(params, GetMemberFandomPostsParam.class);
+            result =  postApi.getMemberPostsByFandom(getMemberFandomPostsParam);
+        }
+        else if("listAllFandoms".equals(method)){//8
+            FandomQueryParam fandomQueryParam=BeanTools.copyAs(params, FandomQueryParam.class);
+            result =  fandomApi.listAllFandoms(fandomQueryParam);
+        }
+        else if("publishPost".equals(method)){//9
+            AddPostParam addPostParam=BeanTools.copyAs(params, AddPostParam.class);
+            result =  postApi.addPost(addPostParam);
+        }
+        else if("commentPost".equals(method)){//10
+            CommentParam commentParam=BeanTools.copyAs(params, CommentParam.class);
+            result =  commentApi.addPostComment(commentParam);
+        }
+        else if("listPostComments".equals(method)){//11
+            CommentFromFandomQueryParam commentFromFandomQueryParam=BeanTools.copyAs(params, CommentFromFandomQueryParam.class);
+            result =  commentApi.getCommentsByPostidFromFandom(commentFromFandomQueryParam);
+        }
+        else if("replyComment".equals(method)){//12
+            CommentParam commentParam=BeanTools.copyAs(params, CommentParam.class);
+            result =  commentApi.replyComment(commentParam);
+        }
+        else if("deletePost".equals(method)){//13
+            RemovePostParam removePostParam=BeanTools.copyAs(params, RemovePostParam.class);
+            result =  postApi.removePost(removePostParam);
+        }
+        else if("listPostVoters".equals(method)){//14
+            PostParam postParam=BeanTools.copyAs(params, PostParam.class);
+            result =  postApi.listPostVoteList(postParam);
+        }
+        else if("deleteComment".equals(method)){//15
+            CommentDelParam commentDelParam=BeanTools.copyAs(params, CommentDelParam.class);
+            result =  commentApi.removeCommet(commentDelParam);
+        }
+        else if("votePost".equals(method)){//16
+            AddLikeParam addLikeParam=BeanTools.copyAs(params, AddLikeParam.class);
+            result =  postApi.addLike(addLikeParam);
+        }
+        else if("deleteVote".equals(method)){//17
+            DeleteLikeParam deleteLikeParam=BeanTools.copyAs(params, DeleteLikeParam.class);
+            result =  postApi.deleteLike(deleteLikeParam);
+        }
+        else if("listFandomPosts".equals(method)){//18
+            PostsQueryParam postsQueryParam=BeanTools.copyAs(params, PostsQueryParam.class);
+            result =  postApi.getPostsByFandom(postsQueryParam);
+        }
+        else if("getFandomInfo".equals(method)){//19
+            FandomInfoParam fandomInfoParam=BeanTools.copyAs(params, FandomInfoParam.class);
+            result =  fandomApi.getFandom(fandomInfoParam);
+        }
+        else if("searchPosts".equals(method)){//20
+            SearchPostParam searchPostParam=BeanTools.copyAs(params, SearchPostParam.class);
+            result =  postApi.searchPosts(searchPostParam);
+        }
+        else if("searchFandoms".equals(method)){//21
+            DeleteLikeParam deleteLikeParam=BeanTools.copyAs(params, DeleteLikeParam.class);
+            result =  fandomApi..deleteLike(deleteLikeParam);
+        }
+        else if("deleteVote".equals(method)){//22
+            DeleteLikeParam deleteLikeParam=BeanTools.copyAs(params, DeleteLikeParam.class);
+            result =  postApi.deleteLike(deleteLikeParam);
+        }
+        else if("deleteVote".equals(method)){//23
+            DeleteLikeParam deleteLikeParam=BeanTools.copyAs(params, DeleteLikeParam.class);
+            result =  postApi.deleteLike(deleteLikeParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JSON.toJSONString(result);
     }

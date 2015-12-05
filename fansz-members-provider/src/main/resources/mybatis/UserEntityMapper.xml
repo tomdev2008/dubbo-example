@@ -324,6 +324,9 @@
             <if test="memberType != null">
               AND  member_type = #{memberType,jdbcType=VARCHAR}
             </if>
+            <if test="loginname != null">
+                AND  loginname = #{loginname,jdbcType=VARCHAR}
+            </if>
         </where>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">

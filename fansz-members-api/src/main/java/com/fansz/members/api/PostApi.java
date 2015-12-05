@@ -89,7 +89,7 @@ public interface PostApi {
      */
     @POST
     @Path("/friends")
-    CommonPagedResult<PostInfoResult> getFriendsPosts(GetPostsParam getPostsParam);
+    CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam);
 
     /**
      * 获得我所关注的所有fandom的所有帖子接口
@@ -98,12 +98,8 @@ public interface PostApi {
      * @return resp 返回对象
      */
     @POST
-    @Path("/fandoms")
-    CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam);
-
-    @POST
-    @Path("/searchPosts")
-    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+    @Path("/myFandoms")
+    CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam);
 
     /**
      * 查询某人在某个fandom的所有帖子列表
@@ -115,13 +111,18 @@ public interface PostApi {
     @Path("/memberPosts")
     CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
 
+    @POST
+    @Path("/searchPosts")
+    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+
+
     /**
-     * 获取圈子里面的帖子信息接口
+     * 获取某个fandom的帖子列表
      *
      * @param param 圈子
      * @return resp 返回对象
      */
     @POST
-    @Path("/posts")
+    @Path("/fandom")
     CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param);
 }

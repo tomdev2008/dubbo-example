@@ -3,7 +3,7 @@ package com.fansz.members.api.service;
 import com.fansz.members.api.entity.PostCommentEntity;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -23,6 +23,6 @@ public interface CommentService {
      */
     void removeComment(CommentDelParam commentDelParam);
 
-    PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram centQueryFromFandom, PageBounds pageBounds);
+    PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam centQueryFromFandom, PageBounds pageBounds);
 
 }

@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 /**
  * Created by xuyubiao on 15/12/1.
  */
-public class CommentQueryFromFandomPram extends PageParam{
+public class CommentFromFandomQueryParam extends PageParam{
 
     private String sn;
     @JsonProperty("access_token")

@@ -47,6 +47,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         UserEntity userEntity=new UserEntity();
         userEntity.setMobile(searchParam.getSearchVal());
         userEntity.setNickname(searchParam.getSearchVal());
+        userEntity.setLoginname(searchParam.getSearchVal());
         PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
         return renderPagedSuccess(data);
     }
