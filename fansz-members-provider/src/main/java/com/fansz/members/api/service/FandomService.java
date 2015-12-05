@@ -1,6 +1,7 @@
 package com.fansz.members.api.service;
 
 import com.fansz.members.model.fandom.*;
+import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
@@ -35,5 +36,8 @@ public interface FandomService {
     PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 
     SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
+
+    PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+
 
 }

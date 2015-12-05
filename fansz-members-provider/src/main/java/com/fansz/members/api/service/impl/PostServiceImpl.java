@@ -111,8 +111,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
-        PageBounds pageBounds = new PageBounds(searchPostParam.getOffset(), searchPostParam.getLimit(), false);
+    public PageList<SearchPostResult> searchPosts(SearchPostParam searchPostParam) {
+        PageBounds pageBounds = new PageBounds(searchPostParam.getOffset(), searchPostParam.getLimit());
         return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(), pageBounds);
     }
 }

@@ -52,6 +52,15 @@
         </association>
     </resultMap>
 
+    <resultMap id="searchPostResult" type="com.fansz.members.model.post.SearchPostResult">
+        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <association property="postMember" resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+    </resultMap>
+
+
     <sql id="Base_Column_List">
     id, member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time
   </sql>
@@ -209,7 +218,7 @@
         AND a.fandom_id is null
     </select>
 
-    <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
+    <select id="searchPosts" parameterType="java.lang.String" resultMap="searchPostResult">
         SELECT
             f.post_title,
             f.post_content,

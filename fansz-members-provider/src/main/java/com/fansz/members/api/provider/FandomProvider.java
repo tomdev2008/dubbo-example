@@ -109,5 +109,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         PageList<ContactInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
         return renderPagedSuccess(result);
     }
+
+    @Override
+    public CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
+        PageList<SearchFandomResult> pageList = fandomService.searchFandoms(searchFandomParam);
+        return super.renderPagedSuccess(pageList);
+    }
 }
 

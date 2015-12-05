@@ -100,7 +100,7 @@ public interface PostApi {
 
     @POST
     @Path("/searchPosts")
-    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+    CommonPagedResult<SearchPostResult> searchPosts(SearchPostParam searchPostParam);
 
     /**
      * 查询某人在某个fandom的所有帖子列表

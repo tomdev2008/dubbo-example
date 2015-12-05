@@ -58,6 +58,19 @@
         </association>
     </resultMap>
 
+    <resultMap id="searchFandomResult" type="com.fansz.members.model.fandom.SearchFandomResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="followerCount" property="followerCount" jdbcType="VARCHAR"/>
+        <result column="postCount" property="postCount" jdbcType="VARCHAR"/>
+        <result column="followed" property="followed" jdbcType="VARCHAR"/>
+        <association property="creator" resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+    </resultMap>
+
     <select id="findFandomInfo" resultMap="findFandomInfo" parameterType="java.lang.Long">
         select
         T1.fandom_name, T1.fandom_avatar_url, T1.fandom_intro, T1.fandom_create_time,
@@ -238,4 +251,53 @@
         where m.fandom_id =  #{fandomId,jdbcType=BIGINT}
         AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
     </select>
+
+    <select id="searchFandoms" parameterType="com.fansz.members.model.fandom.SearchFandomParam" resultMap="searchFandomResult">
+
+      SELECT
+                ff.id,
+                ff.fandom_name,
+                ff.fandom_parent_id,
+                ff.fandom_creator_sn,
+                ff.fandom_avatar_url,
+                ff.fandom_intro,
+                (
+                    SELECT
+                        count(1)
+                    FROM
+                        feeds_member_fandom
+                    WHERE
+                        fandom_id = ff.id
+                ) followerCount,
+                (
+                    SELECT
+                        count(1)
+                    FROM
+                        feeds_member_post_fandom
+                    WHERE
+                        fandom_id = ff.id
+                ) postCount,
+                (
+                    SELECT
+                        count(1)
+                    FROM
+                        feeds_member_post_fandom
+                    WHERE
+                        member_sn = 1
+                ) followed,
+                mp.sn,
+                mp.mobile,
+                mp.email,
+                mp.nickname,
+                mp.gender,
+                mp.birthday,
+                mp.member_avatar,
+                mp.member_type,
+                mp.profile_createtime
+            FROM
+                feeds_fandom ff
+            LEFT JOIN connects_member_profile mp ON ff.fandom_creator_sn = mp.sn
+
+    </select>
+
 </mapper>

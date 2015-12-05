@@ -4,6 +4,8 @@ import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.fansz.members.model.fandom.FandomQueryParam;
+import com.fansz.members.model.fandom.SearchFandomParam;
+import com.fansz.members.model.fandom.SearchFandomResult;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -38,4 +40,6 @@ public interface FandomMapper {
     PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
 
     SingleFandomEntity findFandomInfo(@Param("id") long id);
+
+    PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam, PageBounds pageBounds);
 }

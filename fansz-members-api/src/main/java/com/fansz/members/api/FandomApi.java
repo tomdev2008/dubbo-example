@@ -108,4 +108,8 @@ public interface FandomApi {
     @Path("/info")
     CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
+    @POST
+    @Path("/fandom/search")
+    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+
 }
