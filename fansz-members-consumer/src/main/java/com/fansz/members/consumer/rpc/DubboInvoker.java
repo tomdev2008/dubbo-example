@@ -23,6 +23,8 @@ import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.model.seedingspot.SeedingSpotPrama;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -35,6 +37,8 @@ import java.util.Map;
  */
 @Component("dubboInvoker")
 public class DubboInvoker implements RpcInvoker {
+
+    private Logger logger= LoggerFactory.getLogger(DubboInvoker.class);
 
     @Resource(name = "accountProvider")
     private AccountApi accountApi;
@@ -95,6 +99,7 @@ public class DubboInvoker implements RpcInvoker {
             try {
                 response = invokeRpc(method, params);
             } catch (Exception e) {
+                logger.error("调用RPC服务出错!",e);
                 response = "{\"message\": \"System error\", \"result\": {}, \"status\": \"10001\"}";
             }
             String finalString = "{\"method\":\"" + method + "\"," + response.substring(1);

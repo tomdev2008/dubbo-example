@@ -2,7 +2,7 @@ package com.fansz.members.consumer.server;
 
 import com.fansz.members.consumer.rpc.RpcInvoker;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
@@ -18,8 +18,10 @@ import java.nio.charset.Charset;
  * Created by allan on 15/12/5.
  */
 @Component
-@ChannelHandler.Sharable
+@Sharable
 public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpRequest> {
+
+    private final String ERROR = "{\"header\": {},\"response\": [{\"method\": \"\",\"status\": \"10008\",\"message\": \"Error parameter format\",\"result\": {}}]}";
 
     @Resource(name = "dubboInvoker")
     private RpcInvoker rpcInvoker;
@@ -69,10 +71,8 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
         if (ctx.channel() != null) {
             LOG.error(String.format("channel(%s) encounters error", ctx.channel().id().asShortText()), cause);
             if (ctx.channel().isActive()) {
-
-                DefaultFullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
-                        HttpResponseStatus.INTERNAL_SERVER_ERROR);
-                ctx.channel().writeAndFlush(response).addListener(ChannelFutureListener.CLOSE);
+                BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), false);
+                responder.sendJson(HttpResponseStatus.OK, ERROR);
             }
         }
     }

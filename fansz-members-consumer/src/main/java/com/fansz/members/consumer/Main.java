@@ -1,6 +1,8 @@
 package com.fansz.members.consumer;
 
 import com.fansz.members.consumer.server.BasicHttpResponder;
+import com.fansz.members.consumer.server.HttpRequestRouter;
+import com.fansz.members.consumer.server.NettyHttpService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -10,10 +12,11 @@ public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-consumer.xml");
         ac.start();
-        BasicHttpResponder.HttpRequestRouter httpRequestRouter = ac.getBean(BasicHttpResponder.HttpRequestRouter.class);
-        BasicHttpResponder.NettyHttpService service=null;
+        HttpRequestRouter httpRequestRouter = ac.getBean(HttpRequestRouter.class);
+        NettyHttpService service=null;
         try {
-            BasicHttpResponder.NettyHttpService.builder().setPort(2000).setHttpRequestRouter(httpRequestRouter).build().startUp();
+            service=NettyHttpService.builder().setPort(3000).setHttpRequestRouter(httpRequestRouter).build();
+            service.startUp();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
