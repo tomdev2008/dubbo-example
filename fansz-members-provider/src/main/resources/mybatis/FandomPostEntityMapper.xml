@@ -97,7 +97,7 @@
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity">
         insert into feeds_member_post_fandom (member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time)
-        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR}
+        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR},
         #{postContent,jdbcType=VARCHAR},#{postNewsfeeds,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()

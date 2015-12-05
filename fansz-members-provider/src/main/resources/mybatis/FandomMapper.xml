@@ -31,6 +31,9 @@
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
+        <result column="follower_count" property="followerCount" jdbcType="INTEGER"/>
+        <result column="post_count" property="postCount" jdbcType="INTEGER"/>
+        <result column="followed" property="followed" jdbcType="INTEGER"/>
         <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>

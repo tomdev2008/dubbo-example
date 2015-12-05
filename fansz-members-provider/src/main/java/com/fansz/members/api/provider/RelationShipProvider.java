@@ -75,5 +75,9 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
         return renderPagedSuccess(dataResult);
     }
 
-
+    @Override
+    public CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam) {
+        PageList<FriendInfoResult> dataResult = relationShipService.listMySendRequest(friendsQueryParam);
+        return renderPagedSuccess(dataResult);
+    }
 }

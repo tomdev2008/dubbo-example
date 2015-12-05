@@ -28,6 +28,7 @@ public class StorageServiceUtils implements StorageConfig, Serializable {
         try {
 
             String configFile = baseDir + "/conf/" + CLIENT_CONFIG_FILE;
+            //String configFile = baseDir + "/" + CLIENT_CONFIG_FILE;
             System.out.println("loading fastdfs configuration from " + configFile);
             logger.info("Fast DFS configuration file path:{}", configFile);
             ClientGlobal.init(configFile);

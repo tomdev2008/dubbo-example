@@ -13,7 +13,6 @@ public class FriendsQueryParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = 1170651723025637518L;
 
-    @JsonProperty("member_sn")
     private String sn;
 
     @JsonProperty("access_token")

@@ -76,6 +76,8 @@ public interface PostApi {
      * @param postParam
      * @return
      */
+    @POST
+    @Path("/listLike")
     CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam);
 
     /**

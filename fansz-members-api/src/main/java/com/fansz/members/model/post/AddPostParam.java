@@ -12,6 +12,10 @@ public class AddPostParam implements Serializable {
 
     private static final long serialVersionUID = -9003165341407262234L;
 
+    @JsonProperty("access_token")
+    private String accessToken;
+
+    @JsonProperty("member_sn")
     private String sn;
 
     @JsonProperty("fandom_id")
@@ -67,4 +71,11 @@ public class AddPostParam implements Serializable {
         this.postNewsfeeds = postNewsfeeds;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 }

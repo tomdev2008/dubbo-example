@@ -53,6 +53,7 @@ public interface ProfileApi {
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
 
+    @POST
     @Path("/setMemberType")
     public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam);
 
@@ -61,8 +62,6 @@ public interface ProfileApi {
      */
     @POST
     @Path("/album")
-    @Consumes(ContentType.APPLICATION_JSON_UTF_8)
-    @Produces(ContentType.APPLICATION_JSON_UTF_8)
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
     /**
      * 上传用户通讯录，搜索出通讯录好友（包含好友状态）

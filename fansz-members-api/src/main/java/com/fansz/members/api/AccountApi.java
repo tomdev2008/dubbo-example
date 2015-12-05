@@ -57,8 +57,6 @@ public interface AccountApi {
     @Path("/password/change")
     CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam);
 
-
-
     /**
      * 用户登出
      *

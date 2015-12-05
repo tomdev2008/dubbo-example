@@ -1,6 +1,7 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.ProfileApi;
+import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.model.CommonPagedResult;
@@ -9,6 +10,7 @@ import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,13 +43,21 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam) {
-        PageList<UserInfoResult> data = profileService.searchMembers(searchParam);
+        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+        UserEntity userEntity=new UserEntity();
+        userEntity.setMobile(searchParam.getSearchVal());
+        userEntity.setNickname(searchParam.getSearchVal());
+        PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
         return renderPagedSuccess(data);
     }
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam) {
-        return searchMembersByKey(searchParam);
+        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+        UserEntity userEntity=new UserEntity();
+        userEntity.setMemberType(searchParam.getMemberType());
+        PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
+        return renderPagedSuccess(data);
     }
 
     /**

@@ -33,7 +33,7 @@ if [ ! -d "$LOG_PATH" ]; then
 fi  
 
 #star member server
-nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$STORAGE_OUT" 2>&1 &
+nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS" "$BASE_DIR" >> "$STORAGE_OUT" 2>&1 &
 
 echo $! > "$STORAGE_PID"
 

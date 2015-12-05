@@ -310,22 +310,19 @@
         where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
 
-    <select id="searchMembers" parameterType="com.fansz.members.model.search.SearchParam" resultMap="userInfoResultMap">
+    <select id="searchMembers"  resultMap="userInfoResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_profile
         <where>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
             <if test="nickname != null">
-                nickname = #{nickname,jdbcType=VARCHAR},
+              AND   nickname = #{nickname,jdbcType=VARCHAR}
             </if>
             <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
+             AND   mobile = #{mobile,jdbcType=VARCHAR}
             </if>
             <if test="memberType != null">
-                member_type = #{memberType,jdbcType=VARCHAR},
+              AND  member_type = #{memberType,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
