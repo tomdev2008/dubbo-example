@@ -28,7 +28,7 @@ public interface PostService {
 
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
-    PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+    PageList<SearchPostResult> searchPosts(SearchPostParam searchPostParam);
     void addLike(AddLikeParam addLikeParam);
 
     void deleteLike(DeleteLikeParam deleteLikeParam);

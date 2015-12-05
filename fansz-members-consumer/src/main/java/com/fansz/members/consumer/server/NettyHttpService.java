@@ -1,4 +1,5 @@
-package com.fansz.members.consumer;
+package com.fansz.members.consumer.server;
+
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -16,12 +17,9 @@ import org.slf4j.LoggerFactory;
 import java.net.InetSocketAddress;
 
 /**
- * HTTP服务提供类
- *
- * @author Administrator
+ * Created by allan on 15/12/5.
  */
-public final class NettyHttpService {
-
+public class NettyHttpService {
     private static final Logger LOG = LoggerFactory.getLogger(NettyHttpService.class);
 
     private InetSocketAddress bindAddress;

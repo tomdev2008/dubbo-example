@@ -123,8 +123,8 @@ public class PostProvider extends AbstractProvider implements PostApi {
     }
 
     @Override
-    public CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
-        PageList<PostInfoResult> dataResult = postService.searchPosts(searchPostParam);
+    public CommonPagedResult<SearchPostResult> searchPosts(SearchPostParam searchPostParam) {
+        PageList<SearchPostResult> dataResult = postService.searchPosts(searchPostParam);
             return renderPagedSuccess(dataResult);
     }
     /**
@@ -143,5 +143,6 @@ public class PostProvider extends AbstractProvider implements PostApi {
         PageList<FandomPostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
         return renderPagedSuccess(fandomPostInfoResults);
     }
+
 
 }

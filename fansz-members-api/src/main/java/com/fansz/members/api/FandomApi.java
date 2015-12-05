@@ -133,4 +133,9 @@ public interface FandomApi {
 
 
 
+    @POST
+    @Path("/fandom/search")
+    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+
+
 }

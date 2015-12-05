@@ -1,13 +1,13 @@
-package com.fansz.members.consumer;
+package com.fansz.members.consumer.server;
 
+import com.fansz.members.consumer.rpc.RpcInvoker;
 import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -15,10 +15,10 @@ import java.net.URI;
 import java.nio.charset.Charset;
 
 /**
- * HTTP请求路由处理类，将HTTP请求分发给对应的Handler进行处理
+ * Created by allan on 15/12/5.
  */
 @Component
-@Sharable
+@ChannelHandler.Sharable
 public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpRequest> {
 
     @Resource(name = "dubboInvoker")

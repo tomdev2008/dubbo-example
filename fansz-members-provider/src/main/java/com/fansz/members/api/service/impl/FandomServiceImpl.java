@@ -164,6 +164,11 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
+    public PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
+        PageBounds pageBounds = new PageBounds(searchFandomParam.getOffset(), searchFandomParam.getLimit());
+        return fandomMapper.searchFandoms(searchFandomParam, pageBounds);
+    }
+
     public void addFandom(AddFandomParam addFandomParam) {
         FandomEntity fandomEntity = new FandomEntity();
         fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
@@ -175,5 +180,6 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
 
         this.fandomMapper.insert(fandomEntity);
+
     }
 }
