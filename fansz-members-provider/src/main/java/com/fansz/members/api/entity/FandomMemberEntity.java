@@ -8,7 +8,7 @@ public class FandomMemberEntity {
 
     private String memberSn;
 
-    private String fandomSn;
+    private String fandomId;
 
     private String infatuation;
 
@@ -30,12 +30,12 @@ public class FandomMemberEntity {
         this.memberSn = memberSn;
     }
 
-    public String getFandomSn() {
-        return fandomSn;
+    public String getFandomId() {
+        return fandomId;
     }
 
-    public void setFandomSn(String fandomSn) {
-        this.fandomSn = fandomSn;
+    public void setFandomId(String fandomId) {
+        this.fandomId = fandomId;
     }
 
     public String getInfatuation() {

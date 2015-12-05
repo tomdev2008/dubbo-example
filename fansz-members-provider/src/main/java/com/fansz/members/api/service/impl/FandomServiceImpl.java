@@ -61,7 +61,7 @@ public class FandomServiceImpl implements FandomService {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
         }
         fandomMemberEntity.setInfatuation("0");//1表示特别关注
-        fandomMemberEntityMapper.insert(fandomMemberEntity);
+        fandomMemberEntityMapper.insertSelective(fandomMemberEntity);
         return false;
     }
 
@@ -84,7 +84,7 @@ public class FandomServiceImpl implements FandomService {
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
-        exist.setFandomSn("1");
+        exist.setFandomId("1");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
         return true;
     }
@@ -96,7 +96,7 @@ public class FandomServiceImpl implements FandomService {
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
-        exist.setFandomSn("0");
+        exist.setFandomId("0");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
         return true;
     }
