@@ -10,28 +10,28 @@ import java.io.Serializable;
 public class JoinFandomParam implements Serializable {
 
     private static final long serialVersionUID = 4543574868180635074L;
-
-    private String sn;
+    @JsonProperty("member_sn")
+    private String memberSn;
 
     @JsonProperty("fandom_id")
-    private Long fandomId;
+    private String fandomId;
 
     @JsonProperty("access_token")
     private String accessToken;
 
-    public String getSn() {
-        return sn;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
-    public Long getFandomId() {
+    public String getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(Long fandomId) {
+    public void setFandomId(String fandomId) {
         this.fandomId = fandomId;
     }
 
