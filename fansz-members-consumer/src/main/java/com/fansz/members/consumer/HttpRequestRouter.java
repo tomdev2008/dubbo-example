@@ -18,9 +18,10 @@ import java.nio.charset.Charset;
  * HTTP请求路由处理类，将HTTP请求分发给对应的Handler进行处理
  */
 @Component
+@Sharable
 public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpRequest> {
 
-    @Resource(name="dubboInvoker")
+    @Resource(name = "dubboInvoker")
     private RpcInvoker rpcInvoker;
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestRouter.class);

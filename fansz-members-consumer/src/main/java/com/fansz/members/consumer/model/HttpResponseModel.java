@@ -1,27 +1,29 @@
 package com.fansz.members.consumer.model;
 
+import java.util.List;
+
 /**
  * Created by allan on 15/12/5.
  */
 public class HttpResponseModel {
 
-    private HttpRequestHeader heaer;
+    private HttpRequestHeader header;
 
-    private HttpResponseBody[] response;
+    private List<Object> response;
 
-    public HttpRequestHeader getHeaer() {
-        return heaer;
+    public HttpRequestHeader getHeader() {
+        return header;
     }
 
-    public void setHeaer(HttpRequestHeader heaer) {
-        this.heaer = heaer;
+    public void setHeader(HttpRequestHeader header) {
+        this.header = header;
     }
 
-    public HttpResponseBody[] getResponse() {
+    public List<Object> getResponse() {
         return response;
     }
 
-    public void setResponse(HttpResponseBody[] response) {
+    public void setResponse(List<Object> response) {
         this.response = response;
     }
 }
