@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c02aafb6-1a82-48b1-9959-afb412bdd98a" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/JoinFandomParam.java" afterPath="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/JoinFandomParam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomMemberEntity.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomMemberEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml" afterPath="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml" />
     </list>
     <ignored path="fansz-members.iws" />
@@ -47,12 +44,12 @@
     <favorites_list name="fansz-members" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
       <file leaf-file-name="FandomApi.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.3488374">
-              <caret line="52" column="39" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="32" column="57" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -62,7 +59,7 @@
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
+              <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -72,7 +69,7 @@
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
+              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,36 +77,48 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FandomMemberEntityMapper.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FandomMemberEntityMapper.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.8734177">
-              <caret line="66" column="25" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="25" />
+            <state vertical-scroll-proportion="-9.377358">
+              <caret line="140" column="50" selection-start-line="140" selection-start-column="50" selection-end-line="140" selection-end-column="50" />
               <folding>
-                <marker date="1449327566280" expanded="true" signature="902:1026" placeholder="select from ..feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="1887:1955" placeholder="delete from ..." />
-                <marker date="1449327566280" expanded="true" signature="2066:2281" placeholder="insert into feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="2373:2396" placeholder="select LAST_..." />
-                <marker date="1449327566280" expanded="true" signature="3591:3614" placeholder="select LAST_..." />
-                <marker date="1449327566280" expanded="true" signature="3768:4342" placeholder="update feeds..." />
-                <marker date="1449327566280" expanded="true" signature="4463:4673" placeholder="update feeds..." />
-                <marker date="1449327566280" expanded="true" signature="4796:4884" placeholder="select fando..feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="5052:5233" placeholder="select from ..feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="5414:6152" placeholder="SELECT b.id,..feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="5681:5742" placeholder="SELECT count..feeds_member_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="5769:5835" placeholder="SELECT count..feeds_member_post_fandom..." />
-                <marker date="1449327566280" expanded="true" signature="5858:5962" placeholder="SELECT count..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="902:1026" placeholder="select from ..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="1887:1955" placeholder="delete from ..." />
+                <marker date="1449385095035" expanded="true" signature="2066:2281" placeholder="insert into feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="2373:2396" placeholder="select LAST_..." />
+                <marker date="1449385095035" expanded="true" signature="3591:3614" placeholder="select LAST_..." />
+                <marker date="1449385095035" expanded="true" signature="3768:4342" placeholder="update feeds..." />
+                <marker date="1449385095035" expanded="true" signature="4463:4673" placeholder="update feeds..." />
+                <marker date="1449385095035" expanded="true" signature="4796:4884" placeholder="select fando..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="5052:5233" placeholder="select from ..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="5414:6173" placeholder="SELECT b.id,..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="5681:5749" placeholder="SELECT count..feeds_member_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="5776:5849" placeholder="SELECT count..feeds_member_post_fandom..." />
+                <marker date="1449385095035" expanded="true" signature="5872:5983" placeholder="SELECT count..feeds_member_fandom..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FandomServiceImpl.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MemberFandomQueryParam.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/MemberFandomQueryParam.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FandomServiceImpl.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="11.615385">
-              <caret line="61" column="9" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="52" column="61" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="61" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -185,8 +194,8 @@
         <option value="$PROJECT_DIR$/fansz-members-provider/pom.xml" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/entity/FandomMemberEntity.java" />
         <option value="$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java" />
-        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml" />
         <option value="$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/JoinFandomParam.java" />
+        <option value="$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml" />
       </list>
     </option>
   </component>
@@ -370,7 +379,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -984,7 +993,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1618,12 +1627,13 @@
       <workItem from="1449235370086" duration="1038000" />
       <workItem from="1449237889181" duration="3784000" />
       <workItem from="1449289709265" duration="24896000" />
-      <workItem from="1449321257351" duration="7158000" />
+      <workItem from="1449321257351" duration="7665000" />
+      <workItem from="1449382732436" duration="2449000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="236628000" />
+    <option name="totallyTimeSpent" value="239584000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1652,18 +1662,18 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2106681" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37076023" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43976608" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32698414" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1717,13 +1727,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/FriendsQueryParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46962234">
-          <caret line="20" column="28" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/env/production/dubbo.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.055829227">
@@ -1764,7 +1767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.24630542">
           <caret line="20" column="28" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1793,7 +1795,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26243567">
           <caret line="196" column="45" selection-start-line="196" selection-start-column="28" selection-end-line="196" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1815,7 +1816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4729064">
           <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1839,13 +1839,6 @@
         <state vertical-scroll-proportion="0.13957307">
           <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/MemberFandomQueryParam.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3908046">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
         </state>
       </provider>
     </entry>
@@ -1895,7 +1888,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.88336194">
           <caret line="94" column="21" selection-start-line="94" selection-start-column="21" selection-end-line="94" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1992,7 +1984,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.4745485">
           <caret line="113" column="9" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2000,7 +1991,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8045977">
           <caret line="154" column="1" selection-start-line="154" selection-start-column="1" selection-end-line="154" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2023,7 +2013,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2032,54 +2021,6 @@
         <state vertical-scroll-proportion="0.9110429">
           <caret line="75" column="0" selection-start-line="74" selection-start-column="8" selection-end-line="75" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3488374">
-          <caret line="52" column="39" selection-start-line="52" selection-start-column="29" selection-end-line="52" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="28" selection-start-line="39" selection-start-column="28" selection-end-line="39" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="12" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8734177">
-          <caret line="66" column="25" selection-start-line="66" selection-start-column="16" selection-end-line="66" selection-end-column="25" />
-          <folding>
-            <marker date="1449327566280" expanded="true" signature="902:1026" placeholder="select from ..feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="1887:1955" placeholder="delete from ..." />
-            <marker date="1449327566280" expanded="true" signature="2066:2281" placeholder="insert into feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="2373:2396" placeholder="select LAST_..." />
-            <marker date="1449327566280" expanded="true" signature="3591:3614" placeholder="select LAST_..." />
-            <marker date="1449327566280" expanded="true" signature="3768:4342" placeholder="update feeds..." />
-            <marker date="1449327566280" expanded="true" signature="4463:4673" placeholder="update feeds..." />
-            <marker date="1449327566280" expanded="true" signature="4796:4884" placeholder="select fando..feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="5052:5233" placeholder="select from ..feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="5414:6152" placeholder="SELECT b.id,..feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="5681:5742" placeholder="SELECT count..feeds_member_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="5769:5835" placeholder="SELECT count..feeds_member_post_fandom..." />
-            <marker date="1449327566280" expanded="true" signature="5858:5962" placeholder="SELECT count..feeds_member_fandom..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2095,7 +2036,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.4741036">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2103,15 +2043,80 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5378486">
           <caret line="10" column="27" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/FandomInfoParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33266932">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/relationship/MemberFandomQueryParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="57" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/FandomProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="78" column="66" selection-start-line="78" selection-start-column="66" selection-end-line="78" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/FandomService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/FandomServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="11.615385">
-          <caret line="61" column="9" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="61" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMemberEntityMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.377358">
+          <caret line="140" column="50" selection-start-line="140" selection-start-column="50" selection-end-line="140" selection-end-column="50" />
+          <folding>
+            <marker date="1449385095035" expanded="true" signature="902:1026" placeholder="select from ..feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="1887:1955" placeholder="delete from ..." />
+            <marker date="1449385095035" expanded="true" signature="2066:2281" placeholder="insert into feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="2373:2396" placeholder="select LAST_..." />
+            <marker date="1449385095035" expanded="true" signature="3591:3614" placeholder="select LAST_..." />
+            <marker date="1449385095035" expanded="true" signature="3768:4342" placeholder="update feeds..." />
+            <marker date="1449385095035" expanded="true" signature="4463:4673" placeholder="update feeds..." />
+            <marker date="1449385095035" expanded="true" signature="4796:4884" placeholder="select fando..feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="5052:5233" placeholder="select from ..feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="5414:6173" placeholder="SELECT b.id,..feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="5681:5749" placeholder="SELECT count..feeds_member_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="5776:5849" placeholder="SELECT count..feeds_member_post_fandom..." />
+            <marker date="1449385095035" expanded="true" signature="5872:5983" placeholder="SELECT count..feeds_member_fandom..." />
+          </folding>
         </state>
       </provider>
     </entry>
