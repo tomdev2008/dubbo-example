@@ -30,6 +30,8 @@
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
         <result column="fandom_create_time" jdbcType="TIMESTAMP" property="fandomCreateTime"/>
         <result column="follower_count" property="followerCount" jdbcType="INTEGER"/>
         <result column="post_count" property="postCount" jdbcType="INTEGER"/>
@@ -203,7 +205,7 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="BaseResultMap">
+            resultMap="fandomInfoMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM feeds_fandom
@@ -214,8 +216,8 @@
             <if test="fandomParentId != null">
                 fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
-            <if test="fandomAdminId != null">
-                fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
+            <if test="fandomAdminSn != null">
+                fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
             </if>
             <if test="fandomCreatorId != null">
                 fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
@@ -230,11 +232,11 @@
     </select>
 
     <select id="getRecommendFandom" resultMap="fandomInfoMap">
-            SELECT  f.*,m.count,p.member_avatar,p.sn,p.nickname
-            from feeds_fandom  f, (select  count(1)  count, fandom_id from feeds_member_fandom  group by fandom_id)  m,connects_member_profile p
+            SELECT  f.*,m.follower_count,p.member_avatar,p.sn,p.nickname
+            from feeds_fandom  f, (select  count(1)  follower_count, fandom_id from feeds_member_fandom  group by fandom_id)  m,connects_member_profile p
             where f.id = m.fandom_id
             and   f.fandom_creator_sn = p.sn
-            order by m.count desc
+            order by m.follower_count desc
     </select>
 
     <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomInfoMap">
@@ -251,8 +253,8 @@
         select a.*,r.relation_status
         from (select  p.*
         from  feeds_member_fandom m, connects_member_profile  p
-        where m.fandom_id =  #{fandomId,jdbcType=BIGINT}
-        AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
+        where m.fandom_id =  #{fandomId,jdbcType=VARCHAR}
+        AND   m.member_sn=p.sn)  a  LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
     </select>
 
     <select id="searchFandoms" parameterType="com.fansz.members.model.fandom.SearchFandomParam" resultMap="searchFandomResult">
@@ -300,6 +302,9 @@
             FROM
                 feeds_fandom ff
             LEFT JOIN connects_member_profile mp ON ff.fandom_creator_sn = mp.sn
+
+            WHERE  ff.fandom_name   like  '%' || #{searchVal,jdbcType=VARCHAR} || '%'
+            or     ff.fandom_intro  like  '%' || #{searchVal,jdbcType=VARCHAR} || '%'
 
     </select>
 

@@ -37,7 +37,9 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
+//    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
+
+    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 
     SingleFandomEntity findFandomInfo(@Param("id") long id);
 

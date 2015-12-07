@@ -42,6 +42,10 @@ public class Constants {
 
     public final static String RELATION_IS_NOT_IN_FANDOM="20206";//用户未关注fandom
 
+    public final static String RELATION_IS_SPACIEL_FANDOM="20207";//用户已经关注fandom
+
+    public final static String RELATION_IS_NOT_SPACIEL_FANDOM="20208";//用户未关注fandom
+
     public final static String USER_STATUS_OK = "1";
 
     public final static String RELATION_FRIEND="10";

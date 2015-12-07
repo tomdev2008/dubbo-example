@@ -22,6 +22,11 @@ public class FandomInfoResult implements Serializable {
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
 
+    @JsonProperty("fandom_admin_sn")
+    private String fandomAdminSn;
+
+    @JsonProperty("fandom_create_sn")
+    private String fandomCreatorSn;
 
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
@@ -123,5 +128,21 @@ public class FandomInfoResult implements Serializable {
 
     public void setFollowed(int followed) {
         this.followed = followed;
+    }
+
+    public String getFandomAdminSn() {
+        return fandomAdminSn;
+    }
+
+    public void setFandomAdminSn(String fandomAdminSn) {
+        this.fandomAdminSn = fandomAdminSn;
+    }
+
+    public String getFandomCreatorSn() {
+        return fandomCreatorSn;
+    }
+
+    public void setFandomCreatorSn(String fandomCreatorSn) {
+        this.fandomCreatorSn = fandomCreatorSn;
     }
 }
