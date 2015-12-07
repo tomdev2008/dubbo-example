@@ -12,7 +12,9 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
+import javax.ws.rs.Path;
 import java.util.List;
+import java.util.Map;
 
 @MapperScan
 public interface FandomMapper {
@@ -41,5 +43,5 @@ public interface FandomMapper {
 
     SingleFandomEntity findFandomInfo(@Param("id") long id);
 
-    PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam, PageBounds pageBounds);
+    PageList<SearchFandomResult> searchFandoms(@Param("memberSn")String memberSn, @Param("searchVal")String searchVal, PageBounds pageBounds);
 }

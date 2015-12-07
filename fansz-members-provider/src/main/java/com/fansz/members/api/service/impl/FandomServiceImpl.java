@@ -19,9 +19,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -166,7 +164,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
         PageBounds pageBounds = new PageBounds(searchFandomParam.getOffset(), searchFandomParam.getLimit());
-        return fandomMapper.searchFandoms(searchFandomParam, pageBounds);
+        return fandomMapper.searchFandoms(searchFandomParam.getMemberSn(),searchFandomParam.getSearchVal(), pageBounds);
     }
 
     public void addFandom(AddFandomParam addFandomParam) {

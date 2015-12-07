@@ -252,8 +252,8 @@
             feeds_member_post_fandom f
         LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
         WHERE
-            f.post_title LIKE '%'||#{searchVal}||'%'
-        or f.post_content LIKE '%'||#{searchVal}||'%'
+            f.post_title LIKE concat('%',#{searchVal},'%')
+        or f.post_content LIKE concat('%',#{searchVal},'%')
     </select>
 
     <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="postInfoResultMap">
