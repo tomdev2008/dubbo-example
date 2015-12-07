@@ -31,6 +31,8 @@ public interface UserRelationEntityMapper {
 
     UserRelationEntity findRelationBySns(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
 
+    UserRelationEntity findRelation(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
+
     PageList<FriendInfoResult> findFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
 
     PageList<FriendInfoResult> findSpecialFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
