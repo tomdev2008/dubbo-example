@@ -329,6 +329,16 @@
             </if>
         </where>
     </select>
+    <select id="searchMembersByKey"  resultMap="userInfoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM connects_member_profile
+        <if test="searchKey != null">
+            WHERE   nickname = #{searchKey,jdbcType=VARCHAR}
+            OR mobile = #{searchKey,jdbcType=VARCHAR}
+            OR loginname = #{searchKey,jdbcType=VARCHAR}
+        </if>
+    </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">
        UPDATE connects_member_profile
         SET member_type = #{memberType,jdbcType=VARCHAR},

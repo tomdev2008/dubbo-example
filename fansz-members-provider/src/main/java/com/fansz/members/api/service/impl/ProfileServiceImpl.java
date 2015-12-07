@@ -70,6 +70,10 @@ public class ProfileServiceImpl implements ProfileService {
         return userEntityMapper.searchMembers(searchParam.getNickname(),searchParam.getMobile(),searchParam.getMemberType(),searchParam.getLoginname(),pageBounds);
     }
     @Override
+    public PageList<UserInfoResult> searchMembers(String searchKey,PageBounds pageBounds){
+        return userEntityMapper.searchMembersByKey(searchKey,pageBounds);
+    }
+    @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {
         return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());
     }
