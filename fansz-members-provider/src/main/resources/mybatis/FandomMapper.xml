@@ -253,8 +253,7 @@
         AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="searchFandoms" parameterType="com.fansz.members.model.fandom.SearchFandomParam" resultMap="searchFandomResult">
-
+    <select id="searchFandoms" parameterType="java.lang.String" resultMap="searchFandomResult">
       SELECT
                 ff.id,
                 ff.fandom_name,
@@ -284,7 +283,7 @@
                     FROM
                         feeds_member_post_fandom
                     WHERE
-                        member_sn = 1
+                        member_sn = #{memberSn,jdbcType=VARCHAR}
                 ) followed,
                 mp.sn,
                 mp.mobile,
@@ -298,7 +297,8 @@
             FROM
                 feeds_fandom ff
             LEFT JOIN connects_member_profile mp ON ff.fandom_creator_sn = mp.sn
-
+            WHERE fandom_name like concat('%',#{searchVal},'%')
+            or fandom_intro like  concat('%',#{searchVal},'%')
     </select>
 
 </mapper>

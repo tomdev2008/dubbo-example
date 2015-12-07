@@ -11,7 +11,7 @@ public class UploadResult implements Serializable {
 
     private static final long serialVersionUID = -6184594195746924893L;
 
-    private String fileName;
+    private String name;
 
     private String url;
 
@@ -19,17 +19,17 @@ public class UploadResult implements Serializable {
 
     }
 
-    public UploadResult(String fileName, String url) {
-        this.fileName = fileName;
+    public UploadResult(String name, String url) {
+        this.name = name;
         this.url = url;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getName() {
+        return name;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
