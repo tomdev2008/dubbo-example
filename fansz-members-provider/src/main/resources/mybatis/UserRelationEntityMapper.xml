@@ -143,12 +143,12 @@
         WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="findRelationByMobiles" parameterType="com.fansz.members.model.profile.ContactQueryParam"
+    <select id="findRelationByMobiles" parameterType="java.util.Map"
             resultMap="contactInfoMap">
         SELECT b.relation_status ,a.*
         FROM connects_member_profile a
         LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
-        AND b.my_member_sn= #{sn,jdbcType=VARCHAR} WHERE a.mobile IN
+        AND b.my_member_sn= #{memberSn,jdbcType=VARCHAR} WHERE a.mobile IN
         <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>

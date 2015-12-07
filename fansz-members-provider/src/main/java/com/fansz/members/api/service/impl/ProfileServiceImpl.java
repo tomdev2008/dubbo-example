@@ -14,6 +14,7 @@ import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,7 +69,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
         PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
-        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam,pageBounds);
+        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam.getMemberSn(), contactQueryParam.getMobileList(), pageBounds);
     }
 
     @Override

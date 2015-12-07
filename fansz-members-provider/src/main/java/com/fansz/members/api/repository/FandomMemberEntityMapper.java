@@ -4,6 +4,7 @@ import com.fansz.members.api.entity.FandomMemberEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;

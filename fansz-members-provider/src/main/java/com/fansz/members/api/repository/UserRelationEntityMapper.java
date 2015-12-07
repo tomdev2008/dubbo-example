@@ -37,7 +37,7 @@ public interface UserRelationEntityMapper {
 
     PageList<FriendInfoResult> findSpecialFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
 
-    PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam, PageBounds pageBounds);
+    PageList<ContactInfoResult> findRelationByMobiles(@Param("memberSn") String memberSn, @Param("mobileList") List<String> mobileList, PageBounds pageBounds);
 
     PageList<FriendInfoResult> listAddMeRequest(String memberSn, PageBounds pageBounds);
 
