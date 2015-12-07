@@ -10,6 +10,7 @@ import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
-        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
+        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam);
         return renderSuccess(userInfoResult, "Get profile successfully");
     }
 

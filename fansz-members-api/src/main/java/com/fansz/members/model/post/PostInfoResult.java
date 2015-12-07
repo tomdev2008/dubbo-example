@@ -35,10 +35,10 @@ public class PostInfoResult implements Serializable {
     @JsonProperty("liked")
     private String followed;
 
-    @JsonProperty("likeCount")
+    @JsonProperty("like_count")
     private Long likes;
 
-    @JsonProperty("commentsCount")
+    @JsonProperty("comments_count")
     private Long comments;
 
 

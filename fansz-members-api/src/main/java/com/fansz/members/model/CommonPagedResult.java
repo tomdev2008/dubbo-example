@@ -60,9 +60,17 @@ public class CommonPagedResult<T> implements Serializable {
         this.result = result;
     }
 
-    class PagedResult {
+   public class PagedResult  implements  Serializable{
+
+        private static final long serialVersionUID = -4760300387808556112L;
+
         private PageList<T> data;
+
         private PageParam pager;
+
+        public PagedResult(){
+
+        }
 
         public PageList<T> getData() {
             return data;

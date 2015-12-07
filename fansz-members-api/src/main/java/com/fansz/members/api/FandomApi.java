@@ -78,8 +78,8 @@ public interface FandomApi {
      * @return resp 返回对象
      */
     @POST
-    @Path("/myFndoms")
-    CommonResult<List<FandomInfoResult>> getMyFandoms(MemberFandomQueryParam fandomParam);
+    @Path("/myFandoms")
+    CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam);
 
     /**
      * 查询所有的fandom

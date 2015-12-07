@@ -75,11 +75,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<List<FandomInfoResult>> getMyFandoms(MemberFandomQueryParam fandomParam) {
+    public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) {
         // 获得我关注的fandom
         PageBounds pageBounds = new PageBounds(fandomParam.getOffset(), fandomParam.getLimit());
-        List<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
-        return renderSuccess(fandoms);
+        PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
+        return renderPagedSuccess(fandoms);
     }
 
     /**

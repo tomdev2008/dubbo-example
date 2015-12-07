@@ -23,6 +23,8 @@ public class UserEntity {
 
     private String memberAvatar;
 
+    private String signature;
+
     private Date profileCreatetime;
 
     private Date profileUpdatetime;
@@ -109,6 +111,14 @@ public class UserEntity {
 
     public void setMemberAvatar(String memberAvatar) {
         this.memberAvatar = memberAvatar == null ? null : memberAvatar.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
     public Date getProfileCreatetime() {

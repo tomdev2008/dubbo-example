@@ -2,6 +2,7 @@ package com.fansz.storage.server;
 
 import com.fansz.storage.fastdfs.StorageServiceUtils;
 import com.fansz.storage.model.FastDFSFile;
+import com.fansz.storage.model.UploadResult;
 import com.fansz.storage.tools.FileTools;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -21,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,11 +66,14 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
             try {
                 List<InterfaceHttpData> datas = decoder.getBodyHttpDatas();
                 if (datas != null) {
+                    List<UploadResult> result=new ArrayList<>();
                     for (InterfaceHttpData data : datas) {
                         if (InterfaceHttpData.HttpDataType.FileUpload.equals(data.getHttpDataType())) {
                             FileUpload file = (FileUpload) data;
                             String url = process(file);
-                            if (url !=null && url.trim().length() > 0) {
+                            UploadResult uploadResult=new UploadResult(file.getFilename(),url);
+                            result.add(uploadResult);
+                            if (url != null && url.trim().length() > 0) {
                                 responder.sendJson(HttpResponseStatus.OK, String.format("{\"response\": [{\"status\":\"0\",\"message\":\"Success\",\"result\":{\"url\":\"%s\"}}]}", url));
                             } else {
                                 responder.sendJson(HttpResponseStatus.OK, String.format("{\"response\": [{\"status\":\"10001\",\"message\":\"Fail\",\"result\":{\"url\":\"%s\"}}]}", ""));
@@ -85,6 +90,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
     private String process(FileUpload file) {
         FastDFSFile fastDFSFile = new FastDFSFile(file.getFilename(), file.content().array(), FileTools.getExtension(file.getFilename()));
         return StorageServiceUtils.upload(fastDFSFile);
+
     }
 
     /**

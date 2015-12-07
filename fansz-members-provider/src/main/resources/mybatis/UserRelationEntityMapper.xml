@@ -132,8 +132,8 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_relation
-        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
+        WHERE (my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR})
+        OR  (my_member_sn=#{friendSn,jdbcType=VARCHAR} AND friend_member_sn=#{memberSn,jdbcType=VARCHAR})
     </select>
 
     <select id="findRelationByMobiles" parameterType="com.fansz.members.model.profile.ContactQueryParam"

@@ -11,18 +11,28 @@ public class QueryProfileParam implements Serializable {
 
     private static final long serialVersionUID = 784997167533858716L;
 
-    @JsonProperty("sn")
-    private String uid;
+    private String sn;
+
+    @JsonProperty("friend_sn")
+    private String friendSn;
 
     @JsonProperty("access_token")
     private String accessToken;
 
-    public String getUid() {
-        return uid;
+    public String getSn() {
+        return sn;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+
+    public String getFriendSn() {
+        return friendSn;
+    }
+
+    public void setFriendSn(String friendSn) {
+        this.friendSn = friendSn;
     }
 
     public String getAccessToken() {

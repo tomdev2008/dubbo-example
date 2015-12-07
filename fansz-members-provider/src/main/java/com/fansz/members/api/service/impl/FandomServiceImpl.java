@@ -49,7 +49,7 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public List<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds) {
+    public PageList<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds) {
         return fandomMemberEntityMapper.findFandomsByMemberSn(sn, pageBounds);
     }
 

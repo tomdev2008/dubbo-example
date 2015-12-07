@@ -1,18 +1,17 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
+import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.repository.MemberAlbumEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
+import com.fansz.members.model.profile.*;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
-import com.fansz.members.model.profile.ContactInfoResult;
-import com.fansz.members.model.profile.ContactQueryParam;
-import com.fansz.members.model.profile.UserInfoResult;
-import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.tools.BeanTools;
+import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,16 @@ public class ProfileServiceImpl implements ProfileService {
     private MemberAlbumEntityMapper memberAlbumEntityMapper;
 
     @Override
-    public UserInfoResult getProfile(String uid) {
-        UserEntity user = userEntityMapper.selectByUid(uid);
+    public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
+        UserEntity user = userEntityMapper.selectByUid(queryUserParam.getSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
+        if(StringTools.isNotBlank(queryUserParam.getFriendSn())){
+            UserRelationEntity userRelationEntity= userRelationEntityMapper.findRelationBySns(queryUserParam.getSn(),queryUserParam.getFriendSn());
+            if(userRelationEntity!=null){
+                result.setRelationship(userRelationEntity.getRelationStatus());
+            }
+        }
+
         return result;
     }
 
