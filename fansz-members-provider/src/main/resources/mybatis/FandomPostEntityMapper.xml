@@ -53,6 +53,7 @@
     </resultMap>
 
     <resultMap id="searchPostResult" type="com.fansz.members.model.post.SearchPostResult">
+        <result column="id" property="postId" jdbcType="VARCHAR"/>
         <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
@@ -241,6 +242,7 @@
 
     <select id="searchPosts" parameterType="java.lang.String" resultMap="searchPostResult">
         SELECT
+            f.id,
             f.post_title,
             f.post_content,
             f.post_newsfeeds,

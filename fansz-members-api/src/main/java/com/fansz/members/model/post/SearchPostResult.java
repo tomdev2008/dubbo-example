@@ -12,6 +12,8 @@ import java.util.Date;
 public class SearchPostResult implements Serializable{
 
     private static final long serialVersionUID = -7786572952854806697L;
+    @JsonProperty("post_id")
+    private Long postId;
     @JsonProperty("post_title")
     private String postTitle;
     @JsonProperty("post_content")
@@ -22,6 +24,14 @@ public class SearchPostResult implements Serializable{
     private Date postTime;
     @JsonProperty("post_member")
     private UserInfoResult postMember;
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
 
     public String getPostTitle() {
         return postTitle;
