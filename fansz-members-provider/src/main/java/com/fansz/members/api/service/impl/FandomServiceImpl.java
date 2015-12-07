@@ -82,7 +82,11 @@ public class FandomServiceImpl implements FandomService {
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
-        exist.setFandomId("1");
+        else if ("1".equals(exist.getInfatuation()))
+        {
+            throw new ApplicationException(Constants.RELATION_IS_SPACIEL_FANDOM, "User has already spaciel followed this fandom");
+        }
+        exist.setInfatuation("1");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
         return true;
     }
@@ -94,7 +98,11 @@ public class FandomServiceImpl implements FandomService {
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
-        exist.setFandomId("0");
+        else if (!"1".equals(exist.getInfatuation()))
+        {
+            throw new ApplicationException(Constants.RELATION_IS_NOT_SPACIEL_FANDOM, "User has not already spaciel followed this fandom");
+        }
+        exist.setInfatuation("0");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
         return true;
     }
@@ -133,7 +141,8 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds=new PageBounds(fandomQueryParam.getOffset(),fandomQueryParam.getLimit());
-        return fandomMapper.getFandomMembers(fandomQueryParam,pageBounds);
+        return fandomMapper.getFandomMembers(fandomQueryParam);
+//        return fandomMapper.getFandomMembers(fandomQueryParam,pageBounds);
     }
 
     public SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
