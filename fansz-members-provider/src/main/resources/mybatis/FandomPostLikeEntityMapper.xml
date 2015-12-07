@@ -3,7 +3,7 @@
 <mapper namespace="com.fansz.members.api.repository.FandomPostLikeEntityMapper">
 
     <resultMap id="userInfoResult" type="com.fansz.members.model.profile.UserInfoResult">
-        <result column="sn" jdbcType="VARCHAR" property="memberSn"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
     </resultMap>

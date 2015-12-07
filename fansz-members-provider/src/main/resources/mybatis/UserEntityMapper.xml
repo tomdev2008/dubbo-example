@@ -267,7 +267,7 @@
                 member_status = #{memberStatus,jdbcType=VARCHAR},
             </if>
         </set>
-        where sn = #{sn,jdbcType=VARCHAR}
+        where sn = #{sn,jdbcType=VARCHAR} and member_status='1'
     </update>
 
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.UserEntity">
@@ -328,6 +328,16 @@
                 AND  loginname = #{loginname,jdbcType=VARCHAR}
             </if>
         </where>
+    </select>
+    <select id="searchMembersByKey"  resultMap="userInfoResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,(select relation_status from connects_member_relation where my_member_sn=#{sn,jdbcType=VARCHAR}) relationship
+        FROM connects_member_profile
+        <if test="searchKey != null">
+            WHERE   nickname = #{searchKey,jdbcType=VARCHAR}
+            OR mobile = #{searchKey,jdbcType=VARCHAR}
+            OR loginname = #{searchKey,jdbcType=VARCHAR}
+        </if>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">
        UPDATE connects_member_profile

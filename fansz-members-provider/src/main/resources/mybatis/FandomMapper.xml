@@ -17,7 +17,7 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_id" property="fandomAdminId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <association property="post_member" javaType="com.fansz.members.model.profile.UserInfoResult"
@@ -130,11 +130,11 @@
             <if test="fandomParentId != null">
                 fandom_parent_id,
             </if>
-            <if test="fandomAdminId != null">
-                fandom_admin_id,
+            <if test="fandomAdminSn != null">
+                fandom_admin_sn,
             </if>
-            <if test="fandomCreatorId != null">
-                fandom_creator_id,
+            <if test="fandomCreatorSn != null">
+                fandom_creator_sn,
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url,
@@ -150,11 +150,11 @@
             <if test="fandomParentId != null">
                 #{fandomParentId,jdbcType=BIGINT},
             </if>
-            <if test="fandomAdminId != null">
-                #{fandomAdminId,jdbcType=BIGINT},
+            <if test="fandomAdminSn != null">
+                #{fandomAdminSn,jdbcType=BIGINT},
             </if>
-            <if test="fandomCreatorId != null">
-                #{fandomCreatorId,jdbcType=BIGINT},
+            <if test="fandomCreatorSn != null">
+                #{fandomCreatorSn,jdbcType=BIGINT},
             </if>
             <if test="fandomAvatarUrl != null">
                 #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -176,11 +176,11 @@
             <if test="fandomParentId != null">
                 fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
-            <if test="fandomAdminId != null">
-                fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
+            <if test="fandomAdminSn != null">
+                fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
             </if>
-            <if test="fandomCreatorId != null">
-                fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
+            <if test="fandomCreatorSn != null">
+                fandom_creator_sn = #{fandomCreatorSn,jdbcType=BIGINT},
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -196,8 +196,8 @@
     update feeds_fandom
     set fandom_name = #{fandomName,jdbcType=VARCHAR},
       fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
-      fandom_admin_id = #{fandomAdminId,jdbcType=BIGINT},
-      fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
+      fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
+      fandom_creator_sn = #{fandomCreatorSn,jdbcType=BIGINT},
       fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
       fandom_intro = #{fandomIntro,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
@@ -219,8 +219,8 @@
             <if test="fandomAdminSn != null">
                 fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
             </if>
-            <if test="fandomCreatorId != null">
-                fandom_creator_id = #{fandomCreatorId,jdbcType=BIGINT},
+            <if test="fandomCreatorSn != null">
+                fandom_creator_sn = #{fandomCreatorSn,jdbcType=BIGINT},
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},

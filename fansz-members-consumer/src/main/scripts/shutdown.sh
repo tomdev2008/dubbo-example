@@ -5,7 +5,7 @@
 
  CONSUMER_PID="$BASE_DIR/logs/consumer.pid"
  
- echo "star to kill process:$MEMBERS_PID"
+ echo "star to kill process:$CONSUMER_PID"
     if [ -f "$CONSUMER_PID" ]; then
       if [ -s "$CONSUMER_PID" ]; then
         kill -15 `cat "$CONSUMER_PID"` >/dev/null 2>&1

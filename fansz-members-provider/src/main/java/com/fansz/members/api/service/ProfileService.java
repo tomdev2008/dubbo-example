@@ -27,5 +27,7 @@ public interface ProfileService {
 
     PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds);
 
+    PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds);
+
     List<String> getImages(ContactQueryParam contractQueryParam);
 }

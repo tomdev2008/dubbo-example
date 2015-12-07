@@ -13,10 +13,10 @@ public class PageParam implements Serializable {
     private static final long serialVersionUID = 2149367388124720438L;
 
     @JsonProperty("page_size")
-    private Integer limit;
+    private Integer limit=10;
 
     @JsonProperty("page_num")
-    private Integer offset;
+    private Integer offset=1;
 
     @JsonProperty("total_num")
     private Integer totalNum;

@@ -47,6 +47,9 @@ public interface UserEntityMapper {
 
     PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType,@Param("loginname") String loginname, PageBounds pageBounds);
 
+    PageList<UserInfoResult> searchMembersByKey(@Param("searchKey") String searchKey,@Param("sn")String sn, PageBounds pageBounds);
+
+
     int setMemberType(UserEntity record);
 
 }
