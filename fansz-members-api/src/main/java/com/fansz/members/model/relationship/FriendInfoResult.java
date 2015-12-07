@@ -26,6 +26,8 @@ public class FriendInfoResult implements Serializable {
 
     private String signature;
 
+    private String relationship;
+
     @JsonProperty("member_avatar")
     private String memberAvatar;
 
@@ -114,5 +116,13 @@ public class FriendInfoResult implements Serializable {
 
     public void setSignature(String signature) {
         this.signature = signature;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }

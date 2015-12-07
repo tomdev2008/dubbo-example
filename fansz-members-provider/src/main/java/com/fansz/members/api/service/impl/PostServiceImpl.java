@@ -84,32 +84,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageList<MemberPostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
-        List<MemberPostEntity> memberPostEntities = this.fandomPostEntityMapper.memberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn());
-
-        int count = this.fandomPostEntityMapper.countMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn());
-
-        Paginator paginator = new Paginator(getMemberFandomPostsParam.getPageNum(), getMemberFandomPostsParam.getPageSize(), count);
-        PageList<MemberPostInfoResult> memberPostInfoResults = new PageList<>(paginator);
-
-        for (MemberPostEntity entity : memberPostEntities) {
-            MemberPostInfoResult memberPostInfoResult = new MemberPostInfoResult();
-            memberPostInfoResult.setPostTitle(entity.getPostTitle());
-            memberPostInfoResult.setPostContent(entity.getPostContent());
-            memberPostInfoResult.setPostNewsfeeds(entity.getPostNewsfeeds());
-            memberPostInfoResult.setPostTime(DateFormatUtils.format(entity.getPostTime(), "yyyy-MM-dd HH:mm:ss"));
-
-            MemberPostInfoResult.PostMember postMember = memberPostInfoResult.new PostMember();
-            postMember.setSn(entity.getUserEntiy().getSn());
-            postMember.setNickname(entity.getUserEntiy().getNickname());
-            postMember.setMemberAvatar(entity.getUserEntiy().getMemberAvatar());
-
-            memberPostInfoResult.setPostMember(postMember);
-
-            memberPostInfoResults.add(memberPostInfoResult);
-        }
-
-        return memberPostInfoResults;
+    public PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
+        PageBounds pageBounds = new PageBounds(getMemberFandomPostsParam.getOffset(), getMemberFandomPostsParam.getLimit());
+        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(),pageBounds);
     }
 
     @Override
@@ -118,38 +95,17 @@ public class PostServiceImpl implements PostService {
         return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(), pageBounds);
     }
     @Override
-    public PageList<FandomPostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam) {
-        List<MemberPostEntity> entities;
+    public PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam) {
+        PageList<PostInfoResult> entities=null;
+        PageBounds pageBounds=new PageBounds(postsQueryParam.getPageNum(),postsQueryParam.getPageSize());
         if ("new".equals(postsQueryParam.getType()))
         {
-            entities =  fandomPostEntityMapper.newFandomPosts(postsQueryParam.getFandomId(), postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
+            entities =  fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(),null,pageBounds);
         } else {
-            entities = fandomPostEntityMapper.hotFandomPosts(postsQueryParam.getFandomId(), postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
+            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(),null,pageBounds);
         }
 
-        int count = this.fandomPostEntityMapper.countFandomPosts(postsQueryParam.getFandomId());
-
-        Paginator paginator = new Paginator(postsQueryParam.getPageNum(), postsQueryParam.getPageSize(), count);
-        PageList<FandomPostInfoResult> fandomPostInfoResults = new PageList<>(paginator);
-
-        for (MemberPostEntity entity : entities) {
-            FandomPostInfoResult fandomPostInfoResult = new FandomPostInfoResult();
-            fandomPostInfoResult.setPostTitle(entity.getPostTitle());
-            fandomPostInfoResult.setPostContent(entity.getPostContent());
-            fandomPostInfoResult.setPostNewsfeeds(entity.getPostNewsfeeds());
-            fandomPostInfoResult.setPostTime(DateFormatUtils.format(entity.getPostTime(), "yyyy-MM-dd HH:mm:ss"));
-
-            FandomPostInfoResult.PostMember postMember = fandomPostInfoResult.new PostMember();
-            postMember.setSn(entity.getUserEntiy().getSn());
-            postMember.setNickname(entity.getUserEntiy().getNickname());
-            postMember.setMemberAvatar(entity.getUserEntiy().getMemberAvatar());
-
-            fandomPostInfoResult.setPostMember(postMember);
-
-            fandomPostInfoResults.add(fandomPostInfoResult);
-        }
-
-        return fandomPostInfoResults;
+        return entities;
     }
 
 }

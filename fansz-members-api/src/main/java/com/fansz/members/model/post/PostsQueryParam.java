@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class PostsQueryParam {
 
-    @JsonProperty("sn")
+    @JsonProperty("member_sn")
     private String sn;
 
     @JsonProperty("access_token")

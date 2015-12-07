@@ -38,13 +38,13 @@ public class FandomInfoResult implements Serializable {
     private Date fandomCreateTime;
 
     @JsonProperty("follower_count")
-    private int followerCount;
+    private Integer followerCount;
 
     @JsonProperty("post_count")
-    private int postCount;
+    private Integer postCount;
 
     @JsonProperty("followed")
-    private int followed;
+    private Integer followed;
 
     @JsonProperty("creator")
     private UserInfoResult creator;
@@ -106,27 +106,27 @@ public class FandomInfoResult implements Serializable {
         this.fandomCreateTime = fandomCreateTime;
     }
 
-    public int getFollowerCount() {
+    public Integer getFollowerCount() {
         return followerCount;
     }
 
-    public void setFollowerCount(int followerCount) {
+    public void setFollowerCount(Integer followerCount) {
         this.followerCount = followerCount;
     }
 
-    public int getPostCount() {
+    public Integer getPostCount() {
         return postCount;
     }
 
-    public void setPostCount(int postCount) {
+    public void setPostCount(Integer postCount) {
         this.postCount = postCount;
     }
 
-    public int getFollowed() {
+    public Integer getFollowed() {
         return followed;
     }
 
-    public void setFollowed(int followed) {
+    public void setFollowed(Integer followed) {
         this.followed = followed;
     }
 

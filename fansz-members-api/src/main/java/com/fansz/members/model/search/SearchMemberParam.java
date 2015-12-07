@@ -1,15 +1,16 @@
-package com.fansz.members.model.post;
+package com.fansz.members.model.search;
 
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-/**
- * Created by LiZhe on 12/4/2015.
- */
-public class GetMemberFandomPostsParam extends PageParam{
+import java.io.Serializable;
 
-    @JsonProperty("fandom_id")
-    private long fandomId;
+/**
+ * Created by allan on 15/12/7.
+ */
+public class SearchMemberParam extends PageParam implements Serializable{
+
+    private static final long serialVersionUID = 7395798746330977031L;
 
     @JsonProperty("member_sn")
     private String memberSn;
@@ -18,13 +19,8 @@ public class GetMemberFandomPostsParam extends PageParam{
     private String accessToken;
 
 
-    public long getFandomId() {
-        return fandomId;
-    }
-
-    public void setFandomId(long fandomId) {
-        this.fandomId = fandomId;
-    }
+    @JsonProperty("member_type")
+    private String memberType;
 
     public String getMemberSn() {
         return memberSn;
@@ -42,4 +38,11 @@ public class GetMemberFandomPostsParam extends PageParam{
         this.accessToken = accessToken;
     }
 
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public void setMemberType(String memberType) {
+        this.memberType = memberType;
+    }
 }

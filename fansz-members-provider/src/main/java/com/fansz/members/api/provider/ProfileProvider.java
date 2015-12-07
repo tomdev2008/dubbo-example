@@ -8,6 +8,7 @@ import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.StringTools;
@@ -50,10 +51,10 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam) {
-        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) {
+        PageBounds pageBounds=new PageBounds(searchMemberParam.getOffset(),searchMemberParam.getLimit());
         UserEntity userEntity=new UserEntity();
-        userEntity.setMemberType(searchParam.getMemberType());
+        userEntity.setMemberType(searchMemberParam.getMemberType());
         PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
         return renderPagedSuccess(data);
     }
@@ -70,7 +71,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return renderSuccess(PRESENCE, "Change profile successfully");
     }
 
-    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam) {
+    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam) {
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
         result.setMessage("setMemberType profile successfully");

@@ -5,6 +5,7 @@ import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 
 import javax.ws.rs.*;
@@ -40,7 +41,7 @@ public interface ProfileApi {
 
     @Path("/searchByType")
     @POST
-    CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam);
+    CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam);
 
     /**
      * 修改会员信息
@@ -55,7 +56,7 @@ public interface ProfileApi {
 
     @POST
     @Path("/setMemberType")
-    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam);
+    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam);
 
     /**
      * 查询用户相册

@@ -40,8 +40,6 @@ public interface UserEntityMapper {
 
     UserEntity findByAccount(String loginAccount);
 
-    List<UserInfoResult> findByMobiles(List<String> mobiles);
-
     List<UserEntity> getFandomFollowers(Integer id);
 
 

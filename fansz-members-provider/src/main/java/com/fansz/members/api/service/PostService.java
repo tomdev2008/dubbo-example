@@ -29,11 +29,12 @@ public interface PostService {
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
     PageList<SearchPostResult> searchPosts(SearchPostParam searchPostParam);
+
     void addLike(AddLikeParam addLikeParam);
 
     void deleteLike(DeleteLikeParam deleteLikeParam);
 
-    PageList<MemberPostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam);
+    PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam);
 
-    PageList<FandomPostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam);
+    PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam);
 }

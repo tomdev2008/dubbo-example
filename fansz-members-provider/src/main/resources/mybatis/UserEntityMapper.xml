@@ -347,12 +347,13 @@
     </select>
     <select id="searchMembersByKey"  resultMap="userInfoResultMap">
         SELECT
-        <include refid="Base_Column_List"/>,(select relation_status from connects_member_relation where my_member_sn=#{sn,jdbcType=VARCHAR}) relationship
+        <include refid="Base_Column_List"/>
+        ,(select relation_status from connects_member_relation where my_member_sn=#{sn,jdbcType=VARCHAR} OR friend_member_sn=#{sn,jdbcType=VARCHAR} ) relationship
         FROM connects_member_profile
         <if test="searchKey != null">
-            WHERE   nickname = #{searchKey,jdbcType=VARCHAR}
-            OR mobile = #{searchKey,jdbcType=VARCHAR}
-            OR loginname = #{searchKey,jdbcType=VARCHAR}
+            WHERE   nickname   LIKE concat('%',#{searchKey},'%')
+            OR mobile LIKE concat('%',#{searchKey},'%')
+            OR loginname LIKE concat('%',#{searchKey},'%')
         </if>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">

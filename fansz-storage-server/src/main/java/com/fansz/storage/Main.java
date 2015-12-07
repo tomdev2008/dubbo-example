@@ -13,8 +13,8 @@ public class Main {
             System.out.println("please set the baseDir");
             System.exit(0);
         }
-        // String baseDir="/Users/allan/Work/backend/fansz-members/fansz-storage-server/src/main/resources";
-        String baseDir = args[0];
+         //String baseDir="/Users/allan/Works/backend/fansz-members/fansz-storage-server/src/main/resources/";
+        String baseDir = args[0]+ "/conf/" ;
         StorageServiceUtils.init(baseDir);
         NettyHttpService service = NettyHttpService.builder().build();
         try {

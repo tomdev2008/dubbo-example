@@ -120,7 +120,7 @@ public interface PostApi {
      */
     @POST
     @Path("/memberPosts")
-    CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
+    CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
 
 
     /**
@@ -131,5 +131,5 @@ public interface PostApi {
      */
     @POST
     @Path("/fandom")
-    CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param);
+    CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param);
 }

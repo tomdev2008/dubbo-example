@@ -17,8 +17,6 @@ public class PostInfoResult implements Serializable {
     @JsonProperty("post_id")
     private Long id;
 
-    @JsonProperty("fandom_Id")
-    private Long fandomId;
 
     @JsonProperty("post_title")
     private String postTitle;
@@ -56,13 +54,6 @@ public class PostInfoResult implements Serializable {
         this.id = id;
     }
 
-    public Long getFandomId() {
-        return fandomId;
-    }
-
-    public void setFandomId(Long fandomId) {
-        this.fandomId = fandomId;
-    }
 
     public String getPostContent() {
         return postContent;

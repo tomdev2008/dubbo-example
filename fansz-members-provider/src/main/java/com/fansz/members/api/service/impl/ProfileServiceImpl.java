@@ -60,16 +60,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public int setMemberType(ModifyProfileParam modifyProfileParam) {
-        UserEntity user = BeanTools.copyAs(modifyProfileParam, UserEntity.class);
-        return userEntityMapper.setMemberType(user);
+    public int setMemberType(SetMemberParam setMemberParam) {
+        UserEntity user=new UserEntity();
+        user.setSn(setMemberParam.getMemberSn());
+        user.setMemberType(setMemberParam.getMemberType());
+        return userEntityMapper.updateByUidSelective(user);
     }
 
-    @Override
-    public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
-        PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
-        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam,pageBounds);
-    }
 
     @Override
     public PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds){
@@ -82,5 +79,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {
         return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());
+    }
+
+    @Override
+    public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
+        PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
+        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam,pageBounds);
     }
 }

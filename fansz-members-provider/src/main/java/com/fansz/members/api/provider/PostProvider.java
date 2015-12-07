@@ -133,14 +133,19 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
-        PageList<MemberPostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
+    public CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
+        PageList<PostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
         return renderPagedSuccess(memberPostInfoResults);
     }
 
+    /**
+     * 查询某个fandom的所有post列表
+     * @param param 圈子
+     * @return
+     */
     @Override
-    public CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param) {
-        PageList<FandomPostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
+    public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
+        PageList<PostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
         return renderPagedSuccess(fandomPostInfoResults);
     }
 
