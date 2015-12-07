@@ -47,7 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
         UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
         user.setProfileUpdatetime(new Date());
-        int updated=userEntityMapper.updateByUid(user);
+        int updated=userEntityMapper.updateByUidSelective(user);
         if(updated!=1){
             throw new ApplicationException(Constants.USER_NOT_FOUND,"User does't exist");
         }
@@ -70,8 +70,8 @@ public class ProfileServiceImpl implements ProfileService {
         return userEntityMapper.searchMembers(searchParam.getNickname(),searchParam.getMobile(),searchParam.getMemberType(),searchParam.getLoginname(),pageBounds);
     }
     @Override
-    public PageList<UserInfoResult> searchMembers(String searchKey,PageBounds pageBounds){
-        return userEntityMapper.searchMembersByKey(searchKey,pageBounds);
+    public PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds){
+        return userEntityMapper.searchMembersByKey(searchKey,sn,pageBounds);
     }
     @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {

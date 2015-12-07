@@ -44,7 +44,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam) {
         PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
-        PageList<UserInfoResult> data = profileService.searchMembers(searchParam.getSearchVal(),pageBounds);
+        PageList<UserInfoResult> data = profileService.searchMembers(searchParam.getSearchVal(),searchParam.getMemberSn(),pageBounds);
         return renderPagedSuccess(data);
     }
 
@@ -70,7 +70,6 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     }
 
     public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam) {
-
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
         result.setMessage("setMemberType profile successfully");
