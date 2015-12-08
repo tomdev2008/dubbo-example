@@ -75,7 +75,7 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
-        UserRelationEntity oldRelation = userRelationEntityMapper.findRelationBySns(opRequestParam.getMyMemberSn(), opRequestParam.getFriendMemberSn());
+        UserRelationEntity oldRelation = userRelationEntityMapper.findRelation(opRequestParam.getFriendMemberSn(),opRequestParam.getMyMemberSn());
         if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.TO_BE_FRIEND.getCode())) {
             throw new ApplicationException(Constants.RELATION_FRIEND_NO_EXISTS, "Can't (dis)agree friend");
         }

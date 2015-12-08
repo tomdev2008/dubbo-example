@@ -39,18 +39,6 @@
                      resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap"/>
     </resultMap>
 
-    <resultMap id="memberFandomPostsMap" type="com.fansz.members.api.entity.MemberPostEntity">
-        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
-        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
-        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
-        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
-        <association property="userEntiy" javaType="com.fansz.members.api.entity.UserEntity">
-            <id column="m_id" property="id"/>
-            <result column="m_sn" property="sn"/>
-            <result column="m_nickname" property="nickname"/>
-            <result column="m_member_avatar" property="memberAvatar"/>
-        </association>
-    </resultMap>
 
     <resultMap id="searchPostResult" type="com.fansz.members.model.post.SearchPostResult">
         <result column="id" property="postId" jdbcType="BIGINT"/>
@@ -222,17 +210,14 @@
   </update>
 
     <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoResultMap">
-         SELECT
-            a.*, b.sn,
-            b.nickname,
-            b.member_avatar,
-            c.* ,(
-                SELECT
+        SELECT T1.id ,T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
+        T2.sn sn, T2.nickname,T2.mobile, T2.email,T2.gender,T2.member_avatar,d.fandom_name,d.fandom_intro,1 followed,
+                (SELECT
                     count(1)
                 FROM
                     feeds_member_post_like
                 WHERE
-                    post_id = a.id
+                    post_id = T1.id
             ) likes,
             (
                 SELECT
@@ -240,25 +225,26 @@
                 FROM
                     feeds_member_post_comment
                 WHERE
-                    post_id = a.id
+                    post_id = T1.id
             ) comments
         FROM
             feeds_member_fandom c,
-            feeds_member_post_fandom a,
-            connects_member_profile b
+            feeds_member_post_fandom T1,
+            connects_member_profile T2,
+            feeds_fandom d
         WHERE
             c.member_sn = #{memberSn,jdbcType=VARCHAR}
-        AND c.fandom_id = a.fandom_id
-        AND c.member_sn = b.sn
+        AND c.fandom_id = T1.fandom_id
+        AND c.member_sn = T2.sn
+        AND c.fandom_id=d.id
     </select>
 
     <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
         SELECT a.*,b.sn,b.nickname,b.member_avatar,
         (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
         (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
-        FROM feeds_member_post_fandom a,connects_member_profile b,feeds_member_fandom c
-        WHERE c.member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND a.fandom_id=c.fandom_id
+        FROM feeds_member_post_fandom a,connects_member_profile b
+        WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR}
         AND a.member_sn=b.sn
         AND a.post_newsfeeds='1'
         AND a.fandom_id is null
@@ -331,46 +317,36 @@
     </select>
 
 
-
-    <select id="memberFandomPosts" resultMap="memberFandomPostsMap">
-        SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
-         T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
+    <select id="listTimedMemberFandomPosts" resultMap="postInfoResultMap">
+        SELECT T1.id ,T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
+        T2.sn sn, T2.nickname, T2.member_avatar,
+         (SELECT count(1) FROM feeds_member_post_like where post_id=T1.id) likes,
+        (SELECT count(1) FROM feeds_member_post_comment where post_id=T1.id) comments
         FROM feeds_member_post_fandom T1
         INNER JOIN connects_member_profile T2
         ON T1.member_sn = T2.sn
-        WHERE T1.fandom_id = #{fandomId} AND T1.member_sn = #{memberSn}
+        WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+        <if test="memberSn != null">
+            AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
+        </if>
         ORDER BY T1.post_time DESC
     </select>
 
-    <select id="countMemberFandomPosts" resultType="int">
-        SELECT COUNT(1) FROM feeds_member_post_fandom WHERE fandom_id = #{fandomId} AND member_sn = #{memberSn}
-    </select>
-
-    <select id="newFandomPosts" resultMap="memberFandomPostsMap">
-        SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
-        T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
-        FROM feeds_member_post_fandom T1
-        INNER JOIN connects_member_profile T2
-        ON T1.member_sn = T2.sn
-        WHERE T1.fandom_id = #{fandomId}
-        ORDER BY T1.post_time DESC
-        LIMIT ${(pageNum - 1)*pageSize},#{pageSize}
-    </select>
-
-    <select id="hotFandomPosts" resultMap="memberFandomPostsMap">
-        SELECT T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
-        T2.id m_id, T2.sn m_sn, T2.nickname m_nickname, T2.member_avatar m_member_avatar
+    <select id="listHotMemberFandomPosts" resultMap="postInfoResultMap">
+        SELECT T1.id ,T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
+        T2.sn sn, T2.nickname, T2.member_avatar,
+         (SELECT count(1) FROM feeds_member_post_like where post_id=T1.id) likes,
+        (SELECT count(1) FROM feeds_member_post_comment where post_id=T1.id) comments
         FROM feeds_member_post_fandom T1
         INNER JOIN connects_member_profile T2
         ON T1.member_sn = T2.sn
         LEFT JOIN (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) T3
         ON T1.fandom_id = T3.post_id
-        WHERE T1.fandom_id = #{fandomId}
+        WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+        <if test="memberSn != null">
+            AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
+        </if>
         ORDER BY T3.likeCount DESC
-        LIMIT ${(pageNum - 1)*pageSize},#{pageSize}
     </select>
 
-    <select id="countFandomPosts" resultType="int">
-        SELECT COUNT(1) FROM feeds_member_post_fandom WHERE fandom_id = #{fandomId}
-    </select>
 </mapper>

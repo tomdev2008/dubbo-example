@@ -8,8 +8,10 @@ import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +39,22 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
-        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam.getUid());
+        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam);
         return renderSuccess(userInfoResult, "Get profile successfully");
     }
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam) {
         PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
-        UserEntity userEntity=new UserEntity();
-        userEntity.setMobile(searchParam.getSearchVal());
-        userEntity.setNickname(searchParam.getSearchVal());
-        PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
+        PageList<UserInfoResult> data = profileService.searchMembers(searchParam.getSearchVal(),searchParam.getMemberSn(),pageBounds);
         return renderPagedSuccess(data);
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchParam searchParam) {
-        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
+    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) {
+        PageBounds pageBounds=new PageBounds(searchMemberParam.getOffset(),searchMemberParam.getLimit());
         UserEntity userEntity=new UserEntity();
-        userEntity.setMemberType(searchParam.getMemberType());
+        userEntity.setMemberType(searchMemberParam.getMemberType());
         PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
         return renderPagedSuccess(data);
     }
@@ -72,8 +71,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return renderSuccess(PRESENCE, "Change profile successfully");
     }
 
-    public CommonResult<NullResult> setMemberType(ModifyProfileParam modifyProfileParam) {
-
+    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam) {
         CommonResult<NullResult> result = new CommonResult<>();
         result.setStatus(Constants.SUCCESS);
         result.setMessage("setMemberType profile successfully");

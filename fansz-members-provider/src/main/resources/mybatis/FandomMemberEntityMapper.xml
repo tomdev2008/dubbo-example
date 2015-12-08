@@ -18,7 +18,7 @@
         select
         <include refid="Base_Column_List"/>
         from feeds_member_fandom
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}ø
     </select>
 
     <select id="selectBySelective" resultMap="BaseResultMap"

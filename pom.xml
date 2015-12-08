@@ -271,6 +271,16 @@
                 <artifactId>javassist</artifactId>
                 <version>3.20.0-GA</version>
             </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils-core</artifactId>
+                <version>1.8.3</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils-bean-collections</artifactId>
+                <version>1.8.3</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

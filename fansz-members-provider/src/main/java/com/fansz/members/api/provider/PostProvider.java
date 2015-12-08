@@ -104,7 +104,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<PostInfoResult> getFriendsPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
         PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getMemberSn(), pageBounds);
         return renderPagedSuccess(dataResult);
@@ -116,7 +116,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<PostInfoResult> getFandomPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
         PageList<PostInfoResult> dataResult = postService.findPostsOfMyFandoms(getPostsParam.getMemberSn(), pageBounds);
         return renderPagedSuccess(dataResult);
@@ -133,15 +133,21 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<MemberPostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
-        PageList<MemberPostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
+    public CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
+        PageList<PostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
         return renderPagedSuccess(memberPostInfoResults);
     }
 
+    /**
+     * 查询某个fandom的所有post列表
+     * @param param 圈子
+     * @return
+     */
     @Override
-    public CommonPagedResult<FandomPostInfoResult> getPostsByFandom(PostsQueryParam param) {
-        PageList<FandomPostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
+    public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
+        PageList<PostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
         return renderPagedSuccess(fandomPostInfoResults);
     }
+
 
 }

@@ -37,10 +37,7 @@ public final class StringTools {
      * @return boolean
      */
     public static boolean isNull(String str) {
-        if (str == null) {
-            return true;
-        }
-        return false;
+        return str == null;
     }
 
     /**
@@ -440,10 +437,7 @@ public final class StringTools {
      * @return boolean
      */
     public static boolean isInteger(String str) {
-        if (str != null && !"".equals(str) && isDigits(str) && !"0".startsWith(str)) {
-            return true;
-        }
-        return false;
+        return str != null && !"".equals(str) && isDigits(str) && !"0".startsWith(str);
     }
 
     /**

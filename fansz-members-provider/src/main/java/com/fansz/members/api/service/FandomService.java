@@ -18,7 +18,7 @@ public interface FandomService {
     List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
 
 
-    List<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds);
+    PageList<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds);
 
     boolean joinFandom(JoinFandomParam joinFandomParam);
 

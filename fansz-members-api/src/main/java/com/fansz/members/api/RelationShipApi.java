@@ -90,6 +90,12 @@ public interface RelationShipApi {
     @Path("/friends/requestMe")
     CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
+    /**
+     * 获取我发出的好友请求列表
+     *
+     * @param friendsQueryParam
+     * @return
+     */
     @POST
     @Path("/friends/myRequest")
     CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);

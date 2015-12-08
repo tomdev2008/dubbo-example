@@ -39,7 +39,7 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam, PageBounds pageBounds);
+    PageList<ContactInfoResult> getFandomMembers(@Param("fandomId")String fandomId,@Param("memberSn")String memberSn, PageBounds pageBounds);
 
     SingleFandomEntity findFandomInfo(@Param("id") long id);
 

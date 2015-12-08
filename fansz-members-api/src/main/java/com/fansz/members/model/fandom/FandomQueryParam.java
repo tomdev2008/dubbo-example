@@ -19,11 +19,10 @@ public class FandomQueryParam extends PageParam implements Serializable {
     private String memberSn;
 
     @JsonProperty("fandom_id")
-    private Long fandomId;
+    private String fandomId;
 
     @JsonProperty("fandom_parent_id")
-    private Long fandomParentId;
-
+    private String fandomParentId;
 
     public String getAccessKey() {
         return accessKey;
@@ -41,21 +40,19 @@ public class FandomQueryParam extends PageParam implements Serializable {
         this.memberSn = memberSn;
     }
 
-    public Long getFandomId() {
+    public String getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(Long fandomId) {
+    public void setFandomId(String fandomId) {
         this.fandomId = fandomId;
     }
 
-    public Long getFandomParentId() {
+    public String getFandomParentId() {
         return fandomParentId;
     }
 
-    public void setFandomParentId(Long fandomParentId) {
+    public void setFandomParentId(String fandomParentId) {
         this.fandomParentId = fandomParentId;
     }
-
-
 }

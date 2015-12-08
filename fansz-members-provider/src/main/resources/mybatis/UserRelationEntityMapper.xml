@@ -132,16 +132,31 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_relation
-        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
+        WHERE (my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR})
+        OR  (my_member_sn=#{friendSn,jdbcType=VARCHAR} AND friend_member_sn=#{memberSn,jdbcType=VARCHAR})
     </select>
 
-    <select id="findRelationByMobiles" parameterType="com.fansz.members.model.profile.ContactQueryParam"
+    <select id="findRelation" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM connects_member_relation
+        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findRelationByMobiles" parameterType="java.util.Map"
             resultMap="contactInfoMap">
         SELECT b.relation_status ,a.*
         FROM connects_member_profile a
         LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
-        AND b.my_member_sn= #{sn,jdbcType=VARCHAR} WHERE a.mobile IN
+        AND b.my_member_sn= #{memberSn,jdbcType=VARCHAR} WHERE a.mobile IN
+        <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        union
+        SELECT b.relation_status ,a.*
+        FROM connects_member_profile a
+        LEFT JOIN connects_member_relation b on b.my_member_sn=a.sn
+        AND b.friend_member_sn= #{memberSn,jdbcType=VARCHAR} WHERE a.mobile IN
         <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>
@@ -150,13 +165,14 @@
     <select id="listAddMeRequest" parameterType="java.lang.String"
             resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
        SELECT a.* FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
-       WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR} and b.relation_status='00'
+       WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR}
     </select>
 
     <select id="listMySendRequest" parameterType="java.lang.String"
             resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
-     SELECT a.* FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
-       WHERE a.friend_member_sn=#{sn,jdbcType=VARCHAR} and b.relation_status='00'
+     SELECT a.*,b.relation_status relationship
+     FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
+       WHERE b.my_member_sn=#{sn,jdbcType=VARCHAR}
     </select>
 
 </mapper>

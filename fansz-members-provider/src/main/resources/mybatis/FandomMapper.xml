@@ -20,6 +20,7 @@
         <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="followed" property="followed" jdbcType="VARCHAR"/>
         <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
@@ -245,7 +246,7 @@
         order by a.id
     </select>
 
-    <select id="getFandomMembers" parameterType="com.fansz.members.model.fandom.FandomQueryParam"
+    <select id="getFandomMembers" parameterType="java.lang.Object"
             resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
 
         select a.*,r.relation_status

@@ -35,6 +35,8 @@ public class ModifyProfileParam implements Serializable {
     @JsonProperty("member_type")
     private String memberType;
 
+    private String signature;
+
     public String getSn() {
         return sn;
     }
@@ -107,4 +109,11 @@ public class ModifyProfileParam implements Serializable {
         this.memberType = memberType;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 }

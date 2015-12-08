@@ -40,12 +40,13 @@ public interface UserEntityMapper {
 
     UserEntity findByAccount(String loginAccount);
 
-    List<UserInfoResult> findByMobiles(List<String> mobiles);
-
     List<UserEntity> getFandomFollowers(Integer id);
 
 
-    PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType, PageBounds pageBounds);
+    PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType,@Param("loginname") String loginname, PageBounds pageBounds);
+
+    PageList<UserInfoResult> searchMembersByKey(@Param("searchKey") String searchKey,@Param("sn")String sn, PageBounds pageBounds);
+
 
     int setMemberType(UserEntity record);
 

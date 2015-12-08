@@ -1,11 +1,12 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by LiZhe on 12/4/2015.
  */
-public class GetMemberFandomPostsParam {
+public class GetMemberFandomPostsParam extends PageParam{
 
     @JsonProperty("fandom_id")
     private long fandomId;
@@ -16,11 +17,6 @@ public class GetMemberFandomPostsParam {
     @JsonProperty("access_token")
     private String accessToken;
 
-    @JsonProperty("page_num")
-    private int pageNum;
-
-    @JsonProperty("page_size")
-    private int pageSize;
 
     public long getFandomId() {
         return fandomId;
@@ -46,19 +42,4 @@ public class GetMemberFandomPostsParam {
         this.accessToken = accessToken;
     }
 
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
 }

@@ -33,6 +33,10 @@ public class UserInfoResult implements Serializable {
     @JsonProperty("member_type")
     private String memberType;
 
+    private String signature;
+
+    private String relationship;
+
     public String getSn() {
         return sn;
     }
@@ -106,4 +110,19 @@ public class UserInfoResult implements Serializable {
         this.memberType = memberType;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
 }

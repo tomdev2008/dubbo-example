@@ -9,7 +9,7 @@ public enum RelationShip {
 
     private String code;
 
-    private RelationShip(String code) {
+    RelationShip(String code) {
         this.code = code;
     }
 

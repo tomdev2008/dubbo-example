@@ -6,11 +6,10 @@ import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -29,12 +28,11 @@ public interface CommentApi {
      */
     @POST
     @Path("/create")
-
-    public CommonResult<NullResult> addPostComment(CommentParam commentPara);
+    CommonResult<NullResult> addPostComment(CommentParam commentPara);
 
     @POST
     @Path("/reply")
-    public CommonResult<NullResult> replyComment(CommentParam commentPara);
+    CommonResult<NullResult> replyComment(CommentParam commentPara);
 
     /**
      * 删除评论接口
@@ -44,7 +42,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
-    public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
+    CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
     /**
      * 查询帖子下所有的评论列表
@@ -53,7 +51,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/fandom/show")
-    public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom);
+    CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom);
 
     /**
      * 查看朋友圈里所有的
@@ -62,6 +60,6 @@ public interface CommentApi {
      */
     @POST
     @Path("/newsfeed/show")
-    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentQueryFromFandomPram commentQueryFromFandom);
+    CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentFromFandomQueryParam commentQueryFromFandom);
 
 }

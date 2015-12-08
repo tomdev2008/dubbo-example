@@ -9,7 +9,7 @@ import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
-import com.fansz.members.model.comment.CommentQueryFromFandomPram;
+import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return
      * @throws ApplicationException
      */
-    public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentQueryFromFandomPram commentQueryFromFandom) {
+    public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom) {
         PageBounds pageBounds = new PageBounds(commentQueryFromFandom.getOffset(), commentQueryFromFandom.getLimit());
         return renderPagedSuccess(commentService.getCommentsByPostidFromFandom(commentQueryFromFandom, pageBounds));
     }
@@ -80,11 +80,9 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return
      * @throws ApplicationException
      */
-    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentQueryFromFandomPram commentQueryFromFandom) {
+    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentFromFandomQueryParam commentQueryFromFandom) {
 
         return null;
     }
-
-    ;
 
 }

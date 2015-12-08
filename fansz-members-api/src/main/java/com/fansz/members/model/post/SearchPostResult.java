@@ -25,6 +25,14 @@ public class SearchPostResult implements Serializable{
     @JsonProperty("post_member")
     private UserInfoResult postMember;
 
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+
     public String getPostTitle() {
         return postTitle;
     }

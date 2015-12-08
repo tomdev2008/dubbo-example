@@ -1,10 +1,9 @@
 package com.fansz.members.consumer;
 
-import com.fansz.members.api.AccountApi;
-import com.fansz.members.model.account.RegisterParam;
+import com.fansz.members.consumer.server.BasicHttpResponder;
+import com.fansz.members.consumer.server.HttpRequestRouter;
+import com.fansz.members.consumer.server.NettyHttpService;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.net.InetSocketAddress;
 
 /**
  * Created by allan on 15/11/20.
@@ -16,7 +15,8 @@ public class Main {
         HttpRequestRouter httpRequestRouter = ac.getBean(HttpRequestRouter.class);
         NettyHttpService service=null;
         try {
-            NettyHttpService.builder().setPort(2000).setHttpRequestRouter(httpRequestRouter).build().startUp();
+            service=NettyHttpService.builder().setPort(3000).setHttpRequestRouter(httpRequestRouter).build();
+            service.startUp();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

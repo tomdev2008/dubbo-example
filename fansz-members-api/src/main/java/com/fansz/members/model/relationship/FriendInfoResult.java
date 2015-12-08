@@ -12,6 +12,8 @@ public class FriendInfoResult implements Serializable {
 
     private static final long serialVersionUID = -7836389133676995846L;
 
+    private String sn;
+
     private String email;
 
     private String mobile;
@@ -22,6 +24,10 @@ public class FriendInfoResult implements Serializable {
 
     private String birthday;
 
+    private String signature;
+
+    private String relationship;
+
     @JsonProperty("member_avatar")
     private String memberAvatar;
 
@@ -31,6 +37,14 @@ public class FriendInfoResult implements Serializable {
 
     @JsonProperty("member_type")
     private String memberType;
+
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
     public String getMobile() {
         return mobile;
@@ -94,5 +108,21 @@ public class FriendInfoResult implements Serializable {
 
     public void setMemberType(String memberType) {
         this.memberType = memberType;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
     }
 }

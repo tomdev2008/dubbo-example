@@ -3,6 +3,7 @@ package com.fansz.members.model.post;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by LiZhe on 12/4/2015.
@@ -22,7 +23,7 @@ public class FandomPostInfoResult implements Serializable {
     private String postNewsfeeds;
 
     @JsonProperty("post_time")
-    private String postTime;
+    private Date postTime;
 
     @JsonProperty("post_member")
     private PostMember postMember;
@@ -59,11 +60,11 @@ public class FandomPostInfoResult implements Serializable {
         this.postNewsfeeds = postNewsfeeds;
     }
 
-    public String getPostTime() {
+    public Date getPostTime() {
         return postTime;
     }
 
-    public void setPostTime(String postTime) {
+    public void setPostTime(Date postTime) {
         this.postTime = postTime;
     }
 

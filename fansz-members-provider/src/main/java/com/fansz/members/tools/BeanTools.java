@@ -219,4 +219,15 @@ public final class BeanTools {
                 ignoreProperties.toArray(new String[ignoreProperties.size()]));
     }
 
+    /**
+     * 把对象当作Map用
+     *
+     * @param obj
+     *            对象
+     * @return Map
+     */
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> getProperties(Object obj) {
+        return new FanszBeanMap(obj);
+    }
 }

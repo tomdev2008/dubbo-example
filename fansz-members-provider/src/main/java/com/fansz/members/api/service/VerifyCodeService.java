@@ -13,7 +13,7 @@ public interface VerifyCodeService {
      * @param mobile         手机号码
      * @param verifyCodeType 验证码类型
      */
-    public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType);
+    boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
     /**
      * 查询验证码

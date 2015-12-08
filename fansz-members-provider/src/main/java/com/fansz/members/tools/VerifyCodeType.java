@@ -8,7 +8,7 @@ public enum VerifyCodeType {
 
     private String name;
 
-    private VerifyCodeType(String name) {
+    VerifyCodeType(String name) {
         this.name = name;
     }
 
