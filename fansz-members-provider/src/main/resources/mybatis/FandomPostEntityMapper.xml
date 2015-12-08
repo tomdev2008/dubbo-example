@@ -237,6 +237,7 @@
         AND c.fandom_id = T1.fandom_id
         AND c.member_sn = T2.sn
         AND c.fandom_id=d.id
+        order by T1.id desc
     </select>
 
     <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
@@ -248,6 +249,7 @@
         AND a.member_sn=b.sn
         AND a.post_newsfeeds='1'
         AND a.fandom_id is null
+        order by a.id desc
     </select>
 
     <select id="searchPosts" parameterType="java.lang.String" resultMap="searchPostResult">
