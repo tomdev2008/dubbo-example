@@ -107,9 +107,9 @@ public class FandomServiceImpl implements FandomService {
         return true;
     }
 
-    public List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
+    public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMapper.getRecommendFandom(pageBounds);
+        return fandomMapper.getRecommendFandom(fandomQueryParam.getMemberSn(),pageBounds);
     }
 
     @Override
@@ -144,29 +144,8 @@ public class FandomServiceImpl implements FandomService {
         return fandomMapper.getFandomMembers(fandomQueryParam.getFandomId(),fandomQueryParam.getMemberSn(),pageBounds);
     }
 
-    public SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
-
-        SingleFandomEntity fandomEntity = this.fandomMapper.findFandomInfo(fandomInfoParam.getFandomId());
-
-        if (fandomEntity == null) {
-            return null;
-        }
-
-        SingleFandomInfoResult result = new SingleFandomInfoResult();
-
-        result.setFandomName(fandomEntity.getFandomName());
-        result.setFandomAvatarUrl(fandomEntity.getFandomAvatarUrl());
-        result.setFandomIntro(fandomEntity.getFandomIntro());
-        result.setFandomCreateTime(DateFormatUtils.format(fandomEntity.getFandomCreateTime(), "yyyy-MM-dd HH:mm:ss"));
-
-        SingleFandomInfoResult.Creator creator = result.new Creator();
-        creator.setSn(fandomEntity.getUserEntity().getSn());
-        creator.setNickname(fandomEntity.getUserEntity().getNickname());
-        creator.setMemberAvatar(fandomEntity.getUserEntity().getMemberAvatar());
-
-        result.setCreator(creator);
-
-        return result;
+    public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
+        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(),fandomInfoParam.getMemberSn());
     }
 
     @Override

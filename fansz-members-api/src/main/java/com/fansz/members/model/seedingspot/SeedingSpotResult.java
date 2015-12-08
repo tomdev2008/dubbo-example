@@ -1,6 +1,7 @@
 package com.fansz.members.model.seedingspot;
 
 import com.fansz.members.model.PageParam;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,17 +9,30 @@ import java.util.Date;
 /**
  * Created by dell on 2015/12/5.
  */
-public class SeedingSpotResult implements Serializable{
+public class SeedingSpotResult implements Serializable {
 
     private static final long serialVersionUID = -5881167588340820019L;
     private Long id;
+
     private String intro;
+
+    @JsonProperty("priority_no")
     private Long priorityNo;
+
     private String status;
+
+    @JsonProperty("click_url")
     private String clickUrl;
+
+    @JsonProperty("seeding_type")
     private String seedingType;
+
     private String params;
+
+    @JsonProperty("bg_img")
     private String bgImg;
+
+    @JsonProperty("create_time")
     private Date createTime;
 
     public Long getId() {

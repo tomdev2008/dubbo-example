@@ -216,10 +216,10 @@
                 fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
             <if test="fandomAdminSn != null">
-                fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
+                fandom_admin_sn = #{fandomAdminSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomCreatorSn != null">
-                fandom_creator_sn = #{fandomCreatorSn,jdbcType=BIGINT},
+                fandom_creator_sn = #{fandomCreatorSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -230,12 +230,21 @@
         </where>
     </select>
 
-    <select id="getRecommendFandom" resultMap="fandomInfoMap">
-            SELECT  f.*,m.count,p.member_avatar,p.sn,p.nickname
+    <select id="getRecommendFandom" parameterType="java.lang.String" resultMap="fandomInfoMap">
+            SELECT  f.*,m.count follower_count,p.member_avatar,p.sn,p.nickname,(select count(1) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
+            (select count(1) from feeds_member_post_fandom g where g.fandom_id=f.id) post_count
             from feeds_fandom  f, (select  count(1)  count, fandom_id from feeds_member_fandom  group by fandom_id)  m,connects_member_profile p
             where f.id = m.fandom_id
             and   f.fandom_creator_sn = p.sn
             order by m.count desc
+    </select>
+
+    <select id="getFandomDetail"  resultMap="fandomInfoMap">
+        SELECT  f.*,p.member_avatar,p.sn,p.nickname,(select count(1) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
+        (select count(1) from feeds_member_post_fandom g where g.fandom_id=f.id) post_count,
+        (select count(1) from feeds_member_fandom t where t.fandom_id=f.id) follower_count
+        from feeds_fandom  f, connects_member_profile p
+        where f.id =  #{fandomId,jdbcType=BIGINT} and f.fandom_creator_sn=p.sn
     </select>
 
     <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomInfoMap">

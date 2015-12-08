@@ -34,7 +34,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         fandomQueryParam.setMemberSn(null);
         fandomQueryParam.setFandomId(null);
         fandomQueryParam.setFandomParentId(null);
-        return renderSuccess(fandomService.listFandom(fandomQueryParam),"List fandoms successfully");
+        return renderSuccess(fandomService.listFandom(fandomQueryParam), "List fandoms successfully");
 
     }
 
@@ -63,8 +63,8 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
 
-    public CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
-        SingleFandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
+    public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
+        FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
         return renderSuccess(result);
     }
 
@@ -88,9 +88,9 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomInfoResult>> 返回对象
      */
-    public CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam) {
-        List<FandomInfoResult> result = fandomService.getRecommendFandom(fandomQueryParam);
-        return renderSuccess(result);
+    public CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
+        PageList<FandomInfoResult> result = fandomService.getRecommendFandom(fandomQueryParam);
+        return renderPagedSuccess(result);
     }
 
     /**

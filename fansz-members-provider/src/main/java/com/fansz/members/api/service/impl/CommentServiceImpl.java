@@ -8,10 +8,13 @@ import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
 import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
+import com.fansz.members.tools.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by root on 15-11-4.
@@ -23,15 +26,16 @@ public class CommentServiceImpl implements CommentService {
     private PostCommentEntityMapper postCommentEntityMapper;
 
     @Override
-    public PostCommentEntity addComment(CommentParam commentPara) {
+    public CommentQueryFromFandomResult addComment(CommentParam commentPara) {
         PostCommentEntity postCommentEntity = new PostCommentEntity();
         postCommentEntity.setPostId(commentPara.getPostId());
         postCommentEntity.setCommentatorSn(commentPara.getCommentatorSn());
         postCommentEntity.setCommentContent(commentPara.getCommentContent());
         postCommentEntity.setCommentSource(commentPara.getCommentSource());
         postCommentEntity.setCommentParentId(commentPara.getCommentParentId());
+        postCommentEntity.setCommentTime(new Date());
         postCommentEntityMapper.insert(postCommentEntity);
-        return null;
+        return BeanTools.copyAs(postCommentEntity,CommentQueryFromFandomResult.class);
     }
 
     /**

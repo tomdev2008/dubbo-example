@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by dell on 2015/12/5.
  */
-public class SeedingSpotPrama  extends PageParam implements Serializable{
+public class SeedingSpotPrama extends PageParam implements Serializable {
 
     private static final long serialVersionUID = -899485784754811854L;
 
@@ -18,12 +18,20 @@ public class SeedingSpotPrama  extends PageParam implements Serializable{
     private String accessToken;
 
     private Long id;
+
     private String intro;
+    @JsonProperty("priority_no")
     private Long priorityNo;
+
     private String status;
+    @JsonProperty("click_url")
     private String clickUrl;
+    @JsonProperty("seeding_type")
     private String seedingType;
+
     private String params;
+
+    @JsonProperty("bg_img")
     private String bgImg;
 
     public String getMemberSn() {

@@ -58,7 +58,7 @@
     <orderEntry type="library" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.12" level="project" />
     <orderEntry type="library" name="Maven: javax.xml.bind:jsr173_api:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-netty:3.0.7.Final" level="project" />
-    <orderEntry type="module" module-name="members-api" />
+    <orderEntry type="module" module-name="fansz-members-api" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.2.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.2.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.2.9.RELEASE" level="project" />

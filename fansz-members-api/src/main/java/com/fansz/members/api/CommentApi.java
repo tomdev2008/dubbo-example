@@ -28,11 +28,11 @@ public interface CommentApi {
      */
     @POST
     @Path("/create")
-    CommonResult<NullResult> addPostComment(CommentParam commentPara);
+    CommonResult<CommentQueryFromFandomResult> addPostComment(CommentParam commentPara);
 
     @POST
     @Path("/reply")
-    CommonResult<NullResult> replyComment(CommentParam commentPara);
+    CommonResult<CommentQueryFromFandomResult> replyComment(CommentParam commentPara);
 
     /**
      * 删除评论接口

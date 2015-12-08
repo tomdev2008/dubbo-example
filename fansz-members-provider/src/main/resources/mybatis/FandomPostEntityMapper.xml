@@ -292,6 +292,7 @@
                     feeds_member_post_like l
                 WHERE
                     l.member_sn = #{memberSn,jdbcType=VARCHAR}
+                    and l.post_id=p.id
             ) liked,
             (
                 SELECT

@@ -100,7 +100,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/recommend")
-    CommonResult<List<FandomInfoResult>> getRecommendFandom(FandomQueryParam fandomQueryParam);
+    CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
     /**
      * 获取圈子fandom分类接口
@@ -129,7 +129,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/info")
-    CommonResult<SingleFandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
+    CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
 
 

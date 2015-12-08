@@ -1,6 +1,7 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.PostApi;
+import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.PostService;
 import com.fansz.members.model.CommonPagedResult;
@@ -33,12 +34,12 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> addPost(AddPostParam addPostParam) {
-        postService.addPost(addPostParam);
-        CommonResult<NullResult> result = new CommonResult<NullResult>();
-        result.setResult(PRESENCE);
-        result.setStatus(Constants.SUCCESS);
-        return result;
+    public CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam) {
+        FandomPostEntity fandomPostEntity=postService.addPost(addPostParam);
+        PostParam postParam=new PostParam();
+        postParam.setPostId(fandomPostEntity.getId());
+        postParam.setMemberSn(addPostParam.getSn());
+        return getPost(postParam);
     }
 
 

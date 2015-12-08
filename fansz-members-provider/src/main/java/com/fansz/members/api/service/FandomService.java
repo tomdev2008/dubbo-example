@@ -28,14 +28,14 @@ public interface FandomService {
 
     boolean unmarkAsSpecial(JoinFandomParam joinFandomParam);
 
-    List<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
+    PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
 
     List<FandomCategorys> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 
-    SingleFandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
+    FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
 
     PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 

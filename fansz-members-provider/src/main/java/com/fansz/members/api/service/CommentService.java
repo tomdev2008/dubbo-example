@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CommentService {
 
-    PostCommentEntity addComment(CommentParam commentPara);
+    CommentQueryFromFandomResult addComment(CommentParam commentPara);
 
     /**
      * 删除评论

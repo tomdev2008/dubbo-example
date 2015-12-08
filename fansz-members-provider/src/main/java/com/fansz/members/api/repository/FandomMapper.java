@@ -35,7 +35,9 @@ public interface FandomMapper {
 
     List<FandomInfoResult> listByCondition(FandomEntity param);
 
-    List<FandomInfoResult> getRecommendFandom(PageBounds pageBounds);
+    PageList<FandomInfoResult> getRecommendFandom(@Param("memberSn")String memberSn,PageBounds pageBounds);
+
+    FandomInfoResult getFandomDetail(@Param("fandomId")Long fandomId,@Param("memberSn")String memberSn);
 
     List<FandomInfoResult> getFandomCategory(Long id);
 

@@ -14,14 +14,19 @@ public class SearchPostResult implements Serializable{
     private static final long serialVersionUID = -7786572952854806697L;
     @JsonProperty("post_id")
     private Long postId;
+
     @JsonProperty("post_title")
     private String postTitle;
+
     @JsonProperty("post_content")
     private String postContent;
+
     @JsonProperty("post_newsfeeds")
     private String postNewsfeeds;
+
     @JsonProperty("post_time")
     private Date postTime;
+
     @JsonProperty("post_member")
     private UserInfoResult postMember;
 

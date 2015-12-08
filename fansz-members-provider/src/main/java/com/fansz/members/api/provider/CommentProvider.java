@@ -35,9 +35,8 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @param commentPara 评论信息
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> addPostComment(CommentParam commentPara) {
-        commentService.addComment(commentPara);
-        return super.renderSuccess();
+    public CommonResult<CommentQueryFromFandomResult> addPostComment(CommentParam commentPara) {
+        return renderSuccess(commentService.addComment(commentPara));
     }
 
     /**
@@ -46,7 +45,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @param commentPara 评论信息
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> replyComment(CommentParam commentPara) {
+    public CommonResult<CommentQueryFromFandomResult> replyComment(CommentParam commentPara) {
         return this.addPostComment(commentPara);
     }
 

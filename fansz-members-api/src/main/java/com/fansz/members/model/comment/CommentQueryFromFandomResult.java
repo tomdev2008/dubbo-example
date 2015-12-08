@@ -11,42 +11,63 @@ import java.util.Date;
 public class CommentQueryFromFandomResult {
 
     @JsonProperty("id")
-    private long id;
+    private Long id;
+
     @JsonProperty("post_id")
-    private int postId;
+    private Long postId;
+
+    @JsonProperty("comment_parent_id")
+    private Long commentParentId;
+
     @JsonProperty("comment_content")
     private String commentContent;
+
     @JsonProperty("commentator_sn")
     private String commentatorSn;
+
     @JsonProperty("commentator_nickname")
     private String commentatorNickname;
+
     @JsonProperty("comment_time")
     private Date commentTime;
+
     @JsonProperty("commentator_avatar")
     private String commentatorAvatar;
+
     @JsonProperty("orgin_sn")
     private String orginSn;
+
     @JsonProperty("orgin_content")
     private String orginContent;
+
     @JsonProperty("orgin_nickname")
     private String orginNickname;
+
     @JsonProperty("orgin_avatar")
     private String orginAvatar;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(int postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public Long getCommentParentId() {
+        return commentParentId;
+    }
+
+    public void setCommentParentId(Long commentParentId) {
+        this.commentParentId = commentParentId;
     }
 
     public String getCommentContent() {

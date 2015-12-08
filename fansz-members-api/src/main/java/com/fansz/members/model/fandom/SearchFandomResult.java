@@ -16,14 +16,22 @@ public class SearchFandomResult implements Serializable{
     private String fandomName;
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
+
     @JsonProperty("fandom_creator_id")
-    private Long fandomCreatorSn;
+    private String fandomCreatorSn;
+
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
+
     @JsonProperty("fandom_intro")
     private String fandomIntro;
+
+    @JsonProperty("follower_count")
     private String followerCount;
+
+    @JsonProperty("post_count")
     private String postCount;
+
     private String followed;
     private UserInfoResult creator;
 
@@ -51,11 +59,11 @@ public class SearchFandomResult implements Serializable{
         this.fandomParentId = fandomParentId;
     }
 
-    public Long getFandomCreatorSn() {
+    public String getFandomCreatorSn() {
         return fandomCreatorSn;
     }
 
-    public void setFandomCreatorSn(Long fandomCreatorSn) {
+    public void setFandomCreatorSn(String fandomCreatorSn) {
         this.fandomCreatorSn = fandomCreatorSn;
     }
 

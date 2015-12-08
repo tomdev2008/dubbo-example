@@ -152,7 +152,8 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("getFriends".equals(method)) {//10
             FriendsQueryParam friendsQueryParam = JsonHelper.copyAs(params, FriendsQueryParam.class);
             result = relationShipApi.getFriends(friendsQueryParam);
-        } else if ("searchContacts".equals(method)) {//11
+        }
+       else if ("searchContacts".equals(method)) {//11
             ContactQueryParam contactQueryParam = JsonHelper.copyAs(params, ContactQueryParam.class);
             result = profileApi.getContactInfo(contactQueryParam);
         } else if ("requestToBeFriends".equals(method)) {//12
@@ -173,7 +174,7 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("setMemberType".equals(method)) {//17
             SetMemberParam setMemberParam = JsonHelper.copyAs(params, SetMemberParam.class);
             result = profileApi.setMemberType(setMemberParam);
-        } else if ("getFriendRquests".equals(method)) {//18
+        } else if ("getFriendRequests".equals(method)) {//18
             FriendsQueryParam friendsQueryParam = JsonHelper.copyAs(params, FriendsQueryParam.class);
             result = relationShipApi.getFriendRquests(friendsQueryParam);
         } else if ("getRequesters".equals(method)) {//19
@@ -275,6 +276,9 @@ public class DubboInvoker implements RpcInvoker {
             result = seedingSpotApi.getSeedingSpot(seedingSpotPrama);
         }
 
+        else if("getFriendRequests".equals(method)){
+
+        }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }
 }

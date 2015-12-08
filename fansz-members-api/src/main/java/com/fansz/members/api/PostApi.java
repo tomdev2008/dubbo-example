@@ -29,7 +29,7 @@ public interface PostApi {
      */
     @POST
     @Path("/add")
-    CommonResult<NullResult> addPost(AddPostParam addPostParam);
+    CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam);
 
     /**
      * 删除帖子接口

@@ -49,7 +49,7 @@ public class BasicHttpResponder {
         try {
             String content = object instanceof String ? (String) object : JSON.toJSONString(object);
             buffer = Unpooled.copiedBuffer(content, CharsetUtil.UTF_8);
-            sendContent(status, buffer, "application/json", new HashMap<String, String>());
+            sendContent(status, buffer, "application/json;charset=utf-8", new HashMap<String, String>());
         } catch (Exception e) {
             throw e;
         } finally {
