@@ -56,7 +56,7 @@ public interface ProfileApi {
 
     @POST
     @Path("/setMemberType")
-    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam);
+    CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam);
 
     /**
      * 查询用户相册

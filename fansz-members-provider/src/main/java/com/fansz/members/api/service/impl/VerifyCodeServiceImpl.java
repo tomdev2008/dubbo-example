@@ -97,10 +97,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         if (createTime == null || createTime.trim().length() == 0) {
             return true;
         }
-        if (System.currentTimeMillis() - Long.valueOf(createTime) >= 2 * 60 * 1000) {//2分钟内不允许多次发送验证码
-            return true;
-        }
-        return false;
+        return System.currentTimeMillis() - Long.valueOf(createTime) >= 2 * 60 * 1000;
     }
 
     public VerifyCodeModel queryVerifyCode(String mobile, VerifyCodeType verifyCodeType) {

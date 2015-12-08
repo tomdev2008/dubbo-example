@@ -28,12 +28,11 @@ public interface CommentApi {
      */
     @POST
     @Path("/create")
-
-    public CommonResult<NullResult> addPostComment(CommentParam commentPara);
+    CommonResult<NullResult> addPostComment(CommentParam commentPara);
 
     @POST
     @Path("/reply")
-    public CommonResult<NullResult> replyComment(CommentParam commentPara);
+    CommonResult<NullResult> replyComment(CommentParam commentPara);
 
     /**
      * 删除评论接口
@@ -43,7 +42,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
-    public CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
+    CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
     /**
      * 查询帖子下所有的评论列表
@@ -52,7 +51,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/fandom/show")
-    public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom);
+    CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom);
 
     /**
      * 查看朋友圈里所有的
@@ -61,6 +60,6 @@ public interface CommentApi {
      */
     @POST
     @Path("/newsfeed/show")
-    public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentFromFandomQueryParam commentQueryFromFandom);
+    CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentFromFandomQueryParam commentQueryFromFandom);
 
 }

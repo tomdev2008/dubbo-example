@@ -18,7 +18,7 @@ public interface ProfileService {
 
     void modifyProfile(ModifyProfileParam modifyProfileParam);
 
-    public int setMemberType(SetMemberParam setMemberParam);
+    int setMemberType(SetMemberParam setMemberParam);
 
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 

@@ -20,7 +20,9 @@ import com.fansz.members.model.post.*;
 import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.profile.ModifyProfileParam;
 import com.fansz.members.model.profile.QueryProfileParam;
+import com.fansz.members.model.profile.SetMemberParam;
 import com.fansz.members.model.relationship.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.model.seedingspot.SeedingSpotPrama;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
@@ -169,8 +171,8 @@ public class DubboInvoker implements RpcInvoker {
             SearchParam searchParam = JsonHelper.copyAs(params, SearchParam.class);
             result = profileApi.searchMembersByKey(searchParam);
         } else if ("setMemberType".equals(method)) {//17
-            ModifyProfileParam modifyProfileParam = JsonHelper.copyAs(params, ModifyProfileParam.class);
-            result = profileApi.setMemberType(modifyProfileParam);
+            SetMemberParam setMemberParam = JsonHelper.copyAs(params, SetMemberParam.class);
+            result = profileApi.setMemberType(setMemberParam);
         } else if ("getFriendRquests".equals(method)) {//18
             FriendsQueryParam friendsQueryParam = JsonHelper.copyAs(params, FriendsQueryParam.class);
             result = relationShipApi.getFriendRquests(friendsQueryParam);
@@ -181,8 +183,8 @@ public class DubboInvoker implements RpcInvoker {
             FriendsQueryParam friendsQueryParam = JsonHelper.copyAs(params, FriendsQueryParam.class);
             result = relationShipApi.getSpecialFriends(friendsQueryParam);
         } else if ("getFamousers".equals(method)) {//21
-            SearchParam searchParam = JsonHelper.copyAs(params, SearchParam.class);
-            result = profileApi.searchMembersByType(searchParam);
+            SearchMemberParam searchMemberParam = JsonHelper.copyAs(params, SearchMemberParam.class);
+            result = profileApi.searchMembersByType(searchMemberParam);
         }//connects ends
         else if ("createFandom".equals(method)) {//1
             AddFandomParam addFandomParam = JsonHelper.copyAs(params, AddFandomParam.class);

@@ -89,7 +89,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/list")
-    public CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam);
+    CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam);
 
 
     /**

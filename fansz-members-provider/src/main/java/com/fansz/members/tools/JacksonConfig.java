@@ -20,7 +20,7 @@ public class JacksonConfig implements ContextResolver<ObjectMapper> {
 
     public JacksonConfig() throws Exception {
         objectMapper = new ObjectMapper().disable(
-                SerializationConfig.Feature.WRITE_NULL_MAP_VALUES).disable(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS).setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL); ;
+                SerializationConfig.Feature.WRITE_NULL_MAP_VALUES).disable(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS).setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
     }
 
     @Override

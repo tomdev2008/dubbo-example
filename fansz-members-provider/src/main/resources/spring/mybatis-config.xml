@@ -8,12 +8,14 @@
         <setting name="cacheEnabled" value="false"/>
         <setting name="lazyLoadingEnabled" value="false"/>
         <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
     </settings>
 
 
     <plugins>
         <plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
             <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect"/>
+            <!--<property name="asyncTotalCount" value="true"/>-->
         </plugin>
     </plugins>
 </configuration>

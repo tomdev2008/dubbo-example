@@ -22,7 +22,7 @@ public interface VerifyCodeApi {
      */
     @POST
     @Path("/reset")
-    public CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam);
+    CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam);
 
 
     /**
@@ -33,5 +33,5 @@ public interface VerifyCodeApi {
      */
     @POST
     @Path("/register")
-    public CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam);
+    CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam);
 }
