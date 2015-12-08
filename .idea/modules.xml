@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/fansz-members.iml" filepath="$PROJECT_DIR$/fansz-members.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" filepath="$PROJECT_DIR$/fansz-members-api/fansz-members-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" filepath="$PROJECT_DIR$/fansz-members-consumer/fansz-members-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-members-provider/fansz-members-provider.iml" filepath="$PROJECT_DIR$/fansz-members-provider/fansz-members-provider.iml" />
       <module fileurl="file://$PROJECT_DIR$/fansz-sms-sender/fansz-sms-sender.iml" filepath="$PROJECT_DIR$/fansz-sms-sender/fansz-sms-sender.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fansz-members-api/members-api.iml" filepath="$PROJECT_DIR$/fansz-members-api/members-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fansz-members-consumer/members-consumer.iml" filepath="$PROJECT_DIR$/fansz-members-consumer/members-consumer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fansz-members-provider/members-provider.iml" filepath="$PROJECT_DIR$/fansz-members-provider/members-provider.iml" />
-      <module fileurl="file://$PROJECT_DIR$/parent.iml" filepath="$PROJECT_DIR$/parent.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fansz-storage-server/storage-server.iml" filepath="$PROJECT_DIR$/fansz-storage-server/storage-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/fansz-storage-server/fansz-storage-server.iml" filepath="$PROJECT_DIR$/fansz-storage-server/fansz-storage-server.iml" />
     </modules>
   </component>
 </project>
