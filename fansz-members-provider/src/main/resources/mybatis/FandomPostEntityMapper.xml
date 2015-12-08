@@ -234,7 +234,7 @@
         WHERE
             c.member_sn = #{memberSn,jdbcType=VARCHAR}
         AND c.fandom_id = T1.fandom_id
-        AND c.member_sn = T2.sn
+        AND T1.member_sn = T2.sn
         AND c.fandom_id=d.id
         order by T1.id desc
     </select>

@@ -42,31 +42,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
+      <file leaf-file-name="PostApi.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.2093024">
+              <caret line="101" column="55" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="55" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FandomApi.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddFandomParam.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/AddFandomParam.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="30" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="PostProvider.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PostServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FandomPostEntityMapper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostEntityMapper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3023257">
-              <caret line="57" column="48" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="48" />
+            <state vertical-scroll-proportion="-5.3255816">
+              <caret line="118" column="62" selection-start-line="118" selection-start-column="45" selection-end-line="118" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -75,42 +87,42 @@
       <file leaf-file-name="FandomPostEntityMapper.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16219668">
-              <caret line="259" column="24" selection-start-line="259" selection-start-column="24" selection-end-line="259" selection-end-column="24" />
+            <state vertical-scroll-proportion="-2.4673629">
+              <caret line="210" column="36" selection-start-line="210" selection-start-column="16" selection-end-line="210" selection-end-column="36" />
               <folding>
-                <marker date="1449561997271" expanded="true" signature="5241:5370" placeholder="select from ..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="5491:5828" placeholder="select , lik..." />
-                <marker date="1449561997271" expanded="true" signature="5948:6084" placeholder="select from ..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="6094:6435" placeholder="select , lik..." />
-                <marker date="1449561997271" expanded="true" signature="6524:6597" placeholder="delete from ..." />
-                <marker date="1449561997271" expanded="true" signature="6706:7028" placeholder="insert into feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="7120:7143" placeholder="select LAST_..." />
-                <marker date="1449561997271" expanded="true" signature="8744:8767" placeholder="select LAST_..." />
-                <marker date="1449561997271" expanded="true" signature="8920:9748" placeholder="update feeds..." />
-                <marker date="1449561997271" expanded="true" signature="9867:10241" placeholder="update feeds..." />
-                <marker date="1449561997271" expanded="true" signature="10365:11296" placeholder="SELECT T1.id..feeds_member_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="10365:11324" placeholder="SELECT T1.id..feeds_member_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="10579:10736" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="10788:10948" placeholder="SELECT count..feeds_member_post_comment..." />
-                <marker date="1449561997271" expanded="true" signature="11450:11900" placeholder="SELECT a.*,b..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="11503:11565" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="11583:11648" placeholder="SELECT count..feeds_member_post_comment..." />
-                <marker date="1449561997271" expanded="true" signature="12016:12470" placeholder="SELECT f.id,..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="12608:13898" placeholder="SELECT p.id,..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="12772:12932" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="12984:13170" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="13222:13385" placeholder="SELECT count..feeds_member_post_comment..." />
-                <marker date="1449561997271" expanded="true" signature="13998:14613" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="14136:14199" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="14217:14283" placeholder="SELECT count..feeds_member_post_comment..." />
-                <marker date="1449561997271" expanded="true" signature="14710:15465" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="14848:14911" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="14929:14995" placeholder="SELECT count..feeds_member_post_comment..." />
-                <marker date="1449561997271" expanded="true" signature="15144:15223" placeholder="select count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="15591:16564" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="15591:16593" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
-                <marker date="1449561997271" expanded="true" signature="15755:15915" placeholder="SELECT count..feeds_member_post_like..." />
-                <marker date="1449561997271" expanded="true" signature="15967:16130" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="5241:5370" placeholder="select from ..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="5491:5828" placeholder="select , lik..." />
+                <marker date="1449568799165" expanded="true" signature="5948:6084" placeholder="select from ..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="6094:6435" placeholder="select , lik..." />
+                <marker date="1449568799165" expanded="true" signature="6524:6597" placeholder="delete from ..." />
+                <marker date="1449568799165" expanded="true" signature="6706:7028" placeholder="insert into feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="7120:7143" placeholder="select LAST_..." />
+                <marker date="1449568799165" expanded="true" signature="8744:8767" placeholder="select LAST_..." />
+                <marker date="1449568799165" expanded="true" signature="8920:9748" placeholder="update feeds..." />
+                <marker date="1449568799165" expanded="true" signature="9867:10241" placeholder="update feeds..." />
+                <marker date="1449568799165" expanded="true" signature="10365:11297" placeholder="SELECT T1.id..feeds_member_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="10365:11325" placeholder="SELECT T1.id..feeds_member_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="10579:10736" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="10788:10948" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="11451:11901" placeholder="SELECT a.*,b..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="11504:11566" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="11584:11649" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="12017:12471" placeholder="SELECT f.id,..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="12609:13899" placeholder="SELECT p.id,..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="12773:12933" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="12985:13171" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="13223:13386" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="13999:14614" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="14137:14200" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="14218:14284" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="14711:15466" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="14849:14912" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="14930:14996" placeholder="SELECT count..feeds_member_post_comment..." />
+                <marker date="1449568799165" expanded="true" signature="15145:15224" placeholder="select count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="15592:16565" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="15592:16594" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
+                <marker date="1449568799165" expanded="true" signature="15756:15916" placeholder="SELECT count..feeds_member_post_like..." />
+                <marker date="1449568799165" expanded="true" signature="15968:16131" placeholder="SELECT count..feeds_member_post_comment..." />
               </folding>
             </state>
           </provider>
@@ -341,76 +353,6 @@
               <option name="myItemId" value="fans-members" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fans-members" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: com.github.miemiedev:mybatis-paginator:1.2.15" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mybatis-paginator-1.2.15.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fans-members" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: com.github.miemiedev:mybatis-paginator:1.2.15" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mybatis-paginator-1.2.15.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paginator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fans-members" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Maven: com.github.miemiedev:mybatis-paginator:1.2.15" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mybatis-paginator-1.2.15.jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="paginator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="domain" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -529,36 +471,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="mybatis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fans-members" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fans-members" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fansz-members-provider" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="conf" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -890,7 +802,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="post" />
+              <option name="myItemId" value="fandom" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1601,12 +1513,12 @@
       <workItem from="1449478762917" duration="532000" />
       <workItem from="1449496480327" duration="1357000" />
       <workItem from="1449539713413" duration="3287000" />
-      <workItem from="1449543202546" duration="14744000" />
+      <workItem from="1449543202546" duration="20942000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="276867000" />
+    <option name="totallyTimeSpent" value="283065000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1618,7 +1530,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1046" extended-state="6" />
+    <frame x="-11" y="-11" width="1942" height="1046" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1631,9 +1543,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270525" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2643275" sideWeight="0.49030694" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32748538" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8187134" sideWeight="0.49676898" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.46783626" sideWeight="0.49676898" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2106681" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2106681" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24959612" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1694,13 +1606,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/model/FandomPostWholeEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6343115">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/SearchFandomParam.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12189616">
@@ -1812,33 +1717,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="115" column="94" selection-start-line="115" selection-start-column="94" selection-end-line="115" selection-end-column="94" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.7468355">
-          <caret line="254" column="39" selection-start-line="254" selection-start-column="31" selection-end-line="254" selection-end-column="39" />
-          <folding>
-            <marker date="1449544495659" expanded="true" signature="5527:5867" placeholder="select T1.fa..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="6158:6275" placeholder="select from ..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="6391:6522" placeholder="select from ..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="6610:6671" placeholder="delete from ..." />
-            <marker date="1449544495659" expanded="true" signature="6776:7184" placeholder="insert into feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="7276:7299" placeholder="select LAST_..." />
-            <marker date="1449544495659" expanded="true" signature="8972:8995" placeholder="select LAST_..." />
-            <marker date="1449544495659" expanded="true" signature="9143:10025" placeholder="update feeds..." />
-            <marker date="1449544495659" expanded="true" signature="10140:10546" placeholder="update feeds..." />
-            <marker date="1449544495659" expanded="true" signature="11692:12004" placeholder="SELECT f.*,m..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="11779:11858" placeholder="select count..." />
-            <marker date="1449544495659" expanded="true" signature="12121:12278" placeholder="select from ..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="12468:12796" placeholder="select a.*,r..*..." />
-            <marker date="1449544495659" expanded="true" signature="12511:12674" placeholder="select p.* f..feeds_member_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="12914:14411" placeholder="SELECT ff.id..feeds_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="13160:13336" placeholder="SELECT count..feeds_member_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="13408:13589" placeholder="SELECT count..feeds_member_post_fandom..." />
-            <marker date="1449544495659" expanded="true" signature="13657:13861" placeholder="SELECT count..feeds_member_post_fandom..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2044,14 +1922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.1765914">
-          <caret line="122" column="57" selection-start-line="122" selection-start-column="41" selection-end-line="122" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/PageParam.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3314917">
@@ -2065,16 +1935,6 @@
         <state vertical-scroll-proportion="-0.1160221">
           <caret line="14" column="24" selection-start-line="14" selection-start-column="24" selection-end-line="14" selection-end-column="24" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.27907">
-          <caret line="144" column="57" selection-start-line="144" selection-start-column="38" selection-end-line="144" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2113,14 +1973,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/PostService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5564682">
@@ -2129,60 +1981,121 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/FandomApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="34" column="41" selection-start-line="34" selection-start-column="41" selection-end-line="34" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/model/fandom/AddFandomParam.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="19" selection-end-line="25" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/repository/FandomPostEntityMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.3023257">
-          <caret line="57" column="48" selection-start-line="57" selection-start-column="29" selection-end-line="57" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="33" column="49" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7960089">
+          <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
+          <folding>
+            <marker date="1449544495659" expanded="true" signature="5527:5867" placeholder="select T1.fa..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="6158:6275" placeholder="select from ..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="6391:6522" placeholder="select from ..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="6610:6671" placeholder="delete from ..." />
+            <marker date="1449544495659" expanded="true" signature="6776:7184" placeholder="insert into feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="7276:7299" placeholder="select LAST_..." />
+            <marker date="1449544495659" expanded="true" signature="8972:8995" placeholder="select LAST_..." />
+            <marker date="1449544495659" expanded="true" signature="9143:10025" placeholder="update feeds..." />
+            <marker date="1449544495659" expanded="true" signature="10140:10546" placeholder="update feeds..." />
+            <marker date="1449544495659" expanded="true" signature="11692:12004" placeholder="SELECT f.*,m..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="11779:11858" placeholder="select count..." />
+            <marker date="1449544495659" expanded="true" signature="12121:12278" placeholder="select from ..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="12468:12796" placeholder="select a.*,r..*..." />
+            <marker date="1449544495659" expanded="true" signature="12511:12674" placeholder="select p.* f..feeds_member_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="12914:14411" placeholder="SELECT ff.id..feeds_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="13160:13336" placeholder="SELECT count..feeds_member_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="13408:13589" placeholder="SELECT count..feeds_member_post_fandom..." />
+            <marker date="1449544495659" expanded="true" signature="13657:13861" placeholder="SELECT count..feeds_member_post_fandom..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/service/impl/PostServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="61" column="56" selection-start-line="61" selection-start-column="36" selection-end-line="61" selection-end-column="56" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/java/com/fansz/members/api/provider/PostProvider.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        <state vertical-scroll-proportion="-5.3255816">
+          <caret line="118" column="62" selection-start-line="118" selection-start-column="45" selection-end-line="118" selection-end-column="62" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/fansz-members-api/src/main/java/com/fansz/members/api/PostApi.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.2093024">
+          <caret line="101" column="55" selection-start-line="101" selection-start-column="38" selection-end-line="101" selection-end-column="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fansz-members-provider/src/main/resources/mybatis/FandomPostEntityMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16219668">
-          <caret line="259" column="24" selection-start-line="259" selection-start-column="24" selection-end-line="259" selection-end-column="24" />
+        <state vertical-scroll-proportion="-2.4673629">
+          <caret line="210" column="36" selection-start-line="210" selection-start-column="16" selection-end-line="210" selection-end-column="36" />
           <folding>
-            <marker date="1449561997271" expanded="true" signature="5241:5370" placeholder="select from ..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="5491:5828" placeholder="select , lik..." />
-            <marker date="1449561997271" expanded="true" signature="5948:6084" placeholder="select from ..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="6094:6435" placeholder="select , lik..." />
-            <marker date="1449561997271" expanded="true" signature="6524:6597" placeholder="delete from ..." />
-            <marker date="1449561997271" expanded="true" signature="6706:7028" placeholder="insert into feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="7120:7143" placeholder="select LAST_..." />
-            <marker date="1449561997271" expanded="true" signature="8744:8767" placeholder="select LAST_..." />
-            <marker date="1449561997271" expanded="true" signature="8920:9748" placeholder="update feeds..." />
-            <marker date="1449561997271" expanded="true" signature="9867:10241" placeholder="update feeds..." />
-            <marker date="1449561997271" expanded="true" signature="10365:11296" placeholder="SELECT T1.id..feeds_member_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="10365:11324" placeholder="SELECT T1.id..feeds_member_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="10579:10736" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="10788:10948" placeholder="SELECT count..feeds_member_post_comment..." />
-            <marker date="1449561997271" expanded="true" signature="11450:11900" placeholder="SELECT a.*,b..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="11503:11565" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="11583:11648" placeholder="SELECT count..feeds_member_post_comment..." />
-            <marker date="1449561997271" expanded="true" signature="12016:12470" placeholder="SELECT f.id,..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="12608:13898" placeholder="SELECT p.id,..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="12772:12932" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="12984:13170" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="13222:13385" placeholder="SELECT count..feeds_member_post_comment..." />
-            <marker date="1449561997271" expanded="true" signature="13998:14613" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="14136:14199" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="14217:14283" placeholder="SELECT count..feeds_member_post_comment..." />
-            <marker date="1449561997271" expanded="true" signature="14710:15465" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="14848:14911" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="14929:14995" placeholder="SELECT count..feeds_member_post_comment..." />
-            <marker date="1449561997271" expanded="true" signature="15144:15223" placeholder="select count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="15591:16564" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="15591:16593" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
-            <marker date="1449561997271" expanded="true" signature="15755:15915" placeholder="SELECT count..feeds_member_post_like..." />
-            <marker date="1449561997271" expanded="true" signature="15967:16130" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="5241:5370" placeholder="select from ..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="5491:5828" placeholder="select , lik..." />
+            <marker date="1449568799165" expanded="true" signature="5948:6084" placeholder="select from ..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="6094:6435" placeholder="select , lik..." />
+            <marker date="1449568799165" expanded="true" signature="6524:6597" placeholder="delete from ..." />
+            <marker date="1449568799165" expanded="true" signature="6706:7028" placeholder="insert into feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="7120:7143" placeholder="select LAST_..." />
+            <marker date="1449568799165" expanded="true" signature="8744:8767" placeholder="select LAST_..." />
+            <marker date="1449568799165" expanded="true" signature="8920:9748" placeholder="update feeds..." />
+            <marker date="1449568799165" expanded="true" signature="9867:10241" placeholder="update feeds..." />
+            <marker date="1449568799165" expanded="true" signature="10365:11297" placeholder="SELECT T1.id..feeds_member_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="10365:11325" placeholder="SELECT T1.id..feeds_member_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="10579:10736" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="10788:10948" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="11451:11901" placeholder="SELECT a.*,b..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="11504:11566" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="11584:11649" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="12017:12471" placeholder="SELECT f.id,..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="12609:13899" placeholder="SELECT p.id,..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="12773:12933" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="12985:13171" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="13223:13386" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="13999:14614" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="14137:14200" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="14218:14284" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="14711:15466" placeholder="SELECT T1.id..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="14849:14912" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="14930:14996" placeholder="SELECT count..feeds_member_post_comment..." />
+            <marker date="1449568799165" expanded="true" signature="15145:15224" placeholder="select count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="15592:16565" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="15592:16594" placeholder="SELECT f.id ..feeds_member_post_fandom..." />
+            <marker date="1449568799165" expanded="true" signature="15756:15916" placeholder="SELECT count..feeds_member_post_like..." />
+            <marker date="1449568799165" expanded="true" signature="15968:16131" placeholder="SELECT count..feeds_member_post_comment..." />
           </folding>
         </state>
       </provider>
