@@ -46,8 +46,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostInfoResult getPost(PostParam postParam) {
-        PostInfoResult postInfoResult = fandomPostEntityMapper.getPost(postParam);
+    public GetPostInfoResult getPost(PostParam postParam) {
+        GetPostInfoResult postInfoResult = fandomPostEntityMapper.getPost(postParam);
 
         return postInfoResult;
     }

@@ -71,8 +71,8 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public CommonResult<PostInfoResult> getPost(PostParam postParam) {
-        PostInfoResult postInfoResult = postService.getPost(postParam);
+    public CommonResult<GetPostInfoResult> getPost(PostParam postParam) {
+        GetPostInfoResult postInfoResult = postService.getPost(postParam);
         return renderSuccess(postInfoResult);
     }
 

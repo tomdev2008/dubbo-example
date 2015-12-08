@@ -20,7 +20,7 @@ public interface PostService {
 
     void removePost(RemovePostParam removePostrParam);
 
-    PostInfoResult getPost(PostParam postParam);
+    GetPostInfoResult getPost(PostParam postParam);
 
     List<PostLikeInfoResult> listPostVotes(PostParam postParam);
 

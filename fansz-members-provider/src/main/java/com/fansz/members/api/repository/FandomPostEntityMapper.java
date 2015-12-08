@@ -2,6 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.MemberPostEntity;
+import com.fansz.members.model.post.GetPostInfoResult;
 import com.fansz.members.model.post.PostInfoResult;
 import com.fansz.members.model.post.PostParam;
 import com.fansz.members.model.post.SearchPostResult;
@@ -36,7 +37,7 @@ public interface FandomPostEntityMapper {
 
     PageList<SearchPostResult> searchPosts(String searchVal, PageBounds pageBounds);
 
-    PostInfoResult getPost(PostParam postParam);
+    GetPostInfoResult getPost(PostParam postParam);
 
     /**
      * 查询某人在某个fandom的所有帖子列表

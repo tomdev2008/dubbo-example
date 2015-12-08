@@ -20,7 +20,7 @@
         <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
-        <association property="post_member" javaType="com.fansz.members.model.profile.UserInfoResult"
+        <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
 
