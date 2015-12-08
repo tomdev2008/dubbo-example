@@ -55,4 +55,6 @@ public interface FandomPostEntityMapper {
     PageList<PostInfoResult> listHotMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn, PageBounds pageBounds);
 
 
+    PageList<PostInfoResult> getPostsAllByMember(@Param("memberSn") String memberSn, PageBounds pageBounds);
+
 }

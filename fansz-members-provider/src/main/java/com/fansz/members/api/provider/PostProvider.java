@@ -149,5 +149,14 @@ public class PostProvider extends AbstractProvider implements PostApi {
         return renderPagedSuccess(fandomPostInfoResults);
     }
 
-
+    /**
+     * 获取某人所有帖子列表
+     * @param postParam
+     * @return
+     */
+    @Override
+    public CommonPagedResult<PostInfoResult> getPostsAllByMember(PostParam postParam) {
+        PageList<PostInfoResult> PostInfoList =  postService.getPostsAllByMember(postParam);
+        return renderPagedSuccess(PostInfoList);
+    }
 }

@@ -132,4 +132,17 @@ public interface PostApi {
     @POST
     @Path("/fandom")
     CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param);
+
+
+    /**
+     * 获取某人所有帖子列表
+     *
+     * @param postParam
+     * @return resp 返回对象
+     */
+    @POST
+    @Path("/memberPostsAll")
+    CommonPagedResult<PostInfoResult> getPostsAllByMember(PostParam postParam);
+
+
 }

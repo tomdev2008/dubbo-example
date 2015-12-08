@@ -25,7 +25,6 @@
 
     <resultMap id="postInfoResultMap" type="com.fansz.members.model.post.PostInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
         <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
@@ -349,6 +348,44 @@
             AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
         </if>
         ORDER BY T3.likeCount DESC
+    </select>
+
+
+    <select id="getPostsAllByMember" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            f.id,
+            f.post_title,
+            f.post_content,
+            f.post_newsfeeds,
+            f.post_time,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like l
+                WHERE
+                    l.post_id = f.id
+            ) likes,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_comment c
+                WHERE
+                    c.post_id = f.id
+            ) comments,
+            m.id fandom_id,
+            m.fandom_name,
+            m.fandom_parent_id,
+            m.fandom_avatar_url,
+            m.fandom_creator_sn,
+            m.fandom_intro
+        FROM
+            feeds_member_post_fandom f
+        LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
+        LEFT JOIN feeds_fandom m ON f.fandom_id = m.id
+        WHERE f.member_sn = #{memberSn,jdbcType=VARCHAR}
+        ORDER BY f.post_time
     </select>
 
 </mapper>
