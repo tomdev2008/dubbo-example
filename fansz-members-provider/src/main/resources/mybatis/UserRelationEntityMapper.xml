@@ -115,8 +115,12 @@
     <select id="findFriends" parameterType="java.lang.String"
             resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
         SELECT b.* FROM connects_member_relation a,connects_member_profile b
-        WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
-        AND a.friend_member_sn=b.sn
+          WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
+          AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
+        UNION
+         SELECT b.* FROM connects_member_relation a,connects_member_profile b
+        WHERE a.friend_member_sn=#{myMemberSn,jdbcType=VARCHAR}
+        AND a.my_member_sn=b.sn
         AND a.relation_status IN('10','11')
     </select>
 
@@ -164,7 +168,7 @@
 
     <select id="listAddMeRequest" parameterType="java.lang.String"
             resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
-       SELECT a.* FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
+       SELECT a.*,b.relation_status relationship FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
        WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR}
     </select>
 
