@@ -210,7 +210,7 @@
 
     <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoResultMap">
         SELECT T1.id ,T1.post_title, T1.post_content, T1.post_newsfeeds, T1.post_time,
-        T2.sn sn, T2.nickname,T2.mobile, T2.email,T2.gender,T2.member_avatar,d.fandom_name,d.fandom_intro,1 followed,
+        T2.sn sn, T2.nickname,T2.mobile, T2.email,T2.gender,T2.member_avatar,d.fandom_name,d.fandom_intro,IFNULL(c.infatuation,0)+1 followed,
                 (SELECT
                     count(1)
                 FROM
@@ -243,9 +243,9 @@
         SELECT a.*,b.sn,b.nickname,b.member_avatar,
         (SELECT count(1) FROM feeds_member_post_like where post_id=a.id) likes,
         (SELECT count(1) FROM feeds_member_post_comment where post_id=a.id) comments
-        FROM feeds_member_post_fandom a,connects_member_profile b
-        WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR}
-        AND a.member_sn=b.sn
+        FROM feeds_member_post_fandom a,connects_member_profile b,connects_member_relation c
+        WHERE c.my_member_sn=#{memberSn,jdbcType=VARCHAR}
+        AND a.my_member_sn=b.sn
         AND a.post_newsfeeds='1'
         AND a.fandom_id is null
         order by a.id desc

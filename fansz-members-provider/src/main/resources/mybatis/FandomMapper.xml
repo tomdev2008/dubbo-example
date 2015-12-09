@@ -241,7 +241,7 @@
     </select>
 
     <select id="getFandomDetail" resultMap="fandomInfoMap">
-        SELECT  f.*,p.member_avatar,p.sn,p.nickname,(select count(1) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
+        SELECT  f.*,p.member_avatar,p.sn,p.nickname,(select count(1)+IFNULL(t.infatuation,0) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
         (select count(1) from feeds_member_post_fandom g where g.fandom_id=f.id) post_count,
         (select count(1) from feeds_member_fandom t where t.fandom_id=f.id) follower_count
         from feeds_fandom  f, connects_member_profile p
@@ -293,7 +293,7 @@
                 ) postCount,
                 (
                     SELECT
-                        count(1)
+                        infatuation
                     FROM
                         feeds_member_fandom
                     WHERE
