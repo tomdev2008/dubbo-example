@@ -1,6 +1,5 @@
-package com.fansz.members.tools;
+package com.fansz.members.extension;
 
-import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;

@@ -2,7 +2,6 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
@@ -15,11 +14,12 @@ import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -163,7 +163,6 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
         fandomEntity.setFandomName(addFandomParam.getFandomName());
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
-
         this.fandomMapper.insert(fandomEntity);
 
     }

@@ -3,16 +3,15 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.FandomPostLikeEntity;
-import com.fansz.members.api.entity.MemberPostEntity;
 import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.repository.FandomPostLikeEntityMapper;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.post.*;
 import com.fansz.members.tools.BeanTools;
+import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.github.miemiedev.mybatis.paginator.domain.Paginator;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,13 +41,19 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void removePost(RemovePostParam removePostrParam) {
+        FandomPostEntity fandomPostEntity = fandomPostEntityMapper.selectByPrimaryKey(removePostrParam.getPostId());
+        if (fandomPostEntity == null) {
+            throw new ApplicationException(Constants.POST_NOT_EXISTS, "Post not exists");
+        }
+        if (fandomPostEntity.getMemberSn().equals(removePostrParam.getMemberSn())) {
+            throw new ApplicationException(Constants.POST_NOT_ALLOW_DEL, "Not your post");
+        }
         fandomPostEntityMapper.deleteByPrimaryKey(removePostrParam.getPostId());
     }
 
     @Override
     public GetPostInfoResult getPost(PostParam postParam) {
         GetPostInfoResult postInfoResult = fandomPostEntityMapper.getPost(postParam);
-
         return postInfoResult;
     }
 
@@ -86,7 +91,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
         PageBounds pageBounds = new PageBounds(getMemberFandomPostsParam.getOffset(), getMemberFandomPostsParam.getLimit());
-        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(),pageBounds);
+        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(), pageBounds);
     }
 
     @Override
@@ -94,18 +99,23 @@ public class PostServiceImpl implements PostService {
         PageBounds pageBounds = new PageBounds(searchPostParam.getOffset(), searchPostParam.getLimit());
         return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(), pageBounds);
     }
+
     @Override
     public PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam) {
-        PageList<PostInfoResult> entities=null;
-        PageBounds pageBounds=new PageBounds(postsQueryParam.getPageNum(),postsQueryParam.getPageSize());
-        if ("new".equals(postsQueryParam.getType()))
-        {
-            entities =  fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(),null,pageBounds);
+        PageList<PostInfoResult> entities = null;
+        PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
+        if ("new".equals(postsQueryParam.getType())) {
+            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, pageBounds);
         } else {
-            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(),null,pageBounds);
+            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, pageBounds);
         }
 
         return entities;
     }
 
+    @Override
+    public PageList<PostInfoResult> getPostsAllByMember(PostParam postParam) {
+        PageBounds pageBounds = new PageBounds(postParam.getOffset(), postParam.getLimit());
+        return fandomPostEntityMapper.getPostsAllByMember(postParam.getMemberSn(), pageBounds);
+    }
 }

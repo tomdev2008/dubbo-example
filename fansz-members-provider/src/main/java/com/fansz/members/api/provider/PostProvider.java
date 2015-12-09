@@ -23,8 +23,6 @@ import java.util.List;
 @Component("postProvider")
 public class PostProvider extends AbstractProvider implements PostApi {
 
-    private final static NullResult PRESENCE = new NullResult();
-
     @Autowired
     private PostService postService;
 
@@ -35,8 +33,8 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return resp 返回对象
      */
     public CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam) {
-        FandomPostEntity fandomPostEntity=postService.addPost(addPostParam);
-        PostParam postParam=new PostParam();
+        FandomPostEntity fandomPostEntity = postService.addPost(addPostParam);
+        PostParam postParam = new PostParam();
         postParam.setPostId(fandomPostEntity.getId());
         postParam.setMemberSn(addPostParam.getSn());
         return getPost(postParam);
@@ -50,20 +48,14 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return resp 返回对象
      */
     public CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam) {
-        CommonResult<List<PostLikeInfoResult>> commonResult = new CommonResult<>();
         List<PostLikeInfoResult> result = postService.listPostVotes(postParam);
-        commonResult.setResult(result);
-        commonResult.setStatus(Constants.SUCCESS);
-        return commonResult;
+        return renderSuccess(result);
     }
 
     @Override
     public CommonResult<NullResult> removePost(RemovePostParam removePostrParam) {
-        CommonResult<NullResult> result = new CommonResult<NullResult>();
         postService.removePost(removePostrParam);
-        result.setResult(PRESENCE);
-        result.setStatus(Constants.SUCCESS);
-        return result;
+        return renderSuccess(PRESENCE);
     }
 
     /**
@@ -80,6 +72,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
 
     /**
      * 点赞
+     *
      * @param addLikeParam
      * @return
      */
@@ -91,6 +84,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
 
     /**
      * 取消点赞
+     *
      * @param deleteLikeParam
      * @return
      */
@@ -126,29 +120,42 @@ public class PostProvider extends AbstractProvider implements PostApi {
     @Override
     public CommonPagedResult<SearchPostResult> searchPosts(SearchPostParam searchPostParam) {
         PageList<SearchPostResult> dataResult = postService.searchPosts(searchPostParam);
-            return renderPagedSuccess(dataResult);
+        return renderPagedSuccess(dataResult);
     }
+
     /**
      * 查询某人在某个fandom的所有帖子列表
+     *
      * @param getMemberFandomPostsParam
      * @return
      */
     @Override
     public CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
-        PageList<PostInfoResult> memberPostInfoResults =  this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
+        PageList<PostInfoResult> memberPostInfoResults = this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
         return renderPagedSuccess(memberPostInfoResults);
     }
 
     /**
      * 查询某个fandom的所有post列表
+     *
      * @param param 圈子
      * @return
      */
     @Override
     public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
-        PageList<PostInfoResult> fandomPostInfoResults =  this.postService.getFandomPosts(param);
+        PageList<PostInfoResult> fandomPostInfoResults = this.postService.getFandomPosts(param);
         return renderPagedSuccess(fandomPostInfoResults);
     }
 
-
+    /**
+     * 获取某人所有帖子列表
+     *
+     * @param postParam
+     * @return
+     */
+    @Override
+    public CommonPagedResult<PostInfoResult> getAllPostsByMember(PostParam postParam) {
+        PageList<PostInfoResult> PostInfoList = postService.getPostsAllByMember(postParam);
+        return renderPagedSuccess(PostInfoList);
+    }
 }

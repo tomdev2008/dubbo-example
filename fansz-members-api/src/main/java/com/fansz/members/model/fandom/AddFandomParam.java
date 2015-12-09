@@ -1,23 +1,25 @@
 package com.fansz.members.model.fandom;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import javax.validation.constraints.Size;
 
 /**
  * Created by LiZhe on 12/5/2015.
  */
-public class AddFandomParam {
+public class AddFandomParam extends AbstractToken {
 
+    @Size(min = 1)
     @JsonProperty("fandom_creator_sn")
     private String fandomCreatorSn;
 
-    @JsonProperty("access_token")
-    private String accessToken;
-
+    @Size(min = 1)
     @JsonProperty("fandom_name")
     private String fandomName;
 
     @JsonProperty("fandom_parent_id")
-    private long fandomParentId;
+    private Long fandomParentId;
 
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
@@ -33,13 +35,6 @@ public class AddFandomParam {
         this.fandomCreatorSn = fandomCreatorSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public String getFandomName() {
         return fandomName;
@@ -49,11 +44,11 @@ public class AddFandomParam {
         this.fandomName = fandomName;
     }
 
-    public long getFandomParentId() {
+    public Long getFandomParentId() {
         return fandomParentId;
     }
 
-    public void setFandomParentId(long fandomParentId) {
+    public void setFandomParentId(Long fandomParentId) {
         this.fandomParentId = fandomParentId;
     }
 

@@ -1,5 +1,6 @@
 package com.fansz.members.model.profile;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
@@ -7,7 +8,7 @@ import java.io.Serializable;
 /**
  * 查询登陆用户详细信息
  */
-public class QueryProfileParam implements Serializable {
+public class QueryProfileParam extends AbstractToken {
 
     private static final long serialVersionUID = 784997167533858716L;
 
@@ -16,8 +17,6 @@ public class QueryProfileParam implements Serializable {
     @JsonProperty("friend_sn")
     private String friendSn;
 
-    @JsonProperty("access_token")
-    private String accessToken;
 
     public String getSn() {
         return sn;
@@ -35,11 +34,4 @@ public class QueryProfileParam implements Serializable {
         this.friendSn = friendSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 }

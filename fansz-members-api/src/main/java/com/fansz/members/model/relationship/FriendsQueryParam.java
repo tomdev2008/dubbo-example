@@ -1,6 +1,8 @@
 package com.fansz.members.model.relationship;
 
 
+import com.fansz.members.model.AbstractToken;
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -9,7 +11,7 @@ import java.io.Serializable;
 /**
  * 查询好友请求参数模型
  */
-public class FriendsQueryParam extends PageParam implements Serializable {
+public class FriendsQueryParam extends PageParam implements AccessTokenAware {
 
     private static final long serialVersionUID = 1170651723025637518L;
 
@@ -29,6 +31,7 @@ public class FriendsQueryParam extends PageParam implements Serializable {
         this.sn = sn;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

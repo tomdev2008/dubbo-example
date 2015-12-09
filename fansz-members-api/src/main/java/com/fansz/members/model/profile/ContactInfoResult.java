@@ -30,12 +30,11 @@ public class ContactInfoResult  implements Serializable{
     @JsonProperty("profile_createtime")
     private Date profileCreatetime;
 
+    @JsonProperty("profile_updatetime")
     private Date profileUpdatetime;
 
     @JsonProperty("member_type")
     private String memberType;
-
-    private String memberStatus;
 
     private String relationship;
 
@@ -127,11 +126,4 @@ public class ContactInfoResult  implements Serializable{
         this.profileUpdatetime = profileUpdatetime;
     }
 
-    public String getMemberStatus() {
-        return memberStatus;
-    }
-
-    public void setMemberStatus(String memberStatus) {
-        this.memberStatus = memberStatus;
-    }
 }

@@ -328,32 +328,33 @@
         where loginname = #{loginAccount,jdbcType=VARCHAR}
     </select>
 
-    <select id="searchMembers"  resultMap="userInfoResultMap">
+    <select id="searchMembers" resultMap="userInfoResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_profile
         <where>
             <if test="nickname != null">
-              AND   nickname = #{nickname,jdbcType=VARCHAR}
+                AND nickname = #{nickname,jdbcType=VARCHAR}
             </if>
             <if test="mobile != null">
-             AND   mobile = #{mobile,jdbcType=VARCHAR}
+                AND mobile = #{mobile,jdbcType=VARCHAR}
             </if>
             <if test="memberType != null">
-              AND  member_type = #{memberType,jdbcType=VARCHAR}
+                AND member_type = #{memberType,jdbcType=VARCHAR}
             </if>
             <if test="loginname != null">
-                AND  loginname = #{loginname,jdbcType=VARCHAR}
+                AND loginname = #{loginname,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
-    <select id="searchMembersByKey"  resultMap="userInfoResultMap">
+    <select id="searchMembersByKey" resultMap="userInfoResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        ,(select relation_status from connects_member_relation where my_member_sn=#{sn,jdbcType=VARCHAR} OR friend_member_sn=#{sn,jdbcType=VARCHAR} ) relationship
-        FROM connects_member_profile
+        a.id, a.sn, a.loginname, a.mobile, a.email, a.nickname, a.gender, a.birthday, a.member_avatar, a.signature,a.profile_createtime, a.profile_updatetime, a.member_type, a.member_status
+        ,(select relation_status from connects_member_relation where (my_member_sn=#{sn,jdbcType=VARCHAR} AND friend_member_sn=a.sn) OR
+        (my_member_sn=a.sn AND friend_member_sn=#{sn,jdbcType=VARCHAR}) ) relationship
+        FROM connects_member_profile a
         <if test="searchKey != null">
-            WHERE   nickname   LIKE concat('%',#{searchKey},'%')
+            WHERE nickname LIKE concat('%',#{searchKey},'%')
             OR mobile LIKE concat('%',#{searchKey},'%')
             OR loginname LIKE concat('%',#{searchKey},'%')
         </if>

@@ -1,18 +1,16 @@
 package com.fansz.members.model.account;
 
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by root on 15-11-3.
  */
-public class ChangePasswordParam {
+public class ChangePasswordParam extends AbstractToken {
 
     @JsonProperty("sn")
     private String uid;
-
-    @JsonProperty("access_token")
-    private String accessToken;
 
     @JsonProperty("old_password")
     private String oldPassword;
@@ -29,13 +27,6 @@ public class ChangePasswordParam {
         this.uid = uid;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public String getOldPassword() {
         return oldPassword;

@@ -1,18 +1,21 @@
 package com.fansz.members.model.comment;
 
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by xuyubiao on 15/12/1.
  */
-public class CommentFromFandomQueryParam extends PageParam{
+public class CommentFromFandomQueryParam extends PageParam implements AccessTokenAware {
 
     private String sn;
     @JsonProperty("access_token")
     private String accessToken;
+
     @JsonProperty("comment_source")
     private String commentSource;
+
     @JsonProperty("post_id")
     private Long postId;
 
@@ -24,9 +27,11 @@ public class CommentFromFandomQueryParam extends PageParam{
         this.sn = sn;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }
+
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;

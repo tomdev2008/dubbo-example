@@ -46,6 +46,10 @@ public class Constants {
 
     public final static String RELATION_IS_NOT_SPACIEL_FANDOM="20208";//用户未关注fandom
 
+    public final static String POST_NOT_EXISTS="20301";//POST不存在
+
+    public final static String POST_NOT_ALLOW_DEL="20302";//无法删除他人帖子
+
     public final static String USER_STATUS_OK = "1";
 
     public final static String RELATION_FRIEND="10";

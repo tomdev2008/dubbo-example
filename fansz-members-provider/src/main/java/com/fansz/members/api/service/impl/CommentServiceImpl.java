@@ -13,6 +13,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -35,11 +37,12 @@ public class CommentServiceImpl implements CommentService {
         postCommentEntity.setCommentParentId(commentPara.getCommentParentId());
         postCommentEntity.setCommentTime(new Date());
         postCommentEntityMapper.insert(postCommentEntity);
-        return BeanTools.copyAs(postCommentEntity,CommentQueryFromFandomResult.class);
+        return BeanTools.copyAs(postCommentEntity, CommentQueryFromFandomResult.class);
     }
 
     /**
      * 删除评论
+     *
      * @param commentDelParam
      */
     @Override
@@ -49,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom, PageBounds pageBounds) {
-        return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(),pageBounds);
+        return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(), pageBounds);
     }
 
 }

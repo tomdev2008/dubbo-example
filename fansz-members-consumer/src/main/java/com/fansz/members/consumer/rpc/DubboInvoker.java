@@ -41,7 +41,7 @@ import java.util.Map;
 @Component("dubboInvoker")
 public class DubboInvoker implements RpcInvoker {
 
-    private Logger logger= LoggerFactory.getLogger(DubboInvoker.class);
+    private Logger logger = LoggerFactory.getLogger(DubboInvoker.class);
 
     @Resource(name = "accountProvider")
     private AccountApi accountApi;
@@ -92,17 +92,17 @@ public class DubboInvoker implements RpcInvoker {
      * @param reqArray
      * @return
      */
-    private List<String> mergeRequest(List<Map<String,Object>> reqArray) {
+    private List<String> mergeRequest(List<Map<String, Object>> reqArray) {
         List<String> responseList = new ArrayList<>();
         for (int i = 0; i < reqArray.size(); i++) {
-           Map<String,Object> req=reqArray.get(i);
-            String method = (String)req.get("method");
+            Map<String, Object> req = reqArray.get(i);
+            String method = (String) req.get("method");
             Map<String, Object> params = (Map<String, Object>) req.get("params");
             String response = "";
             try {
                 response = invokeRpc(method, params);
             } catch (Exception e) {
-                logger.error("调用RPC服务出错!",e);
+                logger.error("调用RPC服务出错!", e);
                 response = "{\"message\": \"System error\", \"result\": {}, \"status\": \"10001\"}";
             }
             String finalString = "{\"method\":\"" + method + "\"," + response.substring(1);
@@ -124,7 +124,6 @@ public class DubboInvoker implements RpcInvoker {
         if ("getVerifyCodeForRegister".equals(method)) {//1
             VerifyCodeParam verifyCodeParam = JsonHelper.copyAs(params, VerifyCodeParam.class);
             result = verifyCodeApi.getVerifyCodeForRegister(verifyCodeParam);
-
         } else if ("getVerifyCodeForReset".equals(method)) {//2
             VerifyCodeParam verifyCodeParam = JsonHelper.copyAs(params, VerifyCodeParam.class);
             result = verifyCodeApi.getVerifyCodeForReset(verifyCodeParam);
@@ -152,8 +151,7 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("getFriends".equals(method)) {//10
             FriendsQueryParam friendsQueryParam = JsonHelper.copyAs(params, FriendsQueryParam.class);
             result = relationShipApi.getFriends(friendsQueryParam);
-        }
-       else if ("searchContacts".equals(method)) {//11
+        } else if ("searchContacts".equals(method)) {//11
             ContactQueryParam contactQueryParam = JsonHelper.copyAs(params, ContactQueryParam.class);
             result = profileApi.getContactInfo(contactQueryParam);
         } else if ("requestToBeFriends".equals(method)) {//12
@@ -274,11 +272,11 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("getRecommendInfo".equals(method)) {//28
             SeedingSpotPrama seedingSpotPrama = JsonHelper.copyAs(params, SeedingSpotPrama.class);
             result = seedingSpotApi.getSeedingSpot(seedingSpotPrama);
+        } else if ("getMemberAllPosts".equals(method)) {
+            PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
+            result = postApi.getAllPostsByMember(postParam);
         }
 
-        else if("getFriendRequests".equals(method)){
-
-        }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }
 }

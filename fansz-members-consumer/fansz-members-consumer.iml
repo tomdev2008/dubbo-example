@@ -54,10 +54,10 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: com.github.miemiedev:mybatis-paginator:1.2.15" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.2.7" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-all:5.0.0.Alpha2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jackson-provider:3.0.7.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.resteasy:resteasy-jaxb-provider:3.0.7.Final" level="project" />

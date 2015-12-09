@@ -2,6 +2,8 @@ package com.fansz.members.consumer.utils;
 
 import com.alibaba.fastjson.JSON;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +18,8 @@ public class JsonHelper {
 
     public static String toString(Object obj) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper().disable(
+                    SerializationConfig.Feature.WRITE_NULL_MAP_VALUES).disable(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS).setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
             return mapper.writeValueAsString(obj);
         } catch (IOException e) {
             logger.error("JSON字符串序列化出错!", e);
@@ -40,7 +43,7 @@ public class JsonHelper {
             ObjectMapper mapper = new ObjectMapper();
             return mapper.readValue(body, cls);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("JSON字符串转化为对象出错!", e);
         }
         return null;
     }

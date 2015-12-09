@@ -6,17 +6,15 @@ import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.VerifyCodeService;
-import com.fansz.members.tools.*;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.account.*;
+import com.fansz.members.tools.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -26,7 +24,6 @@ import java.util.Map;
  * 会员服务逻辑实现类
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED)
 public class AccountServiceImpl implements AccountService {
 
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);

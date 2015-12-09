@@ -1,23 +1,24 @@
 package com.fansz.members.model.relationship;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
  * 添加好友请求参数模型
  */
-public class AddFriendParam implements Serializable {
-    private static final long serialVersionUID = 8278115962641637973L;
+public class AddFriendParam extends AbstractToken {
 
+    @Size(min = 1)
     @JsonProperty("member_sn")
     private String myMemberSn;
 
+    @Size(min = 1)
     @JsonProperty("friend_sn")
     private String friendMemberSn;
 
-    @JsonProperty("access_token")
-    private String accessToken;
 
     public String getMyMemberSn() {
         return myMemberSn;
@@ -35,11 +36,4 @@ public class AddFriendParam implements Serializable {
         this.friendMemberSn = friendMemberSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 }

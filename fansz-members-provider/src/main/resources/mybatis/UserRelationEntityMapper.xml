@@ -32,7 +32,6 @@
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
         <result column="profile_updatetime" jdbcType="TIMESTAMP" property="profileUpdatetime"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
-        <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
         <result column="relation_status" jdbcType="VARCHAR" property="relationship"/>
     </resultMap>
     <sql id="Base_Column_List">
@@ -118,7 +117,7 @@
           WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
           AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
         UNION
-         SELECT b.* FROM connects_member_relation a,connects_member_profile b
+         SELECT b.*,a.relation_status FROM connects_member_relation a,connects_member_profile b
         WHERE a.friend_member_sn=#{myMemberSn,jdbcType=VARCHAR}
         AND a.my_member_sn=b.sn
         AND a.relation_status IN('10','11')
@@ -147,20 +146,11 @@
         WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="findRelationByMobiles" parameterType="java.util.Map"
-            resultMap="contactInfoMap">
-        SELECT b.relation_status ,a.*
-        FROM connects_member_profile a
-        LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
-        AND b.my_member_sn= #{memberSn,jdbcType=VARCHAR} WHERE a.mobile IN
-        <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
-            #{item,jdbcType=VARCHAR}
-        </foreach>
-        union
-        SELECT b.relation_status ,a.*
-        FROM connects_member_profile a
-        LEFT JOIN connects_member_relation b on b.my_member_sn=a.sn
-        AND b.friend_member_sn= #{memberSn,jdbcType=VARCHAR} WHERE a.mobile IN
+    <select id="findRelationByMobiles" parameterType="java.util.Map" resultMap="contactInfoMap">
+        SELECT b.relation_status ,a.*  FROM connects_member_profile a
+        LEFT JOIN connects_member_relation b on (
+        b.friend_member_sn=a.sn AND b.my_member_sn= #{memberSn,jdbcType=VARCHAR})
+        OR (b.my_member_sn=a.sn AND b.friend_member_sn= #{memberSn,jdbcType=VARCHAR}) WHERE a.mobile IN
         <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>

@@ -72,7 +72,8 @@
         <result column="followerCount" property="followerCount" jdbcType="VARCHAR"/>
         <result column="postCount" property="postCount" jdbcType="VARCHAR"/>
         <result column="followed" property="followed" jdbcType="VARCHAR"/>
-        <association property="creator" resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+        <association property="creator"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
 
     <select id="findFandomInfo" resultMap="findFandomInfo" parameterType="java.lang.Long">
@@ -239,7 +240,7 @@
             order by m.count desc
     </select>
 
-    <select id="getFandomDetail"  resultMap="fandomInfoMap">
+    <select id="getFandomDetail" resultMap="fandomInfoMap">
         SELECT  f.*,p.member_avatar,p.sn,p.nickname,(select count(1) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
         (select count(1) from feeds_member_post_fandom g where g.fandom_id=f.id) post_count,
         (select count(1) from feeds_member_fandom t where t.fandom_id=f.id) follower_count
@@ -255,14 +256,15 @@
         order by a.id
     </select>
 
-    <select id="getFandomMembers" parameterType="java.lang.Object"
+    <select id="getFandomMembers"
             resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
-
-        select a.*,r.relation_status
-        from (select  p.*
-        from  feeds_member_fandom m, connects_member_profile  p
-        where m.fandom_id =  #{fandomId,jdbcType=BIGINT}
-        AND   m.member_sn=p.sn)  a    LEFT JOIN connects_member_relation r on  r.friend_member_sn=a.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}
+        SELECT p.*,
+        (SELECT r.relation_status FROM connects_member_relation r
+        WHERE (r.friend_member_sn=p.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}) OR(r.my_member_sn=p.sn AND r.friend_member_sn = #{memberSn,jdbcType=VARCHAR})) relation_status
+        FROM  feeds_member_fandom m, connects_member_profile  p
+        WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn
+        AND p.member_status='1'
     </select>
 
     <select id="searchFandoms" parameterType="java.lang.String" resultMap="searchFandomResult">
@@ -293,9 +295,10 @@
                     SELECT
                         count(1)
                     FROM
-                        feeds_member_post_fandom
+                        feeds_member_fandom
                     WHERE
                         member_sn = #{memberSn,jdbcType=VARCHAR}
+                    AND fandom_id=ff.id
                 ) followed,
                 mp.sn,
                 mp.mobile,

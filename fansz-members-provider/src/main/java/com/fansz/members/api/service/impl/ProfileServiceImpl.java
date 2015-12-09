@@ -6,15 +6,13 @@ import com.fansz.members.api.repository.MemberAlbumEntityMapper;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
-import com.fansz.members.model.profile.*;
-import com.fansz.members.model.search.SearchParam;
-import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.model.profile.*;
 import com.fansz.members.tools.BeanTools;
+import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

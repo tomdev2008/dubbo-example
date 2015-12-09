@@ -1,6 +1,7 @@
 package com.fansz.members.model.profile;
 
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import javax.validation.constraints.Size;
@@ -9,15 +10,9 @@ import java.io.Serializable;
 /**
  * 修改用户profile参数模型
  */
-public class ModifyProfileParam implements Serializable {
-
-    private static final long serialVersionUID = -2028355548744485358L;
+public class ModifyProfileParam extends AbstractToken {
 
     private String sn;
-
-    @Size(min = 1)
-    @JsonProperty("access_token")
-    private String accessToken;
 
     private String nickname;
 
@@ -43,14 +38,6 @@ public class ModifyProfileParam implements Serializable {
 
     public void setSn(String sn) {
         this.sn = sn;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
     }
 
     public String getNickname() {

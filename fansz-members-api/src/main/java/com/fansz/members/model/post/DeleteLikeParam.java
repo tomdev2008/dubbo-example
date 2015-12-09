@@ -2,6 +2,9 @@ package com.fansz.members.model.post;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by LiZhe on 12/4/2015.
  */
@@ -10,14 +13,16 @@ public class DeleteLikeParam {
     @JsonProperty("access_token")
     private String accessToken;
 
+    @Size(min=1)
     @JsonProperty("member_sn")
     private String memberSn;
 
     @JsonProperty("like_id")
-    private long likeId;
+    private Long likeId;
 
+    @NotNull
     @JsonProperty("post_id")
-    private long postId;
+    private Long postId;
 
     public String getAccessToken() {
         return accessToken;
@@ -35,19 +40,19 @@ public class DeleteLikeParam {
         this.memberSn = memberSn;
     }
 
-    public long getLikeId() {
+    public Long getLikeId() {
         return likeId;
     }
 
-    public void setLikeId(long likeId) {
+    public void setLikeId(Long likeId) {
         this.likeId = likeId;
     }
 
-    public long getPostId() {
+    public Long getPostId() {
         return postId;
     }
 
-    public void setPostId(long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 }

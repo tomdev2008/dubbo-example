@@ -1,20 +1,22 @@
 package com.fansz.members.model.fandom;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by LiZhe on 12/4/2015.
  */
-public class FandomInfoParam {
+public class FandomInfoParam extends AbstractToken {
 
     @JsonProperty("member_sn")
     private String memberSn;
 
-    @JsonProperty("access_token")
-    private String accessToken;
-
+    @NotNull
     @JsonProperty("fandom_id")
-    private long fandomId;
+    private Long fandomId;
 
     public String getMemberSn() {
         return memberSn;
@@ -24,19 +26,12 @@ public class FandomInfoParam {
         this.memberSn = memberSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
-    public long getFandomId() {
+    public Long getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(long fandomId) {
+    public void setFandomId(Long fandomId) {
         this.fandomId = fandomId;
     }
 }

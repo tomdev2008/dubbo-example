@@ -1,25 +1,26 @@
 package com.fansz.members.model.comment;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
  * Created by allan on 15/11/26.
  */
-public class CommentDelParam implements Serializable{
+public class CommentDelParam extends AbstractToken {
 
-    private static final long serialVersionUID = 7097767369484809045L;
 
+    @NotNull
     @JsonProperty("comment_id")
     private Long commentId;
-
-    @JsonProperty("access_token")
-    private String accessToken;
 
     @JsonProperty("post_id")
     private Long postId;
 
+    @Size(min = 1)
     @JsonProperty("commentator_sn")
     private String commentatorSn;
 
@@ -31,13 +32,6 @@ public class CommentDelParam implements Serializable{
         this.commentId = commentId;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public Long getPostId() {
         return postId;

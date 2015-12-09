@@ -1,5 +1,6 @@
 package com.fansz.members.model.search;
 
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
@@ -8,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by allan on 15/12/7.
  */
-public class SearchMemberParam extends PageParam implements Serializable{
+public class SearchMemberParam extends PageParam implements AccessTokenAware{
 
     private static final long serialVersionUID = 7395798746330977031L;
 
@@ -17,7 +18,6 @@ public class SearchMemberParam extends PageParam implements Serializable{
 
     @JsonProperty("access_token")
     private String accessToken;
-
 
     @JsonProperty("member_type")
     private String memberType;
@@ -30,6 +30,7 @@ public class SearchMemberParam extends PageParam implements Serializable{
         this.memberSn = memberSn;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

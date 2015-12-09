@@ -87,6 +87,11 @@
                 <artifactId>jackson-core-asl</artifactId>
                 <version>1.9.12</version>
             </dependency>
+            <dependency>
+                <groupId>org.codehaus.jackson</groupId>
+                <artifactId>jackson-mapper-asl</artifactId>
+                <version>1.9.12</version>
+            </dependency>
             <!-- 如果要使用xml序列化 -->
             <dependency>
                 <groupId>org.jboss.resteasy</groupId>

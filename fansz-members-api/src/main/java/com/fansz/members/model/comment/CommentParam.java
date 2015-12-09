@@ -1,6 +1,7 @@
 package com.fansz.members.model.comment;
 
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
@@ -8,20 +9,20 @@ import java.io.Serializable;
 /**
  * Created by root on 15-11-4.
  */
-public class CommentParam implements Serializable{
-
-    private static final long serialVersionUID = -3591993766050206164L;
+public class CommentParam extends AbstractToken {
 
     @JsonProperty("commentator_sn")
     private String commentatorSn;
-    @JsonProperty("access_token")
-    private String accessToken;
+
     @JsonProperty("comment_source")
     private String commentSource;
+
     @JsonProperty("comment_content")
     private String commentContent;
+
     @JsonProperty("post_id")
     private Long postId;
+
     @JsonProperty("comment_parent_id")
     private Long commentParentId;
 
@@ -33,13 +34,6 @@ public class CommentParam implements Serializable{
         this.commentatorSn = commentatorSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public String getCommentSource() {
         return commentSource;
