@@ -42,13 +42,15 @@ public class Constants {
 
     public final static String RELATION_IS_NOT_IN_FANDOM="20206";//用户未关注fandom
 
-    public final static String RELATION_IS_SPACIEL_FANDOM="20207";//用户已经关注fandom
+    public final static String RELATION_IS_SPACIEL_FANDOM="20207";//用户已经特殊关注fandom
 
-    public final static String RELATION_IS_NOT_SPACIEL_FANDOM="20208";//用户未关注fandom
+    public final static String RELATION_IS_NOT_SPACIEL_FANDOM="20208";//用户未特殊关注fandom
 
     public final static String POST_NOT_EXISTS="20301";//POST不存在
 
     public final static String POST_NOT_ALLOW_DEL="20302";//无法删除他人帖子
+
+    public final static String NICK_NAME_REPATEDD="20401";//nickname重复
 
     public final static String USER_STATUS_OK = "1";
 

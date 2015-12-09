@@ -276,6 +276,10 @@ public class DubboInvoker implements RpcInvoker {
             PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
             result = postApi.getAllPostsByMember(postParam);
         }
+        else if ("validateNickname".equals(method)) {
+            ModifyProfileParam modifyProfileParam = JsonHelper.copyAs(params, ModifyProfileParam.class);
+            result = profileApi.validateNickName(modifyProfileParam);
+        }
 
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }

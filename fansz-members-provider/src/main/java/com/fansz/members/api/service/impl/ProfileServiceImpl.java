@@ -39,9 +39,9 @@ public class ProfileServiceImpl implements ProfileService {
     public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
         UserEntity user = userEntityMapper.selectByUid(queryUserParam.getSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
-        if(StringTools.isNotBlank(queryUserParam.getFriendSn())){
-            UserRelationEntity userRelationEntity= userRelationEntityMapper.findRelationBySns(queryUserParam.getSn(),queryUserParam.getFriendSn());
-            if(userRelationEntity!=null){
+        if (StringTools.isNotBlank(queryUserParam.getFriendSn())) {
+            UserRelationEntity userRelationEntity = userRelationEntityMapper.findRelationBySns(queryUserParam.getSn(), queryUserParam.getFriendSn());
+            if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());
             }
         }
@@ -51,20 +51,29 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
+        if (StringTools.isNotBlank(modifyProfilePara.getNickname())) {
+            int total = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getSn());
+            if (total > 0) {
+                throw new ApplicationException(Constants.NICK_NAME_REPATEDD, "Nickname repeated");
+            }
+        }
+
         UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
         user.setProfileUpdatetime(new Date());
-        int updated=userEntityMapper.updateByUidSelective(user);
-        if(updated!=1){
-            throw new ApplicationException(Constants.USER_NOT_FOUND,"User does't exist");
+        int updated = userEntityMapper.updateByUidSelective(user);
+        if (updated != 1) {
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
         }
     }
+
     @Override
-    public int isExistsNickname(String nickname,String excludeSn){
-        return userEntityMapper.isExistsNickname(nickname,excludeSn);
+    public int isExistsNickname(String nickname, String excludeSn) {
+        return userEntityMapper.isExistsNickname(nickname, excludeSn);
     }
+
     @Override
     public int setMemberType(SetMemberParam setMemberParam) {
-        UserEntity user=new UserEntity();
+        UserEntity user = new UserEntity();
         user.setSn(setMemberParam.getMemberSn());
         user.setMemberType(setMemberParam.getMemberType());
         return userEntityMapper.updateByUidSelective(user);
@@ -72,18 +81,20 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
-        PageBounds pageBounds=new PageBounds(contactQueryParam.getOffset(),contactQueryParam.getLimit());
+        PageBounds pageBounds = new PageBounds(contactQueryParam.getOffset(), contactQueryParam.getLimit());
         return userRelationEntityMapper.findRelationByMobiles(contactQueryParam.getMemberSn(), contactQueryParam.getMobileList(), pageBounds);
     }
 
     @Override
-    public PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds){
-        return userEntityMapper.searchMembers(searchParam.getNickname(),searchParam.getMobile(),searchParam.getMemberType(),searchParam.getLoginname(),pageBounds);
+    public PageList<UserInfoResult> searchMembers(UserEntity searchParam, PageBounds pageBounds) {
+        return userEntityMapper.searchMembers(searchParam.getNickname(), searchParam.getMobile(), searchParam.getMemberType(), searchParam.getLoginname(), pageBounds);
     }
+
     @Override
-    public PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds){
-        return userEntityMapper.searchMembersByKey(searchKey,sn,pageBounds);
+    public PageList<UserInfoResult> searchMembers(String searchKey, String sn, PageBounds pageBounds) {
+        return userEntityMapper.searchMembersByKey(searchKey, sn, pageBounds);
     }
+
     @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {
         return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());

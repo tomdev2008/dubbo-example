@@ -55,7 +55,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="isExists" parameterType="java.lang.String" resultType="java.lang.Integer">
+    <select id="isExistsMobile" parameterType="java.lang.String" resultType="java.lang.Integer">
     select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 

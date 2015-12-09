@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public class ModifyProfileParam extends AbstractToken {
 
+    @Size(min=1)
     private String sn;
 
     private String nickname;

@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
         if (fandomPostEntity == null) {
             throw new ApplicationException(Constants.POST_NOT_EXISTS, "Post not exists");
         }
-        if (fandomPostEntity.getMemberSn().equals(removePostrParam.getMemberSn())) {
+        if (!fandomPostEntity.getMemberSn().equals(removePostrParam.getMemberSn())) {
             throw new ApplicationException(Constants.POST_NOT_ALLOW_DEL, "Not your post");
         }
         fandomPostEntityMapper.deleteByPrimaryKey(removePostrParam.getPostId());
