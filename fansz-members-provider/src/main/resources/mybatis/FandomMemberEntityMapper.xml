@@ -136,7 +136,7 @@
         c.profile_createtime, c.profile_updatetime, c.member_type, c.member_status,
         (SELECT count(1) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id) follower_count,
         (SELECT count(1) FROM feeds_member_post_fandom WHERE fandom_id=a.fandom_id) post_count,
-        (SELECT count(1) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and member_sn=#{memberSn,jdbcType=VARCHAR})followed
+        (SELECT infatuation FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and member_sn=#{memberSn,jdbcType=VARCHAR})followed
         FROM feeds_member_fandom a,feeds_fandom b,connects_member_profile c
         WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR} and a.fandom_id=b.id and b.fandom_creator_sn=c.sn;
     </select>
