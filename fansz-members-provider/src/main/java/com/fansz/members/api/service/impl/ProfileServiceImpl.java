@@ -13,6 +13,7 @@ import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,7 +58,10 @@ public class ProfileServiceImpl implements ProfileService {
             throw new ApplicationException(Constants.USER_NOT_FOUND,"User does't exist");
         }
     }
-
+    @Override
+    public int isExistsNickname(String nickname,String excludeSn){
+        return userEntityMapper.isExistsNickname(nickname,excludeSn);
+    }
     @Override
     public int setMemberType(SetMemberParam setMemberParam) {
         UserEntity user=new UserEntity();

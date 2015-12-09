@@ -45,17 +45,17 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam) {
-        PageBounds pageBounds=new PageBounds(searchParam.getOffset(),searchParam.getLimit());
-        PageList<UserInfoResult> data = profileService.searchMembers(searchParam.getSearchVal(),searchParam.getMemberSn(),pageBounds);
+        PageBounds pageBounds = new PageBounds(searchParam.getOffset(), searchParam.getLimit());
+        PageList<UserInfoResult> data = profileService.searchMembers(searchParam.getSearchVal(), searchParam.getMemberSn(), pageBounds);
         return renderPagedSuccess(data);
     }
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) {
-        PageBounds pageBounds=new PageBounds(searchMemberParam.getOffset(),searchMemberParam.getLimit());
-        UserEntity userEntity=new UserEntity();
+        PageBounds pageBounds = new PageBounds(searchMemberParam.getOffset(), searchMemberParam.getLimit());
+        UserEntity userEntity = new UserEntity();
         userEntity.setMemberType(searchMemberParam.getMemberType());
-        PageList<UserInfoResult> data = profileService.searchMembers(userEntity,pageBounds);
+        PageList<UserInfoResult> data = profileService.searchMembers(userEntity, pageBounds);
         return renderPagedSuccess(data);
     }
 
@@ -78,6 +78,20 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         profileService.setMemberType(modifyProfileParam);
         result.setResult(PRESENCE);
         return result;
+    }
+
+    /**
+     * 校验用户的nickName是否唯一
+     *
+     * @param modifyProfileParam
+     * @return
+     */
+    @Override
+    public CommonResult<ProfileValidateResult> validateNickName(ModifyProfileParam modifyProfileParam) {
+        int total = profileService.isExistsNickname(modifyProfileParam.getNickname(), modifyProfileParam.getSn());
+        ProfileValidateResult result = new ProfileValidateResult();
+        result.setUnique(total > 0 ? false : true);
+        return renderSuccess(result);
     }
 
     @Override

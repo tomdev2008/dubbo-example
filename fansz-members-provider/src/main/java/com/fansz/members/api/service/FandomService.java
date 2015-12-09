@@ -39,6 +39,6 @@ public interface FandomService {
 
     PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 
-    void addFandom(AddFandomParam addFandomParam);
+    FandomInfoResult addFandom(AddFandomParam addFandomParam);
 
 }

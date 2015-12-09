@@ -67,6 +67,11 @@
         select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR} and member_status='1'
     </select>
 
+    <select id="isExistsNickname"  resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM connects_member_profile WHERE nickname=#{nickname,jdbcType=VARCHAR} AND member_status='1'
+        AND sn!=#{exlucdeSn,jdbcType=VARCHAR}
+    </select>
+
     <select id="getFandomFollowers" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,signature,

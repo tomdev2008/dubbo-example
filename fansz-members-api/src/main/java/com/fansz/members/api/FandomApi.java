@@ -32,7 +32,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/addFandom")
-    CommonResult<NullResult> addFandom(AddFandomParam addFandomParam);
+    CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam);
 
     /**
      * 加入fandom

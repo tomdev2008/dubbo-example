@@ -53,6 +53,15 @@ public interface ProfileApi {
     @Path("/change")
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
+    /**
+     * 校验用户的nickName是否唯一
+     *
+     * @param modifyProfileParam
+     * @return
+     */
+    @POST
+    @Path("/validate")
+    CommonResult<ProfileValidateResult> validateNickName(ModifyProfileParam modifyProfileParam);
 
     @POST
     @Path("/setMemberType")
@@ -64,6 +73,7 @@ public interface ProfileApi {
     @POST
     @Path("/album")
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
+
     /**
      * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
      */

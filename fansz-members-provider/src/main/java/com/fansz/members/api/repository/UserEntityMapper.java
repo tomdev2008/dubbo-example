@@ -32,7 +32,9 @@ public interface UserEntityMapper {
 
     int updateByPrimaryKey(UserEntity record);
 
-    int isExists(String mobile);
+    int isExistsMobile(String mobile);
+
+    int isExistsNickname(@Param("nickname")String nickname,@Param("exlucdeSn")String exlucdeSn);
 
     UserEntity findByMoblie(@Param("mobile") String mobile);
 

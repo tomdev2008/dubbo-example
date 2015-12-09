@@ -41,7 +41,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
      */
     @Override
     public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        int exists = userEntityMapper.isExists(mobile);
+        int exists = userEntityMapper.isExistsMobile(mobile);
         String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用

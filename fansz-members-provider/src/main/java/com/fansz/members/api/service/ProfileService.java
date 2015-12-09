@@ -27,4 +27,6 @@ public interface ProfileService {
     PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds);
 
     List<String> getImages(ContactQueryParam contractQueryParam);
+
+    int isExistsNickname(String nickname,String excludeSn);
 }

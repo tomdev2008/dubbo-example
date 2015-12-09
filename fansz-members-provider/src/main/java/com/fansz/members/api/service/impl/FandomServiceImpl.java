@@ -154,7 +154,7 @@ public class FandomServiceImpl implements FandomService {
         return fandomMapper.searchFandoms(searchFandomParam.getMemberSn(),searchFandomParam.getSearchVal(), pageBounds);
     }
 
-    public void addFandom(AddFandomParam addFandomParam) {
+    public FandomInfoResult addFandom(AddFandomParam addFandomParam) {
         FandomEntity fandomEntity = new FandomEntity();
         fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
         fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
@@ -164,6 +164,7 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomName(addFandomParam.getFandomName());
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
         this.fandomMapper.insert(fandomEntity);
+        return BeanTools.copyAs(fandomEntity,FandomInfoResult.class);
 
     }
 }
