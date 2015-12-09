@@ -15,7 +15,7 @@ public class JoinFandomParam implements Serializable {
     private String memberSn;
 
     @JsonProperty("fandom_id")
-    private Long fandomId;
+    private String fandomId;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -28,11 +28,11 @@ public class JoinFandomParam implements Serializable {
         this.memberSn = memberSn;
     }
 
-    public Long getFandomId() {
+    public String getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(Long fandomId) {
+    public void setFandomId(String fandomId) {
         this.fandomId = fandomId;
     }
 
