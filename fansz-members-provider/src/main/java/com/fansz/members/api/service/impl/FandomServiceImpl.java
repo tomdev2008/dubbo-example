@@ -3,6 +3,7 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomMemberEntity;
 import com.fansz.members.api.entity.SingleFandomEntity;
+import com.fansz.members.api.event.SpecialRealtionEvent;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
@@ -11,12 +12,14 @@ import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
+import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -33,6 +36,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Autowired
     private FandomMemberEntityMapper fandomMemberEntityMapper;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -88,6 +94,14 @@ public class FandomServiceImpl implements FandomService {
         }
         exist.setInfatuation("1");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+
+        SpecialRealtionEvent specialRealtionEvent=null;
+        SpecialFocusParam specialFocusParam =new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        specialRealtionEvent=new SpecialRealtionEvent("add",specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return true;
     }
 
@@ -104,6 +118,13 @@ public class FandomServiceImpl implements FandomService {
         }
         exist.setInfatuation("0");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+
+        SpecialRealtionEvent specialRealtionEvent=null;
+        SpecialFocusParam specialFocusParam =new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        specialRealtionEvent=new SpecialRealtionEvent("remove",specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
         return true;
     }
 
