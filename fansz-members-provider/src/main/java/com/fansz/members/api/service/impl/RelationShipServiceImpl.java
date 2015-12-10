@@ -23,11 +23,14 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by allan on 15/11/29.
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
@@ -36,18 +39,17 @@ public class RelationShipServiceImpl implements RelationShipService {
     private ApplicationContext applicationContext;
 
     @Override
-    public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds,boolean isSpecial) {
-        if(isSpecial){
+    public PageList<FriendInfoResult> getFriends(String uid, PageBounds pageBounds, boolean isSpecial) {
+        if (isSpecial) {
             return userRelationEntityMapper.findSpecialFriends(uid, pageBounds);
-        }
-        else {
+        } else {
             return userRelationEntityMapper.findFriends(uid, pageBounds);
         }
     }
 
     @Override
     public boolean addFriendRequest(AddFriendParam addFriendParam) {
-        UserRelationEntity oldRelation = userRelationEntityMapper.findRelationBySns(addFriendParam.getMyMemberSn(), addFriendParam.getFriendMemberSn());
+        UserRelationEntity oldRelation = userRelationEntityMapper.findFriendRelationBySns(addFriendParam.getMyMemberSn(), addFriendParam.getFriendMemberSn());
         if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_BE_FRIEND.getCode())) {
             throw new ApplicationException(Constants.RELATION_IS_FRIEND, "Is friend already");
         }
@@ -61,9 +63,9 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add) {
-        UserRelationEntity oldRelation = userRelationEntityMapper.findRelationBySns(addFriendParam.getMyMemberSn(), addFriendParam.getFriendMemberSn());
-        SpecialRealtionEvent specialRealtionEvent=null;
-        SpecialFocusParam specialFocusParam =new SpecialFocusParam();
+        UserRelationEntity oldRelation = userRelationEntityMapper.findFriendRelationBySns(addFriendParam.getMyMemberSn(), addFriendParam.getFriendMemberSn());
+        SpecialRealtionEvent specialRealtionEvent = null;
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
         specialFocusParam.setMemberSn(addFriendParam.getMyMemberSn());
         specialFocusParam.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
         if (add) {//添加特殊好友
@@ -71,13 +73,18 @@ public class RelationShipServiceImpl implements RelationShipService {
                 throw new ApplicationException(Constants.RELATION_SPECIAL_NO_ADD, "Can't be special friend");
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            specialRealtionEvent=new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL,specialFocusParam);
+            /**
+             * 因为好友是双向的,而特殊好友是单向的,因此需要更新字段
+             */
+            oldRelation.setMyMemberSn(addFriendParam.getMyMemberSn());
+            oldRelation.setFriendMemberSn(addFriendParam.getFriendMemberSn());
+            specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
                 throw new ApplicationException(Constants.RELATION_SPECIAL_NO_DEL, "Can't remove special friend");
             }
             oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
-            specialRealtionEvent=new SpecialRealtionEvent(this,FandomEventType.REMOVE_SPECIAL,specialFocusParam);
+            specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
         }
 
         applicationContext.publishEvent(specialRealtionEvent);
@@ -87,7 +94,7 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
-        UserRelationEntity oldRelation = userRelationEntityMapper.findRelation(opRequestParam.getFriendMemberSn(),opRequestParam.getMyMemberSn());
+        UserRelationEntity oldRelation = userRelationEntityMapper.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getMyMemberSn());
         if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.TO_BE_FRIEND.getCode())) {
             throw new ApplicationException(Constants.RELATION_FRIEND_NO_EXISTS, "Can't (dis)agree friend");
         }

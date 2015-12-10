@@ -21,6 +21,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +33,7 @@ import java.util.List;
  * fandom服务实现类
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class FandomServiceImpl implements FandomService {
 
     @Autowired

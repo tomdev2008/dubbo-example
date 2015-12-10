@@ -22,6 +22,7 @@ import java.util.Date;
  * Created by root on 15-11-4.
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class CommentServiceImpl implements CommentService {
 
     @Autowired

@@ -14,6 +14,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class PostServiceImpl implements PostService {
 
     @Autowired

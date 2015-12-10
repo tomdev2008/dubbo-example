@@ -17,6 +17,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
  * 用户配置信息服务实现层
  */
 @Service()
+@Transactional(propagation = Propagation.REQUIRED)
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
@@ -41,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
         UserEntity user = userEntityMapper.selectByUid(queryUserParam.getSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
         if (StringTools.isNotBlank(queryUserParam.getFriendSn())) {
-            UserRelationEntity userRelationEntity = userRelationEntityMapper.findRelationBySns(queryUserParam.getSn(), queryUserParam.getFriendSn());
+            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getSn(), queryUserParam.getFriendSn());
             if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());
             }

@@ -285,10 +285,10 @@ public class DubboInvoker implements RpcInvoker {
             result = profileApi.validateNickName(modifyProfileParam);
         } else if ("getAllSpecialFocus".equals(method)) {
             SpecialFocusParam specialFocusParam = JsonHelper.copyAs(params, SpecialFocusParam.class);
-            specialFocusApi.getSpecialFocusInfo(specialFocusParam);
+            result =specialFocusApi.getSpecialFocusInfo(specialFocusParam);
         } else if ("setSpecialFocusOrder".equals(method)) {
             ModifySpecialFocusParam modifySpecialFocusParam = JsonHelper.copyAs(params, ModifySpecialFocusParam.class);
-            specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
+            result =specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }

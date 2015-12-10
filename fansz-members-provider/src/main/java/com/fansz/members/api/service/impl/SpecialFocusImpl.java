@@ -10,6 +10,8 @@ import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.Map;
  * Created by dell on 2015/12/9.
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class SpecialFocusImpl implements SpecialFocusService{
     @Autowired
     private SpecialFocusMapper specialFocusMapper;

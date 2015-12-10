@@ -20,19 +20,19 @@
         <repository>
             <id>nexus-releases</id>
             <name>Releases</name>
-            <url>http://10.0.0.7:8081/nexus/content/repositories/releases/</url>
+            <url>http://192.168.88.7:8081/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus-snapshots</id>
             <name>Snapshots Repository</name>
-            <url>http://10.0.0.7:8081/nexus/content/repositories/snapshots</url>
+            <url>http://192.168.88.7:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
     <repositories>
         <repository>
             <id>nexus-public</id>
             <name>Public Repository of fansz</name>
-            <url>http://10.0.0.7:8081/nexus/content/groups/public/</url>
+            <url>http://192.168.88.7:8081/nexus/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>

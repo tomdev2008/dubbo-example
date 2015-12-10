@@ -29,7 +29,14 @@ public interface UserRelationEntityMapper {
 
     int updateByPrimaryKey(UserRelationEntity record);
 
-    UserRelationEntity findRelationBySns(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
+    /**
+     * 查询用户是否是好友
+     *
+     * @param memberSn
+     * @param friendSn
+     * @return
+     */
+    UserRelationEntity findFriendRelationBySns(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
 
     UserRelationEntity findRelation(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
 

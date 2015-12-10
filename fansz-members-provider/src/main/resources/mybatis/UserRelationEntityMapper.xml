@@ -131,7 +131,7 @@
         AND a.relation_status ='11'
     </select>
 
-    <select id="findRelationBySns" parameterType="java.util.Map" resultMap="BaseResultMap">
+    <select id="findFriendRelationBySns" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_relation

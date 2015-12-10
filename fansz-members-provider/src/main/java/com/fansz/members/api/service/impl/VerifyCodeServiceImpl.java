@@ -9,6 +9,8 @@ import com.fansz.members.tools.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ import java.util.Properties;
  * 验证码服务层实现
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Autowired

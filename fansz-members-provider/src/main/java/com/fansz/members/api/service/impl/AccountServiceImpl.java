@@ -15,6 +15,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +26,7 @@ import java.util.Map;
  * 会员服务逻辑实现类
  */
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class AccountServiceImpl implements AccountService {
 
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
@@ -121,17 +124,17 @@ public class AccountServiceImpl implements AccountService {
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
         UserEntity user = userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
-            throw new ApplicationException(Constants.USER_NOT_FOUND, "用户不存在");
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "User not exist");
         }
 
         //验证码校验
         VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
 
         if (verifyCode == null || !verifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())) {
-            throw new ApplicationException(Constants.VERIFY_ERROR, "校验码错误");
+            throw new ApplicationException(Constants.VERIFY_ERROR, "Verify code error");
         }
         if (!verifyCodeService.isValid(verifyCode)) {
-            throw new ApplicationException(Constants.VERIFY_ERROR, "验证码错误");
+            throw new ApplicationException(Constants.VERIFY_ERROR, "Verify code error");
         }
         //删除验证码
         verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
