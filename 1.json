@@ -1,58 +1,64 @@
 {
   "header": {
-    "terminal_type": "ANDROID",
-    "local": "zh_CN"
+    "local": "ZH_cn",
+    "terminal_type": "IOS"
   },
   "response": [
     {
-      "method": "searchPosts",
+      "method": "getAllSpecialFocus",
       "status": "0",
       "message": "Success",
-      "result": {
-        "data": [
-          {
-            "post_id": 60,
-            "post_title": "",
-            "post_content": "<fansz_img>/g1/M00/01/03/wKhYB1ZoRz6AHHF6AAYJj6uO8og44.jpeg</fansz_img><fansz_img>/g1/M00/61/85/wKhYAlZn1nCABJgZAASQFGy4vhs47.jpeg</fansz_img><fansz_img>/g1/M00/ED/57/wKhYB1ZoRz6AbavzAAWDBXg0rnE58.jpeg</fansz_img>",
-            "post_newsfeeds": "1",
-            "post_time": 1449674575000,
-            "post_member": {
-              "sn": "99c812b775c9418d9ba084a7e5a6c6ce",
-              "nickname": "King",
-              "member_avatar": "/g1/M00/3E/5D/wKhYAlZn1_GAaB7QAADFJMal-3Y89.jpeg"
-            }
-          },
-          {
-            "post_id": 61,
-            "post_title": "",
-            "post_content": "<fansz_img>/g1/M00/89/14/wKhYAlZn2NuAbSnQAAObD0VipGo18.jpeg</fansz_img><fansz_img>/g1/M00/D1/31/wKhYB1ZoSamAFCJ7AAKAjcv65QA69.jpeg</fansz_img><fansz_img>/g1/M00/C4/50/wKhYAlZn2NuAB1rMAAQl56saFH450.jpeg</fansz_img>",
-            "post_newsfeeds": "1",
-            "post_time": 1449675195000,
-            "post_member": {
-              "sn": "99c812b775c9418d9ba084a7e5a6c6ce",
-              "nickname": "King",
-              "member_avatar": "/g1/M00/3E/5D/wKhYAlZn1_GAaB7QAADFJMal-3Y89.jpeg"
-            }
-          },
-          {
-            "post_id": 63,
-            "post_title": "",
-            "post_content": "<fansz_img>/g1/M00/9F/D0/wKhYB1ZoVjiABpmXAAEuY6aGsw813.jpeg</fansz_img><fansz_img>/g1/M00/0A/39/wKhYAlZn5WqAbsAFAANDyMunm4I79.jpeg</fansz_img><fansz_img>/g1/M00/A0/C5/wKhYB1ZoVjiAa7ybAAK9vJdCdTU69.jpeg</fansz_img><fansz_img>/g1/M00/4C/4B/wKhYAlZn5WqAKLlgAAQKiKmG2yY42.jpeg</fansz_img>",
-            "post_newsfeeds": "1",
-            "post_time": 1449678409000,
-            "post_member": {
-              "sn": "99c812b775c9418d9ba084a7e5a6c6ce",
-              "nickname": "King",
-              "member_avatar": "/g1/M00/3E/5D/wKhYAlZn1_GAaB7QAADFJMal-3Y89.jpeg"
-            }
+      "result": [
+        {
+          "special_id": 3,
+          "postion_tag": 1,
+          "special_fandom": {
+            "id": 10597,
+            "fandom_name": "吃货的世界",
+            "fandom_parent_id": 10308,
+            "fandom_avatar_url": "/g1/M00/19/B3/wKhYB1ZpXZeAMynRAAWJBeJyP5836.jpeg",
+            "fandom_intro": "吃货。美食",
+            "fandom_create_time": 1449676800000
           }
-        ],
-        "pager": {
-          "page_size": 3,
-          "page_num": 1,
-          "total_num": 27
+        },
+        {
+          "special_id": 18,
+          "postion_tag": 3,
+          "special_fandom": {
+            "id": 10599,
+            "fandom_name": "徒步穿越火线搞笑了，一切皆在取舍和你一切安好……不能容忍自己自拔……不会",
+            "fandom_parent_id": 10202,
+            "fandom_avatar_url": "/g1/M00/7B/29/wKhYB1ZpZASAbnaaAATMgrnw--Q65.jpeg",
+            "fandom_intro": "最美的风景在路上",
+            "fandom_create_time": 1449676800000
+          }
+        },
+        {
+          "special_id": 40,
+          "postion_tag": 4,
+          "special_member": {
+            "sn": "d6b3472ec80c4f87a2def6c25b3418f8",
+            "mobile": "13761505135",
+            "nickname": "幽幽",
+            "gender": "F",
+            "birthday": "1404624609657",
+            "member_avatar": "/g1/M00/12/6D/wKhYAlZpDYaAGF7dAAA-tqn3SXo609.jpg",
+            "profile_createtime": 1449746679000
+          }
+        },
+        {
+          "special_id": 44,
+          "postion_tag": 5,
+          "special_fandom": {
+            "id": 10598,
+            "fandom_name": "吃货的世界",
+            "fandom_parent_id": 10308,
+            "fandom_avatar_url": "/g1/M00/D9/5F/wKhYB1ZpYOSAGxBxAAQmQNQNKks26.jpeg",
+            "fandom_intro": "",
+            "fandom_create_time": 1449676800000
+          }
         }
-      }
+      ]
     }
   ]
 }
