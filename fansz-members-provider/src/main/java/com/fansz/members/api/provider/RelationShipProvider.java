@@ -48,25 +48,25 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     @Override
     public CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam) {
         relationShipService.addFriendRequest(addFriendParam);
-        return renderSuccess(PRESENCE, "Add friend request successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam) {
         relationShipService.dealSpecialFriend(addFriendParam, true);
-        return renderSuccess(PRESENCE, "Add special friend  successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam) {
         relationShipService.dealSpecialFriend(addFriendParam, false);
-        return renderSuccess(PRESENCE, "Remove special friend  successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam) {
         relationShipService.dealFriendRequest(opRequestParam, true);
-        return renderSuccess(PRESENCE, "Agree friend request successfully");
+        return renderSuccess();
     }
 
     @Override

@@ -26,8 +26,6 @@ import java.util.List;
 @Component("profileProvider")
 public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
-    private final static NullResult PRESENCE = new NullResult();
-
     @Autowired
     private ProfileService profileService;
 
@@ -40,7 +38,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     @Override
     public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
         UserInfoResult userInfoResult = profileService.getProfile(queryUserParam);
-        return renderSuccess(userInfoResult, "Get profile successfully");
+        return renderSuccess(userInfoResult);
     }
 
     @Override
@@ -52,10 +50,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) {
-        PageBounds pageBounds = new PageBounds(searchMemberParam.getOffset(), searchMemberParam.getLimit());
-        UserEntity userEntity = new UserEntity();
-        userEntity.setMemberType(searchMemberParam.getMemberType());
-        PageList<UserInfoResult> data = profileService.searchMembers(userEntity, pageBounds);
+        PageList<UserInfoResult> data = profileService.searchMembers(searchMemberParam);
         return renderPagedSuccess(data);
     }
 
@@ -68,16 +63,18 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     @Override
     public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
         profileService.modifyProfile(modifyProfileParam);
-        return renderSuccess(PRESENCE, "Change profile successfully");
+        return renderSuccess();
     }
 
+    /**
+     * 设置会员类别
+     *
+     * @param modifyProfileParam
+     * @return
+     */
     public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("setMemberType profile successfully");
         profileService.setMemberType(modifyProfileParam);
-        result.setResult(PRESENCE);
-        return result;
+        return renderSuccess();
     }
 
     /**

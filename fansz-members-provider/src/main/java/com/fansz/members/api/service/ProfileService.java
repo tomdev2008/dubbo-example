@@ -3,6 +3,7 @@ package com.fansz.members.api.service;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -22,7 +23,7 @@ public interface ProfileService {
 
     PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 
-    PageList<UserInfoResult> searchMembers(UserEntity searchParam,PageBounds pageBounds);
+    PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam);
 
     PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds);
 

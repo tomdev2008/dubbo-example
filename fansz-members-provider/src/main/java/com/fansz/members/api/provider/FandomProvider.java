@@ -21,7 +21,6 @@ import java.util.List;
 
 /**
  * 圈子接口类
- * Created by root on 15-11-3.
  */
 @Component("fandomProvider")
 public class FandomProvider extends AbstractProvider implements FandomApi {
@@ -34,20 +33,20 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         fandomQueryParam.setMemberSn(null);
         fandomQueryParam.setFandomId(null);
         fandomQueryParam.setFandomParentId(null);
-        return renderSuccess(fandomService.listFandom(fandomQueryParam), "List fandoms successfully");
+        return renderSuccess(fandomService.listFandom(fandomQueryParam));
 
     }
 
     @Override
     public CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam) {
         fandomService.joinFandom(joinFandomParam);
-        return renderSuccess(PRESENCE, "Join fandom successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam) {
         fandomService.exitFandom(exitFandomParam);
-        return renderSuccess(PRESENCE, "Exit fandom successfully");
+        return renderSuccess();
     }
 
     @Override

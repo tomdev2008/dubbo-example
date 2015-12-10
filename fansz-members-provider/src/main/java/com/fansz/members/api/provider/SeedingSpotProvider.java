@@ -18,37 +18,36 @@ import org.springframework.stereotype.Component;
 @Component("seedingSpotProvider")
 public class SeedingSpotProvider extends AbstractProvider implements SeedingSpotApi {
 
-    private final static NullResult PRESENCE = new NullResult();
     @Autowired
     private SeedingSpotService seedingSpotService;
 
     @Override
     public CommonResult<NullResult> addSeedingSpot(SeedingSpotPrama seedingSpotPrama) {
         seedingSpotService.addSeedingSpot(seedingSpotPrama);
-        return renderSuccess(PRESENCE, "add seedingstop successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> delSeedingSpot(SeedingSpotPrama seedingSpotPrama) {
         seedingSpotService.delSeedingSpot(seedingSpotPrama);
-        return renderSuccess(PRESENCE, "del seedingstop successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> modifySeedingSpot(SeedingSpotPrama seedingSpotPrama) {
         seedingSpotService.modifySeedingSpot(seedingSpotPrama);
-        return renderSuccess(PRESENCE, "modify seedingstop successfully");
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<SeedingSpotResult> getSeedingSpotById(SeedingSpotPrama seedingSpotPrama) {
         SeedingSpotResult result = seedingSpotService.getSeedingSpotById(seedingSpotPrama);
-        return super.renderSuccess(result,"get seedingstop successfully");
+        return renderSuccess(result);
     }
 
     @Override
     public CommonPagedResult<SeedingSpotResult> getSeedingSpot(SeedingSpotPrama seedingSpotPrama) {
         PageList<SeedingSpotResult> pageList = seedingSpotService.getSeedingSpot(seedingSpotPrama);
-        return super.renderPagedSuccess(pageList);
+        return renderPagedSuccess(pageList);
     }
 }

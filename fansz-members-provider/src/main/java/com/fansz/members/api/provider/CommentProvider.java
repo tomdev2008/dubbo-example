@@ -65,7 +65,6 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      *
      * @param commentQueryFromFandom
      * @return
-     * @throws ApplicationException
      */
     public CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom) {
         PageBounds pageBounds = new PageBounds(commentQueryFromFandom.getOffset(), commentQueryFromFandom.getLimit());
@@ -80,7 +79,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @throws ApplicationException
      */
     public CommonPagedResult<List<CommentQueryFromFandomResult>> getCommentsByPostidFromNewsfeed(CommentFromFandomQueryParam commentQueryFromFandom) {
-
+        //TODO:下个版本实现
         return null;
     }
 

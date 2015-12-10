@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * Created by dell on 2015/12/9.
+ * 特殊关注服务提供者
  */
 @Component("specialFocusProvider")
 public class SpecialFocusProvider extends AbstractProvider implements SpecialFocusApi {
@@ -27,24 +27,24 @@ public class SpecialFocusProvider extends AbstractProvider implements SpecialFoc
     @Override
     public CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
         List<SpecialFocusResult> pageList = specialFocusService.getSpecialFocusInfo(specialFocusParam);
-        return super.renderSuccess(pageList);
+        return renderSuccess(pageList);
     }
 
     @Override
     public CommonResult<NullResult> addSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
         int count = specialFocusService.addSpecialFocusInfo(specialFocusParam);
-        return super.renderSuccess(PRESENCE);
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam) {
         specialFocusService.modifySpecialFocusInfo(specialFocusParam);
-        return super.renderSuccess(PRESENCE);
+        return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> delSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
         specialFocusService.delSpecialFocusInfo(specialFocusParam);
-        return super.renderSuccess(PRESENCE);
+        return renderSuccess();
     }
 }

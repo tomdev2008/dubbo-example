@@ -8,6 +8,7 @@ import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.profile.*;
+import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.StringTools;
@@ -86,8 +87,9 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public PageList<UserInfoResult> searchMembers(UserEntity searchParam, PageBounds pageBounds) {
-        return userEntityMapper.searchMembers(searchParam.getNickname(), searchParam.getMobile(), searchParam.getMemberType(), searchParam.getLoginname(), pageBounds);
+    public PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam) {
+        PageBounds pageBounds = new PageBounds(searchMemberParam.getOffset(), searchMemberParam.getLimit());
+        return userEntityMapper.searchMembers(null, null, searchMemberParam.getMemberType(), null, pageBounds);
     }
 
     @Override
