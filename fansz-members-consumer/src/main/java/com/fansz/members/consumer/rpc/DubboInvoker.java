@@ -25,6 +25,8 @@ import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
 import com.fansz.members.model.seedingspot.SeedingSpotPrama;
+import com.fansz.members.model.specialfocus.ModifySpecialFocusParam;
+import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,6 +68,9 @@ public class DubboInvoker implements RpcInvoker {
 
     @Resource(name = "seedingSpotProvider")
     private SeedingSpotApi seedingSpotApi;
+
+    @Resource(name = "specialFocusProvider")
+    private SpecialFocusApi specialFocusApi;
 
     public DubboInvoker() {
 
@@ -275,12 +280,16 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("getMemberAllPosts".equals(method)) {
             PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
             result = postApi.getAllPostsByMember(postParam);
-        }
-        else if ("validateNickname".equals(method)) {
+        } else if ("validateNickname".equals(method)) {
             ModifyProfileParam modifyProfileParam = JsonHelper.copyAs(params, ModifyProfileParam.class);
             result = profileApi.validateNickName(modifyProfileParam);
+        } else if ("getAllSpecialFocus".equals(method)) {
+            SpecialFocusParam specialFocusParam = JsonHelper.copyAs(params, SpecialFocusParam.class);
+            specialFocusApi.getSpecialFocusInfo(specialFocusParam);
+        } else if ("setSpecialFocusOrder".equals(method)) {
+            ModifySpecialFocusParam modifySpecialFocusParam = JsonHelper.copyAs(params, ModifySpecialFocusParam.class);
+            specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
         }
-
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }
 }

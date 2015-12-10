@@ -29,7 +29,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      */
     public CommonResult<NullResult> register(RegisterParam registerParam) {
         accountService.register(registerParam);
-        return renderSuccess(PRESENCE, "Register successfully");
+        return renderSuccess();
     }
 
     /**
@@ -40,7 +40,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      */
     public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) {
         accountService.resetPassword(resetPasswordParam);
-        return renderSuccess(PRESENCE, "Reset password successfully");
+        return renderSuccess();
     }
 
 
@@ -52,7 +52,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      */
     public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) {
         accountService.changePassword(changePasswordParam);
-        return renderSuccess(PRESENCE, "Change password successfully");
+        return renderSuccess();
     }
 
     /**
@@ -64,7 +64,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     @Override
     public CommonResult<LoginResult> login(LoginParam loginParam) {
         LoginResult loginResult = accountService.login(loginParam);
-        return renderSuccess(loginResult, "Login successfully");
+        return renderSuccess(loginResult);
     }
 
     /**
@@ -76,6 +76,6 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     @Override
     public CommonResult<NullResult> logout(LogoutParam logoutParam) {
         accountService.logout(logoutParam);
-        return renderSuccess(PRESENCE, "Logout successfully");
+        return renderSuccess();
     }
 }

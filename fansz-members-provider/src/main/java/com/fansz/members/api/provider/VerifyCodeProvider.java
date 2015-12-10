@@ -1,16 +1,14 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.VerifyCodeApi;
+import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.VerifyCodeService;
-import com.fansz.members.model.verifycode.VerifyCodeParam;
-import com.fansz.members.tools.Constants;
-import com.fansz.members.tools.VerifyCodeType;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.verifycode.VerifyCodeParam;
+import com.fansz.members.tools.VerifyCodeType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.ws.rs.PathParam;
 
 /**
  * 验证码服务提供者
@@ -18,9 +16,7 @@ import javax.ws.rs.PathParam;
  * @author yanyanming
  */
 @Component("verifyCodeProvider")
-public class VerifyCodeProvider implements VerifyCodeApi {
-
-    private final static NullResult PRESENCE=new NullResult();
+public class VerifyCodeProvider extends AbstractProvider implements VerifyCodeApi {
 
     @Autowired
     private VerifyCodeService verifyCodeService;
@@ -32,13 +28,8 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
         verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.RESET);
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Get verify code successfully");
-        result.setResult(PRESENCE);
-        return result;
-
+        return renderSuccess();
     }
 
     /**
@@ -48,12 +39,8 @@ public class VerifyCodeProvider implements VerifyCodeApi {
      * @return resp 返回对象
      */
     public CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam) {
-        CommonResult<NullResult> result = new CommonResult<>();
         verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.REGISTER);
-        result.setStatus(Constants.SUCCESS);
-        result.setMessage("Get verify code successfully");
-        result.setResult(PRESENCE);
-        return result;
+        return renderSuccess();
     }
 
 }

@@ -46,15 +46,15 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用
                 if (exists > 0) {
-                    throw new ApplicationException(Constants.MOBILE_IS_USED, "手机号码已经被使用");
+                    throw new ApplicationException(Constants.MOBILE_IS_USED, "Mobile is used");
                 }
                 template = smsProperties.getProperty("template.verify.register");
                 break;
             case RESET://重置密码时,要求号码已经存在
-                if (exists == 0) {
-                    throw new ApplicationException(Constants.MOBILE_NOT_FOUND, "手机号码不存在");
+                /**if (exists == 0) {
+                    throw new ApplicationException(Constants.MOBILE_NOT_FOUND, "Mobile does't belong to yours");
 
-                }
+                }*/
                 template = smsProperties.getProperty("template.verify.reset");
                 break;
         }

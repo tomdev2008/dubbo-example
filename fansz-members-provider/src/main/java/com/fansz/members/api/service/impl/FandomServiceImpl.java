@@ -2,6 +2,9 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomMemberEntity;
+import com.fansz.members.api.entity.SingleFandomEntity;
+import com.fansz.members.api.event.FandomEventType;
+import com.fansz.members.api.event.SpecialRealtionEvent;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
@@ -10,11 +13,13 @@ import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
+import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,6 +38,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Autowired
     private FandomMemberEntityMapper fandomMemberEntityMapper;
+
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -81,13 +89,18 @@ public class FandomServiceImpl implements FandomService {
         FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
-        }
-        else if ("1".equals(exist.getInfatuation()))
-        {
+        } else if ("1".equals(exist.getInfatuation())) {
             throw new ApplicationException(Constants.RELATION_IS_SPACIEL_FANDOM, "User has already spaciel followed this fandom");
         }
         exist.setInfatuation("1");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return true;
     }
 
@@ -97,19 +110,23 @@ public class FandomServiceImpl implements FandomService {
         FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
-        }
-        else if (!"1".equals(exist.getInfatuation()))
-        {
+        } else if (!"1".equals(exist.getInfatuation())) {
             throw new ApplicationException(Constants.RELATION_IS_NOT_SPACIEL_FANDOM, "User has not already spaciel followed this fandom");
         }
         exist.setInfatuation("0");
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
+
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
         return true;
     }
 
     public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMapper.getRecommendFandom(fandomQueryParam.getMemberSn(),pageBounds);
+        return fandomMapper.getRecommendFandom(fandomQueryParam.getMemberSn(), pageBounds);
     }
 
     @Override
@@ -140,18 +157,18 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
-        PageBounds pageBounds=new PageBounds(fandomQueryParam.getOffset(),fandomQueryParam.getLimit());
-        return fandomMapper.getFandomMembers(fandomQueryParam.getFandomId(),fandomQueryParam.getMemberSn(),pageBounds);
+        PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
+        return fandomMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
-        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(),fandomInfoParam.getMemberSn());
+        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getMemberSn());
     }
 
     @Override
     public PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
         PageBounds pageBounds = new PageBounds(searchFandomParam.getOffset(), searchFandomParam.getLimit());
-        return fandomMapper.searchFandoms(searchFandomParam.getMemberSn(),searchFandomParam.getSearchVal(), pageBounds);
+        return fandomMapper.searchFandoms(searchFandomParam.getMemberSn(), searchFandomParam.getSearchVal(), pageBounds);
     }
 
     public FandomInfoResult addFandom(AddFandomParam addFandomParam) {
@@ -164,7 +181,7 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomName(addFandomParam.getFandomName());
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
         this.fandomMapper.insert(fandomEntity);
-        return BeanTools.copyAs(fandomEntity,FandomInfoResult.class);
+        return BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
 
     }
 }
