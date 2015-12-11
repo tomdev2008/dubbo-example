@@ -16,9 +16,11 @@ public class CommentParam extends AbstractToken {
     @JsonProperty("commentator_sn")
     private String commentatorSn;
 
+    @Size(min = 1)
     @JsonProperty("comment_source")
     private String commentSource;
 
+    @Size(min = 1)
     @JsonProperty("comment_content")
     private String commentContent;
 
@@ -28,6 +30,10 @@ public class CommentParam extends AbstractToken {
 
     @JsonProperty("comment_parent_id")
     private Long commentParentId;
+
+    @Size(min = 1)
+    @JsonProperty("access_token")
+    private String accessToken;
 
     public String getCommentatorSn() {
         return commentatorSn;
@@ -68,5 +74,15 @@ public class CommentParam extends AbstractToken {
 
     public void setCommentParentId(Long commentParentId) {
         this.commentParentId = commentParentId;
+    }
+
+    @Override
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    @Override
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 }
