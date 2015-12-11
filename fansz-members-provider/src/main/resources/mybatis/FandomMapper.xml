@@ -230,8 +230,10 @@
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
             resultMap="fandomInfoResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        FROM feeds_fandom
+        <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>,
+        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="b"/></include>
+        FROM feeds_fandom a LEFT JOIN
+        connects_member_profile b ON a.fandom_creator_sn = b.sn
         <where>
             <if test="fandomName != null">
                 fandom_name = #{fandomName,jdbcType=VARCHAR},
