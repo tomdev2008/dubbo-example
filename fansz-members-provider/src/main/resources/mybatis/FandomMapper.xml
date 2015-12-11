@@ -26,6 +26,20 @@
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
 
+    <resultMap id="fandomAllInfoResultMap" type="com.fansz.members.model.fandom.FandomInfoResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+        <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
+        <result column="followed" property="followed" jdbcType="VARCHAR"/>
+        <result column="follower_count" property="followerCount" jdbcType="INTEGER"/>
+        <result column="post_count" property="postCount" jdbcType="INTEGER"/>
+        <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"  columnPrefix="u_"/>
+    </resultMap>
     <resultMap id="fandomInfoMap" type="com.fansz.members.model.fandom.FandomInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
@@ -206,10 +220,12 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="fandomInfoResultMap">
+            resultMap="fandomAllInfoResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        FROM feeds_fandom
+        <include refid="Base_Column_List"/>,
+        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="b"/></include>
+        FROM feeds_fandom a LEFT JOIN connects_member_profile b
+        ON a.fandom_creator_sn=b.sn
         <where>
             <if test="fandomName != null">
                 fandom_name = #{fandomName,jdbcType=VARCHAR},
