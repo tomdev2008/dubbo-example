@@ -298,8 +298,8 @@ public class DubboInvoker implements RpcInvoker {
             result = messageCenterApi.getMessageByMemberSn(queryMessageParam);
         }
         else if ("addJoinFandom".equals(method)) {
-            QueryMessageParam queryMessageParam  = JsonHelper.copyAs(params, QueryMessageParam.class);
-            //result = fandomApi.addJoinFandom();
+            AddFandomParam addFandomParam  = JsonHelper.copyAs(params, AddFandomParam.class);
+            result = fandomApi.addJoinFandom(addFandomParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }
