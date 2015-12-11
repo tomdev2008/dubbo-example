@@ -317,4 +317,13 @@
             or fandom_intro like  concat('%',#{searchVal},'%')
     </select>
 
+    <select id="getCountByFandomName" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            feeds_fandom
+        WHERE
+            fandom_name = #{fandomName,jdbcType=VARCHAR}
+    </select>
+
 </mapper>
