@@ -8,14 +8,19 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class GetPostFandomInfo {
     @JsonProperty("fandom_id")
     private Long fandomId;
+
     @JsonProperty("fandom_name")
     private String fandomName;
+
     @JsonProperty("fandom_parent_id")
     private String fandomParentId;
+
     @JsonProperty("fandom_creator_id")
     private String fandomCreatorId;
+
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
+
     @JsonProperty("fandom_intro")
     private String fandomIntro;
 

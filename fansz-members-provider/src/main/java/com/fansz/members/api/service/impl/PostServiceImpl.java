@@ -94,7 +94,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
         PageBounds pageBounds = new PageBounds(getMemberFandomPostsParam.getOffset(), getMemberFandomPostsParam.getLimit());
-        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(), pageBounds);
+        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(),null, pageBounds);
     }
 
     @Override
@@ -108,9 +108,9 @@ public class PostServiceImpl implements PostService {
         PageList<PostInfoResult> entities = null;
         PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
         if ("new".equals(postsQueryParam.getType())) {
-            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, pageBounds);
+            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null,postsQueryParam.getSn(), pageBounds);
         } else {
-            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, pageBounds);
+            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(),null,postsQueryParam.getSn(), pageBounds);
         }
 
         return entities;

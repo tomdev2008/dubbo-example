@@ -30,8 +30,7 @@ public class PostInfoResult implements Serializable {
     @JsonProperty("post_time")
     private Date postTime;
 
-    @JsonProperty("liked")
-    private String followed;
+    private String liked;
 
     @JsonProperty("like_count")
     private Long likes;
@@ -71,12 +70,12 @@ public class PostInfoResult implements Serializable {
         this.postNewsfeeds = postNewsfeeds;
     }
 
-    public String getFollowed() {
-        return followed;
+    public String getLiked() {
+        return liked;
     }
 
-    public void setFollowed(String followed) {
-        this.followed = followed;
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 
     public String getPostTitle() {

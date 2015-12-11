@@ -16,6 +16,7 @@ import com.fansz.members.model.fandom.AddFandomParam;
 import com.fansz.members.model.fandom.FandomInfoParam;
 import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.fandom.SearchFandomParam;
+import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.post.*;
 import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.profile.ModifyProfileParam;
@@ -71,6 +72,9 @@ public class DubboInvoker implements RpcInvoker {
 
     @Resource(name = "specialFocusProvider")
     private SpecialFocusApi specialFocusApi;
+
+    @Resource(name = "messageCenterProvider")
+    private MessageCenterApi messageCenterApi;
 
     public DubboInvoker() {
 
@@ -285,10 +289,17 @@ public class DubboInvoker implements RpcInvoker {
             result = profileApi.validateNickName(modifyProfileParam);
         } else if ("getAllSpecialFocus".equals(method)) {
             SpecialFocusParam specialFocusParam = JsonHelper.copyAs(params, SpecialFocusParam.class);
-            result =specialFocusApi.getSpecialFocusInfo(specialFocusParam);
+            result = specialFocusApi.getSpecialFocusInfo(specialFocusParam);
         } else if ("setSpecialFocusOrder".equals(method)) {
             ModifySpecialFocusParam modifySpecialFocusParam = JsonHelper.copyAs(params, ModifySpecialFocusParam.class);
-            result =specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
+            result = specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
+        } else if ("myRemindCenter".equals(method)) {
+            QueryMessageParam queryMessageParam  = JsonHelper.copyAs(params, QueryMessageParam.class);
+            result = messageCenterApi.getMessageByMemberSn(queryMessageParam);
+        }
+        else if ("addJoinFandom".equals(method)) {
+            AddFandomParam addFandomParam  = JsonHelper.copyAs(params, AddFandomParam.class);
+            result = fandomApi.addJoinFandom(addFandomParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }

@@ -4,6 +4,7 @@ import com.fansz.members.api.MessageCenterApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.MessageCenterService;
 import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.messagecenter.MessageCenterResult;
 import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -20,8 +21,8 @@ public class MessageCenterProvider extends AbstractProvider implements MessageCe
     private MessageCenterService messageCenterService;
 
     @Override
-    public CommonPagedResult<MessageCenterResult> getMessageByMemberSn(SearchParam searchParam) {
-        PageList<MessageCenterResult> pageList = messageCenterService.getMessageByMemberSn(searchParam);
+    public CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam) {
+        PageList<MessageCenterResult> pageList = messageCenterService.getMessageByMemberSn(queryMessageParam);
         return super.renderPagedSuccess(pageList);
     }
 }
