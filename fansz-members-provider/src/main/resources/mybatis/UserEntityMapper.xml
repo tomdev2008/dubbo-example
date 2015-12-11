@@ -48,6 +48,12 @@
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, signature,profile_createtime, profile_updatetime, member_type, member_status
   </sql>
 
+    <sql id="User_Column_List">
+        ${alias}.id u_id, ${alias}.sn u_sn, ${alias}.loginname u_loginname, ${alias}.password u_password, ${alias}.mobile u_mobile, ${alias}.email u_email,
+        ${alias}.nickname u_nickname, ${alias}.gender u_gender, ${alias}.birthday u_birthday, ${alias}.member_avatar u_member_avatar, ${alias}.signature u_signature,
+        ${alias}.profile_createtime u_profile_createtime, ${alias}.profile_updatetime u_profile_updatetime, ${alias}.member_type u_member_type, ${alias}.member_status u_member_status
+    </sql>
+
     <sql id="Member_Relation_Sql">
         SELECT CASE
             WHEN m.my_member_sn = #{sn,jdbcType=VARCHAR} THEN relation_status
