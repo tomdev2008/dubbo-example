@@ -13,6 +13,7 @@ public class QueryMessageParam extends PageParam implements AccessTokenAware,Ser
 
     private static final long serialVersionUID = -4323802033134201079L;
 
+    @JsonProperty("member_sn")
     private String memberSn;
 
     @JsonProperty("access_token")
