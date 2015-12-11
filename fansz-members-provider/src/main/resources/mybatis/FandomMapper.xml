@@ -91,6 +91,16 @@
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id, fandom_name, fandom_parent_id, fandom_admin_sn, fandom_creator_sn, fandom_avatar_url,
+        fandom_intro, fandom_create_time
+    </sql>
+
+    <sql id="Fandom_Column_List">
+        ${alias}.id, ${alias}.fandom_name, ${alias}.fandom_parent_id, ${alias}.fandom_admin_sn, ${alias}.fandom_creator_sn, ${alias}.fandom_avatar_url,
+        ${alias}.fandom_intro, ${alias}.fandom_create_time
+    </sql>
+
     <select id="findFandomInfo" resultMap="findFandomInfo" parameterType="java.lang.Long">
         select
         T1.fandom_name, T1.fandom_avatar_url, T1.fandom_intro, T1.fandom_create_time,
@@ -101,10 +111,8 @@
         where T1.id = #{id,jdbcType=BIGINT}
     </select>
 
-    <sql id="Base_Column_List">
-    id, fandom_name, fandom_parent_id, fandom_admin_sn, fandom_creator_sn, fandom_avatar_url,
-    fandom_intro, fandom_create_time
-  </sql>
+
+
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -220,12 +228,10 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="fandomAllInfoResultMap">
+            resultMap="fandomInfoResultMap">
         SELECT
-        <include refid="Base_Column_List"/>,
-        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="b"/></include>
-        FROM feeds_fandom a LEFT JOIN connects_member_profile b
-        ON a.fandom_creator_sn=b.sn
+        <include refid="Base_Column_List"/>
+        FROM feeds_fandom
         <where>
             <if test="fandomName != null">
                 fandom_name = #{fandomName,jdbcType=VARCHAR},
