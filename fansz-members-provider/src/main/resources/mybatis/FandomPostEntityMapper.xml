@@ -58,9 +58,9 @@
         <result column="comments" property="comments" jdbcType="BIGINT"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
         <association property="postMember" javaType="com.fansz.members.model.profile.UserInfoResult"
-                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"/>
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfo" javaType="com.fansz.members.model.post.GetPostFandomInfo"
-                     resultMap="getPostFandomInfo"/>
+                     resultMap="getPostFandomInfo" columnPrefix="fi_"/>
     </resultMap>
 
     <resultMap id="getPostFandomInfo" type="com.fansz.members.model.post.GetPostFandomInfo">

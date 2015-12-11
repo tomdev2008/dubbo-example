@@ -16,6 +16,7 @@ import com.fansz.members.model.fandom.AddFandomParam;
 import com.fansz.members.model.fandom.FandomInfoParam;
 import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.fandom.SearchFandomParam;
+import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.post.*;
 import com.fansz.members.model.profile.ContactQueryParam;
 import com.fansz.members.model.profile.ModifyProfileParam;
@@ -293,8 +294,12 @@ public class DubboInvoker implements RpcInvoker {
             ModifySpecialFocusParam modifySpecialFocusParam = JsonHelper.copyAs(params, ModifySpecialFocusParam.class);
             result = specialFocusApi.modifySpecialFocusInfo(modifySpecialFocusParam);
         } else if ("myRemindCenter".equals(method)) {
-            SearchParam searchParam = JsonHelper.copyAs(params, SearchParam.class);
-            result = messageCenterApi.getMessageByMemberSn(searchParam);
+            QueryMessageParam queryMessageParam  = JsonHelper.copyAs(params, QueryMessageParam.class);
+            result = messageCenterApi.getMessageByMemberSn(queryMessageParam);
+        }
+        else if ("addJoinFandom".equals(method)) {
+            QueryMessageParam queryMessageParam  = JsonHelper.copyAs(params, QueryMessageParam.class);
+            //result = fandomApi.addJoinFandom();
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }

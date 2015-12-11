@@ -2,8 +2,8 @@ package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.members.model.CommonPagedResult;
+import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.messagecenter.MessageCenterResult;
-import com.fansz.members.model.search.SearchParam;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -20,11 +20,12 @@ public interface MessageCenterApi {
 
     /**
      * 会员获取消息(支持分页)
-     * @param searchParam
+     *
+     * @param queryMessageParam
      * @return
      */
     @POST
     @Path("/get")
-    CommonPagedResult<MessageCenterResult> getMessageByMemberSn(SearchParam searchParam);
+    CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam);
 
 }
