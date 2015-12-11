@@ -123,7 +123,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> addJoinFandom(JoinFandomParam joinFandomParam) {
+    public CommonResult<NullResult> addJoinFandom(AddFandomParam addFandomParam) {
+        FandomInfoResult fandomInfoResult=fandomService.addFandom(addFandomParam);
+        JoinFandomParam joinFandomParam = new JoinFandomParam();
+        joinFandomParam.setMemberSn(fandomInfoResult.getFandomCreatorSn());
+        joinFandomParam.setFandomId(String.valueOf(fandomInfoResult.getId()));
         fandomService.joinFandom(joinFandomParam);
         return renderSuccess(PRESENCE);
     }
