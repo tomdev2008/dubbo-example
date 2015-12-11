@@ -45,14 +45,14 @@ public interface FandomPostEntityMapper {
      * @param fandomId
      * @return
      */
-    PageList<PostInfoResult> listTimedMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn, PageBounds pageBounds);
+    PageList<PostInfoResult> listTimedMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn,@Param("mySn") String mySn, PageBounds pageBounds);
 
     /**
      * 查询某人在某个fandom的所有帖子列表,按照关注人数倒序排列
      * @param fandomId
      * @return
      */
-    PageList<PostInfoResult> listHotMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn, PageBounds pageBounds);
+    PageList<PostInfoResult> listHotMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn,@Param("mySn") String mySn, PageBounds pageBounds);
 
 
     PageList<PostInfoResult> getPostsAllByMember(@Param("memberSn") String memberSn, PageBounds pageBounds);

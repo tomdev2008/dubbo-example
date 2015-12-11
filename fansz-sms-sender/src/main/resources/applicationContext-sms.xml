@@ -7,10 +7,10 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:conf/redis.properties"/>
+                                  location="classpath:/conf/redis.properties"/>
 
     <context:component-scan base-package="com.fansz.sms"/>
-    <util:properties id="smsProperties" location="classpath:conf/sms.properties"/>
+    <util:properties id="smsProperties" location="classpath:/conf/sms.properties"/>
 
     <bean id="redisPropertySource" class="org.springframework.core.env.MapPropertySource">
         <constructor-arg index="0" value="RedisSentinelConfiguration"/>
