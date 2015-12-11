@@ -206,7 +206,7 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="BaseResultMap">
+            resultMap="fandomInfoResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM feeds_fandom
