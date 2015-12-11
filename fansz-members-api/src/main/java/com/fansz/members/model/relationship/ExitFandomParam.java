@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
  */
 public class ExitFandomParam extends AbstractToken {
 
+    @Size(min=1)
     @JsonProperty("member_sn")
     private String memberSn;
 

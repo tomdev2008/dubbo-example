@@ -121,5 +121,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         PageList<SearchFandomResult> pageList = fandomService.searchFandoms(searchFandomParam);
         return super.renderPagedSuccess(pageList);
     }
+
+    @Override
+    public CommonResult<NullResult> addJoinFandom(JoinFandomParam joinFandomParam) {
+        fandomService.joinFandom(joinFandomParam);
+        return renderSuccess(PRESENCE);
+    }
 }
 

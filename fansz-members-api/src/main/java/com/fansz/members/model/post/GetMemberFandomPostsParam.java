@@ -3,14 +3,18 @@ package com.fansz.members.model.post;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
+
 /**
  * Created by LiZhe on 12/4/2015.
  */
 public class GetMemberFandomPostsParam extends PageParam{
 
+    @Size(min=1)
     @JsonProperty("fandom_id")
     private long fandomId;
 
+    @Size(min=1)
     @JsonProperty("member_sn")
     private String memberSn;
 
