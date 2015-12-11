@@ -4,6 +4,7 @@ package com.fansz.members.model.comment;
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 public class CommentParam extends AbstractToken {
 
+    @Size(min = 1)
     @JsonProperty("commentator_sn")
     private String commentatorSn;
 
@@ -20,6 +22,7 @@ public class CommentParam extends AbstractToken {
     @JsonProperty("comment_content")
     private String commentContent;
 
+    @Size(min = 1)
     @JsonProperty("post_id")
     private Long postId;
 
