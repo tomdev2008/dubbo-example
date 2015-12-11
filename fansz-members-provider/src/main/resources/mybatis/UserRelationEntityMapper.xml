@@ -162,7 +162,7 @@
     <select id="listAddMeRequest" parameterType="java.lang.String"
             resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
        SELECT a.*,b.relation_status relationship FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.my_member_sn=a.sn
-       WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR} AND b.relation_status='00'
+       WHERE b.friend_member_sn=#{sn,jdbcType=VARCHAR}
     </select>
 
     <select id="listMySendRequest" parameterType="java.lang.String"
