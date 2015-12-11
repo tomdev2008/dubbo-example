@@ -22,7 +22,7 @@ public interface PostCommentEntityMapper {
 
     int updateByPrimaryKey(PostCommentEntity record);
 
-    PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(Long postId, PageBounds pageBounds);
+    PageList<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(@Param("postId") Long postId,@Param("commentSource") String commentSource, PageBounds pageBounds);
 
 
     /**

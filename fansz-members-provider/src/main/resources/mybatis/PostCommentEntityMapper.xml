@@ -99,7 +99,7 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-    <select id="getCommentsByPostidFromFandom" resultType="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Long">
+    <select id="getCommentsByPostidFromFandom" resultType="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Object">
          SELECT
             t.id,
             t.post_id postId,
@@ -119,7 +119,7 @@
         LEFT JOIN feeds_member_post_comment p ON t.comment_parent_id = p.id
         LEFT JOIN connects_member_profile q ON p.commentator_sn = q.sn
         WHERE
-            t.post_id = #{id,jdbcType=BIGINT} AND t.comment_source='T';
+            t.post_id = #{postId,jdbcType=BIGINT} AND t.comment_source=#{commentSource,jdbcType=VARCHAR};
     </select>
 
     <!-- 删除我的评论 -->
