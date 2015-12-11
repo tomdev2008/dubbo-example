@@ -228,7 +228,7 @@
 
 
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
-            resultMap="fandomAllInfoResultMap">
+            resultMap="fandomInfoResultMap">
         SELECT
         <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>,
         <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="b"/></include>
