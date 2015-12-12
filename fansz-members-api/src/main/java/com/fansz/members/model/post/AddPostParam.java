@@ -2,6 +2,7 @@ package com.fansz.members.model.post;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,6 +25,7 @@ public class AddPostParam implements Serializable {
     @JsonProperty("post_title")
     private String postTitle;
 
+    @Size(min = 1)
     @JsonProperty("post_content")
     private String postContent;
 

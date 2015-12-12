@@ -56,12 +56,12 @@ public interface ProfileApi {
     /**
      * 校验用户的nickName是否唯一
      *
-     * @param modifyProfileParam
+     * @param nicknameCheckParam
      * @return
      */
     @POST
     @Path("/validate")
-    CommonResult<ProfileValidateResult> validateNickName(ModifyProfileParam modifyProfileParam);
+    CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam nicknameCheckParam);
 
     @POST
     @Path("/setMemberType")

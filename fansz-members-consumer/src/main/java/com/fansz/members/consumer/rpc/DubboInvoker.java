@@ -18,10 +18,7 @@ import com.fansz.members.model.fandom.FandomQueryParam;
 import com.fansz.members.model.fandom.SearchFandomParam;
 import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.post.*;
-import com.fansz.members.model.profile.ContactQueryParam;
-import com.fansz.members.model.profile.ModifyProfileParam;
-import com.fansz.members.model.profile.QueryProfileParam;
-import com.fansz.members.model.profile.SetMemberParam;
+import com.fansz.members.model.profile.*;
 import com.fansz.members.model.relationship.*;
 import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.model.search.SearchParam;
@@ -285,8 +282,8 @@ public class DubboInvoker implements RpcInvoker {
             PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
             result = postApi.getAllPostsByMember(postParam);
         } else if ("validateNickname".equals(method)) {
-            ModifyProfileParam modifyProfileParam = JsonHelper.copyAs(params, ModifyProfileParam.class);
-            result = profileApi.validateNickName(modifyProfileParam);
+            NicknameCheckParam nicknameCheckParam = JsonHelper.copyAs(params, NicknameCheckParam.class);
+            result = profileApi.validateNickName(nicknameCheckParam);
         } else if ("getAllSpecialFocus".equals(method)) {
             SpecialFocusParam specialFocusParam = JsonHelper.copyAs(params, SpecialFocusParam.class);
             result = specialFocusApi.getSpecialFocusInfo(specialFocusParam);

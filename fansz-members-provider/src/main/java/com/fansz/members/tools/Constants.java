@@ -52,6 +52,8 @@ public class Constants {
 
     public final static String NICK_NAME_REPATEDD="20401";//nickname重复
 
+    public final static String COMMENT_NOT_EXISTS="20501";//评论不存在
+
     public final static String USER_STATUS_OK = "1";
 
     public final static String RELATION_FRIEND="10";
