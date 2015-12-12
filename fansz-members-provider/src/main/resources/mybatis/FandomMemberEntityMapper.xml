@@ -131,9 +131,9 @@
     </select>
 
     <select id="findFandomsByMemberSn" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoMap">
-        SELECT b.id,b.fandom_name,b.fandom_parent_id,b.fandom_avatar_url,b.fandom_intro,b.fandom_create_time,c.sn,c.mobile,c.email,c.nickname, c.gender, c.birthday, c.member_avatar,
-        c.profile_createtime, c.profile_updatetime, c.member_type, c.member_status,
+            resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap">
+        SELECT b.id,b.fandom_name,b.fandom_parent_id,b.fandom_avatar_url,b.fandom_intro,b.fandom_create_time,
+        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="c"/></include>,
         (SELECT count(1) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id) follower_count,
         (SELECT count(1) FROM feeds_member_post_fandom WHERE fandom_id=a.fandom_id) post_count,
         (SELECT count(1)+IFNULL(infatuation,0) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and member_sn=#{memberSn,jdbcType=VARCHAR})followed
