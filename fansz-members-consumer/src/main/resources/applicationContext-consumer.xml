@@ -2,14 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
 	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <context:component-scan base-package="com.fansz.members.consumer"/>
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/dubbo.properties"/>
+
+    <util:properties id="apiProperties" location="classpath:/conf/api.properties" />
+
     <dubbo:application name="members-service-consumer" owner="fansz-consumer" organization="fansz"/>
 
     <dubbo:registry address="${dubbo.registry.address}"/>
@@ -21,30 +26,37 @@
     <!--<dubbo:reference id="userService2" interface="com.fansz.members.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
 
     <dubbo:reference interface="com.fansz.members.api.AccountApi" id="accountProvider" validation="true" timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
 
     <dubbo:reference interface="com.fansz.members.api.CommentApi" id="commentProvider" validation="true" timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
 
     <dubbo:reference interface="com.fansz.members.api.FandomApi" id="fandomProvider" validation="true" timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
 
     <dubbo:reference interface="com.fansz.members.api.PostApi" id="postProvider" validation="true" timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
 
     <dubbo:reference interface="com.fansz.members.api.ProfileApi" id="profileProvider" validation="true" timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
+
     <dubbo:reference interface="com.fansz.members.api.RelationShipApi" id="relationShipProvider" validation="true"
                      timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
+
     <dubbo:reference interface="com.fansz.members.api.VerifyCodeApi" id="verifyCodeProvider" validation="true"
                      timeout="2000"
-                     connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
+
     <dubbo:reference interface="com.fansz.members.api.SeedingSpotApi" id="seedingSpotProvider" validation="true"
                      timeout="2000"
-                     connections="100" protocol="dubbo"/>
-    <dubbo:reference interface="com.fansz.members.api.SpecialFocusApi" id="specialFocusProvider" validation="true" timeout="2000"
-                   connections="100" protocol="rest"/>
-    <dubbo:reference interface="com.fansz.members.api.MessageCenterApi" id="messageCenterProvider" validation="true" timeout="2000"
-                   connections="100" protocol="dubbo"/>
+                     connections="100" protocol="rest"/>
+
+    <dubbo:reference interface="com.fansz.members.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
+                     timeout="2000"
+                     connections="100" protocol="rest"/>
+
+    <dubbo:reference interface="com.fansz.members.api.MessageCenterApi" id="messageCenterProvider" validation="true"
+                     timeout="2000"
+                     connections="100" protocol="rest"/>
 </beans>

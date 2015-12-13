@@ -116,7 +116,7 @@ public final class NettyHttpService {
      */
     public static class Builder {
 
-        private static final int DEFAULT_HTTP_CHUNK_LIMIT = 150 * 1024 * 1024;// 默认最大150M
+        private static final int DEFAULT_HTTP_CHUNK_LIMIT = 2 * 1024 * 1024;// 默认最大2M
 
         private static final int DEFAULT_LISTEN_PORT = 80;// 默认绑定80端口
 
