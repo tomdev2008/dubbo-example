@@ -4,7 +4,7 @@
     <resultMap id="specialFocusResultMap" type="com.fansz.members.model.specialfocus.SpecialFocusResult">
         <result column="id" property="id" jdbcType="BIGINT"/>
         <result column="postion_tag" property="postionTag" jdbcType="BIGINT"/>
-        <association property="fandomInfoResult" resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap" notNullColumn="id" columnPrefix="sf_"/>
+        <association property="fandomInfoResult" resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap" notNullColumn="id" columnPrefix="sf_"/>
         <association property="userInfoResult" resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" notNullColumn="sn" columnPrefix="su_"/>
     </resultMap>
 
