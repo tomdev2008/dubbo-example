@@ -457,7 +457,7 @@
         LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
         LEFT JOIN feeds_fandom m ON f.fandom_id = m.id
         WHERE f.member_sn = #{memberSn,jdbcType=VARCHAR}
-        ORDER BY f.post_time
+        ORDER BY f.post_time DESC
     </select>
 
 </mapper>

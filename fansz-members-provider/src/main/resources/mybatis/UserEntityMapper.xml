@@ -374,9 +374,12 @@
         ,(<include refid="Member_Relation_Sql"><property name="alias" value="a"/></include>) relationship
         FROM connects_member_profile a
         <if test="searchKey != null">
-            WHERE nickname LIKE concat('%',#{searchKey},'%')
-            OR mobile LIKE concat('%',#{searchKey},'%')
-            OR loginname LIKE concat('%',#{searchKey},'%')
+--             WHERE nickname LIKE concat('%',#{searchKey},'%')
+--             OR mobile LIKE concat('%',#{searchKey},'%')
+--             OR loginname LIKE concat('%',#{searchKey},'%')
+            WHERE nickname = #{searchKey}
+            OR mobile = #{searchKey}
+            OR loginname = #{searchKey}
         </if>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">
