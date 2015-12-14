@@ -318,7 +318,7 @@
         or f.post_content LIKE concat('%',#{searchVal},'%')
     </select>
 
-    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="getPostInfoResultMap">
+    <select id="getPost" parameterType="com.fansz.members.model.post.GetPostByIdParam" resultMap="getPostInfoResultMap">
         SELECT
             p.id,
             p.post_title,

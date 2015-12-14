@@ -49,7 +49,7 @@ public interface PostApi {
      */
     @POST
     @Path("/get")
-    CommonResult<GetPostInfoResult> getPost(PostParam postParam);
+    CommonResult<GetPostInfoResult> getPost(GetPostByIdParam postParam);
 
 
     /**

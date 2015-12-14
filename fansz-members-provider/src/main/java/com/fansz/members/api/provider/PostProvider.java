@@ -34,7 +34,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      */
     public CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam) {
         FandomPostEntity fandomPostEntity = postService.addPost(addPostParam);
-        PostParam postParam = new PostParam();
+        GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(fandomPostEntity.getId());
         postParam.setMemberSn(addPostParam.getSn());
         return getPost(postParam);
@@ -64,7 +64,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public CommonResult<GetPostInfoResult> getPost(PostParam postParam) {
+    public CommonResult<GetPostInfoResult> getPost(GetPostByIdParam postParam) {
         GetPostInfoResult postInfoResult = postService.getPost(postParam);
         return renderSuccess(postInfoResult);
     }

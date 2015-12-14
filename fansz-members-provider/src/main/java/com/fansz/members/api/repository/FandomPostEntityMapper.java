@@ -2,10 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.entity.MemberPostEntity;
-import com.fansz.members.model.post.GetPostInfoResult;
-import com.fansz.members.model.post.PostInfoResult;
-import com.fansz.members.model.post.PostParam;
-import com.fansz.members.model.post.SearchPostResult;
+import com.fansz.members.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
@@ -37,7 +34,7 @@ public interface FandomPostEntityMapper {
 
     PageList<SearchPostResult> searchPosts(String searchVal, PageBounds pageBounds);
 
-    GetPostInfoResult getPost(PostParam postParam);
+    GetPostInfoResult getPost(GetPostByIdParam postParam);
 
 
     /**
