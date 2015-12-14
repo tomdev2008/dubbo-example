@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -65,6 +66,7 @@ public interface SeedingSpotApi {
      */
     @POST
     @Path("get")
+    @DubboxService("getRecommendInfo")
     CommonPagedResult<SeedingSpotResult> getSeedingSpot(SeedingSpotPrama seedingSpotPrama);
 
 }

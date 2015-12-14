@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -28,6 +29,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/show")
+    @DubboxService("getFriends")
     CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
 
     /**
@@ -37,6 +39,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialFriends/show")
+    @DubboxService("getSpecialFriend")
     CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam);
 
     /**
@@ -47,6 +50,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/add")
+    @DubboxService("requestToBeFriends")
     CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam);
 
     /**
@@ -57,6 +61,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/add")
+    @DubboxService("beMySpecialFriend")
     CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -67,6 +72,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/specialfriends/cancel")
+    @DubboxService("removeMySpecialFriend")
     CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam);
 
     /**
@@ -77,6 +83,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/agree")
+    @DubboxService("agreeAddRequest")
     CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
 
 
@@ -88,6 +95,7 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/requestMe")
+    @DubboxService("getFriendRequests")
     CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
     /**
@@ -98,5 +106,6 @@ public interface RelationShipApi {
      */
     @POST
     @Path("/friends/myRequest")
+    @DubboxService("getRequesters")
     CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);
 }

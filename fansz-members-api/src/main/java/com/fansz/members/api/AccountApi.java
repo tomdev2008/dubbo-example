@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.account.*;
@@ -25,6 +26,7 @@ public interface AccountApi {
      */
     @POST
     @Path("/register")
+    @DubboxService("register")
     CommonResult<NullResult> register(RegisterParam registerParam);
 
     /**
@@ -35,6 +37,7 @@ public interface AccountApi {
      */
     @POST
     @Path("/login")
+    @DubboxService("login")
     CommonResult<LoginResult> login(LoginParam loginParam);
 
     /**
@@ -45,6 +48,7 @@ public interface AccountApi {
      */
     @POST
     @Path("/password/reset")
+    @DubboxService("resetPassword")
     CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam);
 
 
@@ -56,6 +60,7 @@ public interface AccountApi {
      */
     @POST
     @Path("/password/change")
+    @DubboxService("modifyPassword")
     CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam);
 
     /**
@@ -67,5 +72,6 @@ public interface AccountApi {
      */
     @POST
     @Path("/logout")
+    @DubboxService("logout")
     CommonResult<NullResult> logout(LogoutParam logoutParam);
 }

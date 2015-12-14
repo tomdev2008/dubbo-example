@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -29,6 +30,7 @@ public interface PostApi {
      */
     @POST
     @Path("/add")
+    @DubboxService("publishPost")
     CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam);
 
     /**
@@ -39,6 +41,7 @@ public interface PostApi {
      */
     @POST
     @Path("/deletePost")
+    @DubboxService("deletePost")
     CommonResult<NullResult> removePost(RemovePostParam removePostrParam);
 
     /**
@@ -49,6 +52,7 @@ public interface PostApi {
      */
     @POST
     @Path("/get")
+    @DubboxService("getPost")
     CommonResult<GetPostInfoResult> getPost(GetPostByIdParam postParam);
 
 
@@ -59,6 +63,7 @@ public interface PostApi {
      */
     @POST
     @Path("/like")
+    @DubboxService("votePost")
     CommonResult<NullResult> addLike(AddLikeParam addLikeParam);
 
     /**
@@ -69,6 +74,7 @@ public interface PostApi {
      */
     @POST
     @Path("/deleteLike")
+    @DubboxService("deleteVote")
     CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam);
 
     /**
@@ -79,6 +85,7 @@ public interface PostApi {
      */
     @POST
     @Path("/listLike")
+    @DubboxService("listPostVoters")
     CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam);
 
     /**
@@ -89,6 +96,7 @@ public interface PostApi {
      */
     @POST
     @Path("/friends")
+    @DubboxService("listMyNewsfeeds")
     CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam);
 
     /**
@@ -99,6 +107,7 @@ public interface PostApi {
      */
     @POST
     @Path("/myFandoms")
+    @DubboxService("listMyFandomsPost")
     CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam);
 
 
@@ -110,6 +119,7 @@ public interface PostApi {
      */
     @POST
     @Path("/searchPosts")
+    @DubboxService("searchPosts")
     CommonPagedResult<SearchPostResult> searchPosts(SearchPostParam searchPostParam);
 
     /**
@@ -120,6 +130,7 @@ public interface PostApi {
      */
     @POST
     @Path("/memberPosts")
+    @DubboxService("listPostInFandom")
     CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
 
 
@@ -131,6 +142,7 @@ public interface PostApi {
      */
     @POST
     @Path("/fandom")
+    @DubboxService("listFandomPosts")
     CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param);
 
 
@@ -142,6 +154,7 @@ public interface PostApi {
      */
     @POST
     @Path("/memberPostsAll")
+    @DubboxService("getMemberAllPosts")
     CommonPagedResult<PostInfoResult> getAllPostsByMember(PostParam postParam);
 
 

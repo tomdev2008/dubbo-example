@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -28,10 +29,12 @@ public interface CommentApi {
      */
     @POST
     @Path("/create")
+    @DubboxService("commentPost")
     CommonResult<CommentQueryFromFandomResult> addPostComment(CommentParam commentPara);
 
     @POST
     @Path("/reply")
+    @DubboxService("replyComment")
     CommonResult<CommentQueryFromFandomResult> replyComment(CommentParam commentPara);
 
     /**
@@ -42,6 +45,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/del")
+    @DubboxService("deleteComment")
     CommonResult<NullResult> removeCommet(CommentDelParam commentDelParam);
 
     /**
@@ -51,6 +55,7 @@ public interface CommentApi {
      */
     @POST
     @Path("/fandom/show")
+    @DubboxService("listPostComments")
     CommonPagedResult<CommentQueryFromFandomResult> getCommentsByPostidFromFandom(CommentFromFandomQueryParam commentQueryFromFandom);
 
     /**

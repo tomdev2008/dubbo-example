@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -29,6 +30,7 @@ public interface SpecialFocusApi {
      */
     @POST
     @Path("/getInfo")
+    @DubboxService("getAllSpecialFocus")
     CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam);
 
     /**
@@ -47,6 +49,7 @@ public interface SpecialFocusApi {
      */
     @POST
     @Path("/modify")
+    @DubboxService("setSpecialFocusOrder")
     CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam);
 
     /**

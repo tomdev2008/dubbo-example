@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -32,6 +33,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/addFandom")
+    @DubboxService("createFandom")
     CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam);
 
     /**
@@ -41,6 +43,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/addJoin")
+    @DubboxService("addJoinFandom")
     CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam);
 
     /**
@@ -51,6 +54,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/join")
+    @DubboxService("joinFandom")
     CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
 
     /**
@@ -60,6 +64,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/beSpecial")
+    @DubboxService("beMySpecialFandom")
     CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
@@ -69,6 +74,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/notSpecial")
+    @DubboxService("removeMySpecialFandom")
     CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
@@ -79,6 +85,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/exit")
+    @DubboxService("exitFandom")
     CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
 
     /**
@@ -88,6 +95,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/myFandoms")
+    @DubboxService("getMyfandoms")
     CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam);
 
     /**
@@ -98,6 +106,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/list")
+    @DubboxService("listAllFandoms")
     CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam);
 
 
@@ -109,6 +118,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/recommend")
+    @DubboxService("getRecommendFandom")
     CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
     /**
@@ -119,6 +129,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/category")
+    @DubboxService("getFandomCategory")
     CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     /**
@@ -129,6 +140,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/members")
+    @DubboxService("getFandomMembers")
     CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 
     /* 获取圈子信息接口
@@ -138,12 +150,14 @@ public interface FandomApi {
      */
     @POST
     @Path("/info")
+    @DubboxService("getFandomInfo")
     CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
 
 
     @POST
     @Path("/fandom/search")
+    @DubboxService("searchFandoms")
     CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 
 

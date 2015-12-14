@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.messagecenter.MessageCenterResult;
@@ -26,6 +27,7 @@ public interface MessageCenterApi {
      */
     @POST
     @Path("/get")
+    @DubboxService("myRemindCenter")
     CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam);
 
 }

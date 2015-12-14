@@ -264,7 +264,7 @@ public class DubboInvoker implements RpcInvoker {
             SearchPostParam searchPostParam = JsonHelper.copyAs(params, SearchPostParam.class);
             result = postApi.searchPosts(searchPostParam);
         } else if ("getPost".equals(method)) {//25
-            PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
+            GetPostByIdParam postParam = JsonHelper.copyAs(params, GetPostByIdParam.class);
             result = postApi.getPost(postParam);
         } else if ("replyComment".equals(method)) {//26
             CommentParam commentParam = JsonHelper.copyAs(params, CommentParam.class);

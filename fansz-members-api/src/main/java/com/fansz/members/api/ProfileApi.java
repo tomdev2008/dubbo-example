@@ -1,6 +1,7 @@
 package com.fansz.members.api;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
@@ -26,6 +27,7 @@ public interface ProfileApi {
      */
     @Path("/show")
     @POST
+    @DubboxService("getProfile")
     CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam);
 
     /**
@@ -36,11 +38,13 @@ public interface ProfileApi {
      */
     @Path("/searchByKey")
     @POST
+    @DubboxService("searchMembers")
     CommonPagedResult<UserInfoResult> searchMembersByKey(SearchParam searchParam);
 
 
     @Path("/searchByType")
     @POST
+    @DubboxService("getFamousers")
     CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam);
 
     /**
@@ -51,6 +55,7 @@ public interface ProfileApi {
      */
     @POST
     @Path("/change")
+    @DubboxService("modifyMyProfile")
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
     /**
@@ -61,10 +66,12 @@ public interface ProfileApi {
      */
     @POST
     @Path("/validate")
+    @DubboxService("validateNickname")
     CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam nicknameCheckParam);
 
     @POST
     @Path("/setMemberType")
+    @DubboxService("setMemberType")
     CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam);
 
     /**
@@ -72,6 +79,7 @@ public interface ProfileApi {
      */
     @POST
     @Path("/album")
+    @DubboxService("getMembersAlbum")
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
 
     /**
@@ -79,6 +87,7 @@ public interface ProfileApi {
      */
     @POST
     @Path("/contacts/match")
+    @DubboxService("searchContacts")
     CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
 
 
