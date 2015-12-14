@@ -136,6 +136,10 @@ public final class NettyHttpService {
         }
 
 
+        public Builder setHttpChunkLimit(int httpChunkLimit){
+            this.httpChunkLimit=httpChunkLimit;
+            return this;
+        }
         /**
          * 设置监听端口，默认监听80端口
          */

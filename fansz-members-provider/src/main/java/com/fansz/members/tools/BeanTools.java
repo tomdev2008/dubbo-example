@@ -67,6 +67,16 @@ public final class BeanTools {
         }
     }
 
+    public static  <T> T copyMapAs(Map<Object, Object> params, Class<T> cls) {
+        try {
+            T instance = cls.newInstance();
+            org.apache.commons.beanutils.BeanUtils.populate(instance, params);
+            return instance;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     /**
      * 复制源对象集合到目标对象列表
      *

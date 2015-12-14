@@ -13,8 +13,6 @@
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/dubbo.properties"/>
 
-    <util:properties id="apiProperties" location="classpath:/conf/api.properties" />
-
     <dubbo:application name="members-service-consumer" owner="fansz-consumer" organization="fansz"/>
 
     <dubbo:registry address="${dubbo.registry.address}"/>

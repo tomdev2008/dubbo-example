@@ -37,5 +37,11 @@
         <property name="jdbcUrl" value="${jdbc.url}"/>
         <property name="user" value="${jdbc.username}"/>
         <property name="password" value="${jdbc.password}"/>
+        <!--连接池中保留的最大连接数 -->
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}"/>
+        <!-- 连接池中保留的最小连接数-->
+        <property name="minPoolSize" value="${jdbc.minPoolSize}"/>
+        <!-- 初始化连接池中的连接数，取值应在minPoolSize与maxPoolSize之间-->
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}"/>
     </bean>
 </beans>

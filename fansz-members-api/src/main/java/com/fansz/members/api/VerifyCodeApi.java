@@ -3,6 +3,7 @@ package com.fansz.members.api;
 import javax.ws.rs.*;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.verifycode.VerifyCodeParam;
@@ -22,6 +23,7 @@ public interface VerifyCodeApi {
      */
     @POST
     @Path("/reset")
+    @DubboxService("getVerifyCodeForReset")
     CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam);
 
 
@@ -33,5 +35,6 @@ public interface VerifyCodeApi {
      */
     @POST
     @Path("/register")
+    @DubboxService("getVerifyCodeForRegister")
     CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam);
 }

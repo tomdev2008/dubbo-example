@@ -49,8 +49,7 @@
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from feeds_fandom
-    where id = #{id,jdbcType=BIGINT}
+    DELETE from feeds_fandom WHERE id = #{id,jdbcType=BIGINT}
   </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomEntity">
@@ -189,7 +188,7 @@
     </select>
 
     <select id="getFandomDetail" resultMap="fandomAllInfoResultMap">
-        SELECT  f.*,p.member_avatar,p.sn u_sn,p.nickname u_nickname,
+        SELECT  f.*,p.member_avatar,p.sn u_sn,p.nickname u_nickname,p.member_avatar u_member_avatar,
         (SELECT COUNT(1)+IFNULL(t.infatuation,0) FROM feeds_member_fandom t WHERE t.fandom_id=f.id AND t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
         (SELECT COUNT(1) from feeds_member_post_fandom g WHERE g.fandom_id=f.id) post_count,
         (SELECT COUNT(1) from feeds_member_fandom t WHERE t.fandom_id=f.id) follower_count

@@ -40,11 +40,4 @@ public interface AccountService {
      * @param logoutParam
      */
     void logout(LogoutParam logoutParam);
-
-    /**
-     * 根据accessToken返回session信息
-     * @param accessToken
-     * @return
-     */
-    SessionModel getSession(String accessToken);
 }

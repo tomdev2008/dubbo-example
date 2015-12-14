@@ -2,6 +2,8 @@ package com.fansz.members.consumer.rpc;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
 import com.fansz.members.consumer.utils.JsonHelper;
+import com.fansz.members.extension.DubboxService;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +12,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ws.rs.Path;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component("dynamicDubboInvoker")
@@ -27,22 +27,27 @@ public class DynamicDubboInvoker implements RpcInvoker {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Resource(name = "apiProperties")
-    private Properties properties;
-
     public DynamicDubboInvoker() {
 
     }
 
     @PostConstruct
     private void init() throws Exception {
-        for (Object key : properties.keySet()) {
-            String value = properties.getProperty(String.valueOf(key));
-            String[] values = value.split(",");
-            String className = values[0];
-            String methodName = values[1];
-            Method m = Class.forName(className).getMethod(methodName);
-            methodMap.put(String.valueOf(key), m);
+        Reflections reflections = new Reflections("com.fansz.members.api");
+        Set<Class<?>> clsSet = reflections.getTypesAnnotatedWith(Path.class);
+        for (Class<?> cls : clsSet) {
+            Method[] methods = cls.getDeclaredMethods();
+            for (Method method : methods) {
+                DubboxService dubboxService = method.getAnnotation(DubboxService.class);
+                if (dubboxService != null) {
+                    if(methodMap.get(dubboxService.value())!=null){
+                        logger.error("Api method name repeated:{}",dubboxService.value());
+                    }
+                    methodMap.put(dubboxService.value(), method);
+                } else {
+                    logger.warn("Api without DubboxService annotation,class-{},method-{}", cls.getCanonicalName(),method.getName());
+                }
+            }
         }
     }
 

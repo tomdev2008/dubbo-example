@@ -5,6 +5,7 @@ import com.fansz.members.api.model.SessionModel;
 import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
+import com.fansz.members.api.service.SessionService;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.account.*;
@@ -38,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     private VerifyCodeService verifyCodeService;
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private SessionService sessionService;
 
     @Override
     public UserEntity register(RegisterParam registerParam) {
@@ -76,19 +77,6 @@ public class AccountServiceImpl implements AccountService {
         return user;
     }
 
-    private void putSessionInRedis(String accessToken, UserEntity user) {
-        String key = "session:" + accessToken;
-        Map<String, String> session = new HashMap<>();
-        session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
-        session.put("accessToken", UUIDTools.getUniqueId());
-        session.put("refreshToken", UUIDTools.getUniqueId());
-        session.put("id", String.valueOf(user.getId()));
-        session.put("sn", user.getSn());
-        //Date expiresAt = DateTools.wrapDate(new Date(), "m+" + MembersConstant.EXPIRED_PERIOD);
-        //session.put("expiredAt", String.valueOf(expiresAt.getTime()));
-        session.put("expiredAt", "-1");
-        redisTemplate.boundHashOps(key).putAll(session);
-    }
 
     /**
      * 修改密码
@@ -166,28 +154,13 @@ public class AccountServiceImpl implements AccountService {
         result.setRefreshToken(refreshKey);
         result.setExpiresAt(-1);
 
-        putSessionInRedis(accessKey, user);
+        sessionService.saveSession(accessKey, user);
         return result;
     }
 
     @Override
     public void logout(LogoutParam logoutParam) {
-        redisTemplate.delete("sessions:" + logoutParam.getAccessToken());
+        sessionService.invalidateSession(logoutParam.getAccessToken());
     }
 
-    @Override
-    public SessionModel getSession(String accessToken) {
-        String key = "session:" + accessToken;
-        Map<Object, Object> sessionMap = redisTemplate.boundHashOps(key).entries();
-        if (sessionMap != null) {
-            String id = (String) sessionMap.get("id");
-            String sn = (String) sessionMap.get("sn");
-            String refreshToken = (String) sessionMap.get("refreshToken");
-            String lastAccessTime = (String) sessionMap.get("lastAccessTime");
-
-            SessionModel verifyCodeEntity = new SessionModel(Long.valueOf(id), sn, accessToken, refreshToken, Long.valueOf(lastAccessTime));
-            return verifyCodeEntity;
-        }
-        return null;
-    }
 }

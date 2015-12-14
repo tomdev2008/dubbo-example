@@ -13,11 +13,10 @@ public class PostParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = -1772542305173463716L;
 
-    @Size(min=1)
     @JsonProperty("post_id")
     private Long postId;
 
-    @Size(min=1)
+    @Size(min = 1)
     @JsonProperty("member_sn")
     private String memberSn;
 
