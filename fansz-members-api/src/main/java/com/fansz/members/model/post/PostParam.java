@@ -3,6 +3,7 @@ package com.fansz.members.model.post;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -11,9 +12,12 @@ import java.io.Serializable;
 public class PostParam extends PageParam implements Serializable {
 
     private static final long serialVersionUID = -1772542305173463716L;
+
+    @Size(min=1)
     @JsonProperty("post_id")
     private Long postId;
 
+    @Size(min=1)
     @JsonProperty("member_sn")
     private String memberSn;
 
