@@ -117,8 +117,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PageList<PostInfoResult> getPostsAllByMember(PostParam postParam) {
+    public PageList<PostInfoResult> getPostsAllByMember(GetMemberPostsParam postParam) {
         PageBounds pageBounds = new PageBounds(postParam.getOffset(), postParam.getLimit());
-        return fandomPostEntityMapper.getPostsAllByMember(postParam.getMemberSn(), pageBounds);
+        return fandomPostEntityMapper.getPostsAllByMember(postParam.getMemberSn(), postParam.getFriendSn(), pageBounds);
     }
 }

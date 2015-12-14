@@ -154,7 +154,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<PostInfoResult> getAllPostsByMember(PostParam postParam) {
+    public CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam) {
         PageList<PostInfoResult> PostInfoList = postService.getPostsAllByMember(postParam);
         return renderPagedSuccess(PostInfoList);
     }

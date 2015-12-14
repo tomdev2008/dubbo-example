@@ -142,7 +142,7 @@ public interface PostApi {
      */
     @POST
     @Path("/memberPostsAll")
-    CommonPagedResult<PostInfoResult> getAllPostsByMember(PostParam postParam);
+    CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam);
 
 
 }
