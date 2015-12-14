@@ -6,3 +6,4 @@
 !.gitignore
 /.idea
 *.iml
+.DS_Store
