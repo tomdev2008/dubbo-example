@@ -28,6 +28,8 @@ public class Constants {
 
     public final static String USER_EXISTS = "20005";//用户已存在
 
+    public final static String INTERVAL_IS_TOO_SHORT = "20006";//发送间隔过短
+
     public final static String RELATION_FRIEND_NO_EXISTS="20200";//无法添加好友
 
     public final static String RELATION_IS_FRIEND="20201";//已经是好友
@@ -51,6 +53,8 @@ public class Constants {
     public final static String POST_NOT_ALLOW_DEL="20302";//无法删除他人帖子
 
     public final static String NICK_NAME_REPATEDD="20401";//nickname重复
+
+    public final static String COMMENT_NOT_EXISTS="20501";//评论不存在
 
     public final static String USER_STATUS_OK = "1";
 

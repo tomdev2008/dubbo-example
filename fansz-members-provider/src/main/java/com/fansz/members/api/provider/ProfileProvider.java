@@ -80,12 +80,12 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     /**
      * 校验用户的nickName是否唯一
      *
-     * @param modifyProfileParam
+     * @param NicknameCheckParam
      * @return
      */
     @Override
-    public CommonResult<ProfileValidateResult> validateNickName(ModifyProfileParam modifyProfileParam) {
-        int total = profileService.isExistsNickname(modifyProfileParam.getNickname(), modifyProfileParam.getSn());
+    public CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam NicknameCheckParam) {
+        int total = profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getSn());
         ProfileValidateResult result = new ProfileValidateResult();
         result.setUnique(total > 0 ? false : true);
         return renderSuccess(result);

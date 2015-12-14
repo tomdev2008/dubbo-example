@@ -7,11 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
-/**
- * Created by allan on 15/11/26.
- */
-public class CommentDelParam extends AbstractToken {
 
+public class CommentDelParam extends AbstractToken {
 
     @NotNull
     @JsonProperty("comment_id")

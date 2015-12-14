@@ -124,6 +124,6 @@
 
     <!-- 删除我的评论 -->
     <delete id="deleteMyComment">
-        DELETE FROM feeds_member_post_comment WHERE id = #{id} AND commentator_sn = #{sn}
+        DELETE FROM feeds_member_post_comment WHERE id = #{id,jdbcType=BIGINT} AND commentator_sn = #{sn,jdbcType=VARCHAR}
     </delete>
 </mapper>

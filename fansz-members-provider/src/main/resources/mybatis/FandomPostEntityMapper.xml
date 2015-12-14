@@ -35,7 +35,7 @@
         <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
-                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap" columnPrefix="fi_"/>
+                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap" columnPrefix="fi_"/>
     </resultMap>
 
 

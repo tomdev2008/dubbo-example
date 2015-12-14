@@ -4,11 +4,13 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.PostCommentEntity;
 import com.fansz.members.api.repository.PostCommentEntityMapper;
 import com.fansz.members.api.service.CommentService;
+import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
 import com.fansz.members.model.comment.CommentFromFandomQueryParam;
 import com.fansz.members.model.comment.CommentQueryFromFandomResult;
 import com.fansz.members.tools.BeanTools;
+import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,10 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public void removeComment(CommentDelParam commentDelParam) {
-        postCommentEntityMapper.deleteMyComment(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
+        int deleted=postCommentEntityMapper.deleteMyComment(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
+        if(deleted!=1){
+            throw new ApplicationException(Constants.COMMENT_NOT_EXISTS,"Comment not exists");
+        }
     }
 
     @Override

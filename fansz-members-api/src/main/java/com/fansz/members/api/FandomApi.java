@@ -41,7 +41,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/fandom/addJoin")
-    CommonResult<NullResult> addJoinFandom(AddFandomParam addFandomParam);
+    CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam);
 
     /**
      * 加入fandom

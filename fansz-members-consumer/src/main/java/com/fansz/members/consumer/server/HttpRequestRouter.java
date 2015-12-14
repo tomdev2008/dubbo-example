@@ -23,7 +23,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
 
     private final String ERROR = "{\"header\": {},\"response\": [{\"method\": \"\",\"status\": \"10008\",\"message\": \"Error parameter format\",\"result\": {}}]}";
 
-    @Resource(name = "dubboInvoker")
+    @Resource(name = "dynamicDubboInvoker")
     private RpcInvoker rpcInvoker;
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestRouter.class);

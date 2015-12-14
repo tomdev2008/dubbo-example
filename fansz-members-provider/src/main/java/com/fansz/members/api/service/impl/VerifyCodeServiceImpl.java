@@ -54,10 +54,10 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
                 template = smsProperties.getProperty("template.verify.register");
                 break;
             case RESET://重置密码时,要求号码已经存在
-                /**if (exists == 0) {
-                    throw new ApplicationException(Constants.MOBILE_NOT_FOUND, "Mobile does't belong to yours");
+                if (exists == 0) {
+                    throw new ApplicationException(Constants.MOBILE_NOT_FOUND, "Mobile does't belong to you");
 
-                }*/
+                }
                 template = smsProperties.getProperty("template.verify.reset");
                 break;
         }
@@ -69,34 +69,35 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     private boolean createVerifyCode(String mobile, String key, String template) {
         String createTime = (String) redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).get(key + ".createTime");
 
-        if (isAllowed(createTime)) {
-            Map<String, String> verifyMap = new HashMap<>();
-            verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
-
-            long currentTime = System.currentTimeMillis();
-            long validPeriod = Long.valueOf(smsProperties.getProperty("period.verify", "10"));//单位为分钟
-            long expiredTime = currentTime + validPeriod * 60 * 1000;
-            verifyMap.put(key + ".createTime", currentTime + "");
-            verifyMap.put(key + ".expiredTime", expiredTime + "");
-            redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).putAll(verifyMap);
-
-
-            //通过队列,异步方式发送短信
-            String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
-            //Send Message
-            SmsMessage sms = new SmsMessage(messgeContent, mobile);
-            String message = JsonHelper.toString(sms);
-            redisTemplate.convertAndSend("sms", message);
-            return true;
+        if (!isAllowed(createTime)) {
+            throw new ApplicationException(Constants.INTERVAL_IS_TOO_SHORT, "Interval is too short");
         }
-        return false;
+        Map<String, String> verifyMap = new HashMap<>();
+        verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
+
+        long currentTime = System.currentTimeMillis();
+        long validPeriod = Long.valueOf(smsProperties.getProperty("period.verify", "10"));//单位为分钟
+        long expiredTime = currentTime + validPeriod * 60 * 1000;
+        verifyMap.put(key + ".createTime", currentTime + "");
+        verifyMap.put(key + ".expiredTime", expiredTime + "");
+        redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).putAll(verifyMap);
+
+
+        //通过队列,异步方式发送短信
+        String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
+        //Send Message
+        SmsMessage sms = new SmsMessage(messgeContent, mobile);
+        String message = JsonHelper.toString(sms);
+        redisTemplate.convertAndSend("sms", message);
+        return true;
     }
 
     private boolean isAllowed(String createTime) {
         if (createTime == null || createTime.trim().length() == 0) {
             return true;
         }
-        return System.currentTimeMillis() - Long.valueOf(createTime) >= 2 * 60 * 1000;
+        long interval = Long.valueOf(smsProperties.getProperty("sms.send.interval", "1"));//单位为分钟
+        return System.currentTimeMillis() - Long.valueOf(createTime) >= interval * 60 * 1000;
     }
 
     public VerifyCodeModel queryVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
@@ -119,6 +120,6 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Override
     public boolean isValid(VerifyCodeModel verifyCodeEntity) {
-        return verifyCodeEntity.getExpireTime()>System.currentTimeMillis();
+        return verifyCodeEntity.getExpireTime() > System.currentTimeMillis();
     }
 }

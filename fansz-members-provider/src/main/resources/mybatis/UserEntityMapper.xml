@@ -377,9 +377,9 @@
 --             WHERE nickname LIKE concat('%',#{searchKey},'%')
 --             OR mobile LIKE concat('%',#{searchKey},'%')
 --             OR loginname LIKE concat('%',#{searchKey},'%')
-            WHERE nickname = #{searchKey}
-            OR mobile = #{searchKey}
-            OR loginname = #{searchKey}
+            WHERE nickname = #{searchKey,jdbcType=VARCHAR}
+            OR mobile = #{searchKey,jdbcType=VARCHAR}
+            OR loginname = #{searchKey,jdbcType=VARCHAR}
         </if>
     </select>
     <update id="setMemberType" parameterType="com.fansz.members.api.entity.UserEntity">

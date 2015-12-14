@@ -43,8 +43,6 @@ public interface FandomMapper {
 
     PageList<ContactInfoResult> getFandomMembers(@Param("fandomId")String fandomId,@Param("memberSn")String memberSn, PageBounds pageBounds);
 
-    SingleFandomEntity findFandomInfo(@Param("id") long id);
-
     PageList<SearchFandomResult> searchFandoms(@Param("memberSn")String memberSn, @Param("searchVal")String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);

@@ -36,6 +36,7 @@ public interface AccountApi {
     @POST
     @Path("/login")
     CommonResult<LoginResult> login(LoginParam loginParam);
+
     /**
      * 重置密码接口
      *
