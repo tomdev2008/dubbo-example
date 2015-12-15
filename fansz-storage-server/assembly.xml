@@ -21,7 +21,7 @@
 			<outputDirectory>/bin</outputDirectory>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources</directory>
+			<directory>env/${env}</directory>
 			<outputDirectory>/conf</outputDirectory>
 		</fileSet>
 	</fileSets>

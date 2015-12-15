@@ -24,7 +24,7 @@
     <!--<dubbo:reference id="userService2" interface="com.fansz.members.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
 
     <dubbo:reference interface="com.fansz.members.api.AccountApi" id="accountProvider" validation="true" timeout="2000"
-                     connections="100" protocol="rest"/>
+                     connections="100" protocol="rest" client="netty"/>
 
     <dubbo:reference interface="com.fansz.members.api.CommentApi" id="commentProvider" validation="true" timeout="2000"
                      connections="100" protocol="rest"/>

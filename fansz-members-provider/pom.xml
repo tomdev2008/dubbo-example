@@ -298,6 +298,12 @@
             </properties>
         </profile>
         <profile>
+            <id>integration</id>
+            <properties>
+                <env>integration</env>
+            </properties>
+        </profile>
+        <profile>
             <id>production</id>
             <properties>
                 <env>production</env>
