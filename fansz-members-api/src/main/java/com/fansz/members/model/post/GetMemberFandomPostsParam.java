@@ -3,18 +3,19 @@ package com.fansz.members.model.post;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  * Created by LiZhe on 12/4/2015.
  */
-public class GetMemberFandomPostsParam extends PageParam{
+public class GetMemberFandomPostsParam extends PageParam {
 
-    @Size(min=1)
+    @NotNull
     @JsonProperty("fandom_id")
-    private long fandomId;
+    private Long fandomId;
 
-    @Size(min=1)
+    @Size(min = 1)
     @JsonProperty("member_sn")
     private String memberSn;
 
@@ -22,11 +23,11 @@ public class GetMemberFandomPostsParam extends PageParam{
     private String accessToken;
 
 
-    public long getFandomId() {
+    public Long getFandomId() {
         return fandomId;
     }
 
-    public void setFandomId(long fandomId) {
+    public void setFandomId(Long fandomId) {
         this.fandomId = fandomId;
     }
 
