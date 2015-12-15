@@ -2,6 +2,7 @@ package com.fansz.members.model.relationship;
 
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -11,11 +12,11 @@ import java.io.Serializable;
  */
 public class AddFriendParam extends AbstractToken {
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("member_sn")
     private String myMemberSn;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("friend_sn")
     private String friendMemberSn;
 

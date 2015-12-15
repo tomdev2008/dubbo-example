@@ -1,17 +1,17 @@
 package com.fansz.members.model.profile;
 
 import com.fansz.members.model.AbstractToken;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 
 
 public class NicknameCheckParam extends AbstractToken{
 
-    @Size(min=1)
-
+    @NotBlank
     private String sn;
 
-    @Size(min=1)
+    @NotBlank
     private String nickname;
 
     public String getSn() {

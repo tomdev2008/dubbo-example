@@ -2,6 +2,7 @@ package com.fansz.members.model.comment;
 
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +18,7 @@ public class CommentDelParam extends AbstractToken {
     @JsonProperty("post_id")
     private Long postId;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("commentator_sn")
     private String commentatorSn;
 

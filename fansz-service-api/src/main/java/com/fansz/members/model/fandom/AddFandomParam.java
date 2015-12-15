@@ -2,6 +2,7 @@ package com.fansz.members.model.fandom;
 
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 
@@ -10,11 +11,11 @@ import javax.validation.constraints.Size;
  */
 public class AddFandomParam extends AbstractToken {
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("fandom_creator_sn")
     private String fandomCreatorSn;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("fandom_name")
     private String fandomName;
 
