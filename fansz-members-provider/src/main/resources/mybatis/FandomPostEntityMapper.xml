@@ -35,7 +35,7 @@
         <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
                      resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
-                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap" columnPrefix="fi_"/>
+                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomInfoResultMap" columnPrefix="fi_"/>
     </resultMap>
 
 
@@ -318,7 +318,7 @@
         or f.post_content LIKE concat('%',#{searchVal},'%')
     </select>
 
-    <select id="getPost" parameterType="com.fansz.members.model.post.GetPostByIdParam" resultMap="getPostInfoResultMap">
+    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="getPostInfoResultMap">
         SELECT
             p.id,
             p.post_title,
@@ -456,7 +456,7 @@
             feeds_member_post_fandom f
         LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
         LEFT JOIN feeds_fandom m ON f.fandom_id = m.id
-        WHERE f.member_sn = #{memberSn,jdbcType=VARCHAR}
+        WHERE f.member_sn = #{friendSn,jdbcType=VARCHAR}
         ORDER BY f.post_time DESC
     </select>
 

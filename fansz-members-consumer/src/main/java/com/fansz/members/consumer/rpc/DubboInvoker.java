@@ -279,7 +279,7 @@ public class DubboInvoker implements RpcInvoker {
             SeedingSpotPrama seedingSpotPrama = JsonHelper.copyAs(params, SeedingSpotPrama.class);
             result = seedingSpotApi.getSeedingSpot(seedingSpotPrama);
         } else if ("getMemberAllPosts".equals(method)) {
-            PostParam postParam = JsonHelper.copyAs(params, PostParam.class);
+            GetMemberPostsParam postParam = JsonHelper.copyAs(params, GetMemberPostsParam.class);
             result = postApi.getAllPostsByMember(postParam);
         } else if ("validateNickname".equals(method)) {
             NicknameCheckParam nicknameCheckParam = JsonHelper.copyAs(params, NicknameCheckParam.class);

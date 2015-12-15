@@ -38,5 +38,5 @@ public interface PostService {
 
     PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam);
 
-    PageList<PostInfoResult> getPostsAllByMember(PostParam postParam);
+    PageList<PostInfoResult> getPostsAllByMember(GetMemberPostsParam postParam);
 }

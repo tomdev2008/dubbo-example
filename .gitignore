@@ -5,3 +5,5 @@
 /fansz-storage-server/target/
 !.gitignore
 /.idea
+*.iml
+.DS_Store

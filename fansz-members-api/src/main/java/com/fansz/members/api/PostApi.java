@@ -155,7 +155,7 @@ public interface PostApi {
     @POST
     @Path("/memberPostsAll")
     @DubboxService("getMemberAllPosts")
-    CommonPagedResult<PostInfoResult> getAllPostsByMember(PostParam postParam);
+    CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam);
 
 
 }
