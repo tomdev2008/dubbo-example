@@ -1,4 +1,0 @@
-/target
-target/*
-!.gitignore
-members-consumer.iml

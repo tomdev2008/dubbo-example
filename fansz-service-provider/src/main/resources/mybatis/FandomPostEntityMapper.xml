@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.members.api.repository.FandomPostEntityMapper">
+
+    <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomPostEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_sn" property="memberSn" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="WholeResultMap" type="com.fansz.members.api.model.FandomPostWholeEntity">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_sn" property="memberSn" jdbcType="VARCHAR"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="likeCount" property="likeCount" jdbcType="BIGINT"/>
+    </resultMap>
+
+    <resultMap id="postInfoResultMap" type="com.fansz.members.model.post.PostInfoResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="liked" property="liked" jdbcType="VARCHAR"/>
+        <result column="likes" property="likes" jdbcType="BIGINT"/>
+        <result column="comments" property="comments" jdbcType="BIGINT"/>
+        <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
+        <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
+                     resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap" columnPrefix="fi_"/>
+    </resultMap>
+
+
+    <resultMap id="getPostInfoResultMap" type="com.fansz.members.model.post.GetPostInfoResult">
+        <id column="id" property="postId" jdbcType="BIGINT"/>
+        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
+        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
+        <result column="likes" property="likes" jdbcType="BIGINT"/>
+        <result column="liked" property="liked" jdbcType="BIGINT"/>
+        <result column="comments" property="comments" jdbcType="BIGINT"/>
+        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <association property="postMember" javaType="com.fansz.members.model.profile.UserInfoResult"
+                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
+        <association property="fandomInfo" javaType="com.fansz.members.model.post.GetPostFandomInfo"
+                     resultMap="getPostFandomInfo" columnPrefix="fi_"/>
+    </resultMap>
+
+    <resultMap id="getPostFandomInfo" type="com.fansz.members.model.post.GetPostFandomInfo">
+        <id column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
+        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="VARCHAR"/>
+        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
+        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    id, member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_post_fandom
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
+
+        select
+        <include refid="Base_Column_List"/>, likeCount
+        from feeds_member_post_fandom post,
+        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+        where post.id = post_count.post_id
+        and post.fandom_id = #{id,jdbcType=BIGINT}
+        order by post.post_time DESC
+    </select>
+
+    <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from feeds_member_post_fandom
+        where fandom_id = #{id,jdbcType=BIGINT}
+
+        select
+        <include refid="Base_Column_List"/>
+        , likeCount
+        from feeds_member_post_fandom post,
+        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
+        where post.id = post_count.post_id
+        and post.fandom_id = #{id,jdbcType=BIGINT}
+        order by likeCount DESC
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from feeds_member_post_fandom
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+    <insert id="insert" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        insert into feeds_member_post_fandom (member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time)
+        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR},
+        #{postContent,jdbcType=VARCHAR},#{postNewsfeeds,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        insert into feeds_member_post_fandom
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">
+                member_sn,
+            </if>
+            <if test="fandomId != null">
+                fandom_id,
+            </if>
+            <if test="postTitle != null">
+                post_title,
+            </if>
+            <if test="postContent != null">
+                post_content,
+            </if>
+            <if test="postNewsfeeds!=null">
+                post_newsfeeds,
+            </if>
+            <if test="postTime != null">
+                post_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberSn != null">
+                #{memberSn,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomId != null">
+                #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="postTitle != null">
+                #{postTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="postContent != null">
+                #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="postNewsfeeds!=null">
+                #{postNewsfeeds,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                #{postTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+        update feeds_member_post_fandom
+        <set>
+            <if test="memberSn != null">
+                member_sn = #{memberSn,jdbcType=BIGINT},
+            </if>
+            <if test="fandomId != null">
+                fandom_id = #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="postTitle != null">
+                post_title=#{postTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="postContent != null">
+                post_content = #{postContent,jdbcType=VARCHAR},
+            </if>
+            <if test="postNewsfeeds != null">
+                post_newsfeeds = #{postNewsfeeds,jdbcType=VARCHAR},
+            </if>
+            <if test="postTime != null">
+                post_time = #{postTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomPostEntity">
+    update feeds_member_post_fandom
+    set member_sn = #{memberSn,jdbcType=VARCHAR},
+      fandom_id = #{fandomId,jdbcType=BIGINT},
+      post_title=#{postTitle,jdbcType=VARCHAR},
+      post_content = #{postContent,jdbcType=VARCHAR},
+      post_newsfeeds = #{postNewsfeeds,jdbcType=VARCHAR},
+      post_time = #{postTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            T1.id,
+            T1.post_title,
+            T1.post_content,
+            T1.post_newsfeeds,
+            T1.post_time,
+            T2.sn ui_sn,
+            T2.nickname ui_nickname,
+            T2.mobile ui_mobile,
+            T2.email ui_email,
+            T2.gender ui_gender,
+            T2.member_avatar ui_member_avatar,
+            d.id fi_id,
+            d.fandom_name fi_fandom_name,
+            d.fandom_intro fi_fandom_intro,
+            d.fandom_avatar_url fi_fandom_avatar_url,
+            (SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like
+                WHERE
+                    post_id = T1.id
+                    AND member_sn=#{memberSn,jdbcType=VARCHAR}
+            ) liked,
+                (SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like
+                WHERE
+                    post_id = T1.id
+            ) likes,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_comment
+                WHERE
+                    post_id = T1.id
+            ) comments
+        FROM
+            feeds_member_fandom c,
+            feeds_member_post_fandom T1,
+            connects_member_profile T2,
+            feeds_fandom d
+        WHERE
+            c.member_sn = #{memberSn,jdbcType=VARCHAR}
+        AND c.fandom_id = T1.fandom_id
+        AND T1.member_sn = T2.sn
+        AND c.fandom_id=d.id
+        order by T1.id desc
+    </select>
+
+    <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
+            SELECT
+            a.*,
+            b.sn ui_sn,
+            b.nickname ui_nickname,
+            b.member_avatar ui_member_avatar,
+            (SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like
+                WHERE
+                    post_id = a.id
+                    AND member_sn=#{memberSn,jdbcType=VARCHAR}
+            ) liked,
+            (SELECT
+                    COUNT(1)
+                FROM
+                    feeds_member_post_like
+                WHERE
+                    post_id = a.id) likes,
+            (SELECT
+                    COUNT(1)
+                FROM
+                    feeds_member_post_comment
+                WHERE
+                    post_id = a.id) comments
+        FROM
+            feeds_member_post_fandom a,
+            connects_member_profile b,
+            connects_member_relation c
+        WHERE
+              c.my_member_sn = #{memberSn,jdbcType=VARCHAR}
+                AND c.friend_member_sn = a.member_sn
+                AND a.member_sn=b.sn
+                AND a.post_newsfeeds = '1'
+                AND a.fandom_id IS NULL
+        ORDER BY a.id DESC
+    </select>
+
+    <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            f.id,
+            f.post_title,
+            f.post_content,
+            f.post_newsfeeds,
+            f.post_time,
+            p.sn ui_sn,
+            p.nickname ui_nickname,
+            p.member_avatar ui_member_avatar,
+            g.id fi_id,
+            g.fandom_name fi_fandom_name,
+            g.fandom_intro fi_fandom_intro,
+            g.fandom_avatar_url fi_fandom_avatar_url
+        FROM
+            feeds_member_post_fandom f
+        LEFT JOIN feeds_fandom g     ON g.id=f.fandom_id
+        LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
+        WHERE
+            f.post_title LIKE concat('%',#{searchVal},'%')
+        or f.post_content LIKE concat('%',#{searchVal},'%')
+    </select>
+
+    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="getPostInfoResultMap">
+        SELECT
+            p.id,
+            p.post_title,
+            p.post_content,
+            p.post_newsfeeds,
+            p.post_time,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like l
+                WHERE
+                    l.post_id = p.id
+            ) likes,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like l
+                WHERE
+                    l.member_sn = #{memberSn,jdbcType=VARCHAR}
+                    and l.post_id=p.id
+            ) liked,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_comment c
+                WHERE
+                    c.post_id = p.id
+            ) comments,
+            f.id fi_fandom_id,
+            f.fandom_name fi_fandom_name,
+            f.fandom_parent_id fi_fandom_parent_id,
+            f.fandom_creator_sn fi_fandom_creator_sn,
+            f.fandom_avatar_url fi_fandom_avatar_url,
+            f.fandom_intro fi_fandom_intro,
+            mp.sn ui_sn,
+            mp.nickname ui_nickname,
+            mp.member_avatar ui_member_avatar
+        FROM
+            feeds_member_post_fandom p
+        LEFT JOIN feeds_fandom f ON f.id = p.fandom_id
+        LEFT JOIN connects_member_profile mp ON mp.sn = p.member_sn
+        WHERE
+            p.id = #{postId,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="listTimedMemberFandomPosts" resultMap="postInfoResultMap">
+        SELECT
+            T1.id,
+            T1.post_title,
+            T1.post_content,
+            T1.post_newsfeeds,
+            T1.post_time,
+            T2.sn ui_sn,
+            T2.nickname ui_nickname,
+            T2.member_avatar ui_member_avatar,
+           <if test="mySn != null">
+            (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = T1.id  AND member_sn=#{mySn,jdbcType=VARCHAR}) liked,
+            </if>
+            (SELECT COUNT(1) FROM feeds_member_post_like WHERE  post_id = T1.id) likes,
+            (SELECT   COUNT(1)  FROM  feeds_member_post_comment  WHERE  post_id = T1.id) comments
+            FROM
+            feeds_member_post_fandom T1
+            LEFT JOIN
+            connects_member_profile T2 ON T1.member_sn = T2.sn
+            WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+            <if test="memberSn != null">
+                AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
+            </if>
+            ORDER BY T1.post_time DESC
+    </select>
+
+    <select id="listHotMemberFandomPosts" resultMap="postInfoResultMap">
+        SELECT
+            T1.id,
+            T1.post_title,
+            T1.post_content,
+            T1.post_newsfeeds,
+            T1.post_time,
+            T2.sn ui_sn,
+            T2.nickname ui_nickname,
+            T2.member_avatar ui_member_avatar,
+        <if test="mySn != null">
+            (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = T1.id  AND member_sn=#{mySn,jdbcType=VARCHAR}) liked,
+        </if>
+         (SELECT count(1) FROM feeds_member_post_like where post_id=T1.id) likes,
+        (SELECT count(1) FROM feeds_member_post_comment where post_id=T1.id) comments
+        FROM feeds_member_post_fandom T1
+        LEFT JOIN connects_member_profile T2
+        ON T1.member_sn = T2.sn
+        LEFT JOIN (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) T3
+        ON T1.fandom_id = T3.post_id
+        WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+        <if test="memberSn != null">
+            AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
+        </if>
+        ORDER BY T3.likeCount DESC
+    </select>
+
+
+    <select id="getPostsAllByMember" parameterType="java.lang.String" resultMap="postInfoResultMap">
+        SELECT
+            f.id,
+            f.post_title,
+            f.post_content,
+            f.post_newsfeeds,
+            f.post_time,
+            (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = f.id  AND member_sn=#{memberSn,jdbcType=VARCHAR}) liked,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_like l
+                WHERE
+                    l.post_id = f.id
+            ) likes,
+            (
+                SELECT
+                    count(1)
+                FROM
+                    feeds_member_post_comment c
+                WHERE
+                    c.post_id = f.id
+            ) comments,
+            m.id fi_fandom_id,
+            m.fandom_name fi_fandom_name,
+            m.fandom_parent_id fi_fandom_parent_id,
+            m.fandom_avatar_url fi_fandom_avatar_url,
+            m.fandom_creator_sn fi_fandom_creator_sn,
+            m.fandom_intro fi_fandom_intro
+        FROM
+            feeds_member_post_fandom f
+        LEFT JOIN connects_member_profile p ON f.member_sn = p.sn
+        LEFT JOIN feeds_fandom m ON f.fandom_id = m.id
+        WHERE f.member_sn = #{friendSn,jdbcType=VARCHAR}
+        ORDER BY f.post_time DESC
+    </select>
+
+</mapper>

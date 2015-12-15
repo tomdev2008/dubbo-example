@@ -1,9 +1,10 @@
-/fansz-members-api/target
-/fansz-sms-sender/target
-/fansz-members-consumer/target
-/fansz-members-provider/target/
-/fansz-storage-server/target/
+target/*
 !.gitignore
 /.idea
+/fansz-service-api/target
+/fansz-service-consumer/target
+/fansz-service-provider/target
+/fansz-sms-sender/target
+/fansz-storage-server/target
 *.iml
 .DS_Store

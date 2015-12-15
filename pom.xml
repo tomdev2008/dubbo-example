@@ -6,13 +6,12 @@
 
     <groupId>com.fansz</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
-    <name>${project.artifactId}</name>
     <modules>
-        <module>fansz-members-api</module>
-        <module>fansz-members-provider</module>
-        <module>fansz-members-consumer</module>
+        <module>fansz-service-api</module>
+        <module>fansz-service-provider</module>
+        <module>fansz-service-consumer</module>
         <module>fansz-sms-sender</module>
         <module>fansz-storage-server</module>
     </modules>
@@ -122,7 +121,7 @@
             <dependency>
                 <groupId>com.fansz.members</groupId>
                 <artifactId>members-api</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0</version>
             </dependency>
 
             <!--spring begin-->
