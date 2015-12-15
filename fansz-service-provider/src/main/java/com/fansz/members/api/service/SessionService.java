@@ -2,6 +2,7 @@ package com.fansz.members.api.service;
 
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.model.SessionModel;
+import com.fansz.members.model.session.SessionInfoResult;
 
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  */
 public interface SessionService {
 
-    SessionModel getSession(String accessToken);
+    SessionInfoResult getSession(String accessToken);
 
     void saveSession(String accessToken, UserEntity user);
 

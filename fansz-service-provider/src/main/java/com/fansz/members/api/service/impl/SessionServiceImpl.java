@@ -3,6 +3,7 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.model.SessionModel;
 import com.fansz.members.api.service.SessionService;
+import com.fansz.members.model.session.SessionInfoResult;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.UUIDTools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,11 @@ public class SessionServiceImpl implements SessionService {
     private RedisTemplate<String, String> redisTemplate;
 
     @Override
-    public SessionModel getSession(String accessToken) {
+    public SessionInfoResult getSession(String accessToken) {
         String key = SESSION_PREFIX + accessToken;
         Map<Object, Object> sessionMap = redisTemplate.boundHashOps(key).entries();
         if (sessionMap != null) {
-            SessionModel sessionModel= BeanTools.copyMapAs(sessionMap,SessionModel.class);
+            SessionInfoResult sessionModel= BeanTools.copyMapAs(sessionMap,SessionInfoResult.class);
             return sessionModel;
         }
         return null;

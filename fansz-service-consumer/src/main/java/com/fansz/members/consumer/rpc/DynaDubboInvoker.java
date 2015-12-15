@@ -1,11 +1,13 @@
 package com.fansz.members.consumer.rpc;
 
 import com.alibaba.dubbo.common.utils.StringUtils;
+import com.fansz.members.api.SessionApi;
 import com.fansz.members.consumer.utils.ConsumerConstants;
 import com.fansz.members.consumer.utils.JsonHelper;
 import com.fansz.members.consumer.utils.ResponseUtils;
 import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.AccessTokenAware;
+import com.fansz.members.model.session.SessionInfoResult;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,26 +18,28 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ws.rs.Path;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component("dynamicDubboInvoker")
-public class DynamicDubboInvoker implements RpcInvoker {
+public class DynaDubboInvoker implements RpcInvoker {
 
     private final static String BASE_PACKAGE = "com.fansz.members.api";
 
-    private Logger logger = LoggerFactory.getLogger(DubboInvoker.class);
+    private Logger logger = LoggerFactory.getLogger(DynaDubboInvoker.class);
 
     private static Map<String, Method> methodMap = new ConcurrentHashMap<>();
 
     @Autowired
     private ApplicationContext applicationContext;
 
-    public DynamicDubboInvoker() {
+    @Resource(name = "sessionProvider")
+    private SessionApi sessionApi;
 
-    }
 
     @PostConstruct
     private void init() throws Exception {
@@ -118,11 +122,18 @@ public class DynamicDubboInvoker implements RpcInvoker {
             AccessTokenAware at = (AccessTokenAware) values[0];
             String accessToken = at.getAccessToken();
             if (StringUtils.isBlank(accessToken)) {
-                return ResponseUtils.renderAccessTokenError();//accessToken不能为空
+                SessionInfoResult session = sessionApi.getSession(accessToken);
+                if (!isValid(session))
+                    return ResponseUtils.renderAccessTokenError();//accessToken不能为空
             }
         }
         Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
 
         return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.toString(result);
+    }
+
+    private boolean isValid(SessionInfoResult session) {
+        if (session != null) return true;
+        return false;
     }
 }

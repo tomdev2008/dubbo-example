@@ -10,10 +10,10 @@
     <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
 
     <!-- 用rest协议在7001端口暴露服务 -->
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
+    <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>-->
     <!--7002端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" server="netty"/>
+                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" server="netty" extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
 
     <!-- use tomcat server
     <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
@@ -58,6 +58,8 @@
                    connections="100"/>
 
     <dubbo:service interface="com.fansz.members.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="2000"
+                   connections="100"/>
+    <dubbo:service interface="com.fansz.members.api.SessionApi" ref="sessionProvider" validation="true" timeout="2000"
                    connections="100"/>
 
 </beans>

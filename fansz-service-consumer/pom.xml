@@ -80,10 +80,7 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fansz.members</groupId>
-            <artifactId>members-api</artifactId>
-        </dependency>
+       
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
@@ -141,6 +138,11 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz.service</groupId>
+            <artifactId>api</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     <profiles>
