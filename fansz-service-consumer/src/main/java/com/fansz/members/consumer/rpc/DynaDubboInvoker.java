@@ -37,8 +37,8 @@ public class DynaDubboInvoker implements RpcInvoker {
     @Autowired
     private ApplicationContext applicationContext;
 
-    @Resource(name = "sessionProvider")
-    private SessionApi sessionApi;
+    //@Resource(name = "sessionProvider")
+    //private SessionApi sessionApi;
 
 
     @PostConstruct
@@ -122,9 +122,9 @@ public class DynaDubboInvoker implements RpcInvoker {
             AccessTokenAware at = (AccessTokenAware) values[0];
             String accessToken = at.getAccessToken();
             if (StringUtils.isBlank(accessToken)) {
-                SessionInfoResult session = sessionApi.getSession(accessToken);
-                if (!isValid(session))
-                    return ResponseUtils.renderAccessTokenError();//accessToken不能为空
+                //SessionInfoResult session = sessionApi.getSession(accessToken);
+                //if (!isValid(session))
+                    //return ResponseUtils.renderAccessTokenError();//accessToken不能为空
             }
         }
         Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);

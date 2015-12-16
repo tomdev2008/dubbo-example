@@ -193,11 +193,6 @@
         <!--spring end-->
 
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
@@ -284,6 +279,11 @@
             <groupId>com.fansz.service</groupId>
             <artifactId>api</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-utils</artifactId>
+            <version>1.0.2</version>
         </dependency>
     </dependencies>
     <profiles>
