@@ -230,7 +230,7 @@
                         feeds_member_fandom
                     WHERE
                         fandom_id = ff.id
-                ) followerCount,
+                ) follower_count,
                 (
                     SELECT
                         count(1)
@@ -238,7 +238,7 @@
                         feeds_member_post_fandom
                     WHERE
                         fandom_id = ff.id
-                ) postCount,
+                ) post_count,
                 (
                     SELECT
                         infatuation
