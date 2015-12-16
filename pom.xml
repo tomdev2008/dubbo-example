@@ -6,7 +6,7 @@
 
     <groupId>com.fansz</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>pom</packaging>
     <modules>
         <module>fansz-service-api</module>
@@ -121,7 +121,7 @@
             <dependency>
                 <groupId>com.fansz.members</groupId>
                 <artifactId>members-api</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
             </dependency>
 
             <!--spring begin-->
