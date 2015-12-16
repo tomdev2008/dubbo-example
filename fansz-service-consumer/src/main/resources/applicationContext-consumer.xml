@@ -57,6 +57,6 @@
     <dubbo:reference interface="com.fansz.members.api.MessageCenterApi" id="messageCenterProvider" validation="true"
                      timeout="2000"
                      connections="100" protocol="dubbo"/>
-    <!--<dubbo:service interface="com.fansz.members.api.SessionApi" id="sessionProvider" validation="true" timeout="2000"
-                   connections="100" protocol="dubbo"/>-->
+    <dubbo:service interface="com.fansz.members.api.SessionApi" id="sessionProvider" validation="true" timeout="2000"
+                   connections="100" protocol="dubbo"/>
 </beans>
