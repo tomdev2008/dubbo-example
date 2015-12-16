@@ -8,7 +8,6 @@
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
     </parent>
-    <groupId>com.fansz.service</groupId>
     <artifactId>sms-sender</artifactId>
     <packaging>jar</packaging>
     <build>
