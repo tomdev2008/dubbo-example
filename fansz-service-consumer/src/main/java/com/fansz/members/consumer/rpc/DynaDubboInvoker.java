@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component("dynamicDubboInvoker")
+@Component("dynaDubboInvoker")
 public class DynaDubboInvoker implements RpcInvoker {
 
     private final static String BASE_PACKAGE = "com.fansz.members.api";

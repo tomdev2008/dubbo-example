@@ -67,7 +67,7 @@ public final class BeanTools {
         }
     }
 
-    public static  <T> T copyMapAs(Map<Object, Object> params, Class<T> cls) {
+    public static  <T> T copyMapAs(Map<String, String> params, Class<T> cls) {
         try {
             T instance = cls.newInstance();
             org.apache.commons.beanutils.BeanUtils.populate(instance, params);

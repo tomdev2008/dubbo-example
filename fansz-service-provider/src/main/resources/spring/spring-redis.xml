@@ -12,7 +12,7 @@
         </constructor-arg>
     </bean>
 
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
           p:maxTotal="${redis.pool.maxTotal}"
           p:maxIdle="${redis.pool.maxIdle}"
           p:maxWaitMillis="${redis.pool.maxWaitMillis}"
@@ -20,16 +20,11 @@
           p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
           p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
 
-    <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
-        <constructor-arg index="0" ref="redisPropertySource"/>
+    <bean id="jedisSentinelPool" class="com.fansz.members.redis.support.FanszJedisSentinelPool"
+          scope="singleton">
+        <constructor-arg index="0" value="${redis.sentinel.master}"/>
+        <constructor-arg index="1" value="${redis.sentinel.nodes}"/>
+        <constructor-arg index="2" ref="jedisPoolConfig"/>
+        <constructor-arg index="3" value="${redis.password}"/>
     </bean>
-
-    <!-- 配置redis 缓存服务器 -->
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:password="fansz">
-        <constructor-arg index="0" ref="redisSentinelConfiguration"/>
-        <constructor-arg index="1" ref="poolConfig"/>
-    </bean>
-    <!-- redis操作模板 -->
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
-          p:connectionFactory-ref="jedisConnectionFactory"/>
 </beans>

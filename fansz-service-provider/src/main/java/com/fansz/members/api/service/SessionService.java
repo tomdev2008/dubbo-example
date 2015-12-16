@@ -13,7 +13,7 @@ public interface SessionService {
 
     SessionInfoResult getSession(String accessToken);
 
-    void saveSession(String accessToken, UserEntity user);
+    void saveSession(String accessToken, String refreshToken, Long uid);
 
     void invalidateSession(String accessToken);
 }
