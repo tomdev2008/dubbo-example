@@ -161,7 +161,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
+        return fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
@@ -192,5 +192,15 @@ public class FandomServiceImpl implements FandomService {
         }
         return BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
 
+    }
+
+    @Override
+    public int delFandom(DelFandomParam delFandomParam) {
+        return fandomMapper.delFandom(delFandomParam);
+    }
+
+    @Override
+    public int modifyFandom(ModifyFandomParam modifyFandomParam) {
+        return fandomMapper.modifyFandom(modifyFandomParam);
     }
 }

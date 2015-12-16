@@ -22,8 +22,6 @@ public interface FandomPostEntityMapper {
 
     List<FandomPostEntity> selectNewByFandomId(Long id);
 
-    List<FandomPostEntity> selectHotByFandomId(Long id);
-
     int updateByPrimaryKeySelective(FandomPostEntity record);
 
     int updateByPrimaryKey(FandomPostEntity record);

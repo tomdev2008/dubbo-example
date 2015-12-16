@@ -15,7 +15,6 @@ import com.fansz.members.tools.RelationShip;
 import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -48,15 +47,6 @@ public class ProfileServiceImpl implements ProfileService {
             UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getSn(), queryUserParam.getFriendSn());
             if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());
-                if(!queryUserParam.getSn().equals(userRelationEntity.getMyMemberSn())){
-                    if (RelationShip.SPECIAL_FRIEND.getCode().equals(userRelationEntity.getRelationStatus())) {//特殊好友是单向的,A是B的好友,但B不一定是A的好友
-                        result.setRelationship(RelationShip.FRIEND.getCode());
-                    }
-                    else if(RelationShip.TO_BE_FRIEND.getCode().equals(userRelationEntity.getRelationStatus())){
-                        result.setRelationship("01");
-                    }
-                }
-
             }
         }
 

@@ -11,6 +11,7 @@ import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
 import com.fansz.members.model.profile.ContactInfoResult;
 
+import javax.validation.constraints.Null;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -160,5 +161,11 @@ public interface FandomApi {
     @DubboxService("searchFandoms")
     CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 
+    @POST
+    @Path("/delFandom")
+    CommonResult<NullResult> delFandom(DelFandomParam delFandomParam);
 
+    @POST
+    @Path("/modifyFandom")
+    CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam);
 }

@@ -3,11 +3,8 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.event.FandomEventType;
 import com.fansz.members.api.event.SpecialRealtionEvent;
-import com.fansz.members.api.repository.FandomMemberEntityMapper;
-import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.RelationShipService;
-import com.fansz.members.api.service.SpecialFocusService;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.exception.ApplicationException;
@@ -16,7 +13,6 @@ import com.fansz.members.model.relationship.FriendInfoResult;
 import com.fansz.members.model.relationship.FriendsQueryParam;
 import com.fansz.members.model.relationship.OpRequestParam;
 import com.fansz.members.tools.BeanTools;
-import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.RelationShip;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -50,12 +46,19 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean addFriendRequest(AddFriendParam addFriendParam) {
         UserRelationEntity oldRelation = userRelationEntityMapper.findFriendRelationBySns(addFriendParam.getMyMemberSn(), addFriendParam.getFriendMemberSn());
-        if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_BE_FRIEND.getCode())) {
+        if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_ADD.getCode())) {
             throw new ApplicationException(Constants.RELATION_IS_FRIEND, "Is friend already");
         }
         if (oldRelation == null) {
             UserRelationEntity userRelation = BeanTools.copyAs(addFriendParam, UserRelationEntity.class);
-            userRelation.setRelationStatus(RelationShip.TO_BE_FRIEND.getCode());
+            userRelation.setRelationStatus(RelationShip.TO_ADD.getCode());
+            userRelationEntityMapper.insert(userRelation);
+
+            String myMemberSn = userRelation.getFriendMemberSn();
+            String friendMemberSn = userRelation.getMyMemberSn();
+            userRelation.setMyMemberSn(myMemberSn);
+            userRelation.setFriendMemberSn(friendMemberSn);
+            userRelation.setRelationStatus(RelationShip.BE_ADDED.getCode());
             userRelationEntityMapper.insert(userRelation);
         }
         return true;
@@ -73,11 +76,6 @@ public class RelationShipServiceImpl implements RelationShipService {
                 throw new ApplicationException(Constants.RELATION_SPECIAL_NO_ADD, "Can't be special friend");
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            /**
-             * 因为好友是双向的,而特殊好友是单向的,因此需要更新字段
-             */
-            oldRelation.setMyMemberSn(addFriendParam.getMyMemberSn());
-            oldRelation.setFriendMemberSn(addFriendParam.getFriendMemberSn());
             specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
@@ -95,9 +93,13 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
         UserRelationEntity oldRelation = userRelationEntityMapper.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getMyMemberSn());
-        if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.TO_BE_FRIEND.getCode())) {
+        if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.BE_ADDED.getCode())) {
             throw new ApplicationException(Constants.RELATION_FRIEND_NO_EXISTS, "Can't (dis)agree friend");
         }
+        oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
+        userRelationEntityMapper.updateByPrimaryKeySelective(oldRelation);
+
+        oldRelation = userRelationEntityMapper.findRelation(opRequestParam.getMyMemberSn(), opRequestParam.getFriendMemberSn());
         oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
         userRelationEntityMapper.updateByPrimaryKeySelective(oldRelation);
         return true;

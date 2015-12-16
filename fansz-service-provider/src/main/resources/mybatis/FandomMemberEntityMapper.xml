@@ -141,4 +141,16 @@
         WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR} and a.fandom_id=b.id and b.fandom_creator_sn=c.sn;
     </select>
 
+    <select id="getFandomMembers"
+            resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
+        SELECT p.*,b.relation_status
+        FROM  feeds_member_fandom m
+        INNER JOIN connects_member_profile  p
+        LEFT JOIN connects_member_relation b
+        ON b.friend_member_sn=a.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
+        WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn
+        AND p.member_status='1'
+    </select>
+
 </mapper>

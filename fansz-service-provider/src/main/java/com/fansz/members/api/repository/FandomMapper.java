@@ -2,10 +2,7 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.SingleFandomEntity;
-import com.fansz.members.model.fandom.FandomInfoResult;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.fandom.SearchFandomParam;
-import com.fansz.members.model.fandom.SearchFandomResult;
+import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -41,9 +38,11 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    PageList<ContactInfoResult> getFandomMembers(@Param("fandomId")String fandomId,@Param("memberSn")String memberSn, PageBounds pageBounds);
-
     PageList<SearchFandomResult> searchFandoms(@Param("memberSn")String memberSn, @Param("searchVal")String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);
+
+    int delFandom(DelFandomParam delFandomParam);
+
+    int modifyFandom(ModifyFandomParam modifyFandomParam);
 }
