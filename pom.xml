@@ -119,8 +119,8 @@
             <!--rest related jars end -->
 
             <dependency>
-                <groupId>com.fansz.members</groupId>
-                <artifactId>members-api</artifactId>
+                <groupId>com.fansz</groupId>
+                <artifactId>service-api</artifactId>
                 <version>1.0.1</version>
             </dependency>
 
