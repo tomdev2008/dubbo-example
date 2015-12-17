@@ -1,6 +1,5 @@
 package com.fansz.members.model;
 
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;

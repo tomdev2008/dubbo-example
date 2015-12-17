@@ -131,5 +131,17 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         fandomService.joinFandom(joinFandomParam);
         return renderSuccess(fandomInfoResult);
     }
+
+    @Override
+    public CommonResult<NullResult> delFandom(DelFandomParam delFandomParam) {
+        fandomService.delFandom(delFandomParam);
+        return renderSuccess();
+    }
+
+    @Override
+    public CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
+        fandomService.modifyFandom(modifyFandomParam);
+        return renderSuccess();
+    }
 }
 

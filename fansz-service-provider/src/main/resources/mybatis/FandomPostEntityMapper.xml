@@ -85,23 +85,6 @@
         order by post.post_time DESC
     </select>
 
-    <select id="selectHotByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from feeds_member_post_fandom
-        where fandom_id = #{id,jdbcType=BIGINT}
-
-        select
-        <include refid="Base_Column_List"/>
-        , likeCount
-        from feeds_member_post_fandom post,
-        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
-        where post.id = post_count.post_id
-        and post.fandom_id = #{id,jdbcType=BIGINT}
-        order by likeCount DESC
-    </select>
-
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from feeds_member_post_fandom
     where id = #{id,jdbcType=BIGINT}
@@ -287,6 +270,7 @@
                 AND c.friend_member_sn = a.member_sn
                 AND a.member_sn=b.sn
                 AND a.post_newsfeeds = '1'
+                AND c.relation_status IN ('10','11')
                 AND a.fandom_id IS NULL
         ORDER BY a.id DESC
     </select>
@@ -442,7 +426,7 @@
                 WHERE
                     c.post_id = f.id
             ) comments,
-            m.id fi_fandom_id,
+            m.id fi_id,
             m.fandom_name fi_fandom_name,
             m.fandom_parent_id fi_fandom_parent_id,
             m.fandom_avatar_url fi_fandom_avatar_url,

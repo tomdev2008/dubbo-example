@@ -116,11 +116,6 @@
         SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
           WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
           AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
-        UNION
-         SELECT b.*,a.relation_status FROM connects_member_relation a,connects_member_profile b
-        WHERE a.friend_member_sn=#{myMemberSn,jdbcType=VARCHAR}
-        AND a.my_member_sn=b.sn
-        AND a.relation_status IN('10','11')
     </select>
 
     <select id="findSpecialFriends" parameterType="java.lang.String"
@@ -136,23 +131,22 @@
         <include refid="Base_Column_List"/>
         FROM connects_member_relation
         WHERE (my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR})
-        OR  (my_member_sn=#{friendSn,jdbcType=VARCHAR} AND friend_member_sn=#{memberSn,jdbcType=VARCHAR})
     </select>
 
     <select id="findRelation" parameterType="java.util.Map" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_relation
-        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
+        WHERE my_member_sn=#{friendSn,jdbcType=VARCHAR} AND friend_member_sn=#{memberSn,jdbcType=VARCHAR}
     </select>
 
     <select id="findRelationByMobiles" parameterType="java.util.Map" resultMap="contactInfoMap">
-        SELECT a.*,
-        (SELECT b.relation_status FROM connects_member_relation b where b.my_member_sn=#{memberSn,jdbcType=VARCHAR} AND b.friend_member_sn=a.sn
-        union
-        SELECT case c.relation_status when '11' then '10' else c.relation_status end FROM connects_member_relation c where c.friend_member_sn=#{memberSn,jdbcType=VARCHAR} AND c.my_member_sn=a.sn) relation_status
+        SELECT a.*, b.relation_status
         FROM connects_member_profile a
-        WHERE a.mobile IN
+        LEFT JOIN connects_member_relation b
+        ON b.friend_member_sn=a.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
+        WHERE
+        a.mobile IN
         <foreach collection="mobileList" index="index" item="item" open="(" separator="," close=")">
             #{item,jdbcType=VARCHAR}
         </foreach>
