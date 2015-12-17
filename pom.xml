@@ -6,7 +6,7 @@
 
     <groupId>com.fansz</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0.SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>fansz-service-api</module>
@@ -27,19 +27,7 @@
             <url>http://192.168.88.7:8081/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-    <repositories>
-        <repository>
-            <id>nexus-public</id>
-            <name>Public Repository of fansz</name>
-            <url>http://192.168.88.7:8081/nexus/content/groups/public/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -117,13 +105,6 @@
             </dependency>
 
             <!--rest related jars end -->
-
-            <dependency>
-                <groupId>com.fansz.members</groupId>
-                <artifactId>members-api</artifactId>
-                <version>1.0.0</version>
-            </dependency>
-
             <!--spring begin-->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -291,9 +272,19 @@
                 <version>0.9.9-RC1</version>
             </dependency>
             <dependency>
-                <groupId>biz.paluch.redis</groupId>
-                <artifactId>lettuce</artifactId>
-                <version>4.0.2.Final</version>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka-clients</artifactId>
+                <version>0.9.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-utils</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>service-api</artifactId>
+                <version>2.0.0.SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -5,12 +5,17 @@ import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.kafka.MessageProducer;
+import com.fansz.members.redis.JedisTemplate;
+import com.fansz.members.redis.support.JedisCallback;
 import com.fansz.members.tools.*;
+import com.fansz.pub.utils.JsonHelper;
+import com.fansz.pub.utils.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -25,7 +30,7 @@ import java.util.Properties;
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private JedisTemplate jedisTemplate;
 
     @Autowired
     private UserEntityMapper userEntityMapper;
@@ -36,6 +41,8 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Resource(name = "verifyCodeGenerator")
     private VerifyCodeGenerator verifyCodeGenerator;
 
+    @Resource(name = "messageProducer")
+    private MessageProducer messageProducer;
 
     /**
      * 获取验证码,重置密码时使用
@@ -66,13 +73,8 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     }
 
 
-    private boolean createVerifyCode(String mobile, String key, String template) {
-        String createTime = (String) redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).get(key + ".createTime");
-
-        if (!isAllowed(createTime)) {
-            throw new ApplicationException(Constants.INTERVAL_IS_TOO_SHORT, "Interval is too short");
-        }
-        Map<String, String> verifyMap = new HashMap<>();
+    private boolean createVerifyCode(final String mobile, final String key, final String template) {
+        final Map<String, String> verifyMap = new HashMap<>();
         verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
 
         long currentTime = System.currentTimeMillis();
@@ -80,15 +82,27 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         long expiredTime = currentTime + validPeriod * 60 * 1000;
         verifyMap.put(key + ".createTime", currentTime + "");
         verifyMap.put(key + ".expiredTime", expiredTime + "");
-        redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).putAll(verifyMap);
+        jedisTemplate.execute(new JedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(Jedis jedis) throws Exception {
+                String createTime = jedis.hget(Constants.VERIFY_KEY + mobile, key + ".createTime");
+
+                if (!isAllowed(createTime)) {
+                    throw new ApplicationException(Constants.INTERVAL_IS_TOO_SHORT, "Interval is too short");
+                }
+
+                jedis.hmset(Constants.VERIFY_KEY + mobile, verifyMap);
+                return true;
+            }
+        });
 
 
         //通过队列,异步方式发送短信
         String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
         //Send Message
         SmsMessage sms = new SmsMessage(messgeContent, mobile);
-        String message = JsonHelper.toString(sms);
-        redisTemplate.convertAndSend("sms", message);
+        String message = JsonHelper.convertObject2JSONString(sms);
+        messageProducer.produce(sms.getMobile(), message);
         return true;
     }
 
@@ -100,8 +114,14 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         return System.currentTimeMillis() - Long.valueOf(createTime) >= interval * 60 * 1000;
     }
 
-    public VerifyCodeModel queryVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        Map<Object, Object> verifyMap = redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).entries();
+    public VerifyCodeModel queryVerifyCode(final String mobile, VerifyCodeType verifyCodeType) {
+        Map<String, String> verifyMap = jedisTemplate.execute(new JedisCallback<Map<String, String>>() {
+            @Override
+            public Map<String, String> doInRedis(Jedis jedis) throws Exception {
+                return jedis.hgetAll(Constants.VERIFY_KEY + mobile);
+            }
+        });
+
         if (verifyMap != null) {
             String verifyCode = (String) verifyMap.get(verifyCodeType.getName() + ".verifyCode");
             String expiredTime = (String) verifyMap.get(verifyCodeType.getName() + ".expiredTime");
@@ -114,8 +134,16 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     }
 
     @Override
-    public void removeVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        redisTemplate.boundHashOps(Constants.VERIFY_KEY + mobile).delete(verifyCodeType.getName() + ".verifyCode", verifyCodeType.getName() + ".createTime", verifyCodeType.getName() + ".expiredTime");
+    public void removeVerifyCode(final String mobile, VerifyCodeType verifyCodeType) {
+        final String verifyCodeName = verifyCodeType.getName();
+        jedisTemplate.execute(new JedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(Jedis jedis) throws Exception {
+                jedis.hdel(Constants.VERIFY_KEY + mobile, verifyCodeName + ".verifyCode", verifyCodeName + ".createTime", verifyCodeName + ".expiredTime");
+                return true;
+            }
+        });
+
     }
 
     @Override

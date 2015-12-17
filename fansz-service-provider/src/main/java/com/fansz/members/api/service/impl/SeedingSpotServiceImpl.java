@@ -5,7 +5,7 @@ import com.fansz.members.api.repository.SeedingSpotEntityMapper;
 import com.fansz.members.api.service.SeedingSpotService;
 import com.fansz.members.model.seedingspot.SeedingSpotPrama;
 import com.fansz.members.model.seedingspot.SeedingSpotResult;
-import com.fansz.members.tools.BeanTools;
+import com.fansz.pub.utils.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;

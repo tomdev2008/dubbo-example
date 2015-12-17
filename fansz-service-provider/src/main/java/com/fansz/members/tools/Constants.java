@@ -30,6 +30,8 @@ public class Constants {
 
     public final static String INTERVAL_IS_TOO_SHORT = "20006";//发送间隔过短
 
+    public final static String TOKEN_INVALID="20007";//Token无效
+
     public final static String RELATION_FRIEND_NO_EXISTS="20200";//无法添加好友
 
     public final static String RELATION_IS_FRIEND="20201";//已经是好友

@@ -9,6 +9,6 @@ public interface JedisOperations {
 
     void returnResource(Jedis jedis);
 
-    <T> void execute(JedisCallback<T> redisCallback);
+    <T> T execute(JedisCallback<T> redisCallback);
 
 }

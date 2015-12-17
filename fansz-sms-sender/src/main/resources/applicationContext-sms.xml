@@ -10,57 +10,15 @@
                                   location="classpath:/conf/redis.properties"/>
 
     <context:component-scan base-package="com.fansz.sms"/>
-    <util:properties id="smsProperties" location="classpath:/conf/sms.properties"/>
+    <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
-    <bean id="redisPropertySource" class="org.springframework.core.env.MapPropertySource">
-        <constructor-arg index="0" value="RedisSentinelConfiguration"/>
-        <constructor-arg index="1">
-            <map>
-                <entry key="spring.redis.sentinel.master" value="${spring.redis.sentinel.master}"/>
-                <entry key="spring.redis.sentinel.nodes" value="${spring.redis.sentinel.nodes}"/>
-            </map>
+    <context:property-placeholder ignore-resource-not-found="false"
+                                  location="classpath:/conf/sms.properties"/>
+    <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
+        <constructor-arg index="0">
+            <ref bean="kafkaProp"/>
         </constructor-arg>
     </bean>
 
-    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"
-          p:maxTotal="${redis.pool.maxTotal}"
-          p:maxIdle="${redis.pool.maxIdle}"
-          p:maxWaitMillis="${redis.pool.maxWaitMillis}"
-          p:minEvictableIdleTimeMillis="${redis.pool.minEvictableIdleTimeMillis}"
-          p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
-          p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
-
-    <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
-        <constructor-arg index="0" ref="redisPropertySource"/>
-    </bean>
-
-    <!-- 配置redis 缓存服务器 -->
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-          p:password="fansz">
-        <constructor-arg index="0" ref="redisSentinelConfiguration"/>
-        <constructor-arg index="1" ref="poolConfig"/>
-    </bean>
-
-    <bean id="smsQueueListener" class="com.fansz.sms.listener.SmsQueueListener"/>
-
-    <bean id="stringRedisSerializer" class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
-
-    <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
-        <property name="delegate" ref="smsQueueListener"/>
-        <property name="serializer" ref="stringRedisSerializer"/>
-    </bean>
-
-    <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
-        <property name="connectionFactory" ref="jedisConnectionFactory"/>
-        <property name="messageListeners">
-            <!-- map of listeners and their associated topics (channels or/and patterns) -->
-            <map>
-                <entry key-ref="messageListener">
-                    <bean class="org.springframework.data.redis.listener.ChannelTopic">
-                        <constructor-arg value="sms"/>
-                    </bean>
-                </entry>
-            </map>
-        </property>
-    </bean>
+    <bean id="kafkaConsumerRunner" class="com.fansz.sms.listener.KafkaConsumerRunner"/>
 </beans>

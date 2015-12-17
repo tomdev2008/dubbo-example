@@ -4,6 +4,7 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.AccountApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.AccountService;
+import com.fansz.members.api.service.SessionService;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.account.*;
@@ -20,6 +21,8 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
 
     @Autowired
     private AccountService accountService;
+
+    private SessionService sessionService;
 
     /**
      * 注册接口
@@ -77,5 +80,10 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     public CommonResult<NullResult> logout(LogoutParam logoutParam) {
         accountService.logout(logoutParam);
         return renderSuccess();
+    }
+
+    @Override
+    public CommonResult<LoginResult> refreshToken(String refreshToken) {
+        return null;
     }
 }

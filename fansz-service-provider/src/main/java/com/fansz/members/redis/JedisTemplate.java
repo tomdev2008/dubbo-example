@@ -9,10 +9,10 @@ import redis.clients.jedis.JedisSentinelPool;
 
 import javax.annotation.Resource;
 
-@Component("redisTemplate")
-public class RedisTemplate implements JedisOperations {
+@Component("jedisTemplate")
+public class JedisTemplate implements JedisOperations {
 
-    private static final Logger logger = LoggerFactory.getLogger(RedisTemplate.class);
+    private static final Logger logger = LoggerFactory.getLogger(JedisTemplate.class);
 
     @Resource(name = "jedisSentinelPool")
     private JedisSentinelPool jedisPool;
@@ -33,18 +33,19 @@ public class RedisTemplate implements JedisOperations {
         jedis.close();
     }
 
-    public <T> void execute(JedisCallback<T> redisCallback) {
+    public <T> T execute(JedisCallback<T> redisCallback) {
         Jedis jedis = getRedisClient();
         if (jedis == null) {
-            return;
+            return null;
         }
         try {
-            redisCallback.doInRedis(jedis);
+            return redisCallback.doInRedis(jedis);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
 
         } finally {
             returnResource(jedis);
         }
+        return null;
     }
 }

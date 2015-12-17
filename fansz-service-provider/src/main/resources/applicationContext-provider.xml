@@ -13,6 +13,8 @@
 
     <bean id="verifyCodeGenerator" class="com.fansz.members.tools.VerifyCodeGenerator"/>
 
+    <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
+
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
     <util:properties  id="smsProperties" location="classpath:/conf/sms.properties"/>

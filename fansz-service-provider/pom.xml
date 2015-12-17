@@ -6,10 +6,9 @@
     <parent>
         <groupId>com.fansz</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0</version>
+        <version>2.0.0.SNAPSHOT</version>
     </parent>
-    <groupId>com.fansz.service</groupId>
-    <artifactId>provider</artifactId>
+    <artifactId>service-provider</artifactId>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -20,40 +19,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <tasks>
-                                <echo
-                                        message="********************** copy resources to classpath*************************"/>
-                                <echo
-                                        message="********************** copy ${resources.dir} to classpath*************************"/>
-                                <replace file="target/classes/applicationContext-provider.xml"
-                                         token="classpath:/conf/jdbc.properties"
-                                         value="file:${application.root}/conf/jdbc.properties"
-                                         encoding="utf-8"/>
-                                <replace file="target/classes/applicationContext-provider.xml"
-                                         token="classpath:/conf/redis.properties"
-                                         value="file:${application.root}/conf/redis.properties"
-                                         encoding="utf-8"/>
-                                <replace file="target/classes/applicationContext-provider.xml"
-                                         token="classpath:/conf/dubbo.properties"
-                                         value="file:${application.root}/conf/dubbo.properties"
-                                         encoding="utf-8"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -253,21 +218,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.caucho</groupId>
-            <artifactId>hessian</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-logging-juli</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils-core</artifactId>
         </dependency>
@@ -276,14 +226,16 @@
             <artifactId>commons-beanutils-bean-collections</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fansz.service</groupId>
-            <artifactId>api</artifactId>
-            <version>1.0.0</version>
+            <groupId>com.fansz</groupId>
+            <artifactId>service-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
             <artifactId>fansz-utils</artifactId>
-            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
         </dependency>
     </dependencies>
     <profiles>
@@ -301,12 +253,88 @@
             <properties>
                 <env>integration</env>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo
+                                                message="********************** copy resources to classpath*************************"/>
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/jdbc.properties"
+                                                 value="file:${application.root}/conf/jdbc.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/redis.properties"
+                                                 value="file:${application.root}/conf/redis.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>production</id>
             <properties>
                 <env>production</env>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo
+                                                message="********************** copy resources to classpath*************************"/>
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/jdbc.properties"
+                                                 value="file:${application.root}/conf/jdbc.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/redis.properties"
+                                                 value="file:${application.root}/conf/redis.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>
