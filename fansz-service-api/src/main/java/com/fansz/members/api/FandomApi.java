@@ -38,6 +38,7 @@ public interface FandomApi {
 
     /**
      * 关注fandom
+     *
      * @param addFandomParam
      * @return
      */
@@ -62,20 +63,20 @@ public interface FandomApi {
      * @param joinFandomParam
      * @return
      */
-   // @POST
-   // @Path("/fandom/beSpecial")
+    // @POST
+    // @Path("/fandom/beSpecial")
     //@DubboxService("beMySpecialFandom")
-    CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
+    //CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
      * 取消特别关注fandom
      * @param joinFandomParam
      * @return
      */
-   // @POST
-   // @Path("/fandom/notSpecial")
-   // @DubboxService("removeMySpecialFandom")
-    CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
+    // @POST
+    // @Path("/fandom/notSpecial")
+    // @DubboxService("removeMySpecialFandom")
+    //CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
      * 退出fandom
@@ -154,16 +155,33 @@ public interface FandomApi {
     CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
 
-
+    /**
+     * 根据关键字搜索fandom
+     *
+     * @param searchFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/search")
     @DubboxService("searchFandoms")
     CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 
+    /**
+     * 删除fandom
+     *
+     * @param delFandomParam
+     * @return
+     */
     @POST
     @Path("/delFandom")
     CommonResult<NullResult> delFandom(DelFandomParam delFandomParam);
 
+    /**
+     * 修改fandom信息
+     *
+     * @param modifyFandomParam
+     * @return
+     */
     @POST
     @Path("/modifyFandom")
     CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam);
