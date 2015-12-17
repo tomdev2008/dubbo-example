@@ -12,18 +12,19 @@ public class QueryProfileParam extends AbstractToken {
 
     private static final long serialVersionUID = 784997167533858716L;
 
-    private String sn;
+    @JsonProperty("member_sn")
+    private String memberSn;
 
     @JsonProperty("friend_sn")
     private String friendSn;
 
 
-    public String getSn() {
-        return sn;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
     public String getFriendSn() {
