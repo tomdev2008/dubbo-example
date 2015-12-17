@@ -137,7 +137,7 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM connects_member_relation
-        WHERE my_member_sn=#{friendSn,jdbcType=VARCHAR} AND friend_member_sn=#{memberSn,jdbcType=VARCHAR}
+        WHERE my_member_sn=#{memberSn,jdbcType=VARCHAR} AND friend_member_sn=#{friendSn,jdbcType=VARCHAR}
     </select>
 
     <select id="findRelationByMobiles" parameterType="java.util.Map" resultMap="contactInfoMap">
