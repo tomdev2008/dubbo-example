@@ -62,9 +62,9 @@ public interface FandomApi {
      * @param joinFandomParam
      * @return
      */
-    @POST
-    @Path("/fandom/beSpecial")
-    @DubboxService("beMySpecialFandom")
+   // @POST
+   // @Path("/fandom/beSpecial")
+    //@DubboxService("beMySpecialFandom")
     CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
@@ -72,9 +72,9 @@ public interface FandomApi {
      * @param joinFandomParam
      * @return
      */
-    @POST
-    @Path("/fandom/notSpecial")
-    @DubboxService("removeMySpecialFandom")
+   // @POST
+   // @Path("/fandom/notSpecial")
+   // @DubboxService("removeMySpecialFandom")
     CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**

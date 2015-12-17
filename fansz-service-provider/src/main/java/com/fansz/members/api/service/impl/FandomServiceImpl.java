@@ -69,8 +69,16 @@ public class FandomServiceImpl implements FandomService {
         if (exist != null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
         }
-        fandomMemberEntity.setInfatuation("0");//1表示特别关注
+        fandomMemberEntity.setInfatuation("1");//1表示特别关注
         fandomMemberEntityMapper.insertSelective(fandomMemberEntity);
+
+        //添加特别关注记录
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return false;
     }
 
@@ -83,6 +91,14 @@ public class FandomServiceImpl implements FandomService {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
+
+        //删除特别关注记录
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return false;
     }
 
