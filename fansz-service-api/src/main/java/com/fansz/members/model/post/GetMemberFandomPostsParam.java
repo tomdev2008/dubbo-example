@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
@@ -10,7 +11,7 @@ import javax.validation.constraints.Size;
 /**
  * Created by LiZhe on 12/4/2015.
  */
-public class GetMemberFandomPostsParam extends PageParam {
+public class GetMemberFandomPostsParam extends PageParam implements AccessTokenAware {
 
     @NotNull
     @JsonProperty("fandom_id")
@@ -18,7 +19,7 @@ public class GetMemberFandomPostsParam extends PageParam {
 
     @NotBlank
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -32,14 +33,17 @@ public class GetMemberFandomPostsParam extends PageParam {
         this.fandomId = fandomId;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

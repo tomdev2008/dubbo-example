@@ -1,14 +1,15 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Created by LiZhe on 12/5/2015.
  */
-public class PostsQueryParam {
+public class PostsQueryParam implements AccessTokenAware {
 
     @JsonProperty("member_sn")
-    private String sn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -25,14 +26,16 @@ public class PostsQueryParam {
     @JsonProperty("page_num")
     private int pageNum;
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
-
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

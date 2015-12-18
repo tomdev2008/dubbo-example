@@ -116,6 +116,10 @@
             <groupId>com.fansz</groupId>
             <artifactId>service-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-utils</artifactId>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

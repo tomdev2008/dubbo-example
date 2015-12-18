@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 /**
  * 用户点赞/查询单个POST详细信息,传入参数模型
  */
-public class PostParam extends PageParam implements Serializable {
+public class PostParam extends PageParam implements AccessTokenAware, Serializable {
 
     private static final long serialVersionUID = -1772542305173463716L;
 
@@ -20,7 +21,7 @@ public class PostParam extends PageParam implements Serializable {
 
     @NotBlank
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -33,12 +34,14 @@ public class PostParam extends PageParam implements Serializable {
         this.postId = postId;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getAccessToken() {

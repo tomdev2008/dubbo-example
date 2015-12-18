@@ -1,6 +1,5 @@
 package com.fansz.members.consumer.rpc;
 
-import com.alibaba.dubbo.common.utils.StringUtils;
 import com.fansz.members.api.SessionApi;
 import com.fansz.members.consumer.utils.ConsumerConstants;
 import com.fansz.members.consumer.utils.JsonHelper;
@@ -8,6 +7,7 @@ import com.fansz.members.consumer.utils.ResponseUtils;
 import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.session.SessionInfoResult;
+import com.fansz.pub.utils.StringTools;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +67,7 @@ public class DynaDubboInvoker implements RpcInvoker {
         List reqArray = (List) reqMap.get(ConsumerConstants.HTTP_REQUEST);
 
         List<String> responseList = mergeRequest(reqArray);
-        String response = StringUtils.join(responseList, ",");
+        String response = StringTools.join(responseList, ",");
         return String.format(ConsumerConstants.HTTP_RESPONSE, header, response);
     }
 
@@ -121,16 +121,19 @@ public class DynaDubboInvoker implements RpcInvoker {
         if (values[0] instanceof AccessTokenAware) {
             AccessTokenAware at = (AccessTokenAware) values[0];
             String accessToken = at.getAccessToken();
-            if (StringUtils.isBlank(accessToken)) {
-                SessionInfoResult session = sessionApi.getSession(accessToken);
-                if (!isValid(session))
-                    return ResponseUtils.renderAccessTokenError();//accessToken不能为空
+            if (StringTools.isBlank(accessToken)) {
+                return ResponseUtils.renderAccessTokenError();//accessToken不能为空
             }
-        }
-        Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
 
-        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.toString(result);
-    }
+            SessionInfoResult session = sessionApi.getSession(accessToken);
+            if (!isValid(session))
+                return ResponseUtils.renderAccessTokenError();//accessToken不能为空
+        }
+
+    Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
+
+    return result==null?ResponseUtils.renderMethodNameError():JsonHelper.toString(result);
+}
 
     private boolean isValid(SessionInfoResult session) {
         if (session != null) return true;

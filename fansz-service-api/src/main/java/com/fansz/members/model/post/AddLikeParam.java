@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -9,14 +10,14 @@ import javax.validation.constraints.Size;
 /**
  * Created by LiZhe on 12/4/2015.
  */
-public class AddLikeParam {
+public class AddLikeParam implements AccessTokenAware {
 
     @JsonProperty("access_token")
     private String accessToken;
 
     @NotBlank
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @NotNull
     @JsonProperty("post_id")
@@ -30,12 +31,14 @@ public class AddLikeParam {
         this.accessToken = accessToken;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public Long getPostId() {

@@ -9,11 +9,11 @@ import java.io.Serializable;
 /**
  * Created by dell on 2015/12/5.
  */
-public class SearchFandomParam extends PageParam  implements AccessTokenAware{
+public class SearchFandomParam extends PageParam implements AccessTokenAware {
 
     private static final long serialVersionUID = 5059191023562439861L;
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -21,12 +21,14 @@ public class SearchFandomParam extends PageParam  implements AccessTokenAware{
     @JsonProperty("search_val")
     private String searchVal;
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getAccessToken() {

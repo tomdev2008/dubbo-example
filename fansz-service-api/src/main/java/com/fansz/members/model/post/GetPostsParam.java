@@ -1,19 +1,21 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * 分页查询用户所有fandom的post信息
  */
-public class GetPostsParam extends PageParam {
+public class GetPostsParam extends PageParam implements AccessTokenAware {
 
     @JsonProperty("access_token")
     private String accessToken;
 
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }
@@ -22,11 +24,13 @@ public class GetPostsParam extends PageParam {
         this.accessToken = accessToken;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 }

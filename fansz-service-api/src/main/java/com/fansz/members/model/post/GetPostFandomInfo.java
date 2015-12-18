@@ -2,10 +2,15 @@ package com.fansz.members.model.post;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * Created by dell on 2015/12/7.
  */
-public class GetPostFandomInfo {
+public class GetPostFandomInfo implements Serializable{
+
+    private static final long serialVersionUID = -2586811055652415053L;
+
     @JsonProperty("fandom_id")
     private Long fandomId;
 

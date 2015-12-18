@@ -13,16 +13,22 @@ public class MessageCenterResult implements Serializable{
     private static final long serialVersionUID = -7140164730823327853L;
     @JsonProperty("member_sn")
     private String memberSn;
+
     @JsonProperty("operation_time")
     private Date operationTime;
+
     @JsonProperty("post_id")
     private Long postId;
+
     @JsonProperty("op_type")
     private String opType;
+
     @JsonProperty("like_comment_content")
     private String likeCommentContent;
+
     @JsonProperty("nickname")
     private String nickname;
+    
     @JsonProperty("member_avatar")
     private String memberAvatar;
 

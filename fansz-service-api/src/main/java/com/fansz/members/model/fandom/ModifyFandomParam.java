@@ -1,5 +1,6 @@
 package com.fansz.members.model.fandom;
 
+import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -10,16 +11,12 @@ import java.util.Date;
 /**
  * Created by dell on 2015/12/16.
  */
-public class ModifyFandomParam implements Serializable{
+public class ModifyFandomParam extends AbstractToken implements Serializable {
     private static final long serialVersionUID = 63976582296875325L;
 
     @NotBlank
     @JsonProperty("fandom_admin_sn")
     private String adminSn;
-
-    @NotBlank
-    @JsonProperty("access_token")
-    private String accessToken;
 
     @NotNull
     @JsonProperty("fandom_id")
@@ -48,13 +45,6 @@ public class ModifyFandomParam implements Serializable{
         this.adminSn = adminSn;
     }
 
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
 
     public Long getId() {
         return id;

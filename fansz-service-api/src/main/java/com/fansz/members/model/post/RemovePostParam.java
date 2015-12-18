@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
@@ -7,17 +8,20 @@ import java.io.Serializable;
 /**
  * Created by dell on 2015/12/4.
  */
-public class RemovePostParam implements Serializable{
+public class RemovePostParam implements AccessTokenAware,Serializable{
 
     private static final long serialVersionUID = 6298573938660712413L;
 
     @JsonProperty("access_token")
     private String accessToken;
+
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
+
     @JsonProperty("post_id")
     private Long postId;
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }
@@ -26,12 +30,14 @@ public class RemovePostParam implements Serializable{
         this.accessToken = accessToken;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public Long getPostId() {

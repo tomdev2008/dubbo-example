@@ -28,7 +28,7 @@ public class SessionServiceImpl implements SessionService {
 
     private Logger logger = LoggerFactory.getLogger(SessionServiceImpl.class);
 
-    private final static String ACCESS_TOKEN_PREFIX = "token:access:";
+    private final static String SESSION_PREFIX = "session:";
 
     private final static String REFRESH_TOKEN_PREFIX = "token:refresh:";
 
@@ -47,8 +47,8 @@ public class SessionServiceImpl implements SessionService {
         SessionInfoResult result = jedisTemplate.execute(new JedisCallback<SessionInfoResult>() {
             @Override
             public SessionInfoResult doInRedis(Jedis jedis) throws Exception {
-                Map<String, String> sessionMap = jedis.hgetAll(ACCESS_TOKEN_PREFIX + accessToken);
-                if (sessionMap != null) {
+                Map<String, String> sessionMap = jedis.hgetAll(SESSION_PREFIX + accessToken);
+                if (sessionMap != null && !sessionMap.isEmpty()) {
                     SessionInfoResult sessionModel = new SessionInfoResult();
                     BeanTools.copyMapToObject(sessionMap, SessionInfoResult.class);
                     return sessionModel;
@@ -62,8 +62,8 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public void saveSession(String accessToken, String refreshToken, Long uid) {
-        final String accessKey = ACCESS_TOKEN_PREFIX + accessToken;
-        final String refreshKey = ACCESS_TOKEN_PREFIX + refreshToken;
+        final String sessionKey = SESSION_PREFIX + accessToken;
+        final String refreshKey = REFRESH_TOKEN_PREFIX + refreshToken;
 
         final Map<String, String> session = new HashMap<>();
 
@@ -76,8 +76,8 @@ public class SessionServiceImpl implements SessionService {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
                 Pipeline pipe = jedis.pipelined();
-                pipe.hmset(accessKey, session);
-                pipe.expire(accessKey, accessValidPeriod * 60);//默认为5小时,配置文件单位为分钟
+                pipe.hmset(sessionKey, session);
+                pipe.expire(sessionKey, accessValidPeriod * 60);//默认为5小时,配置文件单位为分钟
                 session.remove("accessToken");
                 pipe.hmset(refreshKey, session);
                 pipe.expire(refreshKey, accessValidPeriod * 60);//默认为30天,配置文件单位为分钟
@@ -92,7 +92,7 @@ public class SessionServiceImpl implements SessionService {
         jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
-                jedis.del(ACCESS_TOKEN_PREFIX + accessToken);
+                jedis.del(SESSION_PREFIX + accessToken);
                 return true;
             }
         });
@@ -102,13 +102,13 @@ public class SessionServiceImpl implements SessionService {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
-                final String refreshKey = ACCESS_TOKEN_PREFIX + refreshToken;
+                final String refreshKey = REFRESH_TOKEN_PREFIX + refreshToken;
                 String uid = jedis.hget(refreshKey, "id");
                 if (!StringTools.isBlank(uid)) {
                     throw new ApplicationException(Constants.TOKEN_INVALID, "Token invalid");
                 }
                 final String accessToken = applyNewToken();
-                final String accessKey = ACCESS_TOKEN_PREFIX + accessToken;
+                final String sessionKey = SESSION_PREFIX + accessToken;
 
                 final Map<String, String> session = new HashMap<>();
 
@@ -116,7 +116,7 @@ public class SessionServiceImpl implements SessionService {
                 session.put("accessToken", accessToken);
                 session.put("refreshToken", refreshToken);
                 session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
-                jedis.hmset(accessKey, session);
+                jedis.hmset(sessionKey, session);
                 return accessToken;
             }
         });

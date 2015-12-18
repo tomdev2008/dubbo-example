@@ -13,7 +13,9 @@ import javax.validation.constraints.Size;
  */
 public class CommentFromFandomQueryParam extends PageParam implements AccessTokenAware {
 
-    private String sn;
+    @JsonProperty("sn")
+    private String currentSn;
+
     @JsonProperty("access_token")
     private String accessToken;
 
@@ -23,14 +25,6 @@ public class CommentFromFandomQueryParam extends PageParam implements AccessToke
 
     @JsonProperty("post_id")
     private Long postId;
-
-    public String getSn() {
-        return sn;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
 
     @Override
     public String getAccessToken() {
@@ -56,5 +50,15 @@ public class CommentFromFandomQueryParam extends PageParam implements AccessToke
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
+    }
+
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 }

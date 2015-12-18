@@ -1,5 +1,6 @@
 package com.fansz.members.model.post;
 
+import com.fansz.members.model.AccessTokenAware;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -10,7 +11,7 @@ import java.util.Date;
 /**
  * 发post参数模型
  */
-public class AddPostParam implements Serializable {
+public class AddPostParam implements AccessTokenAware, Serializable {
 
     private static final long serialVersionUID = -9003165341407262234L;
 
@@ -18,7 +19,7 @@ public class AddPostParam implements Serializable {
     private String accessToken;
 
     @JsonProperty("member_sn")
-    private String sn;
+    private String currentSn;
 
     @JsonProperty("fandom_id")
     private Long fandomId;
@@ -34,12 +35,14 @@ public class AddPostParam implements Serializable {
     private String postNewsfeeds;
 
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public Long getFandomId() {
@@ -74,6 +77,7 @@ public class AddPostParam implements Serializable {
         this.postNewsfeeds = postNewsfeeds;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

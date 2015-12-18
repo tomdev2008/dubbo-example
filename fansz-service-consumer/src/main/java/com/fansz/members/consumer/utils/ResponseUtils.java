@@ -11,7 +11,7 @@ public final class ResponseUtils {
     }
 
     public static String renderAccessTokenError() {
-        return String.format(ERROR, "10001", "Access token error");
+        return String.format(ERROR, "20007", "Token invalid");
     }
 
     public static String renderAppError() {

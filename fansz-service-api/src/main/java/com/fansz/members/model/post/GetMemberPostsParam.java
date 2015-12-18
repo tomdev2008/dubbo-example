@@ -14,7 +14,7 @@ public class GetMemberPostsParam extends PageParam implements AccessTokenAware {
     private String accessToken;
 
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("friend_sn")
     private String friendSn;
@@ -28,12 +28,14 @@ public class GetMemberPostsParam extends PageParam implements AccessTokenAware {
         this.accessToken = accessToken;
     }
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getFriendSn() {
