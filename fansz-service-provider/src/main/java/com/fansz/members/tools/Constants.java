@@ -56,6 +56,8 @@ public class Constants {
 
     public final static String COMMENT_NOT_EXISTS="20501";//评论不存在
 
+    public final static String DELETE_NOT_PERMISSION = "20303"; //没有删除权限
+
     public final static String USER_STATUS_OK = "1";
 
     public final static String RELATION_FRIEND="10";

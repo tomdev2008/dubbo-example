@@ -88,7 +88,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deleteLike(DeleteLikeParam deleteLikeParam) {
-        this.fandomPostLikeEntityMapper.deleteMyLike(deleteLikeParam.getMemberSn(), deleteLikeParam.getPostId());
+        int count = this.fandomPostLikeEntityMapper.deleteMyLike(deleteLikeParam.getMemberSn(), deleteLikeParam.getPostId());
+        if(count == 0){
+            throw new ApplicationException(Constants.DELETE_NOT_PERMISSION, "no delete permissions");
+        }
     }
 
     @Override
