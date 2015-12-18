@@ -174,6 +174,7 @@ public interface FandomApi {
      */
     @POST
     @Path("/delFandom")
+    @DubboxService("deleteFandom")
     CommonResult<NullResult> delFandom(DelFandomParam delFandomParam);
 
     /**
@@ -184,5 +185,6 @@ public interface FandomApi {
      */
     @POST
     @Path("/modifyFandom")
+    @DubboxService("modifyFandom")
     CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam);
 }
