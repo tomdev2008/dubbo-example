@@ -6,12 +6,11 @@ import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.fandom.*;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
-import com.fansz.members.model.profile.ContactInfoResult;
 
-import javax.validation.constraints.Null;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -39,6 +38,7 @@ public interface FandomApi {
 
     /**
      * 关注fandom
+     *
      * @param addFandomParam
      * @return
      */
@@ -63,20 +63,20 @@ public interface FandomApi {
      * @param joinFandomParam
      * @return
      */
-   // @POST
-   // @Path("/fandom/beSpecial")
+    // @POST
+    // @Path("/fandom/beSpecial")
     //@DubboxService("beMySpecialFandom")
-    CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
+    //CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
      * 取消特别关注fandom
      * @param joinFandomParam
      * @return
      */
-   // @POST
-   // @Path("/fandom/notSpecial")
-   // @DubboxService("removeMySpecialFandom")
-    CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
+    // @POST
+    // @Path("/fandom/notSpecial")
+    // @DubboxService("removeMySpecialFandom")
+    //CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
      * 退出fandom
@@ -155,16 +155,33 @@ public interface FandomApi {
     CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
 
 
-
+    /**
+     * 根据关键字搜索fandom
+     *
+     * @param searchFandomParam
+     * @return
+     */
     @POST
     @Path("/fandom/search")
     @DubboxService("searchFandoms")
     CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
 
+    /**
+     * 删除fandom
+     *
+     * @param delFandomParam
+     * @return
+     */
     @POST
     @Path("/delFandom")
     CommonResult<NullResult> delFandom(DelFandomParam delFandomParam);
 
+    /**
+     * 修改fandom信息
+     *
+     * @param modifyFandomParam
+     * @return
+     */
     @POST
     @Path("/modifyFandom")
     CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam);

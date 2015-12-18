@@ -6,10 +6,9 @@
     <parent>
         <groupId>com.fansz</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
-    <groupId>com.fansz.service</groupId>
-    <artifactId>api</artifactId>
+    <artifactId>service-api</artifactId>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -51,7 +50,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>4.2.0.Final</version>
         </dependency>
     </dependencies>
 

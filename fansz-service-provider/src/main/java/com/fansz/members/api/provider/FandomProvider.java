@@ -49,18 +49,16 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return renderSuccess();
     }
 
-    @Override
-    public CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam) {
-        fandomService.markAsSpecial(joinFandomParam);
-        return renderSuccess(PRESENCE);
-    }
-
-    @Override
-    public CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam) {
-        fandomService.unmarkAsSpecial(joinFandomParam);
-        return renderSuccess(PRESENCE);
-    }
-
+    /**
+     * @Override public CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam) {
+     * fandomService.markAsSpecial(joinFandomParam);
+     * return renderSuccess(PRESENCE);
+     * }
+     * @Override public CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam) {
+     * fandomService.unmarkAsSpecial(joinFandomParam);
+     * return renderSuccess(PRESENCE);
+     * }
+     **/
 
     public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
         FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
@@ -69,7 +67,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Override
     public CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) {
-        FandomInfoResult fandomInfoResult=fandomService.addFandom(addFandomParam);
+        FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
         return renderSuccess(fandomInfoResult);
     }
 
@@ -124,7 +122,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Override
     public CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) {
-        FandomInfoResult fandomInfoResult=fandomService.addFandom(addFandomParam);
+        FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
         JoinFandomParam joinFandomParam = new JoinFandomParam();
         joinFandomParam.setMemberSn(fandomInfoResult.getFandomCreatorSn());
         joinFandomParam.setFandomId(String.valueOf(fandomInfoResult.getId()));

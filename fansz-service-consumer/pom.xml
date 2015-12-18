@@ -6,39 +6,12 @@
     <parent>
         <groupId>com.fansz</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
-    <groupId>com.fansz.service</groupId>
-    <artifactId>consumer</artifactId>
+    <artifactId>service-consumer</artifactId>
     <packaging>jar</packaging>
     <build>
         <plugins>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <configuration>
-                            <tasks>
-                                <echo
-                                        message="********************** copy resources to classpath*************************"/>
-                                <echo
-                                        message="********************** copy ${resources.dir} to classpath*************************"/>
-                                <replace file="target/classes/applicationContext-consumer.xml"
-                                         token="classpath:/conf/dubbo.properties"
-                                         value="file:${application.root}/conf/dubbo.properties"
-                                         encoding="utf-8"/>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -81,8 +54,8 @@
             <artifactId>spring-beans</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fansz.members</groupId>
-            <artifactId>members-api</artifactId>
+            <groupId>com.fansz</groupId>
+            <artifactId>service-api</artifactId>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
@@ -158,12 +131,72 @@
             <properties>
                 <env>integration</env>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo
+                                                message="********************** copy resources to classpath*************************"/>
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-consumer.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>production</id>
             <properties>
                 <env>production</env>
             </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo
+                                                message="********************** copy resources to classpath*************************"/>
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-consumer.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

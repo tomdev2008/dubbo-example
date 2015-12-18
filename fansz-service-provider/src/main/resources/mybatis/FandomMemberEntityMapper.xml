@@ -146,10 +146,10 @@
         SELECT p.*,b.relation_status
         FROM  feeds_member_fandom m
         INNER JOIN connects_member_profile  p
+        ON m.member_sn=p.sn
         LEFT JOIN connects_member_relation b
-        ON b.friend_member_sn=a.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
+        ON b.friend_member_sn=p.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
         WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
-        AND   m.member_sn=p.sn
         AND p.member_status='1'
     </select>
 

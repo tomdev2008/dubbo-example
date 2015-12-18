@@ -6,9 +6,8 @@
     <parent>
         <groupId>com.fansz</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
-    <groupId>com.fansz.service</groupId>
     <artifactId>storage-server</artifactId>
     <packaging>jar</packaging>
     <build>

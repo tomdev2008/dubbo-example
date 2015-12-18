@@ -200,13 +200,13 @@ public class DubboInvoker implements RpcInvoker {
         } else if ("exitFandom".equals(method)) {//3
             ExitFandomParam exitFandomParam = JsonHelper.copyAs(params, ExitFandomParam.class);
             result = fandomApi.exitFandom(exitFandomParam);
-        } else if ("beMySpecialFandom".equals(method)) {//4
+        } /**else if ("beMySpecialFandom".equals(method)) {//4
             JoinFandomParam joinFandomParam = JsonHelper.copyAs(params, JoinFandomParam.class);
             result = fandomApi.markSpecialFandom(joinFandomParam);
         } else if ("removeMySpecialFandom".equals(method)) {//5
             JoinFandomParam joinFandomParam = JsonHelper.copyAs(params, JoinFandomParam.class);
             result = fandomApi.removeSpecialFandom(joinFandomParam);
-        } else if ("getRecommendFandom".equals(method)) {//6
+        } **/else if ("getRecommendFandom".equals(method)) {//6
             FandomQueryParam fandomQueryParam = JsonHelper.copyAs(params, FandomQueryParam.class);
             result = fandomApi.getRecommendFandom(fandomQueryParam);
         } else if ("getMyfandoms".equals(method)) {//7
