@@ -35,9 +35,6 @@
             <if test="priorityNo != null">
                 priority_no,
             </if>
-            <if test="status != null">
-                status,
-            </if>
             <if test="clickUrl != null">
                 click_url,
             </if>
@@ -60,9 +57,6 @@
             </if>
             <if test="priorityNo != null">
                 #{priorityNo,jdbcType=BIGINT},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
             </if>
             <if test="clickUrl != null">
                 #{clickUrl,jdbcType=VARCHAR},
@@ -114,7 +108,7 @@
     </update>
 
     <delete id="delSeedingSpot">
-        DELETE FROM seeding_spot_info WHERE id = #{id}
+        DELETE FROM seeding_spot_info WHERE id = #{id,jdbcType=BIGINT} AND STATUS != 1
     </delete>
 
     <select id="getSeedingSpotById" resultMap="seedingSpotResult" parameterType="java.lang.Long">
@@ -131,7 +125,7 @@
         FROM
             seeding_spot_info
         WHERE
-            id = #{id}
+            id = #{id,jdbcType=BIGINT}
     </select>
 
     <select id="getSeedingSpot" resultMap="seedingSpotResult" >
@@ -148,5 +142,28 @@
         FROM
             seeding_spot_info
     </select>
+
+    <select id="getSeedingSpotByStatus" parameterType="java.lang.String" resultMap="seedingSpotResult" >
+        SELECT
+        id,
+        intro,
+        priority_no,
+        STATUS,
+        click_url,
+        seeding_type,
+        params,
+        bg_img,
+        create_time
+        FROM
+        seeding_spot_info
+        WHERE STATUS = #{status,jdbcType=VARCHAR}
+    </select>
+
+    <update id="modifySeedingSpotStatus" parameterType="java.lang.Object">
+      UPDATE seeding_spot_info
+        SET STATUS = #{stauts,jdbcType=VARCHAR}
+      WHERE
+         id = #{id,jdbcType=BIGINT}
+    </update>
 
 </mapper>

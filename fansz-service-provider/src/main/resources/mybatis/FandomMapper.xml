@@ -56,7 +56,7 @@
         insert into feeds_fandom (fandom_name,fandom_parent_id,fandom_admin_sn,
         fandom_creator_sn,fandom_avatar_url,fandom_intro,fandom_create_time)
         values (#{fandomName,jdbcType=VARCHAR}, #{fandomParentId,jdbcType=BIGINT},
-        #{fandomAdminSn,jdbcType=BIGINT}, #{fandomCreatorSn,jdbcType=BIGINT}, #{fandomAvatarUrl,jdbcType=VARCHAR},
+        #{fandomAdminSn,jdbcType=VARCHAR}, #{fandomCreatorSn,jdbcType=VARCHAR}, #{fandomAvatarUrl,jdbcType=VARCHAR},
         #{fandomIntro,jdbcType=VARCHAR}, #{fandomCreateTime})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
@@ -93,10 +93,10 @@
                 #{fandomParentId,jdbcType=BIGINT},
             </if>
             <if test="fandomAdminSn != null">
-                #{fandomAdminSn,jdbcType=BIGINT},
+                #{fandomAdminSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomCreatorSn != null">
-                #{fandomCreatorSn,jdbcType=BIGINT},
+                #{fandomCreatorSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomAvatarUrl != null">
                 #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -119,10 +119,10 @@
                 fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
             <if test="fandomAdminSn != null">
-                fandom_admin_sn = #{fandomAdminSn,jdbcType=BIGINT},
+                fandom_admin_sn = #{fandomAdminSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomCreatorSn != null">
-                fandom_creator_sn = #{fandomCreatorSn,jdbcType=BIGINT},
+                fandom_creator_sn = #{fandomCreatorSn,jdbcType=VARCHAR},
             </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
@@ -204,17 +204,6 @@
         order by a.id
     </select>
 
-    <select id="getFandomMembers"
-            resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
-        SELECT p.*,
-        (SELECT r.relation_status FROM connects_member_relation r
-        WHERE (r.friend_member_sn=p.sn and r.my_member_sn = #{memberSn,jdbcType=VARCHAR}) OR(r.my_member_sn=p.sn AND r.friend_member_sn = #{memberSn,jdbcType=VARCHAR})) relation_status
-        FROM  feeds_member_fandom m, connects_member_profile  p
-        WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
-        AND   m.member_sn=p.sn
-        AND p.member_status='1'
-    </select>
-
     <select id="searchFandoms" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
       SELECT
                 ff.id,
@@ -230,7 +219,7 @@
                         feeds_member_fandom
                     WHERE
                         fandom_id = ff.id
-                ) followerCount,
+                ) follower_count,
                 (
                     SELECT
                         count(1)
@@ -238,7 +227,7 @@
                         feeds_member_post_fandom
                     WHERE
                         fandom_id = ff.id
-                ) postCount,
+                ) post_count,
                 (
                     SELECT
                         infatuation
@@ -264,5 +253,36 @@
         WHERE
             fandom_name = #{fandomName,jdbcType=VARCHAR}
     </select>
+
+    <delete id="delFandom" parameterType="com.fansz.members.model.fandom.DelFandomParam" >
+      DELETE
+        FROM
+            feeds_fandom
+        WHERE
+            id = #{id,jdbcType=BIGINT}
+        AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="modifyFandom" parameterType="com.fansz.members.model.fandom.ModifyFandomParam" >
+        update feeds_fandom
+        <set>
+            <if test="fandomName != null">
+                fandom_name = #{fandomName,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomParentId != null">
+                fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
+            </if>
+            <if test="fandomCreatorSn != null">
+                fandom_creator_sn = #{fandomCreatorSn,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomAvatarUrl != null">
+                fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="fandomIntro != null">
+                fandom_intro = #{fandomIntro,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
+    </update>
 
 </mapper>

@@ -2,6 +2,7 @@ package com.fansz.members.model.post;
 
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -17,7 +18,7 @@ public class PostParam extends PageParam implements Serializable {
     @JsonProperty("post_id")
     private Long postId;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("member_sn")
     private String memberSn;
 

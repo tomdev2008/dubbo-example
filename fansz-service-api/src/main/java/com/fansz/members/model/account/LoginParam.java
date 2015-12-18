@@ -1,6 +1,8 @@
 package com.fansz.members.model.account;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
@@ -10,10 +12,11 @@ import java.io.Serializable;
 public class LoginParam implements Serializable {
     private static final long serialVersionUID = 7339771245324989539L;
 
+    @NotBlank
     @Size(min = 1, max = 20)
     private String loginname;
 
-    @Size(min = 1)
+    @NotBlank
     private String password;
 
     public String getLoginname() {

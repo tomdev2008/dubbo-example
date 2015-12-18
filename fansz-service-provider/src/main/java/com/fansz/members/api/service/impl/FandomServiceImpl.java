@@ -68,8 +68,16 @@ public class FandomServiceImpl implements FandomService {
         if (exist != null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
         }
-        fandomMemberEntity.setInfatuation("0");//1表示特别关注
+        fandomMemberEntity.setInfatuation("1");//1表示特别关注
         fandomMemberEntityMapper.insertSelective(fandomMemberEntity);
+
+        //添加特别关注记录
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return false;
     }
 
@@ -82,6 +90,14 @@ public class FandomServiceImpl implements FandomService {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
         }
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
+
+        //删除特别关注记录
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
+        applicationContext.publishEvent(specialRealtionEvent);
+
         return false;
     }
 
@@ -160,7 +176,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
+        return fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
@@ -174,22 +190,30 @@ public class FandomServiceImpl implements FandomService {
     }
 
     public FandomInfoResult addFandom(AddFandomParam addFandomParam) {
-       int count = this.fandomMapper.getCountByFandomName(addFandomParam.getFandomName());
-        FandomEntity fandomEntity = null;
-        if(count == 0) {
-            fandomEntity = new FandomEntity();
-            fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
-            fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
-            fandomEntity.setFandomCreateTime(new Date());
-            fandomEntity.setFandomCreatorSn(addFandomParam.getFandomCreatorSn());
-            fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
-            fandomEntity.setFandomName(addFandomParam.getFandomName());
-            fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
-            this.fandomMapper.insert(fandomEntity);
-        }else{
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "already exists fandom name");
+        int count = this.fandomMapper.getCountByFandomName(addFandomParam.getFandomName());
+        if (count > 0) {
+            throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
         }
+        FandomEntity fandomEntity = new FandomEntity();
+        fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
+        fandomEntity.setFandomCreateTime(new Date());
+        fandomEntity.setFandomCreatorSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
+        fandomEntity.setFandomName(addFandomParam.getFandomName());
+        fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
+        this.fandomMapper.insert(fandomEntity);
         return BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
 
+    }
+
+    @Override
+    public int delFandom(DelFandomParam delFandomParam) {
+        return fandomMapper.delFandom(delFandomParam);
+    }
+
+    @Override
+    public int modifyFandom(ModifyFandomParam modifyFandomParam) {
+        return fandomMapper.modifyFandom(modifyFandomParam);
     }
 }

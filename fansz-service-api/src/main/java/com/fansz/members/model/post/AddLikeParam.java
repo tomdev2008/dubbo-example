@@ -1,6 +1,7 @@
 package com.fansz.members.model.post;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,7 +14,7 @@ public class AddLikeParam {
     @JsonProperty("access_token")
     private String accessToken;
 
-    @Size(min=1)
+    @NotBlank
     @JsonProperty("member_sn")
     private String memberSn;
 

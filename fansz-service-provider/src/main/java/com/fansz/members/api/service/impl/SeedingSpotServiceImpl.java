@@ -51,4 +51,15 @@ public class SeedingSpotServiceImpl implements SeedingSpotService {
         PageBounds pageBounds = new PageBounds(seedingSpotPrama.getOffset(), seedingSpotPrama.getLimit());
         return seedingSpotEntityMapper.getSeedingSpot(pageBounds);
     }
+
+    @Override
+    public PageList<SeedingSpotResult> getSeedingSpotByStatus(SeedingSpotPrama seedingSpotPrama) {
+        PageBounds pageBounds = new PageBounds(seedingSpotPrama.getOffset(), seedingSpotPrama.getLimit());
+        return seedingSpotEntityMapper.getSeedingSpotByStatus(seedingSpotPrama.getStatus(),pageBounds);
+    }
+
+    @Override
+    public int modifySeedingSpotStatus(SeedingSpotPrama seedingSpotPrama) {
+        return seedingSpotEntityMapper.modifySeedingSpotStatus(seedingSpotPrama.getId(),seedingSpotPrama.getStatus());
+    }
 }

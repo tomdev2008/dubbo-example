@@ -3,6 +3,7 @@ package com.fansz.members.model.comment;
 
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -13,15 +14,15 @@ import java.io.Serializable;
  */
 public class CommentParam extends AbstractToken {
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("commentator_sn")
     private String commentatorSn;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("comment_source")
     private String commentSource;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("comment_content")
     private String commentContent;
 
@@ -32,7 +33,7 @@ public class CommentParam extends AbstractToken {
     @JsonProperty("comment_parent_id")
     private Long commentParentId;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("access_token")
     private String accessToken;
 

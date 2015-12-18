@@ -2,8 +2,10 @@ package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomMemberEntity;
 import com.fansz.members.model.fandom.FandomInfoResult;
+import com.fansz.members.model.profile.ContactInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -28,5 +30,7 @@ public interface FandomMemberEntityMapper {
     PageList<FandomInfoResult> findFandomsByMemberSn(String userSn, PageBounds pageBounds);
 
     FandomMemberEntity selectByMemberAndFandom(FandomMemberEntity record);
+
+    PageList<ContactInfoResult> getFandomMembers(@Param("fandomId")String fandomId, @Param("memberSn")String memberSn, PageBounds pageBounds);
 
 }

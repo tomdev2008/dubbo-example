@@ -5,7 +5,7 @@ package com.fansz.members.tools;
  */
 public enum RelationShip {
 
-    TO_BE_FRIEND("00"), FRIEND("10"), SPECIAL_FRIEND("11");
+    TO_ADD("00"), BE_ADDED("01"), FRIEND("10"), SPECIAL_FRIEND("11");
 
     private String code;
 

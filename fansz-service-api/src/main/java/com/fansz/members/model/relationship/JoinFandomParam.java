@@ -1,6 +1,7 @@
 package com.fansz.members.model.relationship;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -12,11 +13,11 @@ public class JoinFandomParam implements Serializable {
 
     private static final long serialVersionUID = 4543574868180635074L;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("member_sn")
     private String memberSn;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("fandom_id")
     private String fandomId;
 

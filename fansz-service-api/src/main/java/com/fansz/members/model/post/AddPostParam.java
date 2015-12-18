@@ -1,6 +1,7 @@
 package com.fansz.members.model.post;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class AddPostParam implements Serializable {
     @JsonProperty("post_title")
     private String postTitle;
 
-    @Size(min = 1)
+    @NotBlank
     @JsonProperty("post_content")
     private String postContent;
 

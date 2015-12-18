@@ -34,4 +34,7 @@ public interface SeedingSpotService {
 
     PageList<SeedingSpotResult> getSeedingSpot(SeedingSpotPrama seedingSpotPrama);
 
+    PageList<SeedingSpotResult> getSeedingSpotByStatus(SeedingSpotPrama seedingSpotPrama);
+
+    int modifySeedingSpotStatus(SeedingSpotPrama seedingSpotPrama);
 }

@@ -3,6 +3,7 @@ package com.fansz.members.model.profile;
 
 import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.io.Serializable;
  */
 public class ModifyProfileParam extends AbstractToken {
 
-    @Size(min=1)
+    @NotBlank
     private String sn;
 
     private String nickname;

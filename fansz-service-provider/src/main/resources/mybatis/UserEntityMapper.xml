@@ -54,16 +54,6 @@
         ${alias}.profile_createtime u_profile_createtime, ${alias}.profile_updatetime u_profile_updatetime, ${alias}.member_type u_member_type, ${alias}.member_status u_member_status
     </sql>
 
-    <sql id="Member_Relation_Sql">
-        SELECT CASE
-            WHEN m.my_member_sn = #{sn,jdbcType=VARCHAR} THEN relation_status
-            WHEN m.my_member_sn != #{sn,jdbcType=VARCHAR} AND m.relation_status IN ('11','10') THEN '10'
-            WHEN m.my_member_sn != #{sn,jdbcType=VARCHAR} AND m.relation_status = '00' THEN '01'
-            END relation_status
-        FROM  connects_member_relation m
-      WHERE (m.my_member_sn=#{sn,jdbcType=VARCHAR} AND m.friend_member_sn=${alias}.sn) OR
-        (m.my_member_sn=${alias}.sn AND m.friend_member_sn=#{sn,jdbcType=VARCHAR})
-    </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -369,10 +359,10 @@
         </where>
     </select>
     <select id="searchMembersByKey" resultMap="userInfoResultMap">
-        SELECT
-        a.id, a.sn, a.loginname, a.mobile, a.email, a.nickname, a.gender, a.birthday, a.member_avatar, a.signature,a.profile_createtime, a.profile_updatetime, a.member_type, a.member_status
-        ,(<include refid="Member_Relation_Sql"><property name="alias" value="a"/></include>) relationship
+        SELECT a.* ,b.relation_status relationship
         FROM connects_member_profile a
+        LEFT JOIN connects_member_relation b
+        ON b.friend_member_sn=a.sn AND  b.my_member_sn=#{sn,jdbcType=VARCHAR}
         <if test="searchKey != null">
             WHERE nickname = #{searchKey,jdbcType=VARCHAR}
             OR mobile = #{searchKey,jdbcType=VARCHAR}

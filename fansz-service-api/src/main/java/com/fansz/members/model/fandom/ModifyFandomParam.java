@@ -1,26 +1,38 @@
 package com.fansz.members.model.fandom;
 
-import com.fansz.members.model.AbstractToken;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.Date;
 
 /**
- * Created by LiZhe on 12/5/2015.
+ * Created by dell on 2015/12/16.
  */
-public class AddFandomParam extends AbstractToken {
+public class ModifyFandomParam implements Serializable{
+    private static final long serialVersionUID = 63976582296875325L;
 
     @NotBlank
-    @JsonProperty("fandom_creator_sn")
-    private String fandomCreatorSn;
+    @JsonProperty("fandom_admin_sn")
+    private String adminSn;
 
     @NotBlank
+    @JsonProperty("access_token")
+    private String accessToken;
+
+    @NotNull
+    @JsonProperty("fandom_id")
+    private Long id;
+
     @JsonProperty("fandom_name")
     private String fandomName;
 
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
+
+    @JsonProperty("fandom_creator_sn")
+    private String fandomCreatorSn;
 
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
@@ -28,14 +40,29 @@ public class AddFandomParam extends AbstractToken {
     @JsonProperty("fandom_intro")
     private String fandomIntro;
 
-    public String getFandomCreatorSn() {
-        return fandomCreatorSn;
+    public String getAdminSn() {
+        return adminSn;
     }
 
-    public void setFandomCreatorSn(String fandomCreatorSn) {
-        this.fandomCreatorSn = fandomCreatorSn;
+    public void setAdminSn(String adminSn) {
+        this.adminSn = adminSn;
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFandomName() {
         return fandomName;
@@ -51,6 +78,14 @@ public class AddFandomParam extends AbstractToken {
 
     public void setFandomParentId(Long fandomParentId) {
         this.fandomParentId = fandomParentId;
+    }
+
+    public String getFandomCreatorSn() {
+        return fandomCreatorSn;
+    }
+
+    public void setFandomCreatorSn(String fandomCreatorSn) {
+        this.fandomCreatorSn = fandomCreatorSn;
     }
 
     public String getFandomAvatarUrl() {

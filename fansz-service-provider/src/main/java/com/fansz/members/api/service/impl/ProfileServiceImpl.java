@@ -41,21 +41,12 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
-        UserEntity user = userEntityMapper.selectByUid(queryUserParam.getSn());
+        UserEntity user = userEntityMapper.selectByUid(queryUserParam.getFriendSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
         if (StringTools.isNotBlank(queryUserParam.getFriendSn())) {
-            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getSn(), queryUserParam.getFriendSn());
+            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getMemberSn(), queryUserParam.getFriendSn());
             if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());
-                if(!queryUserParam.getSn().equals(userRelationEntity.getMyMemberSn())){
-                    if (RelationShip.SPECIAL_FRIEND.getCode().equals(userRelationEntity.getRelationStatus())) {//特殊好友是单向的,A是B的好友,但B不一定是A的好友
-                        result.setRelationship(RelationShip.FRIEND.getCode());
-                    }
-                    else if(RelationShip.TO_BE_FRIEND.getCode().equals(userRelationEntity.getRelationStatus())){
-                        result.setRelationship("01");
-                    }
-                }
-
             }
         }
 

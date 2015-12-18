@@ -50,4 +50,16 @@ public class SeedingSpotProvider extends AbstractProvider implements SeedingSpot
         PageList<SeedingSpotResult> pageList = seedingSpotService.getSeedingSpot(seedingSpotPrama);
         return renderPagedSuccess(pageList);
     }
+
+    @Override
+    public CommonPagedResult<SeedingSpotResult> getSeedingSpotByStatus(SeedingSpotPrama seedingSpotPrama) {
+        PageList<SeedingSpotResult> pageList = seedingSpotService.getSeedingSpotByStatus(seedingSpotPrama);
+        return renderPagedSuccess(pageList);
+    }
+
+    @Override
+    public CommonResult<NullResult> modifySeedingSpotStatus(SeedingSpotPrama seedingSpotPrama) {
+        seedingSpotService.modifySeedingSpotStatus(seedingSpotPrama);
+        return renderSuccess();
+    }
 }

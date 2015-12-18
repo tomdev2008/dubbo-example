@@ -18,7 +18,7 @@ public class Main {
         StorageServiceUtils.init(baseDir);
         NettyHttpService service = NettyHttpService.builder().build();
         try {
-            NettyHttpService.builder().setPort(2000).setHttpChunkLimit(2 * 1024 * 1024).build().startUp();
+            NettyHttpService.builder().setPort(2000).setHttpChunkLimit(50 * 1024 * 1024).build().startUp();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

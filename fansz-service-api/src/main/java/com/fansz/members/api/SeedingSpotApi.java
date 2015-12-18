@@ -33,7 +33,7 @@ public interface SeedingSpotApi {
     CommonResult<NullResult> addSeedingSpot(SeedingSpotPrama seedingSpotPrama);
 
     /**
-     * 删除广告位信息
+     * 删除推荐位（生效的无法删除）
      * @param seedingSpotPrama
      * @return
      */
@@ -68,5 +68,23 @@ public interface SeedingSpotApi {
     @Path("get")
     @DubboxService("getRecommendInfo")
     CommonPagedResult<SeedingSpotResult> getSeedingSpot(SeedingSpotPrama seedingSpotPrama);
+
+    /**
+     *查询推荐位（查询生效的，查询历史的）
+     * @param seedingSpotPrama
+     * @return
+     */
+    @POST
+    @Path("getByStatus")
+    CommonPagedResult<SeedingSpotResult> getSeedingSpotByStatus(SeedingSpotPrama seedingSpotPrama);
+
+    /**
+     *推荐位上架、失效
+     * @param seedingSpotPrama
+     * @return
+     */
+    @POST
+    @Path("modifyStatus")
+    CommonResult<NullResult> modifySeedingSpotStatus(SeedingSpotPrama seedingSpotPrama);
 
 }

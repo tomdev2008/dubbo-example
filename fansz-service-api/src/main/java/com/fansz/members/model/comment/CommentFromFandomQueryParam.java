@@ -3,6 +3,10 @@ package com.fansz.members.model.comment;
 import com.fansz.members.model.AccessTokenAware;
 import com.fansz.members.model.PageParam;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by xuyubiao on 15/12/1.
@@ -13,6 +17,7 @@ public class CommentFromFandomQueryParam extends PageParam implements AccessToke
     @JsonProperty("access_token")
     private String accessToken;
 
+    @NotBlank
     @JsonProperty("comment_source")
     private String commentSource;
 
