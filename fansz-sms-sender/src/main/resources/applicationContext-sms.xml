@@ -7,18 +7,17 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/redis.properties"/>
+                                  location="classpath:/conf/redis.properties,classpath:/conf/sms.properties"/>
 
     <context:component-scan base-package="com.fansz.sms"/>
+
     <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
-    <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/sms.properties"/>
     <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
         <constructor-arg index="0">
             <ref bean="kafkaProp"/>
         </constructor-arg>
     </bean>
 
-    <bean id="kafkaConsumerRunner" class="com.fansz.sms.listener.KafkaConsumerRunner"/>
+    <bean id="kafkaConsumerRunner" class="com.fansz.sms.consumer.KafkaConsumerRunner"/>
 </beans>

@@ -28,6 +28,20 @@
         </snapshotRepository>
     </distributionManagement>
 
+    <repositories>
+        <repository>
+            <id>nexus-public</id>
+            <name>Public Repository of fansz</name>
+            <url>http://192.168.88.7:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -129,12 +143,6 @@
             <!--spring end-->
 
             <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>1.6.1.RELEASE</version>
-            </dependency>
-
-            <dependency>
                 <groupId>redis.clients</groupId>
                 <artifactId>jedis</artifactId>
                 <version>2.7.2</version>
@@ -221,16 +229,6 @@
                 <version>${hessian_version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-core</artifactId>
-                <version>${tomcat_embed_version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.tomcat.embed</groupId>
-                <artifactId>tomcat-embed-logging-juli</artifactId>
-                <version>${tomcat_embed_version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.csource</groupId>
                 <artifactId>fastdfs</artifactId>

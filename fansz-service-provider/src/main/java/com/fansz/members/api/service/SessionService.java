@@ -1,10 +1,6 @@
 package com.fansz.members.api.service;
 
-import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.api.model.SessionModel;
 import com.fansz.members.model.session.SessionInfoResult;
-
-import java.util.Map;
 
 /**
  * Created by allan on 15/12/14.

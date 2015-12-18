@@ -5,10 +5,9 @@ import com.fansz.members.api.AccountApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.SessionService;
-import com.fansz.members.tools.Constants;
 import com.fansz.members.model.CommonResult;
-import com.fansz.members.model.account.*;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.account.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

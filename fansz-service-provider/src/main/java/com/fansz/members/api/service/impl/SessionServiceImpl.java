@@ -32,10 +32,10 @@ public class SessionServiceImpl implements SessionService {
 
     private final static String REFRESH_TOKEN_PREFIX = "token:refresh:";
 
-    @Value("token.access.valid")
+    @Value("${token.access.valid}")
     private int accessValidPeriod;
 
-    @Value("token.refresh.valid")
+    @Value("${token.refresh.valid}")
     private int refreshValidPeriod;
 
     @Autowired
@@ -77,10 +77,10 @@ public class SessionServiceImpl implements SessionService {
             public Boolean doInRedis(Jedis jedis) throws Exception {
                 Pipeline pipe = jedis.pipelined();
                 pipe.hmset(accessKey, session);
-                pipe.expire(accessKey, accessValidPeriod * 3600);//默认为5小时
+                pipe.expire(accessKey, accessValidPeriod * 60);//默认为5小时,配置文件单位为分钟
                 session.remove("accessToken");
                 pipe.hmset(refreshKey, session);
-                pipe.expire(refreshKey, accessValidPeriod * 3600);
+                pipe.expire(refreshKey, accessValidPeriod * 60);//默认为30天,配置文件单位为分钟
                 pipe.sync();
                 return true;
             }

@@ -1,13 +1,9 @@
 package com.fansz.members.api.repository;
 
-import com.fansz.members.model.specialfocus.ModifySpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusResult;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.mybatis.spring.annotation.MapperScan;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
 import java.util.List;
 import java.util.Map;
 

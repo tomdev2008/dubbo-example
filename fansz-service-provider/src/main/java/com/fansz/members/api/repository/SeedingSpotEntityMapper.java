@@ -1,7 +1,6 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.SeedingSpotEntity;
-import com.fansz.members.model.seedingspot.SeedingSpotPrama;
 import com.fansz.members.model.seedingspot.SeedingSpotResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;

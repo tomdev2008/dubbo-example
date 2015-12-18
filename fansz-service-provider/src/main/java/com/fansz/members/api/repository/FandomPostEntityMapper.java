@@ -1,8 +1,9 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.api.entity.FandomPostEntity;
-import com.fansz.members.api.entity.MemberPostEntity;
-import com.fansz.members.model.post.*;
+import com.fansz.members.model.post.GetPostByIdParam;
+import com.fansz.members.model.post.GetPostInfoResult;
+import com.fansz.members.model.post.PostInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;

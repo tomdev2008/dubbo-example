@@ -1,7 +1,6 @@
 package com.fansz.members.api.repository;
 
 import com.fansz.members.model.messagecenter.MessageCenterResult;
-import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;

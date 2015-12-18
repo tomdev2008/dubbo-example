@@ -7,7 +7,6 @@ import com.fansz.members.model.specialfocus.ModifySpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusResult;
 import com.fansz.members.tools.Constants;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

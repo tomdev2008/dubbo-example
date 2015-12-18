@@ -8,10 +8,13 @@ import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.kafka.MessageProducer;
 import com.fansz.members.redis.JedisTemplate;
 import com.fansz.members.redis.support.JedisCallback;
-import com.fansz.members.tools.*;
+import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.VerifyCodeGenerator;
+import com.fansz.members.tools.VerifyCodeType;
 import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +29,6 @@ import java.util.Properties;
  * 验证码服务层实现
  */
 @Service
-@Transactional(propagation = Propagation.REQUIRED)
 public class VerifyCodeServiceImpl implements VerifyCodeService {
 
     @Autowired
@@ -35,14 +37,20 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     @Autowired
     private UserEntityMapper userEntityMapper;
 
-    @Resource(name = "smsProperties")
-    private Properties smsProperties;
-
     @Resource(name = "verifyCodeGenerator")
     private VerifyCodeGenerator verifyCodeGenerator;
 
     @Resource(name = "messageProducer")
     private MessageProducer messageProducer;
+
+    @Resource(name = "smsProperties")
+    private Properties smsProperties;
+
+    @Value("${code.valid.interval}")
+    private Integer validPeriod;
+
+    @Value("${code.send.interval}")
+    private Integer sendInterval;
 
     /**
      * 获取验证码,重置密码时使用
@@ -78,7 +86,6 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
 
         long currentTime = System.currentTimeMillis();
-        long validPeriod = Long.valueOf(smsProperties.getProperty("period.verify", "10"));//单位为分钟
         long expiredTime = currentTime + validPeriod * 60 * 1000;
         verifyMap.put(key + ".createTime", currentTime + "");
         verifyMap.put(key + ".expiredTime", expiredTime + "");
@@ -110,8 +117,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         if (createTime == null || createTime.trim().length() == 0) {
             return true;
         }
-        long interval = Long.valueOf(smsProperties.getProperty("sms.send.interval", "1"));//单位为分钟
-        return System.currentTimeMillis() - Long.valueOf(createTime) >= interval * 60 * 1000;
+        return System.currentTimeMillis() - Long.valueOf(createTime) >= sendInterval * 60 * 1000;//单位为分钟
     }
 
     public VerifyCodeModel queryVerifyCode(final String mobile, VerifyCodeType verifyCodeType) {

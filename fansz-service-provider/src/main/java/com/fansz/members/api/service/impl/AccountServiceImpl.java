@@ -1,7 +1,6 @@
 package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
-import com.fansz.members.api.model.SessionModel;
 import com.fansz.members.api.model.VerifyCodeModel;
 import com.fansz.members.api.repository.UserEntityMapper;
 import com.fansz.members.api.service.AccountService;
@@ -9,7 +8,8 @@ import com.fansz.members.api.service.SessionService;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.account.*;
-import com.fansz.members.tools.*;
+import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.VerifyCodeType;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.SecurityTools;
 import com.fansz.pub.utils.UUIDTools;
@@ -22,8 +22,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 会员服务逻辑实现类

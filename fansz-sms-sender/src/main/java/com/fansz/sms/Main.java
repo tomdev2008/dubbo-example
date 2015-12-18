@@ -1,27 +1,32 @@
 package com.fansz.sms;
 
-import com.fansz.sms.listener.KafkaConsumerRunner;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import com.fansz.sms.consumer.KafkaConsumerRunner;
+import com.fansz.sms.exception.SmsConsumerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
- * Created by allan on 15/11/27.
+ * 短消息发送线程启动入口
  */
 public class Main {
+    private final static Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         KafkaConsumerRunner kafkaConsumerRunner = null;
+        ClassPathXmlApplicationContext ac = null;
         try {
-            ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-sms.xml");
-            ac.start();
+            new ClassPathXmlApplicationContext("applicationContext-sms.xml").start();
             kafkaConsumerRunner = (KafkaConsumerRunner) ac.getBean("kafkaConsumerRunner");
             kafkaConsumerRunner.start();
-        } finally {
-            kafkaConsumerRunner.shutdown();
+        } catch (SmsConsumerException e) {
+            logger.error("SMS sending thread error,please restart the application!", e);
+            if (kafkaConsumerRunner != null) {
+                kafkaConsumerRunner.shutdown();
+            }
+            if (ac != null) {
+                ac.close();
+            }
         }
     }
 }

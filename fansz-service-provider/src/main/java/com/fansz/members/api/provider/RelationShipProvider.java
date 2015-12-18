@@ -1,7 +1,6 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.RelationShipApi;
-import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.RelationShipService;
 import com.fansz.members.model.CommonPagedResult;
@@ -15,8 +14,6 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * 关系provider

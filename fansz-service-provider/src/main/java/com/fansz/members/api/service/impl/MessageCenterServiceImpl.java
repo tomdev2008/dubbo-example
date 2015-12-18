@@ -1,11 +1,9 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.members.api.MessageCenterApi;
 import com.fansz.members.api.repository.MessageCenterMapper;
 import com.fansz.members.api.service.MessageCenterService;
 import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.messagecenter.MessageCenterResult;
-import com.fansz.members.model.search.SearchParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;

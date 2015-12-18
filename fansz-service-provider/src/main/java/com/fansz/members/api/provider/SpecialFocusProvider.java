@@ -3,13 +3,11 @@ package com.fansz.members.api.provider;
 import com.fansz.members.api.SpecialFocusApi;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.SpecialFocusService;
-import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
 import com.fansz.members.model.specialfocus.ModifySpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.model.specialfocus.SpecialFocusResult;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

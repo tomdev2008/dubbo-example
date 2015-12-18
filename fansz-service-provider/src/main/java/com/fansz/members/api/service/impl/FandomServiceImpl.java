@@ -2,7 +2,6 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.entity.SingleFandomEntity;
 import com.fansz.members.api.event.FandomEventType;
 import com.fansz.members.api.event.SpecialRealtionEvent;
 import com.fansz.members.api.repository.FandomMapper;

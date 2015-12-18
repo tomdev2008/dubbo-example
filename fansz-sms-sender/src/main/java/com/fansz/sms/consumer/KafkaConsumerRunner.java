@@ -1,6 +1,7 @@
-package com.fansz.sms.listener;
+package com.fansz.sms.consumer;
 
 import com.alibaba.fastjson.JSON;
+import com.fansz.sms.exception.SmsConsumerException;
 import com.fansz.sms.model.SmsMessage;
 import com.fansz.sms.sender.HttpSender;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -16,7 +17,7 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Created by allan on 15/12/16.
+ * 从kafka队列读取消息,并发送短信
  */
 public class KafkaConsumerRunner extends Thread {
     private final AtomicBoolean closed = new AtomicBoolean(false);
@@ -25,38 +26,42 @@ public class KafkaConsumerRunner extends Thread {
     @Autowired
     private KafkaConsumer consumer;
 
-    @Value("sms.url")
+    @Value("${sms.url}")
     private String url;
 
-    @Value("sms.account")
+    @Value("${sms.account}")
     private String account;
 
-    @Value("sms.pwd")
+    @Value("${sms.pwd}")
     private String pswd;
 
 
     public void run() {
-        consumer.subscribe(Arrays.asList("ms"));
+        consumer.subscribe(Arrays.asList("sms"));
         try {
             while (!closed.get()) {
-                ConsumerRecords<String, String> records = consumer.poll(1);
+                ConsumerRecords<String, String> records = consumer.poll(1000);
                 sendSms(records);
-                Thread.sleep(6000);
+                consumer.commitSync();
+                Thread.sleep(1000);
             }
-        } catch (WakeupException e) {
+        } catch (Exception e) {
             // Ignore exception if closing
-            if (!closed.get()) throw e;
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            if (!closed.get()) {
+                throw new SmsConsumerException("sms sender thread error", e);
+            }
         } finally {
-            consumer.close();
+            if (consumer != null) {
+                consumer.close();
+            }
         }
     }
 
     // Shutdown hook which can be called from a separate thread
     public void shutdown() {
-        closed.set(true);
-        consumer.wakeup();
+        if (consumer != null) {
+            consumer.close();
+        }
     }
 
     private void sendSms(ConsumerRecords<String, String> records) {
@@ -64,8 +69,7 @@ public class KafkaConsumerRunner extends Thread {
             try {
                 SmsMessage smsMessage = JSON.parseObject(record.value(), SmsMessage.class);
                 String returnString = HttpSender.batchSend(url, account, pswd, smsMessage.getMobile(), smsMessage.getContent(), true, null, null);
-                System.out.println(returnString);
-                logger.debug(returnString);
+                logger.debug("sms provider return code is :{}", returnString);
             } catch (Exception e) {
                 logger.error("短消息发送失败", e);
             }

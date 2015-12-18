@@ -15,6 +15,7 @@ import java.util.Properties;
  */
 @Component("messageProducer")
 public class MessageProducer {
+
     @Resource(name = "kafkaProp")
     private Properties kafkaProp;
 
@@ -25,7 +26,7 @@ public class MessageProducer {
         producer = new KafkaProducer(kafkaProp);
     }
 
-    public void produce(String key,String val) {
+    public void produce(String key, String val) {
         producer.send(new ProducerRecord<String, String>("sms", key, val));
 
     }

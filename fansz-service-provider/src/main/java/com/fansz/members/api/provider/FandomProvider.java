@@ -11,7 +11,6 @@ import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
 import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.relationship.MemberFandomQueryParam;
-import com.fansz.members.tools.Constants;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
