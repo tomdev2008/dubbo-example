@@ -75,6 +75,8 @@ public interface AccountApi {
     @DubboxService("logout")
     CommonResult<NullResult> logout(LogoutParam logoutParam);
 
+    @POST
+    @Path("/tokens/refresh")
     @DubboxService("refreshToken")
     CommonResult<LoginResult> refreshToken(String refreshToken);
 }
