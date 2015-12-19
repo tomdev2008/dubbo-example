@@ -210,7 +210,11 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public int delFandom(DelFandomParam delFandomParam) {
-        return fandomMapper.delFandom(delFandomParam);
+        int count = fandomMapper.delFandom(delFandomParam);
+        if(count == 0){
+            throw new ApplicationException(Constants.DELETE_NOT_PERMISSION, "no delete permissions");
+        }
+        return 1;
     }
 
     @Override

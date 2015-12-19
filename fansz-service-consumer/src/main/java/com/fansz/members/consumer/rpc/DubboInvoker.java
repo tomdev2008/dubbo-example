@@ -294,7 +294,7 @@ public class DubboInvoker implements RpcInvoker {
         else if ("addJoinFandom".equals(method)) {
             AddFandomParam addFandomParam  = JsonHelper.copyAs(params, AddFandomParam.class);
             result = fandomApi.addJoinFandom(addFandomParam);
-        }else if("delFandom".equals(method)){
+        }else if("deleteFandom".equals(method)){
             DelFandomParam delFandomParam = JsonHelper.copyAs(params,DelFandomParam.class);
             result = fandomApi.delFandom(delFandomParam);
         }else if("modifyFandom".equals(method)){
