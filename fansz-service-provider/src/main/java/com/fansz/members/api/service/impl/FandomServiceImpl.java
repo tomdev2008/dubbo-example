@@ -218,7 +218,12 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public int modifyFandom(ModifyFandomParam modifyFandomParam) {
-        return fandomMapper.modifyFandom(modifyFandomParam);
+    public FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam) {
+        int count = fandomMapper.modifyFandom(modifyFandomParam);
+        FandomInfoResult fandomInfoResult = null;
+        if(count > 0){
+             fandomInfoResult = fandomMapper.getFandomDetail(modifyFandomParam.getId(),modifyFandomParam.getFandomCreatorSn());
+        }
+        return fandomInfoResult;
     }
 }

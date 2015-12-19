@@ -272,9 +272,6 @@
             <if test="fandomParentId != null">
                 fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
             </if>
-            <if test="fandomCreatorSn != null">
-                fandom_creator_sn = #{fandomCreatorSn,jdbcType=VARCHAR},
-            </if>
             <if test="fandomAvatarUrl != null">
                 fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
             </if>

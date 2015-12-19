@@ -137,9 +137,9 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
-        fandomService.modifyFandom(modifyFandomParam);
-        return renderSuccess();
+    public CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
+        FandomInfoResult fandomInfoResult = fandomService.modifyFandom(modifyFandomParam);
+        return renderSuccess(fandomInfoResult);
     }
 }
 
