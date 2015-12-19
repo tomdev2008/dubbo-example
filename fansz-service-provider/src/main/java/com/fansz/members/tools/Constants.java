@@ -64,7 +64,11 @@ public class Constants {
 
     public final static String FANDOM_NAME_REPATEDD = "20402";//fandom名称重复
 
+    public final static String FANDOM_NO_DELETE = "20403"; //没有删除fandom权限
+
     public final static String COMMENT_NO_AUTHORITY_DELETE = "20501";//无权限删除评论
+
+
 
 
     public final static String USER_STATUS_OK = "1";
