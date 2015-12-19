@@ -8,7 +8,7 @@ echo  "$BASE_DIR"
 
   
 # cat 
-export JAVA_HOME="/usr/local/jdk1.7.0_10"
+export JAVA_HOME="/usr/local/jdk1.7.0_79"
    
   
 JAVA_OPTS="$JAVA_OPTS -server -Xms2048m -Xmx2048m -XX:PermSize=256m -XX:MaxPermSize=512m"
