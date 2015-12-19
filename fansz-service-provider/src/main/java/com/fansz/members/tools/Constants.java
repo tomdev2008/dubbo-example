@@ -56,10 +56,16 @@ public class Constants {
 
     public final static String POST_NOT_ALLOW_DEL = "20302";//无法删除他人帖子
 
+    public final static String LIKED_NO_DELETE = "20303";//无删除点赞权限
+
+    public final static String LIKED_REPEATED = "20304";//重复点赞
+
+
 
     public final static String FANDOM_NAME_REPATEDD = "20402";//fandom名称重复
 
-    public final static String COMMENT_NOT_EXISTS = "20501";//评论不存在
+    public final static String COMMENT_NO_AUTHORITY_DELETE = "20501";//无权限删除评论
+
 
     public final static String USER_STATUS_OK = "1";
 

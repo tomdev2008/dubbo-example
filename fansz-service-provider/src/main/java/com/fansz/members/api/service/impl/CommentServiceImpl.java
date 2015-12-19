@@ -2,6 +2,7 @@ package com.fansz.members.api.service.impl;
 
 
 import com.fansz.members.api.entity.PostCommentEntity;
+import com.fansz.members.api.repository.FandomPostEntityMapper;
 import com.fansz.members.api.repository.PostCommentEntityMapper;
 import com.fansz.members.api.service.CommentService;
 import com.fansz.members.exception.ApplicationException;
@@ -30,6 +31,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostCommentEntityMapper postCommentEntityMapper;
 
+    @Autowired
+    private FandomPostEntityMapper fandomPostEntityMapper;
+
     @Override
     public CommentQueryFromFandomResult addComment(CommentParam commentPara) {
         PostCommentEntity postCommentEntity = new PostCommentEntity();
@@ -40,6 +44,7 @@ public class CommentServiceImpl implements CommentService {
         postCommentEntity.setCommentParentId(commentPara.getCommentParentId());
         postCommentEntity.setCommentTime(new Date());
         postCommentEntityMapper.insert(postCommentEntity);
+        fandomPostEntityMapper.incrCommentCountById(commentPara.getPostId());
         return BeanTools.copyAs(postCommentEntity, CommentQueryFromFandomResult.class);
     }
 
@@ -50,10 +55,12 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public void removeComment(CommentDelParam commentDelParam) {
-        int deleted=postCommentEntityMapper.deleteMyComment(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
-        if(deleted!=1){
-            throw new ApplicationException(Constants.COMMENT_NOT_EXISTS,"Comment not exists");
+        PostCommentEntity postCommentEntity=postCommentEntityMapper.selectByIdAndSn(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
+        if(postCommentEntity==null){
+            throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE,"No authority to delete Comment");
         }
+        postCommentEntityMapper.deleteByPrimaryKey(postCommentEntity.getId());
+        fandomPostEntityMapper.decrCommentCountById(postCommentEntity.getPostId());
     }
 
     @Override
