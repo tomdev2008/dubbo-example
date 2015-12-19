@@ -12,10 +12,7 @@ import com.fansz.members.model.account.*;
 import com.fansz.members.model.comment.CommentDelParam;
 import com.fansz.members.model.comment.CommentParam;
 import com.fansz.members.model.comment.CommentFromFandomQueryParam;
-import com.fansz.members.model.fandom.AddFandomParam;
-import com.fansz.members.model.fandom.FandomInfoParam;
-import com.fansz.members.model.fandom.FandomQueryParam;
-import com.fansz.members.model.fandom.SearchFandomParam;
+import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.message.QueryMessageParam;
 import com.fansz.members.model.post.*;
 import com.fansz.members.model.profile.*;
@@ -297,6 +294,12 @@ public class DubboInvoker implements RpcInvoker {
         else if ("addJoinFandom".equals(method)) {
             AddFandomParam addFandomParam  = JsonHelper.copyAs(params, AddFandomParam.class);
             result = fandomApi.addJoinFandom(addFandomParam);
+        }else if("delFandom".equals(method)){
+            DelFandomParam delFandomParam = JsonHelper.copyAs(params,DelFandomParam.class);
+            result = fandomApi.delFandom(delFandomParam);
+        }else if("modifyFandom".equals(method)){
+            ModifyFandomParam modifyFandomParam = JsonHelper.copyAs(params,ModifyFandomParam.class);
+            result = fandomApi.modifyFandom(modifyFandomParam);
         }
         return result == null ? "{\"message\": \"method name error\", \"result\": {}, \"status\": \"10001\"}" : JsonHelper.toString(result);
     }
