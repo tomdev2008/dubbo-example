@@ -51,7 +51,6 @@ public class Constants {
     public final static String RELATION_IS_NOT_SPACIEL_FANDOM = "20208";//用户未特殊关注fandom
 
 
-
     public final static String POST_NOT_EXISTS = "20301";//POST不存在
 
     public final static String POST_NOT_ALLOW_DEL = "20302";//无法删除他人帖子
@@ -61,14 +60,14 @@ public class Constants {
     public final static String LIKED_REPEATED = "20304";//重复点赞
 
 
-
     public final static String FANDOM_NAME_REPATEDD = "20402";//fandom名称重复
 
     public final static String FANDOM_NO_DELETE = "20403"; //没有删除fandom权限
 
+    public final static String FANDOM_MONDIFY_NOT_PERMISSION = "20404"; //没有权限修改fandom
+
+
     public final static String COMMENT_NO_AUTHORITY_DELETE = "20501";//无权限删除评论
-
-
 
 
     public final static String USER_STATUS_OK = "1";

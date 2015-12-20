@@ -18,6 +18,7 @@
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
         <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
@@ -281,5 +282,20 @@
         </set>
         where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </update>
+
+    <select id="getFandomInfo" parameterType="java.lang.Long" resultMap="fandomAllInfoResultMap">
+        SELECT
+            id,
+            fandom_name,
+            fandom_parent_id,
+            fandom_admin_sn,
+            fandom_creator_sn,
+            fandom_avatar_url,
+            fandom_intro,
+            fandom_create_time
+        FROM
+            feeds_fandom
+        where id = #{id,jdbcType=BIGINT}
+    </select>
 
 </mapper>
