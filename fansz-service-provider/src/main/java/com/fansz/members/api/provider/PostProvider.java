@@ -35,7 +35,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
         FandomPostEntity fandomPostEntity = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(fandomPostEntity.getId());
-        postParam.setMemberSn(addPostParam.getSn());
+        postParam.setCurrentSn(addPostParam.getCurrentSn());
         return getPost(postParam);
     }
 
@@ -100,7 +100,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      */
     public CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
-        PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getMemberSn(), pageBounds);
+        PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(dataResult);
     }
 
@@ -112,7 +112,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      */
     public CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam) {
         PageBounds pageBounds = new PageBounds(getPostsParam.getOffset(), getPostsParam.getLimit());
-        PageList<PostInfoResult> dataResult = postService.findPostsOfMyFandoms(getPostsParam.getMemberSn(), pageBounds);
+        PageList<PostInfoResult> dataResult = postService.findPostsOfMyFandoms(getPostsParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(dataResult);
     }
 

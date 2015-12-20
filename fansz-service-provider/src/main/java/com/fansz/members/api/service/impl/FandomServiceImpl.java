@@ -144,7 +144,7 @@ public class FandomServiceImpl implements FandomService {
 
     public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMapper.getRecommendFandom(fandomQueryParam.getMemberSn(), pageBounds);
+        return fandomMapper.getRecommendFandom(fandomQueryParam.getCurrentSn(), pageBounds);
     }
 
     @Override
@@ -176,7 +176,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getOffset(), fandomQueryParam.getLimit());
-        return fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getMemberSn(), pageBounds);
+        return fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getCurrentSn(), pageBounds);
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
@@ -186,7 +186,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
         PageBounds pageBounds = new PageBounds(searchFandomParam.getOffset(), searchFandomParam.getLimit());
-        return fandomMapper.searchFandoms(searchFandomParam.getMemberSn(), searchFandomParam.getSearchVal(), pageBounds);
+        return fandomMapper.searchFandoms(searchFandomParam.getCurrentSn(), searchFandomParam.getSearchVal(), pageBounds);
     }
 
     public FandomInfoResult addFandom(AddFandomParam addFandomParam) {
@@ -209,11 +209,20 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public int delFandom(DelFandomParam delFandomParam) {
-        return fandomMapper.delFandom(delFandomParam);
+        int count = fandomMapper.delFandom(delFandomParam);
+        if(count == 0){
+            throw new ApplicationException(Constants.FANDOM_NO_DELETE, "Need authority to delete");
+        }
+        return 1;
     }
 
     @Override
-    public int modifyFandom(ModifyFandomParam modifyFandomParam) {
-        return fandomMapper.modifyFandom(modifyFandomParam);
+    public FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam) {
+        int count = fandomMapper.modifyFandom(modifyFandomParam);
+        FandomInfoResult fandomInfoResult = null;
+        if(count > 0){
+             fandomInfoResult = fandomMapper.getFandomDetail(modifyFandomParam.getId(),modifyFandomParam.getFandomCreatorSn());
+        }
+        return fandomInfoResult;
     }
 }

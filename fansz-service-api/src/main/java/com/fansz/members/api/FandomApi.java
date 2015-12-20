@@ -186,5 +186,5 @@ public interface FandomApi {
     @POST
     @Path("/modifyFandom")
     @DubboxService("modifyFandom")
-    CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam);
+    CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam);
 }

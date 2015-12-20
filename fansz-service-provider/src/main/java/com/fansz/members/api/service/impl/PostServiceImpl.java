@@ -36,7 +36,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public FandomPostEntity addPost(AddPostParam addPostParam) {
         FandomPostEntity fandomPostEntity = BeanTools.copyAs(addPostParam, FandomPostEntity.class);
-        fandomPostEntity.setMemberSn(addPostParam.getSn());
+        fandomPostEntity.setMemberSn(addPostParam.getCurrentSn());
         fandomPostEntity.setPostTime(new Date());
         fandomPostEntityMapper.insert(fandomPostEntity);
         return fandomPostEntity;
@@ -48,7 +48,7 @@ public class PostServiceImpl implements PostService {
         if (fandomPostEntity == null) {
             throw new ApplicationException(Constants.POST_NOT_EXISTS, "Post not exists");
         }
-        if (!fandomPostEntity.getMemberSn().equals(removePostrParam.getMemberSn())) {
+        if (!fandomPostEntity.getMemberSn().equals(removePostrParam.getCurrentSn())) {
             throw new ApplicationException(Constants.POST_NOT_ALLOW_DEL, "Not your post");
         }
         fandomPostEntityMapper.deleteByPrimaryKey(removePostrParam.getPostId());
@@ -79,22 +79,32 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void addLike(AddLikeParam addLikeParam) {
+        int existed = fandomPostLikeEntityMapper.isLiked(addLikeParam.getCurrentSn(), addLikeParam.getPostId());
+        if (existed > 0) {
+            throw new ApplicationException(Constants.LIKED_REPEATED, "Liked repeated");
+        }
         FandomPostLikeEntity entity = new FandomPostLikeEntity();
         entity.setPostId(addLikeParam.getPostId());
-        entity.setMemberSn(addLikeParam.getMemberSn());
+        entity.setMemberSn(addLikeParam.getCurrentSn());
         entity.setLikeTime(new Date());
         this.fandomPostLikeEntityMapper.insert(entity);
+        fandomPostEntityMapper.incrLikeCountById(addLikeParam.getPostId());
     }
 
     @Override
     public void deleteLike(DeleteLikeParam deleteLikeParam) {
-        this.fandomPostLikeEntityMapper.deleteMyLike(deleteLikeParam.getMemberSn(), deleteLikeParam.getPostId());
+        int deleteCount = this.fandomPostLikeEntityMapper.deleteMyLike(deleteLikeParam.getCurrentSn(), deleteLikeParam.getPostId());
+        if (deleteCount == 0) {
+            throw new ApplicationException(Constants.LIKED_NO_DELETE, "Need authority to delete");
+        }
+        fandomPostEntityMapper.decrLikeCountById(deleteLikeParam.getPostId());
+
     }
 
     @Override
     public PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
         PageBounds pageBounds = new PageBounds(getMemberFandomPostsParam.getOffset(), getMemberFandomPostsParam.getLimit());
-        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(),null, pageBounds);
+        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getCurrentSn(), null, pageBounds);
     }
 
     @Override
@@ -108,9 +118,9 @@ public class PostServiceImpl implements PostService {
         PageList<PostInfoResult> entities = null;
         PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
         if ("new".equals(postsQueryParam.getType())) {
-            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null,postsQueryParam.getSn(), pageBounds);
+            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
         } else {
-            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(),null,postsQueryParam.getSn(), pageBounds);
+            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
         }
 
         return entities;
@@ -119,6 +129,6 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageList<PostInfoResult> getPostsAllByMember(GetMemberPostsParam postParam) {
         PageBounds pageBounds = new PageBounds(postParam.getOffset(), postParam.getLimit());
-        return fandomPostEntityMapper.getPostsAllByMember(postParam.getMemberSn(), postParam.getFriendSn(), pageBounds);
+        return fandomPostEntityMapper.getPostsAllByMember(postParam.getCurrentSn(), postParam.getFriendSn(), pageBounds);
     }
 }

@@ -16,19 +16,29 @@ public class FriendsQueryParam extends PageParam implements AccessTokenAware {
     private static final long serialVersionUID = 1170651723025637518L;
 
     @JsonProperty("member_sn")
-    private String sn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
 
     private String relation;
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
+    }
+
+    public String getRelation() {
+        return relation;
+    }
+
+    public void setRelation(String relation) {
+        this.relation = relation;
     }
 
     @Override
@@ -41,7 +51,4 @@ public class FriendsQueryParam extends PageParam implements AccessTokenAware {
     }
 
 
-    public void setRelation(String relation) {
-        this.relation = relation;
-    }
 }

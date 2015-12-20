@@ -40,7 +40,7 @@ public class KafkaConsumerRunner extends Thread {
         consumer.subscribe(Arrays.asList("sms"));
         try {
             while (!closed.get()) {
-                ConsumerRecords<String, String> records = consumer.poll(1000);
+                ConsumerRecords<String, String> records = consumer.poll(2000);
                 sendSms(records);
                 consumer.commitSync();
                 Thread.sleep(1000);

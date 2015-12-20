@@ -27,6 +27,15 @@ public interface FandomPostEntityMapper {
 
     int updateByPrimaryKey(FandomPostEntity record);
 
+    int incrLikeCountById(Long postId);
+
+    int decrLikeCountById(Long postId);
+
+
+    int incrCommentCountById(Long postId);
+
+    int decrCommentCountById(Long postId);
+
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
     PageList<PostInfoResult> findPostsOfMyFriends(String memberSn, PageBounds pageBounds);
@@ -38,19 +47,21 @@ public interface FandomPostEntityMapper {
 
     /**
      * 查询某人在某个fandom的所有帖子列表,按照时间倒序排列
+     *
      * @param fandomId
      * @return
      */
-    PageList<PostInfoResult> listTimedMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn,@Param("mySn") String mySn, PageBounds pageBounds);
+    PageList<PostInfoResult> listTimedMemberFandomPosts(@Param("fandomId") long fandomId, @Param("memberSn") String memberSn, @Param("mySn") String mySn, PageBounds pageBounds);
 
     /**
      * 查询某人在某个fandom的所有帖子列表,按照关注人数倒序排列
+     *
      * @param fandomId
      * @return
      */
-    PageList<PostInfoResult> listHotMemberFandomPosts(@Param("fandomId") long fandomId,@Param("memberSn") String memberSn,@Param("mySn") String mySn, PageBounds pageBounds);
+    PageList<PostInfoResult> listHotMemberFandomPosts(@Param("fandomId") long fandomId, @Param("memberSn") String memberSn, @Param("mySn") String mySn, PageBounds pageBounds);
 
 
-    PageList<PostInfoResult> getPostsAllByMember(@Param("memberSn") String memberSn,@Param("friendSn") String friendSn, PageBounds pageBounds);
+    PageList<PostInfoResult> getPostsAllByMember(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn, PageBounds pageBounds);
 
 }

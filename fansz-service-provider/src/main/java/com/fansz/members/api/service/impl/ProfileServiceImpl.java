@@ -86,7 +86,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
         PageBounds pageBounds = new PageBounds(contactQueryParam.getOffset(), contactQueryParam.getLimit());
-        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam.getMemberSn(), contactQueryParam.getMobileList(), pageBounds);
+        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam.getCurrentSn(), contactQueryParam.getMobileList(), pageBounds);
     }
 
     @Override

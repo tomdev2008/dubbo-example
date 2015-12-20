@@ -23,6 +23,6 @@ public class MessageCenterServiceImpl implements MessageCenterService {
     @Override
     public PageList<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam) {
         PageBounds pageBounds = new PageBounds(queryMessageParam.getOffset(), queryMessageParam.getLimit());
-        return messageCenterMapper.getMessageByMemberSn(queryMessageParam.getMemberSn(),pageBounds);
+        return messageCenterMapper.getMessageByMemberSn(queryMessageParam.getCurrentSn(),pageBounds);
     }
 }

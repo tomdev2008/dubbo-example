@@ -29,7 +29,7 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     public CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam) {
         // 获得好友详细信息
         PageBounds pageBounds = new PageBounds(friendsParam.getOffset(), friendsParam.getLimit());
-        PageList<FriendInfoResult> friends = relationShipService.getFriends(friendsParam.getSn(), pageBounds, false);
+        PageList<FriendInfoResult> friends = relationShipService.getFriends(friendsParam.getCurrentSn(), pageBounds, false);
         return renderPagedSuccess(friends);
 
     }
@@ -38,7 +38,7 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     public CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam) {
         // 获得特别好友详细信息
         PageBounds pageBounds = new PageBounds(friendsParam.getOffset(), friendsParam.getLimit());
-        PageList<FriendInfoResult> friends = relationShipService.getFriends(friendsParam.getSn(), pageBounds, true);
+        PageList<FriendInfoResult> friends = relationShipService.getFriends(friendsParam.getCurrentSn(), pageBounds, true);
         return renderPagedSuccess(friends);
     }
 

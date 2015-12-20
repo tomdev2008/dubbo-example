@@ -114,4 +114,9 @@
     <delete id="deleteMyLike">
         DELETE FROM feeds_member_post_like WHERE post_id = #{postId} AND member_sn = #{sn}
     </delete>
+
+    <select id="isLiked" resultType="java.lang.Integer">
+        SELECT  COUNT(1)
+        FROM feeds_member_post_like WHERE post_id = #{postId} AND member_sn = #{sn}
+    </select>
 </mapper>

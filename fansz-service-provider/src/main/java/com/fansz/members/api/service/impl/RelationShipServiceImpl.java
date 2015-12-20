@@ -108,13 +108,13 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public PageList<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam) {
         PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
-        return userRelationEntityMapper.listAddMeRequest(friendsQueryParam.getSn(), pageBounds);
+        return userRelationEntityMapper.listAddMeRequest(friendsQueryParam.getCurrentSn(), pageBounds);
     }
 
     @Override
     public PageList<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam) {
         PageBounds pageBounds = new PageBounds(friendsQueryParam.getOffset(), friendsQueryParam.getLimit());
-        return userRelationEntityMapper.listMySendRequest(friendsQueryParam.getSn(), pageBounds);
+        return userRelationEntityMapper.listMySendRequest(friendsQueryParam.getCurrentSn(), pageBounds);
     }
 
 }

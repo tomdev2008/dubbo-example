@@ -32,5 +32,5 @@ public interface PostCommentEntityMapper {
      * @param id 评论ID
      * @return
      */
-    int deleteMyComment(@Param("sn") String sn, @Param("id") long id);
+    PostCommentEntity selectByIdAndSn(@Param("sn") String sn, @Param("id") long id);
 }

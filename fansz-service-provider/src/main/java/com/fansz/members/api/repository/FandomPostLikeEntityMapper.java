@@ -25,4 +25,6 @@ public interface FandomPostLikeEntityMapper {
 
     int deleteMyLike(@Param("sn") String sn, @Param("postId") long postId);
 
+    int isLiked(@Param("sn") String sn, @Param("postId") long postId);
+
 }

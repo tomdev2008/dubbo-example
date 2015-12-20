@@ -29,7 +29,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Override
     public CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam) {
-        fandomQueryParam.setMemberSn(null);
+        fandomQueryParam.setCurrentSn(null);
         fandomQueryParam.setFandomId(null);
         fandomQueryParam.setFandomParentId(null);
         return renderSuccess(fandomService.listFandom(fandomQueryParam));
@@ -136,9 +136,9 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
-        fandomService.modifyFandom(modifyFandomParam);
-        return renderSuccess();
+    public CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
+        FandomInfoResult fandomInfoResult = fandomService.modifyFandom(modifyFandomParam);
+        return renderSuccess(fandomInfoResult);
     }
 }
 

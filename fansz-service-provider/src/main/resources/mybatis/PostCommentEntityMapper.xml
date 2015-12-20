@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, post_id, commentator_id, comment_content, comment_time
+    id, post_id, commentator_sn, comment_content, comment_time
   </sql>
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -43,8 +43,8 @@
             <if test="postId != null">
                 post_id,
             </if>
-            <if test="commentatorId != null">
-                commentator_id,
+            <if test="commentatorSn != null">
+                commentator_sn,
             </if>
             <if test="commentContent != null">
                 comment_content,
@@ -57,8 +57,8 @@
             <if test="postId != null">
                 #{postId,jdbcType=BIGINT},
             </if>
-            <if test="commentatorId != null">
-                #{commentatorId,jdbcType=BIGINT},
+            <if test="commentatorSn != null">
+                #{commentator_sn,jdbcType=VARCHAR},
             </if>
             <if test="commentContent != null">
                 #{commentContent,jdbcType=VARCHAR},
@@ -78,8 +78,8 @@
             <if test="postId != null">
                 post_id = #{postId,jdbcType=BIGINT},
             </if>
-            <if test="commentatorId != null">
-                commentator_id = #{commentatorId,jdbcType=BIGINT},
+            <if test="commentatorSn != null">
+                commentator_sn = #{commentatorId,jdbcType=VARCHAR},
             </if>
             <if test="commentContent != null">
                 comment_content = #{commentContent,jdbcType=VARCHAR},
@@ -94,7 +94,7 @@
     <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.PostCommentEntity">
     update feeds_member_post_comment
     set post_id = #{postId,jdbcType=BIGINT},
-      commentator_id = #{commentatorId,jdbcType=BIGINT},
+      commentator_sn = #{commentatorSn,jdbcType=VARCHAR},
       comment_content = #{commentContent,jdbcType=VARCHAR},
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
@@ -122,8 +122,7 @@
             t.post_id = #{postId,jdbcType=BIGINT} AND t.comment_source=#{commentSource,jdbcType=VARCHAR}
     </select>
 
-    <!-- 删除我的评论 -->
-    <delete id="deleteMyComment">
-        DELETE FROM feeds_member_post_comment WHERE id = #{id,jdbcType=BIGINT} AND commentator_sn = #{sn,jdbcType=VARCHAR}
-    </delete>
+    <select id="selectByIdAndSn" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List"/> FROM feeds_member_post_comment WHERE id = #{id,jdbcType=BIGINT} AND commentator_sn = #{sn,jdbcType=VARCHAR}
+    </select>
 </mapper>

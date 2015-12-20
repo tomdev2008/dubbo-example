@@ -14,7 +14,7 @@ public class SearchMemberParam extends PageParam implements AccessTokenAware{
     private static final long serialVersionUID = 7395798746330977031L;
 
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("access_token")
     private String accessToken;
@@ -22,12 +22,14 @@ public class SearchMemberParam extends PageParam implements AccessTokenAware{
     @JsonProperty("member_type")
     private String memberType;
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     @Override
