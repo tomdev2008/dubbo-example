@@ -219,17 +219,11 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam) {
-        if(null != modifyFandomParam.getFandomName() || "".equals(modifyFandomParam.getFandomName())) {
-            int count1 = this.fandomMapper.getCountByFandomName(modifyFandomParam.getFandomName());
-            if (count1 > 0) {
-                throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
-            }
+        int count = fandomMapper.modifyFandom(modifyFandomParam);
+        FandomInfoResult fandomInfoResult = null;
+        if(count > 0){
+             fandomInfoResult = fandomMapper.getFandomDetail(modifyFandomParam.getId(),modifyFandomParam.getFandomCreatorSn());
         }
-        int count2 = fandomMapper.modifyFandom(modifyFandomParam);
-        if(count2 == 0){
-            throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "no fandom modify permissions");
-        }
-        FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId());
         return fandomInfoResult;
     }
 }

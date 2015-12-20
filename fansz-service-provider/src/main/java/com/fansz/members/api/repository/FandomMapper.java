@@ -45,6 +45,4 @@ public interface FandomMapper {
     int delFandom(DelFandomParam delFandomParam);
 
     int modifyFandom(ModifyFandomParam modifyFandomParam);
-
-    FandomInfoResult getFandomInfo(Long id);
 }
