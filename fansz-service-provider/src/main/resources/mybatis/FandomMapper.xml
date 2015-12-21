@@ -17,6 +17,7 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
+        <result column="fandom_parent_name" property="fandomParentName" jdbcType="BIGINT"/>
         <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
         <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
@@ -192,7 +193,8 @@
         SELECT  f.*,p.member_avatar,p.sn u_sn,p.nickname u_nickname,p.member_avatar u_member_avatar,
         (SELECT COUNT(1)+IFNULL(t.infatuation,0) FROM feeds_member_fandom t WHERE t.fandom_id=f.id AND t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
         (SELECT COUNT(1) from feeds_member_post_fandom g WHERE g.fandom_id=f.id) post_count,
-        (SELECT COUNT(1) from feeds_member_fandom t WHERE t.fandom_id=f.id) follower_count
+        (SELECT COUNT(1) from feeds_member_fandom t WHERE t.fandom_id=f.id) follower_count,
+        (SELECT fandom_name from feeds_fandom where id = f.fandom_parent_id) fandom_parent_name
         FROM feeds_fandom  f, connects_member_profile p
         WHERE f.id =  #{fandomId,jdbcType=BIGINT} AND f.fandom_creator_sn=p.sn
     </select>

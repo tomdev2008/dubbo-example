@@ -22,6 +22,9 @@ public class FandomInfoResult implements Serializable {
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
 
+    @JsonProperty("fandom_parent_name")
+    private String fandomParentName;
+
     @JsonProperty("fandom_admin_sn")
     private String fandomAdminSn;
 
