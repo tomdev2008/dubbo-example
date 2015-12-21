@@ -6,8 +6,8 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
-        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
@@ -17,9 +17,9 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_parent_name" property="fandomParentName" jdbcType="BIGINT"/>
-        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
-        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
+        <result column="fandom_parent_name" property="fandomParentName" jdbcType="VARCHAR"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>

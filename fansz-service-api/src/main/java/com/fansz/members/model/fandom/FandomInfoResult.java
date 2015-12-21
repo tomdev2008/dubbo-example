@@ -148,4 +148,12 @@ public class FandomInfoResult implements Serializable {
     public void setFandomCreatorSn(String fandomCreatorSn) {
         this.fandomCreatorSn = fandomCreatorSn;
     }
+
+    public String getFandomParentName() {
+        return fandomParentName;
+    }
+
+    public void setFandomParentName(String fandomParentName) {
+        this.fandomParentName = fandomParentName;
+    }
 }
