@@ -283,7 +283,7 @@
         where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </update>
 
-    <select id="getFandomInfo" parameterType="java.lang.Long" resultMap="fandomAllInfoResultMap">
+    <select id="getFandomInfo" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
         SELECT
             id,
             fandom_name,
@@ -295,7 +295,13 @@
             fandom_create_time
         FROM
             feeds_fandom
-        where id = #{id,jdbcType=BIGINT}
+        where
+        <if test="fandomName != null">
+            fandom_name = #{fandomName,jdbcType=VARCHAR}
+        </if>
+        <if test="fandomId != null">
+            id = #{fandomId,jdbcType=BIGINT}
+        </if>
     </select>
 
 </mapper>

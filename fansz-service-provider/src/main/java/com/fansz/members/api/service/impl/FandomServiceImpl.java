@@ -16,6 +16,7 @@ import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.tools.BeanTools;
 import com.fansz.members.tools.Constants;
+import com.fansz.members.tools.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -219,9 +220,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam) {
-        if(null != modifyFandomParam.getFandomName() || "".equals(modifyFandomParam.getFandomName())) {
-            int count1 = this.fandomMapper.getCountByFandomName(modifyFandomParam.getFandomName());
-            if (count1 > 0) {
+        if(StringTools.isNotBlank(modifyFandomParam.getFandomName())) {
+            FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(null,modifyFandomParam.getFandomName());
+            if (null != fandomInfoResult && !fandomInfoResult.getId().equals(modifyFandomParam.getId())) {
                 throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
             }
         }
@@ -229,7 +230,7 @@ public class FandomServiceImpl implements FandomService {
         if(count2 == 0){
             throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "no fandom modify permissions");
         }
-        FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId());
+        FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(),null);
         return fandomInfoResult;
     }
 }
