@@ -126,14 +126,16 @@ public class DynaDubboInvoker implements RpcInvoker {
             }
 
             SessionInfoResult session = sessionApi.getSession(accessToken);
-            if (!isValid(session))
+            if (!isValid(session)) {
                 return ResponseUtils.renderAccessTokenError();//accessToken不能为空
+            }
+            at.setCurrentSn(session.getSn());
         }
 
-    Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
+        Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
 
-    return result==null?ResponseUtils.renderMethodNameError():JsonHelper.toString(result);
-}
+        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.toString(result);
+    }
 
     private boolean isValid(SessionInfoResult session) {
         if (session != null) return true;
