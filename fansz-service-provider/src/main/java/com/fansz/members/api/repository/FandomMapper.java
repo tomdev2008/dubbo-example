@@ -45,4 +45,6 @@ public interface FandomMapper {
     int delFandom(DelFandomParam delFandomParam);
 
     int modifyFandom(ModifyFandomParam modifyFandomParam);
+
+    FandomInfoResult getFandomInfo(@Param("fandomId")Long fandomId,@Param("fandomName")String fandomName);
 }
