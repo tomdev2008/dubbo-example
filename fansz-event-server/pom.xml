@@ -9,7 +9,7 @@
         <version>2.0.0.SNAPSHOT</version>
     </parent>
     <groupId>com.fansz</groupId>
-    <artifactId>sms-sender</artifactId>
+    <artifactId>event-server</artifactId>
     <packaging>jar</packaging>
     <build>
         <plugins>
