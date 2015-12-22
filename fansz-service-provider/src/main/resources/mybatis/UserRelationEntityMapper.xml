@@ -112,14 +112,14 @@
     </update>
 
     <select id="findFriends" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+            resultMap="com.fansz.members.api.repository.UserMapper.friendInfoResultMap">
         SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
           WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
           AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
     </select>
 
     <select id="findSpecialFriends" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+            resultMap="com.fansz.members.api.repository.UserMapper.friendInfoResultMap">
         SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
         WHERE a.my_member_sn=#{myMemberSn,jdbcType=VARCHAR}
         AND a.friend_member_sn=b.sn
@@ -154,7 +154,7 @@
 
 
     <select id="listAddMeRequest" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+            resultMap="com.fansz.members.api.repository.UserMapper.friendInfoResultMap">
        SELECT a.*,b.relation_status relationship
        FROM connects_member_profile a LEFT JOIN connects_member_relation b
        ON  b.friend_member_sn=a.sn
@@ -162,7 +162,7 @@
     </select>
 
     <select id="listMySendRequest" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.UserEntityMapper.friendInfoResultMap">
+            resultMap="com.fansz.members.api.repository.UserMapper.friendInfoResultMap">
      SELECT a.*,b.relation_status relationship
      FROM connects_member_profile a LEFT JOIN connects_member_relation b on  b.friend_member_sn=a.sn
        WHERE b.my_member_sn=#{sn,jdbcType=VARCHAR}AND b.relation_status!='01'

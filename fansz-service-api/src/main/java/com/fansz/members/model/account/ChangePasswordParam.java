@@ -10,7 +10,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class ChangePasswordParam extends AbstractToken {
 
     @JsonProperty("sn")
-    private String uid;
+    private String currentSn;
 
     @JsonProperty("old_password")
     private String oldPassword;
@@ -19,14 +19,15 @@ public class ChangePasswordParam extends AbstractToken {
     private String newPassword;
 
 
-    public String getUid() {
-        return uid;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
-
 
     public String getOldPassword() {
         return oldPassword;

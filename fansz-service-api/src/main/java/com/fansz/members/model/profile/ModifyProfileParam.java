@@ -14,7 +14,8 @@ import java.io.Serializable;
 public class ModifyProfileParam extends AbstractToken {
 
     @NotBlank
-    private String sn;
+    @JsonProperty("sn")
+    private String currentSn;
 
     private String nickname;
 
@@ -34,12 +35,14 @@ public class ModifyProfileParam extends AbstractToken {
 
     private String signature;
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getNickname() {

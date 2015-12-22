@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 public class SetMemberParam extends AbstractToken {
 
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @JsonProperty("operator_sn")
     private String operatorSn;
@@ -20,12 +20,14 @@ public class SetMemberParam extends AbstractToken {
     private String memberType;
 
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getOperatorSn() {

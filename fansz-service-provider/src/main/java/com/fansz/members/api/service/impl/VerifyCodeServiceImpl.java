@@ -1,23 +1,21 @@
 package com.fansz.members.api.service.impl;
 
-import com.fansz.members.api.model.SmsMessage;
 import com.fansz.members.api.model.VerifyCodeModel;
-import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.repository.UserMapper;
 import com.fansz.members.api.service.VerifyCodeService;
 import com.fansz.members.exception.ApplicationException;
-import com.fansz.members.kafka.MessageProducer;
-import com.fansz.members.redis.JedisTemplate;
-import com.fansz.members.redis.support.JedisCallback;
+import com.fansz.members.kafka.EventProducer;
+import com.fansz.members.model.event.AsyncEventType;
+import com.fansz.members.model.event.SmsEvent;
 import com.fansz.members.tools.Constants;
 import com.fansz.members.tools.VerifyCodeGenerator;
 import com.fansz.members.tools.VerifyCodeType;
-import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.JedisTemplate;
+import com.fansz.redis.support.JedisCallback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
@@ -35,13 +33,13 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     private JedisTemplate jedisTemplate;
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
+    private UserMapper userMapper;
 
     @Resource(name = "verifyCodeGenerator")
     private VerifyCodeGenerator verifyCodeGenerator;
 
-    @Resource(name = "messageProducer")
-    private MessageProducer messageProducer;
+    @Resource(name = "eventProducer")
+    private EventProducer eventProducer;
 
     @Resource(name = "smsProperties")
     private Properties smsProperties;
@@ -59,7 +57,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
      */
     @Override
     public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        int exists = userEntityMapper.isExistsMobile(mobile);
+        int exists = userMapper.isExistsMobile(mobile);
         String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用
@@ -107,9 +105,8 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         //通过队列,异步方式发送短信
         String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
         //Send Message
-        SmsMessage sms = new SmsMessage(messgeContent, mobile);
-        String message = JsonHelper.convertObject2JSONString(sms);
-        messageProducer.produce(sms.getMobile(), message);
+        SmsEvent sms = new SmsEvent(messgeContent, mobile);
+        eventProducer.produce(AsyncEventType.SEND_SMS, sms);
         return true;
     }
 

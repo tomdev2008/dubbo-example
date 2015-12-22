@@ -3,14 +3,13 @@ package com.fansz.members.api.service.impl;
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.entity.UserRelationEntity;
 import com.fansz.members.api.repository.MemberAlbumEntityMapper;
-import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.repository.UserMapper;
 import com.fansz.members.api.repository.UserRelationEntityMapper;
 import com.fansz.members.api.service.ProfileService;
 import com.fansz.members.exception.ApplicationException;
 import com.fansz.members.model.profile.*;
 import com.fansz.members.model.search.SearchMemberParam;
 import com.fansz.members.tools.Constants;
-import com.fansz.members.tools.RelationShip;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -31,7 +30,7 @@ import java.util.List;
 public class ProfileServiceImpl implements ProfileService {
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
+    private UserMapper userMapper;
 
     @Autowired
     private UserRelationEntityMapper userRelationEntityMapper;
@@ -41,10 +40,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
-        UserEntity user = userEntityMapper.selectByUid(queryUserParam.getFriendSn());
+        UserEntity user = userMapper.selectByUid(queryUserParam.getFriendSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
         if (StringTools.isNotBlank(queryUserParam.getFriendSn())) {
-            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getMemberSn(), queryUserParam.getFriendSn());
+            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
             if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());
             }
@@ -56,7 +55,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
         if (StringTools.isNotBlank(modifyProfilePara.getNickname())) {
-            int total = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getSn());
+            int total = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getCurrentSn());
             if (total > 0) {
                 throw new ApplicationException(Constants.NICK_NAME_REPATEDD, "Nickname repeated");
             }
@@ -64,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
         user.setProfileUpdatetime(new Date());
-        int updated = userEntityMapper.updateByUidSelective(user);
+        int updated = userMapper.updateByUidSelective(user);
         if (updated != 1) {
             throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
         }
@@ -72,15 +71,15 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public int isExistsNickname(String nickname, String excludeSn) {
-        return userEntityMapper.isExistsNickname(nickname, excludeSn);
+        return userMapper.isExistsNickname(nickname, excludeSn);
     }
 
     @Override
     public int setMemberType(SetMemberParam setMemberParam) {
         UserEntity user = new UserEntity();
-        user.setSn(setMemberParam.getMemberSn());
+        user.setSn(setMemberParam.getCurrentSn());
         user.setMemberType(setMemberParam.getMemberType());
-        return userEntityMapper.updateByUidSelective(user);
+        return userMapper.updateByUidSelective(user);
     }
 
     @Override
@@ -92,12 +91,12 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam) {
         PageBounds pageBounds = new PageBounds(searchMemberParam.getOffset(), searchMemberParam.getLimit());
-        return userEntityMapper.searchMembers(null, null, searchMemberParam.getMemberType(), null, pageBounds);
+        return userMapper.searchMembers(null, null, searchMemberParam.getMemberType(), null, pageBounds);
     }
 
     @Override
     public PageList<UserInfoResult> searchMembers(String searchKey, String sn, PageBounds pageBounds) {
-        return userEntityMapper.searchMembersByKey(searchKey, sn, pageBounds);
+        return userMapper.searchMembersByKey(searchKey, sn, pageBounds);
     }
 
     @Override

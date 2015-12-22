@@ -12,20 +12,21 @@ import javax.validation.constraints.Size;
 public class FandomInfoParam extends AbstractToken {
 
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @NotNull
     @JsonProperty("fandom_id")
     private Long fandomId;
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
-
 
     public Long getFandomId() {
         return fandomId;

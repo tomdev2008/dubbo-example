@@ -5,7 +5,6 @@ import com.fansz.members.extension.DubboxService;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
-import com.fansz.members.model.post.PostsQueryParam;
 import com.fansz.members.model.post.*;
 
 import javax.ws.rs.Consumes;
@@ -31,7 +30,7 @@ public interface PostApi {
     @POST
     @Path("/add")
     @DubboxService("publishPost")
-    CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam);
+    CommonResult<PostInfoResult> addPost(AddPostParam addPostParam);
 
     /**
      * 删除帖子接口
@@ -53,7 +52,7 @@ public interface PostApi {
     @POST
     @Path("/get")
     @DubboxService("getPost")
-    CommonResult<GetPostInfoResult> getPost(GetPostByIdParam postParam);
+    CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam);
 
 
     /**

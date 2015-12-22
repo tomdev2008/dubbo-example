@@ -126,18 +126,18 @@ public interface FandomApi {
      * 获取圈子fandom分类接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategorys>> 返回对象
+     * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @POST
     @Path("/category")
     @DubboxService("getFandomCategory")
-    CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam);
+    CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     /**
      * 获取圈子成员列表接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategorys>> 返回对象
+     * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @POST
     @Path("/members")

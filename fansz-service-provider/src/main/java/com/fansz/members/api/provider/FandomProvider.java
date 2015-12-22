@@ -93,11 +93,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * 获取fandom大小分类接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategorys>> 返回对象
+     * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @Override
-    public CommonResult<List<FandomCategorys>> getFandomCategory(FandomQueryParam fandomQueryParam) {
-        List<FandomCategorys> result = fandomService.getFandomCategory(fandomQueryParam);
+    public CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) {
+        List<FandomCategory> result = fandomService.getFandomCategory(fandomQueryParam);
         return renderSuccess(result);
     }
 
@@ -105,7 +105,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * 获取圈子fandom接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategorys>> 返回对象
+     * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @Override
     public CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {

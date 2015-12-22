@@ -12,8 +12,8 @@
         <module>fansz-service-api</module>
         <module>fansz-service-provider</module>
         <module>fansz-service-consumer</module>
-        <module>fansz-sms-sender</module>
         <module>fansz-storage-server</module>
+        <module>fansz-event-server</module>
     </modules>
     <distributionManagement>
         <repository>
@@ -277,7 +277,12 @@
             <dependency>
                 <groupId>com.fansz</groupId>
                 <artifactId>fansz-utils</artifactId>
-                <version>1.0.5</version>
+                <version>${fansz.component.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>common-redis</artifactId>
+                <version>${fansz.component.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fansz</groupId>
@@ -332,6 +337,7 @@
         <hessian_lite_version>3.2.1-fixed-2</hessian_lite_version>
         <tomcat_embed_version>8.0.11</tomcat_embed_version>
         <hibernate_validator_version>4.2.0.Final</hibernate_validator_version>
+        <fansz.component.version>1.0.5</fansz.component.version>
         <maven.test.skip>true</maven.test.skip>
     </properties>
 </project>

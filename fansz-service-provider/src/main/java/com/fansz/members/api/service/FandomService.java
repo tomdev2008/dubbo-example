@@ -29,8 +29,7 @@ public interface FandomService {
 
     PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
-
-    List<FandomCategorys> getFandomCategory(FandomQueryParam fandomQueryParam);
+    List<FandomCategory> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 

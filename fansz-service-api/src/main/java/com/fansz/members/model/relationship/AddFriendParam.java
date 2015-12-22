@@ -14,19 +14,21 @@ public class AddFriendParam extends AbstractToken {
 
     @NotBlank
     @JsonProperty("member_sn")
-    private String myMemberSn;
+    private String currentSn;
 
     @NotBlank
     @JsonProperty("friend_sn")
     private String friendMemberSn;
 
 
-    public String getMyMemberSn() {
-        return myMemberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMyMemberSn(String myMemberSn) {
-        this.myMemberSn = myMemberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getFriendMemberSn() {

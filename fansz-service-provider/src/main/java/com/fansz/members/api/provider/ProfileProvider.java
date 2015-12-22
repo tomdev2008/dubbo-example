@@ -82,7 +82,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam NicknameCheckParam) {
-        int total = profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getSn());
+        int total = profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getCurrentSn());
         ProfileValidateResult result = new ProfileValidateResult();
         result.setUnique(total > 0 ? false : true);
         return renderSuccess(result);

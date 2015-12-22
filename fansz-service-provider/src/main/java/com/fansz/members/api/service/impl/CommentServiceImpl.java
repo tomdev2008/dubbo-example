@@ -38,7 +38,7 @@ public class CommentServiceImpl implements CommentService {
     public CommentQueryFromFandomResult addComment(CommentParam commentPara) {
         PostCommentEntity postCommentEntity = new PostCommentEntity();
         postCommentEntity.setPostId(commentPara.getPostId());
-        postCommentEntity.setCommentatorSn(commentPara.getCommentatorSn());
+        postCommentEntity.setCommentatorSn(commentPara.getCurrentSn());
         postCommentEntity.setCommentContent(commentPara.getCommentContent());
         postCommentEntity.setCommentSource(commentPara.getCommentSource());
         postCommentEntity.setCommentParentId(commentPara.getCommentParentId());
@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public void removeComment(CommentDelParam commentDelParam) {
-        PostCommentEntity postCommentEntity=postCommentEntityMapper.selectByIdAndSn(commentDelParam.getCommentatorSn(), commentDelParam.getCommentId());
+        PostCommentEntity postCommentEntity=postCommentEntityMapper.selectByIdAndSn(commentDelParam.getCurrentSn(), commentDelParam.getCommentId());
         if(postCommentEntity==null){
             throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE,"No authority to delete Comment");
         }

@@ -13,19 +13,20 @@ public class ExitFandomParam extends AbstractToken {
 
     @NotBlank
     @JsonProperty("member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @NotBlank
     @JsonProperty("fandom_id")
     private String fandomId;
 
-
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getFandomId() {

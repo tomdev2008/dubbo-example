@@ -13,7 +13,7 @@ public class AddFandomParam extends AbstractToken {
 
     @NotBlank
     @JsonProperty("fandom_creator_sn")
-    private String fandomCreatorSn;
+    private String currentSn;
 
     @NotBlank
     @JsonProperty("fandom_name")
@@ -28,14 +28,15 @@ public class AddFandomParam extends AbstractToken {
     @JsonProperty("fandom_intro")
     private String fandomIntro;
 
-    public String getFandomCreatorSn() {
-        return fandomCreatorSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setFandomCreatorSn(String fandomCreatorSn) {
-        this.fandomCreatorSn = fandomCreatorSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
-
 
     public String getFandomName() {
         return fandomName;

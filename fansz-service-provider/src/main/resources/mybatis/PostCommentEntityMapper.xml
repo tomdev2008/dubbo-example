@@ -99,15 +99,16 @@
       comment_time = #{commentTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
     <select id="getCommentsByPostidFromFandom" resultType="com.fansz.members.model.comment.CommentQueryFromFandomResult" parameterType="java.lang.Object">
          SELECT
             t.id,
             t.post_id postId,
             t.comment_content commentContent,
             t.commentator_sn commentatorSn,
-            m.nickname commentatorNickname,
             t.comment_time commentTime,
             m.member_avatar commentatorAvatar,
+            m.nickname commentatorNickname,
             p.commentator_sn orginSn,
             p.comment_content orginContent,
             p.comment_time orginTime,

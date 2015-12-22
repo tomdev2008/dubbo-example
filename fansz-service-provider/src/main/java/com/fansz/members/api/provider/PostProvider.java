@@ -1,18 +1,21 @@
 package com.fansz.members.api.provider;
 
 import com.fansz.members.api.PostApi;
-import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.api.extension.AbstractProvider;
 import com.fansz.members.api.service.PostService;
+import com.fansz.members.kafka.EventProducer;
 import com.fansz.members.model.CommonPagedResult;
 import com.fansz.members.model.CommonResult;
 import com.fansz.members.model.NullResult;
+import com.fansz.members.model.event.AsyncEventType;
+import com.fansz.members.model.event.PublishPostEvent;
 import com.fansz.members.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,17 +28,24 @@ public class PostProvider extends AbstractProvider implements PostApi {
     @Autowired
     private PostService postService;
 
+    @Resource(name = "eventProducer")
+    private EventProducer eventProducer;
+
     /**
      * 发帖子接口
      *
      * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
-    public CommonResult<GetPostInfoResult> addPost(AddPostParam addPostParam) {
-        FandomPostEntity fandomPostEntity = postService.addPost(addPostParam);
+    public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) {
+        Long postId = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
-        postParam.setPostId(fandomPostEntity.getId());
+        postParam.setPostId(postId);
         postParam.setCurrentSn(addPostParam.getCurrentSn());
+        if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
+            PublishPostEvent postPublishEvent = new PublishPostEvent(postId, addPostParam.getCurrentSn());
+            eventProducer.produce(AsyncEventType.PUBLISH_POST, postPublishEvent);
+        }
         return getPost(postParam);
     }
 
@@ -63,8 +73,8 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public CommonResult<GetPostInfoResult> getPost(GetPostByIdParam postParam) {
-        GetPostInfoResult postInfoResult = postService.getPost(postParam);
+    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) {
+        PostInfoResult postInfoResult = postService.getPost(postParam);
         return renderSuccess(postInfoResult);
     }
 

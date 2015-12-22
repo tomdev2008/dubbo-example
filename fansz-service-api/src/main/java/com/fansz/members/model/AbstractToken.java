@@ -1,7 +1,5 @@
 package com.fansz.members.model;
 
-import com.fansz.members.model.AccessTokenAware;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.io.Serializable;
@@ -16,10 +14,6 @@ public abstract class AbstractToken implements AccessTokenAware, Serializable {
     @JsonProperty("access_token")
     private String accessToken;
 
-    @JsonIgnore
-    private String currentSn;
-
-
     @Override
     public String getAccessToken() {
         return accessToken;
@@ -29,13 +23,5 @@ public abstract class AbstractToken implements AccessTokenAware, Serializable {
         this.accessToken = accessToken;
     }
 
-    @Override
-    public String getCurrentSn() {
-        return currentSn;
-    }
 
-    @Override
-    public void setCurrentSn(String currentSn) {
-        this.currentSn = currentSn;
-    }
 }

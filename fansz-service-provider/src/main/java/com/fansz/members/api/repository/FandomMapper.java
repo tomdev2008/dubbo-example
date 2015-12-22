@@ -15,33 +15,27 @@ import java.util.List;
 @MapperScan
 public interface FandomMapper {
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(FandomEntity record);
 
     int insertSelective(FandomEntity record);
-
-    FandomEntity selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(FandomEntity record);
-
-    int updateByPrimaryKey(FandomEntity record);
 
     List<FandomEntity> selectByParentId(Long id);
 
     List<FandomInfoResult> listByCondition(FandomEntity param);
 
-    PageList<FandomInfoResult> getRecommendFandom(@Param("memberSn")String memberSn,PageBounds pageBounds);
+    PageList<FandomInfoResult> getRecommendFandom(@Param("memberSn") String memberSn, PageBounds pageBounds);
 
-    FandomInfoResult getFandomDetail(@Param("fandomId")Long fandomId,@Param("memberSn")String memberSn);
+    FandomInfoResult getFandomDetail(@Param("fandomId") Long fandomId, @Param("memberSn") String memberSn);
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    PageList<SearchFandomResult> searchFandoms(@Param("memberSn")String memberSn, @Param("searchVal")String searchVal, PageBounds pageBounds);
+    PageList<SearchFandomResult> searchFandoms(@Param("memberSn") String memberSn, @Param("searchVal") String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);
 
     int delFandom(DelFandomParam delFandomParam);
 
     int modifyFandom(ModifyFandomParam modifyFandomParam);
+
+    FandomInfoResult getFandomInfo(@Param("fandomId") Long fandomId, @Param("fandomName") String fandomName);
 }

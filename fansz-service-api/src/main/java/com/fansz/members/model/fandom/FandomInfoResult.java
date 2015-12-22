@@ -22,6 +22,9 @@ public class FandomInfoResult implements Serializable {
     @JsonProperty("fandom_parent_id")
     private Long fandomParentId;
 
+    @JsonProperty("fandom_parent_name")
+    private String fandomParentName;
+
     @JsonProperty("fandom_admin_sn")
     private String fandomAdminSn;
 
@@ -144,5 +147,13 @@ public class FandomInfoResult implements Serializable {
 
     public void setFandomCreatorSn(String fandomCreatorSn) {
         this.fandomCreatorSn = fandomCreatorSn;
+    }
+
+    public String getFandomParentName() {
+        return fandomParentName;
+    }
+
+    public void setFandomParentName(String fandomParentName) {
+        this.fandomParentName = fandomParentName;
     }
 }

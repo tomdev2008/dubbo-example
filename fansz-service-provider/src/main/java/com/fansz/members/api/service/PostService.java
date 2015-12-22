@@ -1,7 +1,6 @@
 package com.fansz.members.api.service;
 
 
-import com.fansz.members.api.entity.FandomPostEntity;
 import com.fansz.members.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -16,11 +15,11 @@ import java.util.List;
 @Service
 public interface PostService {
 
-    FandomPostEntity addPost(AddPostParam addPostParam);
+    Long addPost(AddPostParam addPostParam);
 
     void removePost(RemovePostParam removePostrParam);
 
-    GetPostInfoResult getPost(GetPostByIdParam postParam);
+    PostInfoResult getPost(GetPostByIdParam postParam);
 
     List<PostLikeInfoResult> listPostVotes(PostParam postParam);
 

@@ -6,8 +6,8 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
-        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="BIGINT"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
@@ -17,7 +17,9 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
-        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="BIGINT"/>
+        <result column="fandom_parent_name" property="fandomParentName" jdbcType="VARCHAR"/>
+        <result column="fandom_admin_sn" property="fandomAdminSn" jdbcType="VARCHAR"/>
+        <result column="fandom_creator_sn" property="fandomCreatorSn" jdbcType="VARCHAR"/>
         <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
         <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
@@ -25,7 +27,7 @@
         <result column="follower_count" property="followerCount" jdbcType="INTEGER"/>
         <result column="post_count" property="postCount" jdbcType="INTEGER"/>
         <association property="creator" javaType="com.fansz.members.model.profile.UserInfoResult"
-                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap"  columnPrefix="u_"/>
+                     resultMap="com.fansz.members.api.repository.UserMapper.userInfoResultMap" columnPrefix="u_"/>
     </resultMap>
 
     <sql id="Fandom_Column_List">
@@ -36,21 +38,13 @@
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
-        <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
         from feeds_fandom a
         where a.id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>
-        from feeds_fandom a
-        where a.fandom_parent_id = #{id,jdbcType=BIGINT}
-    </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    DELETE from feeds_fandom WHERE id = #{id,jdbcType=BIGINT}
-  </delete>
 
     <insert id="insert" parameterType="com.fansz.members.api.entity.FandomEntity">
         insert into feeds_fandom (fandom_name,fandom_parent_id,fandom_admin_sn,
@@ -149,8 +143,13 @@
     <select id="listByCondition" parameterType="com.fansz.members.api.entity.FandomEntity"
             resultMap="fandomAllInfoResultMap">
         SELECT
-        <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>,
-        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="b"/></include>
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        ,
+        <include refid="com.fansz.members.api.repository.UserMapper.User_Column_List">
+            <property name="alias" value="b"/>
+        </include>
         FROM feeds_fandom a LEFT JOIN
         connects_member_profile b ON a.fandom_creator_sn = b.sn
         <where>
@@ -191,58 +190,63 @@
         SELECT  f.*,p.member_avatar,p.sn u_sn,p.nickname u_nickname,p.member_avatar u_member_avatar,
         (SELECT COUNT(1)+IFNULL(t.infatuation,0) FROM feeds_member_fandom t WHERE t.fandom_id=f.id AND t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
         (SELECT COUNT(1) from feeds_member_post_fandom g WHERE g.fandom_id=f.id) post_count,
-        (SELECT COUNT(1) from feeds_member_fandom t WHERE t.fandom_id=f.id) follower_count
+        (SELECT COUNT(1) from feeds_member_fandom t WHERE t.fandom_id=f.id) follower_count,
+        (SELECT fandom_name from feeds_fandom where id = f.fandom_parent_id) fandom_parent_name
         FROM feeds_fandom  f, connects_member_profile p
         WHERE f.id =  #{fandomId,jdbcType=BIGINT} AND f.fandom_creator_sn=p.sn
     </select>
 
     <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomAllInfoResultMap">
         select
-        <include refid="Fandom_Column_List"><property name="alias" value="a"/></include>
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
         from feeds_fandom a
         where a.fandom_parent_id = #{id,jdbcType=BIGINT}
         order by a.id
     </select>
 
     <select id="searchFandoms" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
-      SELECT
-                ff.id,
-                ff.fandom_name,
-                ff.fandom_parent_id,
-                ff.fandom_creator_sn,
-                ff.fandom_avatar_url,
-                ff.fandom_intro,
-                (
-                    SELECT
-                        count(1)
-                    FROM
-                        feeds_member_fandom
-                    WHERE
-                        fandom_id = ff.id
-                ) follower_count,
-                (
-                    SELECT
-                        count(1)
-                    FROM
-                        feeds_member_post_fandom
-                    WHERE
-                        fandom_id = ff.id
-                ) post_count,
-                (
-                    SELECT
-                        infatuation
-                    FROM
-                        feeds_member_fandom
-                    WHERE
-                        member_sn = #{memberSn,jdbcType=VARCHAR}
-                    AND fandom_id=ff.id
-                ) followed,
-              <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="mp"/></include>
-            FROM
-                feeds_fandom ff
-            LEFT JOIN connects_member_profile mp ON ff.fandom_creator_sn = mp.sn
-            WHERE fandom_name like concat('%',#{searchVal},'%')
-            OR fandom_intro like  concat('%',#{searchVal},'%')
+        SELECT
+        ff.id,
+        ff.fandom_name,
+        ff.fandom_parent_id,
+        ff.fandom_creator_sn,
+        ff.fandom_avatar_url,
+        ff.fandom_intro,
+        (
+        SELECT
+        count(1)
+        FROM
+        feeds_member_fandom
+        WHERE
+        fandom_id = ff.id
+        ) follower_count,
+        (
+        SELECT
+        count(1)
+        FROM
+        feeds_member_post_fandom
+        WHERE
+        fandom_id = ff.id
+        ) post_count,
+        (
+        SELECT
+        infatuation
+        FROM
+        feeds_member_fandom
+        WHERE
+        member_sn = #{memberSn,jdbcType=VARCHAR}
+        AND fandom_id=ff.id
+        ) followed,
+        <include refid="com.fansz.members.api.repository.UserMapper.User_Column_List">
+            <property name="alias" value="mp"/>
+        </include>
+        FROM
+        feeds_fandom ff
+        LEFT JOIN connects_member_profile mp ON ff.fandom_creator_sn = mp.sn
+        WHERE fandom_name like concat('%',#{searchVal},'%')
+        OR fandom_intro like concat('%',#{searchVal},'%')
     </select>
 
     <select id="getCountByFandomName" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -254,7 +258,7 @@
             fandom_name = #{fandomName,jdbcType=VARCHAR}
     </select>
 
-    <delete id="delFandom" parameterType="com.fansz.members.model.fandom.DelFandomParam" >
+    <delete id="delFandom" parameterType="com.fansz.members.model.fandom.DelFandomParam">
       DELETE
         FROM
             feeds_fandom
@@ -263,7 +267,7 @@
         AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </delete>
 
-    <update id="modifyFandom" parameterType="com.fansz.members.model.fandom.ModifyFandomParam" >
+    <update id="modifyFandom" parameterType="com.fansz.members.model.fandom.ModifyFandomParam">
         update feeds_fandom
         <set>
             <if test="fandomName != null">
@@ -281,5 +285,19 @@
         </set>
         where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </update>
+
+    <select id="getFandomInfo" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
+        SELECT
+        <include refid="Fandom_Column_List"><property name="alias" value="f"/></include>
+        FROM
+        feeds_fandom f
+        where
+        <if test="fandomName != null">
+            f.fandom_name = #{fandomName,jdbcType=VARCHAR}
+        </if>
+        <if test="fandomId != null">
+            f.id = #{fandomId,jdbcType=BIGINT}
+        </if>
+    </select>
 
 </mapper>

@@ -231,6 +231,10 @@
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
+            <artifactId>common-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
             <artifactId>fansz-utils</artifactId>
         </dependency>
         <dependency>

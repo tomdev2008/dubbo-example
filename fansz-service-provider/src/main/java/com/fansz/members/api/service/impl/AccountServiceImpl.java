@@ -2,7 +2,7 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.UserEntity;
 import com.fansz.members.api.model.VerifyCodeModel;
-import com.fansz.members.api.repository.UserEntityMapper;
+import com.fansz.members.api.repository.UserMapper;
 import com.fansz.members.api.service.AccountService;
 import com.fansz.members.api.service.SessionService;
 import com.fansz.members.api.service.VerifyCodeService;
@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Autowired
-    private UserEntityMapper userEntityMapper;
+    private UserMapper userMapper;
 
     @Autowired
     private VerifyCodeService verifyCodeService;
@@ -55,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        UserEntity existedUser = userEntityMapper.findByAccount(registerParam.getLoginname());
+        UserEntity existedUser = userMapper.findByAccount(registerParam.getLoginname());
         if (existedUser != null) {
             throw new ApplicationException(Constants.USER_EXISTS, "User exists");
         }
@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
         logger.info("Begin to add profile " + user);
 
         //Save User Info
-        userEntityMapper.insertSelective(user);
+        userMapper.insertSelective(user);
         logger.info("profile saved:" + user);
 
         return user;
@@ -88,7 +88,7 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(changePasswordPara.getOldPassword());
 
         //Get User Info
-        UserEntity user = userEntityMapper.selectByUid(changePasswordPara.getUid());
+        UserEntity user = userMapper.selectByUid(changePasswordPara.getCurrentSn());
         if (user == null) {
             throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
         }
@@ -100,7 +100,7 @@ public class AccountServiceImpl implements AccountService {
         UserEntity changeParam = new UserEntity();
         changeParam.setId(user.getId());
         changeParam.setPassword(encodedNewPwd);
-        userEntityMapper.updateByPrimaryKeySelective(changeParam);
+        userMapper.updateByPrimaryKeySelective(changeParam);
     }
 
     /**
@@ -110,7 +110,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-        UserEntity user = userEntityMapper.findByMoblie(resetPasswordParam.getMobile());
+        UserEntity user = userMapper.findByMoblie(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
             throw new ApplicationException(Constants.USER_NOT_FOUND, "User not exist");
         }
@@ -132,12 +132,12 @@ public class AccountServiceImpl implements AccountService {
         UserEntity changeParam = new UserEntity();
         changeParam.setId(user.getId());
         changeParam.setPassword(encodedPwd);
-        userEntityMapper.updateByPrimaryKeySelective(changeParam);
+        userMapper.updateByPrimaryKeySelective(changeParam);
     }
 
     @Override
     public LoginResult login(LoginParam loginParam) {
-        UserEntity user = userEntityMapper.findByAccount(loginParam.getLoginname());
+        UserEntity user = userMapper.findByAccount(loginParam.getLoginname());
         if (user == null) {
             throw new ApplicationException(Constants.USER_NOT_FOUND, "User not exist");
         }

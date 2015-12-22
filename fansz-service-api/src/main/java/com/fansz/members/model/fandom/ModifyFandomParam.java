@@ -29,7 +29,7 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
     private Long fandomParentId;
 
     @JsonProperty("fandom_creator_sn")
-    private String fandomCreatorSn;
+    private String currentSn;
 
     @JsonProperty("fandom_avatar_url")
     private String fandomAvatarUrl;
@@ -70,12 +70,14 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
         this.fandomParentId = fandomParentId;
     }
 
-    public String getFandomCreatorSn() {
-        return fandomCreatorSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setFandomCreatorSn(String fandomCreatorSn) {
-        this.fandomCreatorSn = fandomCreatorSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getFandomAvatarUrl() {

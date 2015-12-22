@@ -42,7 +42,7 @@ public class SpecialFocusImpl implements SpecialFocusService{
     @Override
     public int modifySpecialFocusInfo(ModifySpecialFocusParam modifySpecialFocusParam) {
         Map map = null;
-        String memberSn = modifySpecialFocusParam.getMemberSn();
+        String memberSn = modifySpecialFocusParam.getCurrentSn();
         List<SpecialFocusParam> SpecialFocusParamList = modifySpecialFocusParam.getList();
         for (SpecialFocusParam specialFocusParam:SpecialFocusParamList) {
             map = new HashMap();

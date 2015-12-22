@@ -1,6 +1,7 @@
 package com.fansz.members.model.profile;
 
 import com.fansz.members.model.AbstractToken;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
@@ -8,18 +9,20 @@ import javax.validation.constraints.Size;
 
 public class NicknameCheckParam extends AbstractToken{
 
-    @NotBlank
-    private String sn;
+    @JsonProperty("sn")
+    private String currentSn;
 
     @NotBlank
     private String nickname;
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getNickname() {

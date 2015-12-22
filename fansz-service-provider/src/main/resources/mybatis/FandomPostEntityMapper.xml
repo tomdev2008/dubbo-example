@@ -33,34 +33,9 @@
         <result column="likes" property="likes" jdbcType="BIGINT"/>
         <result column="comments" property="comments" jdbcType="BIGINT"/>
         <association property="userInfoResult" javaType="com.fansz.members.model.profile.UserInfoResult"
-                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
+                     resultMap="com.fansz.members.api.repository.UserMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfoResult" javaType="com.fansz.members.model.fandom.FandomInfoResult"
                      resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap" columnPrefix="fi_"/>
-    </resultMap>
-
-
-    <resultMap id="getPostInfoResultMap" type="com.fansz.members.model.post.GetPostInfoResult">
-        <id column="id" property="postId" jdbcType="BIGINT"/>
-        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
-        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
-        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
-        <result column="likes" property="likes" jdbcType="BIGINT"/>
-        <result column="liked" property="liked" jdbcType="BIGINT"/>
-        <result column="comments" property="comments" jdbcType="BIGINT"/>
-        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
-        <association property="postMember" javaType="com.fansz.members.model.profile.UserInfoResult"
-                     resultMap="com.fansz.members.api.repository.UserEntityMapper.userInfoResultMap" columnPrefix="ui_"/>
-        <association property="fandomInfo" javaType="com.fansz.members.model.post.GetPostFandomInfo"
-                     resultMap="getPostFandomInfo" columnPrefix="fi_"/>
-    </resultMap>
-
-    <resultMap id="getPostFandomInfo" type="com.fansz.members.model.post.GetPostFandomInfo">
-        <id column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
-        <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
-        <result column="fandom_parent_id" property="fandomParentId" jdbcType="VARCHAR"/>
-        <result column="fandom_creator_sn" property="fandomCreatorId" jdbcType="VARCHAR"/>
-        <result column="fandom_avatar_url" property="fandomAvatarUrl" jdbcType="VARCHAR"/>
-        <result column="fandom_intro" property="fandomIntro" jdbcType="VARCHAR"/>
     </resultMap>
 
 
@@ -303,7 +278,7 @@
         or f.post_content LIKE concat('%',#{searchVal},'%')
     </select>
 
-    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="getPostInfoResultMap">
+    <select id="getPost" parameterType="com.fansz.members.model.post.PostParam" resultMap="postInfoResultMap">
         SELECT
             p.id,
             p.post_title,

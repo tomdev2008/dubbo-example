@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * Created by root on 15-11-3.
  */
-@Service
-@Transactional(propagation = Propagation.REQUIRED)
+//@Service
+//@Transactional(propagation = Propagation.REQUIRED)
 public class PostServiceImpl implements PostService {
 
     @Autowired
@@ -34,12 +34,12 @@ public class PostServiceImpl implements PostService {
     private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
 
     @Override
-    public FandomPostEntity addPost(AddPostParam addPostParam) {
+    public Long addPost(AddPostParam addPostParam) {
         FandomPostEntity fandomPostEntity = BeanTools.copyAs(addPostParam, FandomPostEntity.class);
         fandomPostEntity.setMemberSn(addPostParam.getCurrentSn());
         fandomPostEntity.setPostTime(new Date());
         fandomPostEntityMapper.insert(fandomPostEntity);
-        return fandomPostEntity;
+        return fandomPostEntity.getId();
     }
 
     @Override
@@ -55,9 +55,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public GetPostInfoResult getPost(GetPostByIdParam postParam) {
-        GetPostInfoResult postInfoResult = fandomPostEntityMapper.getPost(postParam);
-        return postInfoResult;
+    public PostInfoResult getPost(GetPostByIdParam postParam) {
+        return fandomPostEntityMapper.getPost(postParam);
     }
 
     @Override

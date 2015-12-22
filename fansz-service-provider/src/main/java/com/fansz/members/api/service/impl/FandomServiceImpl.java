@@ -2,12 +2,14 @@ package com.fansz.members.api.service.impl;
 
 import com.fansz.members.api.entity.FandomEntity;
 import com.fansz.members.api.entity.FandomMemberEntity;
-import com.fansz.members.api.event.FandomEventType;
-import com.fansz.members.api.event.SpecialRealtionEvent;
 import com.fansz.members.api.repository.FandomMapper;
 import com.fansz.members.api.repository.FandomMemberEntityMapper;
 import com.fansz.members.api.service.FandomService;
 import com.fansz.members.exception.ApplicationException;
+import com.fansz.members.kafka.EventProducer;
+import com.fansz.members.model.event.AsyncEventType;
+import com.fansz.members.model.event.SpecialFocusEvent;
+import com.fansz.members.model.event.UnSpecialFocusEvent;
 import com.fansz.members.model.fandom.*;
 import com.fansz.members.model.profile.ContactInfoResult;
 import com.fansz.members.model.relationship.ExitFandomParam;
@@ -15,14 +17,16 @@ import com.fansz.members.model.relationship.JoinFandomParam;
 import com.fansz.members.model.specialfocus.SpecialFocusParam;
 import com.fansz.members.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,8 +45,8 @@ public class FandomServiceImpl implements FandomService {
     @Autowired
     private FandomMemberEntityMapper fandomMemberEntityMapper;
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    @Resource(name = "eventProducer")
+    private EventProducer eventProducer;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -73,11 +77,9 @@ public class FandomServiceImpl implements FandomService {
 
         //添加特别关注记录
         SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setCurrentSn(joinFandomParam.getMemberSn());
         specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
-        applicationContext.publishEvent(specialRealtionEvent);
-
+        eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(specialFocusParam));
         return false;
     }
 
@@ -93,11 +95,10 @@ public class FandomServiceImpl implements FandomService {
 
         //删除特别关注记录
         SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setCurrentSn(joinFandomParam.getCurrentSn());
         specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
-        applicationContext.publishEvent(specialRealtionEvent);
 
+        eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new UnSpecialFocusEvent(specialFocusParam));
         return false;
     }
 
@@ -114,10 +115,9 @@ public class FandomServiceImpl implements FandomService {
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
 
         SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setCurrentSn(joinFandomParam.getMemberSn());
         specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.ADD_SPECIAL, specialFocusParam);
-        applicationContext.publishEvent(specialRealtionEvent);
+        eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(specialFocusParam));
 
         return true;
     }
@@ -135,10 +135,9 @@ public class FandomServiceImpl implements FandomService {
         fandomMemberEntityMapper.updateByPrimaryKeySelective(exist);
 
         SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setMemberSn(joinFandomParam.getMemberSn());
+        specialFocusParam.setCurrentSn(joinFandomParam.getMemberSn());
         specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-        SpecialRealtionEvent specialRealtionEvent = new SpecialRealtionEvent(this, FandomEventType.REMOVE_SPECIAL, specialFocusParam);
-        applicationContext.publishEvent(specialRealtionEvent);
+        eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new UnSpecialFocusEvent(specialFocusParam));
         return true;
     }
 
@@ -148,26 +147,16 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public List<FandomCategorys> getFandomCategory(FandomQueryParam fandomQueryParam) {
-        List<FandomCategorys> result = new ArrayList<>();
+    public List<FandomCategory> getFandomCategory(FandomQueryParam fandomQueryParam) {
+        List<FandomCategory> result = new ArrayList<>();
         List<FandomInfoResult> rootCategory = fandomMapper.getFandomCategory(Long.parseLong("0"));
 
-        List<FandomInfoResult> childCategory = null;
-        FandomCategorys fandomCategorys = null;
-        if (rootCategory != null) {
+        if (!CollectionTools.isNullOrEmpty(rootCategory)) {
             for (FandomInfoResult root : rootCategory) {
-                fandomCategorys = new FandomCategorys();
-
-                childCategory = fandomMapper.getFandomCategory(root.getId());
-
-                fandomCategorys.setId(root.getId());
-                fandomCategorys.setFandomName(root.getFandomName());
-                fandomCategorys.setFandomParentId(root.getFandomParentId());
-                fandomCategorys.setFandomAvatarUrl(root.getFandomAvatarUrl());
-                fandomCategorys.setFandomIntro(root.getFandomIntro());
-                fandomCategorys.setFandomCreateTime(root.getFandomCreateTime());
-                fandomCategorys.setChildCategory(childCategory);
-                result.add(fandomCategorys);
+                List<FandomInfoResult> childCategory = fandomMapper.getFandomCategory(root.getId());
+                FandomCategory fandomCategory = BeanTools.copyAs(root, FandomCategory.class);
+                fandomCategory.setChildCategory(childCategory);
+                result.add(fandomCategory);
             }
         }
         return result;
@@ -180,7 +169,7 @@ public class FandomServiceImpl implements FandomService {
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
-        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getMemberSn());
+        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
     }
 
     @Override
@@ -195,10 +184,10 @@ public class FandomServiceImpl implements FandomService {
             throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
         }
         FandomEntity fandomEntity = new FandomEntity();
-        fandomEntity.setFandomAdminSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomAdminSn(addFandomParam.getCurrentSn());
         fandomEntity.setFandomAvatarUrl(addFandomParam.getFandomAvatarUrl());
         fandomEntity.setFandomCreateTime(new Date());
-        fandomEntity.setFandomCreatorSn(addFandomParam.getFandomCreatorSn());
+        fandomEntity.setFandomCreatorSn(addFandomParam.getCurrentSn());
         fandomEntity.setFandomIntro(addFandomParam.getFandomIntro());
         fandomEntity.setFandomName(addFandomParam.getFandomName());
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
@@ -210,7 +199,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public int delFandom(DelFandomParam delFandomParam) {
         int count = fandomMapper.delFandom(delFandomParam);
-        if(count == 0){
+        if (count == 0) {
             throw new ApplicationException(Constants.FANDOM_NO_DELETE, "Need authority to delete");
         }
         return 1;
@@ -218,11 +207,17 @@ public class FandomServiceImpl implements FandomService {
 
     @Override
     public FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam) {
-        int count = fandomMapper.modifyFandom(modifyFandomParam);
-        FandomInfoResult fandomInfoResult = null;
-        if(count > 0){
-             fandomInfoResult = fandomMapper.getFandomDetail(modifyFandomParam.getId(),modifyFandomParam.getFandomCreatorSn());
+        if (StringTools.isNotBlank(modifyFandomParam.getFandomName())) {
+            FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(null, modifyFandomParam.getFandomName());
+            if (null != fandomInfoResult && !fandomInfoResult.getId().equals(modifyFandomParam.getId())) {
+                throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
+            }
         }
+        int count2 = fandomMapper.modifyFandom(modifyFandomParam);
+        if (count2 == 0) {
+            throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "No fandom modify permissions");
+        }
+        FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(), null);
         return fandomInfoResult;
     }
 }

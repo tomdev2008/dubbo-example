@@ -20,7 +20,7 @@ public class CommentDelParam extends AbstractToken {
 
     @NotBlank
     @JsonProperty("commentator_sn")
-    private String commentatorSn;
+    private String currentSn;
 
     public Long getCommentId() {
         return commentId;
@@ -39,11 +39,13 @@ public class CommentDelParam extends AbstractToken {
         this.postId = postId;
     }
 
-    public String getCommentatorSn() {
-        return commentatorSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setCommentatorSn(String commentatorSn) {
-        this.commentatorSn = commentatorSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 }

@@ -1,3 +1,4 @@
+/fansz-event-server/target
 /fansz-sms-sender/fansz-sms-sender.iml
 target/*
 !.gitignore

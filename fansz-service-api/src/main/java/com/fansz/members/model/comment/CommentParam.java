@@ -16,7 +16,7 @@ public class CommentParam extends AbstractToken {
 
     @NotBlank
     @JsonProperty("commentator_sn")
-    private String commentatorSn;
+    private String currentSn;
 
     @NotBlank
     @JsonProperty("comment_source")
@@ -37,14 +37,15 @@ public class CommentParam extends AbstractToken {
     @JsonProperty("access_token")
     private String accessToken;
 
-    public String getCommentatorSn() {
-        return commentatorSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setCommentatorSn(String commentatorSn) {
-        this.commentatorSn = commentatorSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
-
 
     public String getCommentSource() {
         return commentSource;
