@@ -144,7 +144,9 @@
     <select id="getFandomMembers"
             resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
         SELECT p.*,b.relation_status
-        FROM  feeds_member_fandom m
+        FROM  feeds_fandom f
+        LEFT JOIN  feeds_member_fandom m
+       <![CDATA[ on f.id = m.fandom_id and f.fandom_creator_sn <> m.member_sn]]>
         INNER JOIN connects_member_profile  p
         ON m.member_sn=p.sn
         LEFT JOIN connects_member_relation b
