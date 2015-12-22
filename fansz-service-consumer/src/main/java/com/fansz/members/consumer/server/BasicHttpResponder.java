@@ -66,11 +66,11 @@ public class BasicHttpResponder {
         setCustomHeaders(response, headers);
 
         if (content != null) {
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, contentType);
-            response.headers().setInt(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
+            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, contentType);
+            response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, content.readableBytes());
             response.content().writeBytes(content);
         } else {
-            response.headers().setInt(HttpHeaderNames.CONTENT_LENGTH, 0);
+            response.headers().set(HttpHeaders.Names.CONTENT_LENGTH, 0);
         }
 
         boolean responseKeepAlive = setResponseKeepAlive(response);
@@ -102,13 +102,13 @@ public class BasicHttpResponder {
     }
 
     private boolean setResponseKeepAlive(HttpResponse response) {
-        boolean closeConn = HttpHeaderValues.CLOSE.equalsIgnoreCase(response.headers().get(HttpHeaderNames.CONNECTION));
+        boolean closeConn = HttpHeaders.Values.CLOSE.equalsIgnoreCase(response.headers().get(HttpHeaders.Names.CONNECTION));
         boolean responseKeepAlive = this.keepAlive && !closeConn;
 
         if (responseKeepAlive) {
-            response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
+            response.headers().set(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
         } else {
-            response.headers().set(HttpHeaderNames.CONNECTION, HttpHeaderValues.CLOSE);
+            response.headers().set(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.CLOSE);
         }
 
         return responseKeepAlive;

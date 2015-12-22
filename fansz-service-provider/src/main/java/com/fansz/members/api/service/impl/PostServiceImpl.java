@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * Created by root on 15-11-3.
  */
-//@Service
-//@Transactional(propagation = Propagation.REQUIRED)
+@Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class PostServiceImpl implements PostService {
 
     @Autowired

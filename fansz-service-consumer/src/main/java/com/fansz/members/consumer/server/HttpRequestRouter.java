@@ -41,9 +41,9 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
      * @throws Exception
      */
     @Override
-    public void messageReceived(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
-        BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), HttpHeaderUtil.isKeepAlive(request));
-        if (HttpMethod.HEAD.equals(request.method()) || HttpMethod.OPTIONS.equals(request.method())) {
+    public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+        BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), HttpHeaders.isKeepAlive(request));
+        if (HttpMethod.HEAD.equals(request.getMethod()) || HttpMethod.OPTIONS.equals(request.getMethod())) {
             // HTTP HEAD请求:1、只请求资源的首部；2、检查超链接的有效性；3、检查网页是否被修改；目前主要用于支持nginx的健康检测
             // HTTP OPTIONS请求：1、获取服务器支持的HTTP请求方法。
             // 2、用来检查服务器的性能。例如：AJAX进行跨域请求时的预检，需要向另外一个域名的资源发送一个HTTP OPTIONS请求头，用以判断实际发送的请求是否安全;
@@ -51,11 +51,11 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
             responder.sendStatus(HttpResponseStatus.NO_CONTENT);
         } else {
             // 不支持GET方法
-            if (request.method().equals(HttpMethod.GET)) {
+            if (request.getMethod().equals(HttpMethod.GET)) {
                 responder.sendStatus(HttpResponseStatus.FORBIDDEN);
             }
 
-            String url = URI.create(request.uri()).normalize().toString();
+            String url = URI.create(request.getUri()).normalize().toString();
             String body = request.content().toString(Charset.forName("UTF-8"));
             String response = rpcInvoker.invoke(url, body);
             responder.sendJson(HttpResponseStatus.OK, response);
@@ -69,7 +69,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if (ctx.channel() != null) {
-            LOG.error(String.format("channel(%s) encounters error", ctx.channel().id().asShortText()), cause);
+            LOG.error(String.format("channel(%s) encounters error", ctx.name()), cause);
             if (ctx.channel().isActive()) {
                 BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), false);
                 responder.sendJson(HttpResponseStatus.OK, ERROR);

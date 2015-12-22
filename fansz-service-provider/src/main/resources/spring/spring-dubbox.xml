@@ -13,7 +13,7 @@
     <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>-->
     <!--7002端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" server="netty" extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
+                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" server="netty4" extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
 
     <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
 
