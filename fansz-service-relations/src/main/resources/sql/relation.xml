@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dynamic-query xmlns="http://fansz.com/xml/ns/dynamic-query"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://fansz.com/xml/ns/dynamic-query http://fansz.com/xml/ns/dynamic-query_1_0.xsd"
+               version="1.0">
+    <native-query name="relation.updateRelationStatus">
+        <![CDATA[
+          UPDATE connects_member_relation a
+          SET a.relation_status=:relationStatus
+          WHERE a.id=:id
+        ]]>
+    </native-query>
+    <native-query name="relation.findFriends">
+        <![CDATA[
+          SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
+            WHERE a.my_member_sn=:myMemberSn
+            AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
+        ]]>
+    </native-query>
+
+    <native-query name="relation.findSpecialFriends">
+        <![CDATA[
+           SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
+        WHERE a.my_member_sn=:myMemberSn
+        AND a.friend_member_sn=b.sn
+        AND a.relation_status ='11'
+        ]]>
+    </native-query>
+
+    <native-query name="relation.findFriendRelationBySns">
+        <![CDATA[
+          SELECT *
+        FROM connects_member_relation
+        WHERE my_member_sn=:memberSn AND friend_member_sn=:friendSn
+        ]]>
+    </native-query>
+
+    <native-query name="relation.findRelationByMobiles">
+        <![CDATA[
+        SELECT a.*, b.relation_status
+        FROM connects_member_profile a
+        LEFT JOIN connects_member_relation b
+        ON b.friend_member_sn=a.sn AND  b.my_member_sn=:memberSn
+        WHERE a.mobile IN (
+        <#list mobileList as item>
+        #{item,jdbcType=VARCHAR}
+         <#if item_has_next>,</#if>
+        </#list>)
+         ]]>
+    </native-query>
+
+    <native-query name="relation.listAddMeRequest">
+        SELECT a.*,b.relation_status relationship
+        FROM connects_member_profile a LEFT JOIN connects_member_relation b
+        ON b.friend_member_sn=a.sn
+        WHERE b.my_member_sn=:sn AND b.relation_status!='00'
+    </native-query>
+
+    <native-query name="relation.listMySendRequest">
+        SELECT a.*,b.relation_status relationship
+        FROM connects_member_profile a LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
+        WHERE b.my_member_sn=:sn AND b.relation_status!='01'
+    </native-query>
+</dynamic-query>
+
+

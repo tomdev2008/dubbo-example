@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fansz.members.api.repository.FandomMemberEntityMapper">
+<mapper namespace="com.fansz.service.api.repository.FandomMemberEntityMapper">
 
-    <resultMap id="BaseResultMap" type="com.fansz.members.api.entity.FandomMemberEntity">
+    <resultMap id="BaseResultMap" type="com.fansz.service.api.entity.FandomMemberEntity">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="member_sn" property="memberSn" jdbcType="VARCHAR"/>
         <result column="fandom_id" property="fandomId" jdbcType="VARCHAR"/>
@@ -22,7 +22,7 @@
     </select>
 
     <select id="selectBySelective" resultMap="BaseResultMap"
-            parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+            parameterType="com.fansz.service.api.entity.FandomMemberEntity">
         select
         <include refid="Base_Column_List"/>
         from feeds_member_fandom
@@ -49,7 +49,7 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
 
-    <insert id="insert" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+    <insert id="insert" parameterType="com.fansz.service.api.entity.FandomMemberEntity">
         insert into feeds_member_fandom (member_sn, fandom_id,infatuation,join_time)
         values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=VARCHAR},#{infatuation,jdbcType=VARCHAR},#{joinTime,jdbcType=TIMESTAMP})
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
@@ -57,7 +57,7 @@
         </selectKey>
     </insert>
 
-    <insert id="insertSelective" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+    <insert id="insertSelective" parameterType="com.fansz.service.api.entity.FandomMemberEntity">
         insert into feeds_member_fandom
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="memberSn != null">
@@ -91,7 +91,7 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.service.api.entity.FandomMemberEntity">
         update feeds_member_fandom
         <set>
             <if test="memberSn != null">
@@ -110,7 +110,7 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.fansz.members.api.entity.FandomMemberEntity">
+    <update id="updateByPrimaryKey" parameterType="com.fansz.service.api.entity.FandomMemberEntity">
     update feeds_member_fandom
     set member_sn = #{memberSn,jdbcType=VARCHAR},
       fandom_sn = #{fandomId,jdbcType=VARCHAR},
@@ -122,7 +122,7 @@
         select fandom_sn from feeds_member_fandom where member_sn = #{memberSn,jdbcType=VARCHAR}
     </select>
 
-    <select id="selectByMemberAndFandom" parameterType="com.fansz.members.api.entity.FandomMemberEntity"
+    <select id="selectByMemberAndFandom" parameterType="com.fansz.service.api.entity.FandomMemberEntity"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -131,9 +131,9 @@
     </select>
 
     <select id="findFandomsByMemberSn" parameterType="java.lang.String"
-            resultMap="com.fansz.members.api.repository.FandomMapper.fandomAllInfoResultMap">
+            resultMap="com.fansz.service.api.repository.FandomMapper.fandomAllInfoResultMap">
         SELECT b.id,b.fandom_name,b.fandom_parent_id,b.fandom_avatar_url,b.fandom_intro,b.fandom_create_time,
-        <include refid="com.fansz.members.api.repository.UserEntityMapper.User_Column_List"><property name="alias" value="c"/></include>,
+        <include refid="com.fansz.service.api.repository.UserMapper.User_Column_List"><property name="alias" value="c"/></include>,
         (SELECT count(1) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id) follower_count,
         (SELECT count(1) FROM feeds_member_post_fandom WHERE fandom_id=a.fandom_id) post_count,
         (SELECT count(1)+IFNULL(infatuation,0) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and member_sn=#{memberSn,jdbcType=VARCHAR})followed
@@ -142,17 +142,16 @@
     </select>
 
     <select id="getFandomMembers"
-            resultMap="com.fansz.members.api.repository.UserRelationEntityMapper.contactInfoMap">
+            resultMap="com.fansz.service.api.repository.UserRelationEntityMapper.contactInfoMap">
         SELECT p.*,b.relation_status
-        FROM  feeds_fandom f
-        LEFT JOIN  feeds_member_fandom m
-       <![CDATA[ on f.id = m.fandom_id and f.fandom_creator_sn <> m.member_sn]]>
+        FROM  feeds_member_fandom m
         INNER JOIN connects_member_profile  p
-        ON m.member_sn=p.sn
         LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=p.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
         WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn
         AND p.member_status='1'
+        ORDER BY m.join_time ASC
     </select>
 
 </mapper>

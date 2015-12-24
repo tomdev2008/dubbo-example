@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+	 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <dubbo:application name="members-event-server" owner="fansz-evernt-server" organization="fansz"/>
+
+    <dubbo:registry address="${dubbo.registry.address}"/>
+
+    <!--uncomment this if you want to test dubbo's monitor-->
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+    <!-- directly connect to provider to simulate the access to non-dubbo rest services -->
+    <!--<dubbo:reference id="userService2" interface="com.fansz.service.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
+
+    <dubbo:reference interface="com.fansz.service.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
+                     timeout="2000"
+                     connections="100" protocol="dubbo"/>
+</beans>

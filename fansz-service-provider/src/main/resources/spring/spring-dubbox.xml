@@ -10,10 +10,12 @@
     <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
 
     <!-- 用rest协议在7001端口暴露服务 -->
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.members.extension.ApplicationExceptionMapper,com.fansz.members.extension.ValidationExceptionMapper"/>
+    <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>-->
     <!--7002端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.members.extension.MembersSerialOptimizerImpl" server="netty"/>
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4" extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+
+    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
 
     <!-- use tomcat server
     <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
@@ -31,33 +33,27 @@
 
 
     <!-- 声明需要暴露的服务接口 -->
-
-    <dubbo:service interface="com.fansz.members.api.AccountApi" ref="accountProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.CommentApi" ref="commentProvider" validation="true" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.CommentApi" ref="commentProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.FandomApi" ref="fandomProvider" validation="true" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.FandomApi" ref="fandomProvider" validation="true" timeout="2000"
-                   connections="100"/>
-
-    <dubbo:service interface="com.fansz.members.api.PostApi" ref="postProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.PostApi" ref="postProvider" validation="true" timeout="2000"
                    connections="100" />
 
-    <dubbo:service interface="com.fansz.members.api.ProfileApi" ref="profileProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.ProfileApi" ref="profileProvider" validation="true" timeout="2000"
                    connections="100"/>
-    <dubbo:service interface="com.fansz.members.api.RelationShipApi" ref="relationShipProvider" validation="true" timeout="2000"
-                   connections="100"/>
-    <dubbo:service interface="com.fansz.members.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.RelationShipApi" ref="relationShipProvider" validation="true" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.SeedingSpotApi" ref="seedingSpotProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.SeedingSpotApi" ref="seedingSpotProvider" validation="true" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.SpecialFocusApi" ref="specialFocusProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.SpecialFocusApi" ref="specialFocusProvider" validation="true" timeout="2000"
                    connections="100"/>
 
-    <dubbo:service interface="com.fansz.members.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="2000"
+    <dubbo:service interface="com.fansz.service.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="2000"
                    connections="100"/>
 
 </beans>

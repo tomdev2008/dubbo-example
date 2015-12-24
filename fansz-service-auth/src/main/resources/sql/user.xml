@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dynamic-query xmlns="http://fansz.com/xml/ns/dynamic-query"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://fansz.com/xml/ns/dynamic-query http://fansz.com/xml/ns/dynamic-query_1_0.xsd"
+               version="1.0">
+    <hql-query name="user.findByMobile">
+        <![CDATA[
+          from UserEntity u where u.mobile=:mobile  and u.memberStatus='1'
+        ]]>
+    </hql-query>
+
+    <hql-query name="user.findByAccoount">
+        <![CDATA[
+          from UserEntity u where u.loginname=:loginname and u.memberStatus='1'
+        ]]>
+    </hql-query>
+
+    <hql-query name="user.findBySn">
+        <![CDATA[
+          from UserEntity u where u.sn=:sn  and u.memberStatus='1'
+        ]]>
+    </hql-query>
+
+    <hql-query name="user.findByAccount">
+        <![CDATA[
+          from AppUser u where u.mobile=:mobile
+        ]]>
+    </hql-query>
+
+    <native-query name="user.updatePassword">
+        <![CDATA[
+           UPDATE connects_member_profile SET  password = :password WHERE id =:userId
+        ]]>
+    </native-query>
+</dynamic-query>
