@@ -1,6 +1,6 @@
 package com.fansz.event.consumer.support;
 
-import com.fansz.members.model.event.AsyncEventType;
+import com.fansz.event.type.AsyncEventType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 /**

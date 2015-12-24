@@ -1,5 +1,5 @@
 #!/bin/sh
-MAIN_CLASS="com.fansz.members.Main"
+MAIN_CLASS="com.fansz.service.Main"
   
 #  
 cd `dirname $0`/..  

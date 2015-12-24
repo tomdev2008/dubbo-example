@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="members-service-relations" owner="relations" organization="fansz"/>
+
+    <!-- 用rest协议在7001端口暴露服务 -->
+    <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>-->
+    <!--7002端口提供RPC服务-->
+    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"
+                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+
+    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5"
+                    threads="100"
+                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+
+    <!-- 使用redis注册中心暴露服务地址-->
+    <dubbo:registry address="${dubbo.registry.address}"/>
+
+    <dubbo:service interface="com.fansz.service.api.RelationShipApi" ref="relationShipProvider" validation="true"
+                   timeout="5000"
+                   connections="10000" version="0.0.1"/>
+
+</beans>

@@ -17,7 +17,7 @@
                         userId="fansz_dev"
                         password="fansz_dev"/>
 
-        <javaModelGenerator targetPackage="com.fansz.members.api.entity"
+        <javaModelGenerator targetPackage="com.fansz.service.api.entity"
                             targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
@@ -28,7 +28,7 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator targetPackage="com.fansz.members.api.repository"
+        <javaClientGenerator targetPackage="com.fansz.service.api.repository"
                              targetProject="src/main/java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>

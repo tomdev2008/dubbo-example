@@ -1,12 +1,11 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.members.model.event.AsyncEventType;
-import com.fansz.members.model.event.PublishPostEvent;
-import com.fansz.members.model.event.SmsEvent;
+import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.support.JedisCallback;
+import com.fansz.service.model.event.PublishPostEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

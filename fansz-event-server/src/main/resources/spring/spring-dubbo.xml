@@ -17,9 +17,9 @@
     <!--<dubbo:monitor protocol="registry"/>-->
 
     <!-- directly connect to provider to simulate the access to non-dubbo rest services -->
-    <!--<dubbo:reference id="userService2" interface="com.fansz.members.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
+    <!--<dubbo:reference id="userService2" interface="com.fansz.service.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
 
-    <dubbo:reference interface="com.fansz.members.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
+    <dubbo:reference interface="com.fansz.service.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
                      timeout="2000"
                      connections="100" protocol="dubbo"/>
 </beans>

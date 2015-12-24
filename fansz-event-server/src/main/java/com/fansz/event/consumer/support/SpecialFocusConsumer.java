@@ -1,14 +1,10 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.members.api.SpecialFocusApi;
-import com.fansz.members.model.event.AsyncEventType;
-import com.fansz.members.model.event.SmsEvent;
-import com.fansz.members.model.event.SpecialFocusEvent;
-import com.fansz.members.model.event.UnSpecialFocusEvent;
-import com.fansz.members.model.specialfocus.SpecialFocusParam;
+import com.fansz.event.type.AsyncEventType;
+import com.fansz.service.api.SpecialFocusApi;
+import com.fansz.service.model.event.SpecialFocusEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

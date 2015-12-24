@@ -1,3 +1,7 @@
+/fansz-service-relations/target
+/fansz-service-feeds/target
+/fansz-service-auth/target
+/fansz-access-layer/target
 /fansz-event-server/target
 target/*
 !.gitignore
