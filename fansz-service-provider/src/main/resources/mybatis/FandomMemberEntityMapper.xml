@@ -144,15 +144,14 @@
     <select id="getFandomMembers"
             resultMap="com.fansz.service.api.repository.UserRelationEntityMapper.contactInfoMap">
         SELECT p.*,b.relation_status
-        FROM  feeds_fandom f
-        LEFT JOIN  feeds_member_fandom m
-       <![CDATA[ on f.id = m.fandom_id and f.fandom_creator_sn <> m.member_sn]]>
+        FROM  feeds_member_fandom m
         INNER JOIN connects_member_profile  p
-        ON m.member_sn=p.sn
         LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=p.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
         WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
+        AND   m.member_sn=p.sn
         AND p.member_status='1'
+        ORDER BY m.join_time ASC
     </select>
 
 </mapper>
