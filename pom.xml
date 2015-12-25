@@ -19,6 +19,7 @@
         <module>fansz-service-relations</module>
         <module>fansz-service-auth</module>
         <module>fansz-service-feeds</module>
+        <module>fansz-newsfeeds-api</module>
     </modules>
     <repositories>
         <repository>
@@ -63,11 +64,6 @@
             <dependency>
                 <groupId>com.fansz</groupId>
                 <artifactId>commons-event</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>http-server</artifactId>
                 <version>${fansz.component.version}</version>
             </dependency>
             <dependency>

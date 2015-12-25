@@ -30,7 +30,7 @@ public interface UserRelationRepository extends IBaseDAO<UserRelationEntity> {
     @NamedQuery(queryId = "relation.findRelation", parameters = {"memberSn", "friendSn"})
     UserRelationEntity findRelation(String memberSn, String friendSn);
 
-    @NamedQuery(queryId = "relation.findFriends", parameters = {"myMemberSn"})
+    @NamedQuery(queryId = "relation.findFriends", parameters = {"page","myMemberSn"})
     QueryResult<FriendInfoResult> findFriends(Page page, @Param("myMemberSn") String userSn);
 
     @NamedQuery(queryId = "relation.findSpecialFriends", parameters = {"myMemberSn"})

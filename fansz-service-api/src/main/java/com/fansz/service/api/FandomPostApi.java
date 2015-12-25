@@ -20,8 +20,7 @@ import java.util.List;
 @Path("/posts")
 @Consumes(ContentType.APPLICATION_JSON_UTF_8)
 @Produces(ContentType.APPLICATION_JSON_UTF_8)
-public interface PostApi {
-
+public interface FandomPostApi {
     /**
      * 发帖子接口
      *

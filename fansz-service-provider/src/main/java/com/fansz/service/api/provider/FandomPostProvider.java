@@ -6,7 +6,7 @@ import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
-import com.fansz.service.api.PostApi;
+import com.fansz.service.api.FandomPostApi;
 import com.fansz.service.api.service.PostService;
 import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.model.event.PublishPostEvent;
@@ -24,7 +24,7 @@ import java.util.List;
  * Created by root on 15-11-3.
  */
 @Component("postProvider")
-public class PostProvider extends AbstractProvider implements PostApi {
+public class FandomPostProvider extends AbstractProvider implements FandomPostApi {
 
     @Autowired
     private PostService postService;

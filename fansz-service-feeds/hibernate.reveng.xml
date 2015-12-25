@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>     
+<!DOCTYPE hibernate-reverse-engineering              
+SYSTEM "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+<hibernate-reverse-engineering>
+	<!-- <table-filter match-schema="f_test" match-name=".*"/> -->
+	<!-- <schema-selection match-schema="f_test" match-table="t_app*" /> -->
+
+	<!-- <type-mapping>
+		<sql-type jdbc-type="VARCHAR" length="1" hibernate-type="yes_no" />
+		<sql-type jdbc-type="VARCHAR" length="21" not-null="false"
+			hibernate-type="cn.com.timekey.drugmonitor.po.type.RoleEnumType" />
+		<sql-type jdbc-type="VARCHAR" length="15" not-null="false"
+			hibernate-type="cn.com.timekey.drugmonitor.po.type.PrescriptionTypeEnumType" />
+	</type-mapping> -->
+	<table-filter match-name="BIN$.*" exclude="true" />
+
+	<table-filter match-catalog="fansz" match-name="log_member_op"/>
+
+<!-- 	<table name="user" catalog="cmm">
+		<primary-key>
+			<generator class="uuid.hex" />
+			<key-column name="ID" />
+		</primary-key>
+	</table> -->
+
+</hibernate-reverse-engineering>
