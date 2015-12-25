@@ -9,7 +9,7 @@ public interface SessionService {
 
     SessionInfoResult getSession(String accessToken);
 
-    void saveSession(String accessToken, String refreshToken, Long uid);
+    void saveSession(String accessToken, String refreshToken, Long id,String sn);
 
     void invalidateSession(String accessToken);
 }

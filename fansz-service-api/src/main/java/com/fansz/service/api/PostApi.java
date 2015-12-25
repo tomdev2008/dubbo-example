@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.extension.DubboxService;
 import com.fansz.service.model.post.*;
 
@@ -30,7 +31,7 @@ public interface PostApi {
     @POST
     @Path("/add")
     @DubboxService("publishPost")
-    CommonResult<PostInfoResult> addPost(AddPostParam addPostParam);
+    CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException;
 
     /**
      * 删除帖子接口
@@ -41,7 +42,7 @@ public interface PostApi {
     @POST
     @Path("/deletePost")
     @DubboxService("deletePost")
-    CommonResult<NullResult> removePost(RemovePostParam removePostrParam);
+    CommonResult<NullResult> removePost(RemovePostParam removePostrParam) throws ApplicationException;
 
     /**
      * 根据postId获取帖子信息接口
@@ -52,7 +53,7 @@ public interface PostApi {
     @POST
     @Path("/get")
     @DubboxService("getPost")
-    CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam);
+    CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
 
 
     /**
@@ -63,7 +64,7 @@ public interface PostApi {
     @POST
     @Path("/like")
     @DubboxService("votePost")
-    CommonResult<NullResult> addLike(AddLikeParam addLikeParam);
+    CommonResult<NullResult> addLike(AddLikeParam addLikeParam) throws ApplicationException;
 
     /**
      * 取消帖子点赞接口
@@ -74,7 +75,7 @@ public interface PostApi {
     @POST
     @Path("/deleteLike")
     @DubboxService("deleteVote")
-    CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam);
+    CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam) throws ApplicationException;
 
     /**
      * 查询POST的点赞信息
@@ -85,7 +86,7 @@ public interface PostApi {
     @POST
     @Path("/listLike")
     @DubboxService("listPostVoters")
-    CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam);
+    CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam) throws ApplicationException;
 
     /**
      * 获得所有好友的所有帖子接口
@@ -96,7 +97,7 @@ public interface PostApi {
     @POST
     @Path("/friends")
     @DubboxService("listMyNewsfeeds")
-    CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam);
+    CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) throws ApplicationException;
 
     /**
      * 获得我所关注的所有fandom的帖子列表
@@ -107,7 +108,7 @@ public interface PostApi {
     @POST
     @Path("/myFandoms")
     @DubboxService("listMyFandomsPost")
-    CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam);
+    CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam) throws ApplicationException;
 
 
     /**
@@ -119,7 +120,7 @@ public interface PostApi {
     @POST
     @Path("/searchPosts")
     @DubboxService("searchPosts")
-    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam);
+    CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam) throws ApplicationException;
 
     /**
      * 查询某人在某个fandom的所有帖子列表
@@ -130,7 +131,7 @@ public interface PostApi {
     @POST
     @Path("/memberPosts")
     @DubboxService("listPostInFandom")
-    CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam);
+    CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) throws ApplicationException;
 
 
     /**
@@ -142,7 +143,7 @@ public interface PostApi {
     @POST
     @Path("/fandom")
     @DubboxService("listFandomPosts")
-    CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param);
+    CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) throws ApplicationException;
 
 
     /**
@@ -154,7 +155,7 @@ public interface PostApi {
     @POST
     @Path("/memberPostsAll")
     @DubboxService("getMemberAllPosts")
-    CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam);
+    CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam) throws ApplicationException;
 
 
 }

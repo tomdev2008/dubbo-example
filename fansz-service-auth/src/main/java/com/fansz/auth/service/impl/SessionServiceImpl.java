@@ -1,6 +1,7 @@
 package com.fansz.auth.service.impl;
 
 import com.fansz.auth.service.SessionService;
+import com.fansz.pub.utils.CollectionTools;
 import com.fansz.service.constant.ErrorCode;
 import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.model.session.SessionInfoResult;
@@ -18,6 +19,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,7 +52,7 @@ public class SessionServiceImpl implements SessionService {
                 Map<String, String> sessionMap = jedis.hgetAll(SESSION_PREFIX + accessToken);
                 if (sessionMap != null && !sessionMap.isEmpty()) {
                     SessionInfoResult sessionModel = new SessionInfoResult();
-                    BeanTools.copyMapToObject(sessionMap, SessionInfoResult.class);
+                    BeanTools.copyMapToObject(sessionMap, sessionModel);
                     return sessionModel;
                 }
                 return null;
@@ -61,13 +63,14 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void saveSession(String accessToken, String refreshToken, Long uid) {
+    public void saveSession(String accessToken, String refreshToken, Long id,String sn) {
         final String sessionKey = SESSION_PREFIX + accessToken;
         final String refreshKey = REFRESH_TOKEN_PREFIX + refreshToken;
 
         final Map<String, String> session = new HashMap<>();
 
-        session.put("id", String.valueOf(uid));
+        session.put("id", String.valueOf(id));
+        session.put("sn",sn);
         session.put("accessToken", accessToken);
         session.put("refreshToken", refreshToken);
         session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));
@@ -103,8 +106,8 @@ public class SessionServiceImpl implements SessionService {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
                 final String refreshKey = REFRESH_TOKEN_PREFIX + refreshToken;
-                String uid = jedis.hget(refreshKey, "id");
-                if (!StringTools.isBlank(uid)) {
+                List<String> uidSn = jedis.hmget(refreshKey, "id","sn");
+                if (CollectionTools.isNullOrEmpty(uidSn)) {
                     throw new ApplicationException(ErrorCode.TOKEN_INVALID);
                 }
                 final String accessToken = applyNewToken();
@@ -112,7 +115,8 @@ public class SessionServiceImpl implements SessionService {
 
                 final Map<String, String> session = new HashMap<>();
 
-                session.put("id", String.valueOf(uid));
+                session.put("id", uidSn.get(0));
+                session.put("sn",uidSn.get(1));
                 session.put("accessToken", accessToken);
                 session.put("refreshToken", refreshToken);
                 session.put("lastAccessTime", String.valueOf(System.currentTimeMillis()));

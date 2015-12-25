@@ -146,7 +146,7 @@ public class AccountServiceImpl implements AccountService {
         result.setRefreshToken(refreshKey);
         result.setExpiresAt(-1);
 
-        sessionService.saveSession(accessKey, refreshKey, user.getId());
+        sessionService.saveSession(accessKey, refreshKey, user.getId(),user.getSn());
         return result;
     }
 

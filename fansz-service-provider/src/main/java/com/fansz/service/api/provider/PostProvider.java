@@ -8,6 +8,7 @@ import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.service.api.PostApi;
 import com.fansz.service.api.service.PostService;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.model.event.PublishPostEvent;
 import com.fansz.service.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -37,7 +38,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
-    public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) {
+    public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam)  throws ApplicationException {
         Long postId = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(postId);
@@ -56,13 +57,13 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param postParam 帖子id
      * @return resp 返回对象
      */
-    public CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam) {
+    public CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam)  throws ApplicationException{
         List<PostLikeInfoResult> result = postService.listPostVotes(postParam);
         return renderSuccess(result);
     }
 
     @Override
-    public CommonResult<NullResult> removePost(RemovePostParam removePostrParam) {
+    public CommonResult<NullResult> removePost(RemovePostParam removePostrParam)  throws ApplicationException{
         postService.removePost(removePostrParam);
         return renderSuccess(PRESENCE);
     }
@@ -73,7 +74,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) {
+    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam)  throws ApplicationException{
         PostInfoResult postInfoResult = postService.getPost(postParam);
         return renderSuccess(postInfoResult);
     }
@@ -86,7 +87,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonResult<NullResult> addLike(AddLikeParam addLikeParam) {
+    public CommonResult<NullResult> addLike(AddLikeParam addLikeParam)  throws ApplicationException{
         this.postService.addLike(addLikeParam);
         return renderSuccess();
     }
@@ -97,7 +98,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param deleteLikeParam
      * @return
      */
-    public CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam) {
+    public CommonResult<NullResult> deleteLike(DeleteLikeParam deleteLikeParam)  throws ApplicationException{
         this.postService.deleteLike(deleteLikeParam);
         return renderSuccess();
     }
@@ -108,7 +109,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam)  throws ApplicationException{
         PageBounds pageBounds = new PageBounds(getPostsParam.getPageNum(), getPostsParam.getPageSize());
         PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(dataResult);
@@ -120,14 +121,14 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @param getPostsParam 分页参数
      * @return resp 返回对象
      */
-    public CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam) {
+    public CommonPagedResult<PostInfoResult> listMyFandomPosts(GetPostsParam getPostsParam)  throws ApplicationException{
         PageBounds pageBounds = new PageBounds(getPostsParam.getPageNum(), getPostsParam.getPageSize());
         PageList<PostInfoResult> dataResult = postService.findPostsOfMyFandoms(getPostsParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(dataResult);
     }
 
     @Override
-    public CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
+    public CommonPagedResult<PostInfoResult> searchPosts(SearchPostParam searchPostParam)  throws ApplicationException{
         PageList<PostInfoResult> dataResult = postService.searchPosts(searchPostParam);
         return renderPagedSuccess(dataResult);
     }
@@ -139,7 +140,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam) {
+    public CommonPagedResult<PostInfoResult> getMemberPostsByFandom(GetMemberFandomPostsParam getMemberFandomPostsParam)  throws ApplicationException {
         PageList<PostInfoResult> postInfoResults = this.postService.getMemberFandomPosts(getMemberFandomPostsParam);
         return renderPagedSuccess(postInfoResults);
     }
@@ -151,7 +152,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) {
+    public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param)  throws ApplicationException{
         PageList<PostInfoResult> postInfoResults = this.postService.getFandomPosts(param);
         return renderPagedSuccess(postInfoResults);
     }
@@ -163,7 +164,7 @@ public class PostProvider extends AbstractProvider implements PostApi {
      * @return
      */
     @Override
-    public CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam) {
+    public CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam)  throws ApplicationException{
         PageList<PostInfoResult> PostInfoList = postService.getPostsAllByMember(postParam);
         return renderPagedSuccess(PostInfoList);
     }
