@@ -30,18 +30,18 @@ public interface UserRelationRepository extends IBaseDAO<UserRelationEntity> {
     @NamedQuery(queryId = "relation.findRelation", parameters = {"memberSn", "friendSn"})
     UserRelationEntity findRelation(String memberSn, String friendSn);
 
-    @NamedQuery(queryId = "relation.findFriends", parameters = {"myMemberSn"})
+    @NamedQuery(queryId = "relation.findFriends", parameters = {"page", "myMemberSn"})
     QueryResult<FriendInfoResult> findFriends(Page page, @Param("myMemberSn") String userSn);
 
-    @NamedQuery(queryId = "relation.findSpecialFriends", parameters = {"myMemberSn"})
+    @NamedQuery(queryId = "relation.findSpecialFriends", parameters = {"page", "myMemberSn"})
     QueryResult<FriendInfoResult> findSpecialFriends(Page page, String userSn);
 
     @NamedQuery(queryId = "relation.findRelationByMobiles", parameters = {"memberSn", "mobileList"})
     QueryResult<ContactInfoResult> findRelationByMobiles(Page page, String memberSn, List<String> mobileList);
 
-    @NamedQuery(queryId = "relation.listAddMeRequest", parameters = {"memberSn"})
+    @NamedQuery(queryId = "relation.listAddMeRequest", parameters = {"page", "memberSn"})
     QueryResult<FriendInfoResult> listAddMeRequest(Page page, String memberSn);
 
-    @NamedQuery(queryId = "relation.listMySendRequest", parameters = {"memberSn"})
+    @NamedQuery(queryId = "relation.listMySendRequest", parameters = {"page", "memberSn"})
     QueryResult<FriendInfoResult> listMySendRequest(Page page, String memberSn);
 }
