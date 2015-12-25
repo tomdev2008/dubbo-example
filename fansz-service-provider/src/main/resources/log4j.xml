@@ -25,4 +25,5 @@
         <level value="debug"/>
         <appender-ref ref="CONSOLE"/>
     </root>
+    <logger name="org.mybatis">debug</logger>
 </log4j:configuration>

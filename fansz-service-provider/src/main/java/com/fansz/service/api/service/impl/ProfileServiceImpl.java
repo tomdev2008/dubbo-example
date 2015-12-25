@@ -62,6 +62,7 @@ public class ProfileServiceImpl implements ProfileService {
         }
 
         UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
+        user.setSn(modifyProfilePara.getCurrentSn());
         user.setProfileUpdatetime(new Date());
         int updated = userMapper.updateByUidSelective(user);
         if (updated != 1) {
