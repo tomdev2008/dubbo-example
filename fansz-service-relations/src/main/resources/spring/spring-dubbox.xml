@@ -13,18 +13,12 @@
     <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>-->
     <!--7002端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"
-                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
-
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5"
-                    threads="100"
-                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
 
     <!-- 使用redis注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <dubbo:service interface="com.fansz.service.api.RelationShipApi" ref="relationShipProvider" validation="true"
-                   timeout="5000"
-                   connections="10000" version="0.0.1"/>
+                   timeout="5000" connections="500" version="0.0.1" group="${provider.group}"/>
 
 </beans>

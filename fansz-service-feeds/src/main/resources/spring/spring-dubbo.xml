@@ -7,24 +7,19 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
+    <dubbo:application name="members-service-feeds" owner="feeds" organization="fansz"/>
 
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"
-                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
-
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5"
-                    threads="100"
-                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.service.api.AccountApi" ref="accountProvider" validation="true" timeout="5000"
-                   connections="10000" version="0.0.1" cluster="failfast" loadbalance="roundrobin"/>
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.service.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
-                   connections="10000" version="0.0.1" cluster="failsafe" retries="2" loadbalance="roundrobin"/>
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
 </beans>

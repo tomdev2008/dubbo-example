@@ -9,51 +9,34 @@
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
 
-    <!-- 用rest协议在7001端口暴露服务 -->
-    <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>-->
-    <!--7002端口提供RPC服务-->
+    <!--7003端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4" extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
 
-    <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
-
-    <!-- use tomcat server
-    <dubbo:protocol name="rest" port="8888" threads="500" contextpath="services" server="tomcat" accepts="500"
-                    extension="com.alibaba.dubbo.demo.extension.TraceInterceptor,
-                    com.alibaba.dubbo.demo.extension.TraceFilter,
-                    com.alibaba.dubbo.demo.extension.ClientTraceFilter,
-                    com.alibaba.dubbo.demo.extension.DynamicTraceBinding,
-                    com.alibaba.dubbo.demo.extension.CustomExceptionMapper,
-                    com.alibaba.dubbo.rpc.protocol.rest.support.LoggingFilter"/>
-     -->
-
-    <!-- 使用redis注册中心暴露服务地址
-    <dubbo:registry address="redis://10.0.0.8:6379?backup=edis://10.0.0.8:6380"/>-->
+    <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
 
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.fansz.service.api.CommentApi" ref="commentProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.CommentApi" ref="commentProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.FandomApi" ref="fandomProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.FandomApi" ref="fandomProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.PostApi" ref="postProvider" validation="true" timeout="2000"
-                   connections="100" />
+    <dubbo:service interface="com.fansz.service.api.PostApi" ref="postProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.ProfileApi" ref="profileProvider" validation="true" timeout="2000"
-                   connections="100"/>
-    <dubbo:service interface="com.fansz.service.api.RelationShipApi" ref="relationShipProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.ProfileApi" ref="profileProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.SeedingSpotApi" ref="seedingSpotProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.SeedingSpotApi" ref="seedingSpotProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.SpecialFocusApi" ref="specialFocusProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.SpecialFocusApi" ref="specialFocusProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
-    <dubbo:service interface="com.fansz.service.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="2000"
-                   connections="100"/>
+    <dubbo:service interface="com.fansz.service.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 
 </beans>
