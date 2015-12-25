@@ -2,6 +2,7 @@ package com.fansz.event.consumer;
 
 import com.fansz.event.consumer.support.IEventConsumer;
 import com.fansz.event.exception.SmsConsumerException;
+import com.fansz.event.type.AsyncEventType;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -35,12 +38,17 @@ public class KafkaConsumerRunner extends Thread {
     private void init() {
         Map<String, IEventConsumer> m = applicationContext.getBeansOfType(IEventConsumer.class);
         for (IEventConsumer consumer : m.values()) {
-            CONSUMER_MAP.put(consumer.getEventType().getName(), consumer);
+            CONSUMER_MAP.put(consumer.getEventType().getCode(), consumer);
         }
     }
 
     public void run() {
-        consumer.subscribe(Arrays.asList("event"));
+        List<String> eventList=new ArrayList<>();
+
+        for(AsyncEventType aet:AsyncEventType.values()){
+            eventList.add(aet.getName());
+        }
+        consumer.subscribe(eventList);
         try {
             while (!closed.get()) {
                 ConsumerRecords<String, String> records = consumer.poll(2000);

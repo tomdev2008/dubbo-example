@@ -15,10 +15,10 @@
     <!--<dubbo:monitor protocol="registry"/>-->
 
     <dubbo:reference interface="com.fansz.service.api.AccountApi" id="accountProvider" validation="true" timeout="5000"
-                     connections="100" protocol="dubbo" client="netty4" version="0.0.1"  retries="0"/>
+                     connections="100" protocol="dubbo" client="netty4" version="0.0.1"  retries="0" group="allan"/>
 
     <dubbo:reference interface="com.fansz.service.api.VerifyCodeApi" id="verifyCodeProvider" validation="true" timeout="5000"
-                     connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="0"/>
+                     connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="allan"/>
 
     <dubbo:reference interface="com.fansz.service.api.CommentApi" id="commentProvider" validation="true" timeout="5000"
                      connections="100" protocol="dubbo" client="netty4" retries="0"/>

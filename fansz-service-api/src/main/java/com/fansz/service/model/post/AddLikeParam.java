@@ -12,10 +12,10 @@ import javax.validation.constraints.NotNull;
  */
 public class AddLikeParam implements AccessTokenAware {
 
+    @NotBlank
     @JsonProperty("access_token")
     private String accessToken;
 
-    @NotBlank
     @JsonProperty("member_sn")
     private String currentSn;
 

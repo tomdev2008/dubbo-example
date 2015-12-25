@@ -16,7 +16,7 @@ public class Main {
         KafkaConsumerRunner kafkaConsumerRunner = null;
         ClassPathXmlApplicationContext ac = null;
         try {
-            ac= new ClassPathXmlApplicationContext("applicationContext-sms.xml");
+            ac= new ClassPathXmlApplicationContext("applicationContext-event.xml");
             ac.start();
             kafkaConsumerRunner = (KafkaConsumerRunner) ac.getBean("kafkaConsumerRunner");
             kafkaConsumerRunner.start();

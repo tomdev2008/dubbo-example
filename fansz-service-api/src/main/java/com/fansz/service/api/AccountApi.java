@@ -3,6 +3,7 @@ package com.fansz.service.api;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.extension.DubboxService;
 import com.fansz.service.model.account.*;
 import com.fansz.service.model.session.SessionInfoResult;
@@ -39,7 +40,7 @@ public interface AccountApi {
     @POST
     @Path("/login")
     @DubboxService("login")
-    CommonResult<LoginResult> login(LoginParam loginParam);
+    CommonResult<LoginResult> login(LoginParam loginParam) throws ApplicationException;
 
     /**
      * 重置密码接口

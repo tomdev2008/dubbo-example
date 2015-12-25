@@ -17,7 +17,7 @@ public interface UserRepository extends IBaseDAO<UserEntity> {
     @NamedQuery(queryId = "user.findBySn",parameters = "sn")
     UserEntity findBySn(String sn);
 
-    @NamedQuery(queryId = "user.findByAccount",parameters = "loginname")
+    @NamedQuery(queryId = "user.findByAccoount",parameters = "loginname")
     UserEntity findByAccount(String loginname);
 
     @NamedExec(execId = "user.updatePassword", parameters = {"userId", "password"})

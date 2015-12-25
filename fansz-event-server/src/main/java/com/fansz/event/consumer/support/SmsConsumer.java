@@ -17,13 +17,13 @@ import org.springframework.stereotype.Component;
 public class SmsConsumer implements IEventConsumer {
     private Logger logger = LoggerFactory.getLogger(SmsConsumer.class);
 
-    @Value("${event.url}")
+    @Value("${sms.url}")
     private String url;
 
-    @Value("${event.account}")
+    @Value("${sms.account}")
     private String account;
 
-    @Value("${event.pwd}")
+    @Value("${sms.pwd}")
     private String pswd;
 
     @Override

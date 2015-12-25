@@ -7,6 +7,7 @@ import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.service.api.AccountApi;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.model.account.*;
 import com.fansz.service.model.session.SessionInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +67,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @return
      */
     @Override
-    public CommonResult<LoginResult> login(LoginParam loginParam) {
+    public CommonResult<LoginResult> login(LoginParam loginParam) throws ApplicationException {
         LoginResult loginResult = accountService.login(loginParam);
         return renderSuccess(loginResult);
     }

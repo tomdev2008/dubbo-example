@@ -108,6 +108,7 @@
         <!-- 配置拦截 -->
         <tx:attributes>
             <tx:method name="get*" propagation="SUPPORTS"/>
+            <tx:method name="login" propagation="SUPPORTS"/>
             <tx:method name="find*" propagation="SUPPORTS"/>
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
