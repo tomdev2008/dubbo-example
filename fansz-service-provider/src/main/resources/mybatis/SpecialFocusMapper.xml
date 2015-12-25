@@ -32,7 +32,7 @@
             connects_special_scrolling_bar b
         LEFT JOIN connects_member_profile p ON b.special_member_sn = p.sn
         LEFT JOIN feeds_fandom f ON b.special_fandom_id = f.id
-        WHERE b.member_sn = #{memberSn,jdbcType=VARCHAR}
+        WHERE b.member_sn = #{currentSn,jdbcType=VARCHAR}
         ORDER BY b.postion_tag ASC
     </select>
 
@@ -61,7 +61,7 @@
             <if test="specialFandomId != null">
                 #{specialFandomId,jdbcType=BIGINT},
             </if>
-            ifnull(MAX(postion_tag),0)+1 as new_postion_tag FROM connects_special_scrolling_bar WHERE member_sn = #{memberSn,jdbcType=VARCHAR}
+            ifnull(MAX(postion_tag),0)+1 as new_postion_tag FROM connects_special_scrolling_bar WHERE member_sn = #{currentSn,jdbcType=VARCHAR}
         </trim>
     </insert>
 
@@ -69,7 +69,7 @@
             UPDATE connects_special_scrolling_bar
             SET postion_tag = #{postingTag,jdbcType=BIGINT}
             WHERE
-            member_sn = #{memberSn,jdbcType=VARCHAR}
+            member_sn = #{currentSn,jdbcType=VARCHAR}
             <if test="specialMemberSn != null">
                 AND special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
             </if>
@@ -81,7 +81,7 @@
     <delete id="delSpecialFocusInfo" parameterType="java.lang.Long">
         DELETE FROM connects_special_scrolling_bar
         WHERE
-        member_sn = #{memberSn,jdbcType=VARCHAR}
+        member_sn = #{currentSn,jdbcType=VARCHAR}
         <if test="specialMemberSn != null">
             AND special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
         </if>
@@ -96,7 +96,7 @@
         FROM
             connects_special_scrolling_bar
         WHERE
-            member_sn = #{memberSn,jdbcType=VARCHAR}
+            member_sn = #{currentSn,jdbcType=VARCHAR}
         <if test="specialMemberSn != null">
             AND  special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
         </if>
