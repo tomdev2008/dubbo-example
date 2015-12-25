@@ -21,6 +21,11 @@
         ]]>
     </hql-query>
 
+    <hql-query name="user.findByAccount">
+        <![CDATA[
+          from AppUser u where u.mobile=:mobile
+        ]]>
+    </hql-query>
 
     <native-query name="user.updatePassword">
         <![CDATA[

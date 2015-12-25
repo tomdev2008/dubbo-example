@@ -1,4 +1,4 @@
-package com.fansz.service.consumer.utils;
+package com.fansz.access.utils;
 
 /**
  * 常量类

@@ -54,7 +54,7 @@ public class RelationShipServiceImpl implements RelationShipService {
     public boolean addFriendRequest(AddFriendParam addFriendParam) {
         UserRelationEntity oldRelation = userRelationRepository.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_ADD.getCode())) {
-            throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND, "Is friend already");
+            throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
         }
         if (oldRelation == null) {
             UserRelationEntity userRelation = BeanTools.copyAs(addFriendParam, UserRelationEntity.class);
@@ -79,13 +79,13 @@ public class RelationShipServiceImpl implements RelationShipService {
         specialFocusParam.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
         if (add) {//添加特殊好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode())) {
-                throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD, "Can't be special friend");
+                throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
             eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(specialFocusParam));
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
-                throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL, "Can't remove special friend");
+                throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
             oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
             eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new UnSpecialFocusEvent(specialFocusParam));
@@ -99,7 +99,7 @@ public class RelationShipServiceImpl implements RelationShipService {
     public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
         UserRelationEntity oldRelation = userRelationRepository.findRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
         if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.BE_ADDED.getCode())) {
-            throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS, "Can't (dis)agree friend");
+            throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
         }
         userRelationRepository.updateRelationStatus(oldRelation.getId(),RelationShip.FRIEND.getCode());
 

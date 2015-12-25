@@ -22,6 +22,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
     private SessionService sessionService;
 
     /**

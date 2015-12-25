@@ -59,19 +59,19 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
      * @param mobile 手机号码
      */
     @Override
-    public boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
+    public ErrorCode createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
         UserEntity user = userRepository.findByMobile(mobile);
         String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用
-                if (user !=null) {
-                    throw new ApplicationException(ErrorCode.MOBILE_IS_USED, "Mobile is used");
+                if (user != null) {
+                    return ErrorCode.MOBILE_IS_USED;
                 }
                 template = smsProperties.getProperty("template.verify.register");
                 break;
             case RESET://重置密码时,要求号码已经存在
                 if (user == null) {
-                    throw new ApplicationException(ErrorCode.MOBILE_NOT_FOUND, "Mobile does't belong to you");
+                    return ErrorCode.MOBILE_NOT_FOUND;
 
                 }
                 template = smsProperties.getProperty("template.verify.reset");
@@ -82,7 +82,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     }
 
 
-    private boolean createVerifyCode(final String mobile, final String key, final String template) {
+    private ErrorCode createVerifyCode(final String mobile, final String key, final String template) {
         final Map<String, String> verifyMap = new HashMap<>();
         verifyMap.put(key + ".verifyCode", verifyCodeGenerator.getIdentifyCode());
 
@@ -90,27 +90,29 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
         long expiredTime = currentTime + validPeriod * 60 * 1000;
         verifyMap.put(key + ".createTime", currentTime + "");
         verifyMap.put(key + ".expiredTime", expiredTime + "");
-        jedisTemplate.execute(new JedisCallback<Boolean>() {
+        ErrorCode result = jedisTemplate.execute(new JedisCallback<ErrorCode>() {
             @Override
-            public Boolean doInRedis(Jedis jedis) throws Exception {
+            public ErrorCode doInRedis(Jedis jedis) throws Exception {
                 String createTime = jedis.hget(VERIFY_KEY + mobile, key + ".createTime");
 
                 if (!isAllowed(createTime)) {
-                    throw new ApplicationException(ErrorCode.INTERVAL_IS_TOO_SHORT, "Interval is too short");
+                    return ErrorCode.INTERVAL_IS_TOO_SHORT;
                 }
 
-                jedis.hmset(ErrorCode.VERIFY_KEY + mobile, verifyMap);
-                return true;
+                jedis.hmset(VERIFY_KEY + mobile, verifyMap);
+                return ErrorCode.SUCCESS;
             }
         });
-
+        if (!ErrorCode.SUCCESS.equals(result)) {
+            return result;
+        }
 
         //通过队列,异步方式发送短信
         String messgeContent = String.format(template, verifyMap.get(key + ".verifyCode"), validPeriod);
         //Send Message
         SmsEvent sms = new SmsEvent(messgeContent, mobile);
         eventProducer.produce(AsyncEventType.SEND_SMS, sms);
-        return true;
+        return ErrorCode.SUCCESS;
     }
 
     private boolean isAllowed(String createTime) {

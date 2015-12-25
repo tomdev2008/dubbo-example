@@ -1,5 +1,5 @@
 #!/bin/sh
-MAIN_CLASS="com.fansz.service.consumer.Main"
+MAIN_CLASS="com.fansz.auth.AuthStarter"
   
 #  
 cd `dirname $0`/..  

@@ -47,17 +47,17 @@ public class AccountServiceImpl implements AccountService {
         VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
         if (verifyCode == null || !verifyCode.getVerifyCode().equals(registerParam.getVerifyCode())) {
-            throw new ApplicationException(ErrorCode.VERIFY_ERROR, "验证码错误");
+            throw new ApplicationException(ErrorCode.VERIFY_ERROR.getCode(), ErrorCode.VERIFY_ERROR.getName());
         }
         if (!verifyCodeService.isValid(verifyCode)) {
-            throw new ApplicationException(ErrorCode.VERIFY_ERROR, "验证码错误");
+            throw new ApplicationException(ErrorCode.VERIFY_ERROR.getCode(), ErrorCode.VERIFY_ERROR.getName());
         }
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
         UserEntity existedUser = userRepository.findByAccount(registerParam.getLoginname());
         if (existedUser != null) {
-            throw new ApplicationException(ErrorCode.USER_EXISTS, "User exists");
+            throw new ApplicationException(ErrorCode.USER_EXISTS.getCode(), ErrorCode.USER_EXISTS.getName());
         }
         //Create User
         String encodedPwd = SecurityTools.encode(registerParam.getPassword());
@@ -88,10 +88,10 @@ public class AccountServiceImpl implements AccountService {
         //Get User Info
         UserEntity user = userRepository.findBySn(changePasswordParam.getCurrentSn());
         if (user == null) {
-            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "User does't exist");
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
         if (!user.getPassword().equals(encodedPwd)) {
-            throw new ApplicationException(ErrorCode.PASSWORD_WRONG, "Wrong password");
+            throw new ApplicationException(ErrorCode.PASSWORD_WRONG);
         }
         //Update New Password
         String encodedNewPwd = SecurityTools.encode(changePasswordParam.getNewPassword());
@@ -107,17 +107,17 @@ public class AccountServiceImpl implements AccountService {
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
         UserEntity user = userRepository.findByMobile(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
-            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "User not exist");
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
 
         //验证码校验
         VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
 
         if (verifyCode == null || !verifyCode.getVerifyCode().equals(resetPasswordParam.getVerifyCode())) {
-            throw new ApplicationException(ErrorCode.VERIFY_ERROR, "Verify code error");
+            throw new ApplicationException(ErrorCode.VERIFY_ERROR);
         }
         if (!verifyCodeService.isValid(verifyCode)) {
-            throw new ApplicationException(ErrorCode.VERIFY_ERROR, "Verify code error");
+            throw new ApplicationException(ErrorCode.VERIFY_ERROR);
         }
         //删除验证码
         verifyCodeService.removeVerifyCode(resetPasswordParam.getMobile(), VerifyCodeType.RESET);
@@ -131,12 +131,12 @@ public class AccountServiceImpl implements AccountService {
     public LoginResult login(LoginParam loginParam) {
         UserEntity user = userRepository.findByAccount(loginParam.getLoginname());
         if (user == null) {
-            throw new ApplicationException(ErrorCode.USER_NOT_FOUND, "User not exist");
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
         String pswdInDb = user.getPassword();
         String encodedPswd = SecurityTools.encode(loginParam.getPassword());
         if (!pswdInDb.equals(encodedPswd)) {
-            throw new ApplicationException(ErrorCode.PASSWORD_WRONG, "Password is wrong");
+            throw new ApplicationException(ErrorCode.PASSWORD_WRONG);
         }
 
         String accessKey = UUIDTools.generate();

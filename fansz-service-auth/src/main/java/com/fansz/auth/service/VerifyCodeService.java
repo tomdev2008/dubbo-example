@@ -3,6 +3,7 @@ package com.fansz.auth.service;
 
 import com.fansz.auth.model.VerifyCodeModel;
 import com.fansz.auth.model.VerifyCodeType;
+import com.fansz.service.constant.ErrorCode;
 
 /**
  * Created by allan on 15/11/26.
@@ -14,7 +15,7 @@ public interface VerifyCodeService {
      * @param mobile         手机号码
      * @param verifyCodeType 验证码类型
      */
-    boolean createVerifyCode(String mobile, VerifyCodeType verifyCodeType);
+    ErrorCode createVerifyCode(String mobile, VerifyCodeType verifyCodeType);
 
     /**
      * 查询验证码

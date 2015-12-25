@@ -120,6 +120,10 @@
             <groupId>com.fansz</groupId>
             <artifactId>common-utils</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>http-server</artifactId>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

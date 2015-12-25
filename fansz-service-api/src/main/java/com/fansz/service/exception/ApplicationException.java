@@ -1,5 +1,7 @@
 package com.fansz.service.exception;
 
+import com.fansz.service.constant.ErrorCode;
+
 /**
  * Created by allan on 15/11/27.
  */
@@ -16,6 +18,10 @@ public class ApplicationException extends RuntimeException {
         this.code = code;
     }
 
+    public ApplicationException(ErrorCode errorCode) {
+        super(errorCode.getName());
+        this.code = errorCode.getCode();
+    }
     public ApplicationException(String message, Throwable cause) {
         super(message, cause);
     }

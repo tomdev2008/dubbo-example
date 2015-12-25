@@ -10,7 +10,8 @@
     <dubbo:application name="members-service-provider" owner="members" organization="fansz"/>
 
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
+                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"
+                    extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>
 
     <dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5"
                     threads="100"
@@ -21,9 +22,9 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.service.api.AccountApi" ref="accountProvider" validation="true" timeout="5000"
-                   connections="10000" version="0.0.1" />
+                   connections="10000" version="0.0.1" cluster="failfast" loadbalance="roundrobin"/>
 
     <dubbo:service interface="com.fansz.service.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
-                   connections="10000" version="0.0.1"  retries="2"/>
+                   connections="10000" version="0.0.1" cluster="failsafe" retries="2" loadbalance="roundrobin"/>
 
 </beans>

@@ -1,10 +1,14 @@
-package com.fansz.service.consumer.rpc;
+package com.fansz.access.rpc;
 
+import com.alibaba.dubbo.rpc.RpcException;
 import com.fansz.common.provider.model.AccessTokenAware;
+import com.fansz.access.utils.JsonHelper;
+import com.fansz.access.utils.ResponseUtils;
+import com.fansz.common.provider.model.CommonResult;
+import com.fansz.common.provider.model.NullResult;
 import com.fansz.service.api.AccountApi;
-import com.fansz.service.consumer.utils.ConsumerConstants;
-import com.fansz.service.consumer.utils.JsonHelper;
-import com.fansz.service.consumer.utils.ResponseUtils;
+import com.fansz.access.utils.ConsumerConstants;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.extension.DubboxService;
 import com.fansz.service.model.session.SessionInfoResult;
 import com.fansz.pub.utils.StringTools;
@@ -17,6 +21,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import javax.ws.rs.Path;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -88,12 +94,25 @@ public class DynaDubboInvoker implements RpcInvoker {
             Map<String, Object> req = reqArray.get(i);
             String method = (String) req.get("method");
             Map<String, Object> params = (Map<String, Object>) req.get("params");
-            String response = "";
+            String response = ResponseUtils.renderAppError();
             try {
                 response = invokeRpc(method, params);
-            } catch (Exception e) {
-                logger.error("调用RPC服务出错!", e);
-                response = ResponseUtils.renderAppError();
+            }
+            catch (Exception e) {
+                if (e.getCause() != null && e.getCause() instanceof ApplicationException) {
+                    logger.error("调用时逻辑错误,抛出异常!", e);
+                    ApplicationException ae = (ApplicationException) e.getCause();
+                    response = ResponseUtils.renderLogicError(ae.getCode(), ae.getMessage());
+                } else if(e.getCause() != null && e.getCause() instanceof RpcException){
+                    RpcException re=(RpcException)e.getCause();
+                    if(re!=null&&re.getCause() instanceof  ValidationException) {
+                        response = ResponseUtils.renderParamError();
+                    }
+                }
+                else {
+                    logger.error("调用RPC服务出错!", e);
+                    response = ResponseUtils.renderAppError();
+                }
             }
             String finalString = "{\"method\":\"" + method + "\"," + response.substring(1);
             responseList.add(finalString);

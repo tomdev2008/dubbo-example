@@ -1,4 +1,4 @@
-package com.fansz.service.consumer.utils;
+package com.fansz.access.utils;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;

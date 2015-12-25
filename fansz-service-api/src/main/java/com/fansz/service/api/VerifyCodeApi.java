@@ -3,6 +3,7 @@ package com.fansz.service.api;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
+import com.fansz.service.exception.ApplicationException;
 import com.fansz.service.extension.DubboxService;
 import com.fansz.service.model.verifycode.VerifyCodeParam;
 

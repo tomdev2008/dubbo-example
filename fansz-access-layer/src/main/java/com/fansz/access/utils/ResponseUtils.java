@@ -1,4 +1,4 @@
-package com.fansz.service.consumer.utils;
+package com.fansz.access.utils;
 
 /**
  * Created by allan on 15/12/15.
@@ -16,5 +16,11 @@ public final class ResponseUtils {
 
     public static String renderAppError() {
         return String.format(ERROR, "10001", "System error");
+    }
+    public static String renderParamError() {
+        return String.format(ERROR, "10008", "Parameter is wrong");
+    }
+    public static String renderLogicError(String errorCode,String message) {
+        return String.format(ERROR, errorCode, message);
     }
 }

@@ -1,4 +1,4 @@
-package com.fansz.service.consumer.rpc;
+package com.fansz.access.rpc;
 
 /**
  * Created by allan on 15/12/5.

@@ -105,7 +105,7 @@ public class SessionServiceImpl implements SessionService {
                 final String refreshKey = REFRESH_TOKEN_PREFIX + refreshToken;
                 String uid = jedis.hget(refreshKey, "id");
                 if (!StringTools.isBlank(uid)) {
-                    throw new ApplicationException(ErrorCode.TOKEN_INVALID, "Token invalid");
+                    throw new ApplicationException(ErrorCode.TOKEN_INVALID);
                 }
                 final String accessToken = applyNewToken();
                 final String sessionKey = SESSION_PREFIX + accessToken;
