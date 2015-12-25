@@ -9,8 +9,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 /**
  * 短消息发送线程启动入口
  */
-public class Main {
-    private final static Logger logger = LoggerFactory.getLogger(Main.class);
+public class EventStarter {
+    private final static Logger logger = LoggerFactory.getLogger(EventStarter.class);
 
     public static void main(String[] args) {
         KafkaConsumerRunner kafkaConsumerRunner = null;

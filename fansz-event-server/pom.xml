@@ -127,19 +127,23 @@
                                     <tasks>
                                         <echo
                                                 message="********************** copy resources to classpath*************************"/>
-                                        <echo
-                                                message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/sms.properties"
                                                  value="file:${application.root}/conf/sms.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/redis.properties"
                                                  value="file:${application.root}/conf/redis.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/kafka.properties"
                                                  value="file:${application.root}/conf/kafka.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
                                     </tasks>
                                 </configuration>
@@ -171,19 +175,23 @@
                                     <tasks>
                                         <echo
                                                 message="********************** copy resources to classpath*************************"/>
-                                        <echo
-                                                message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/sms.properties"
                                                  value="file:${application.root}/conf/sms.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/redis.properties"
                                                  value="file:${application.root}/conf/redis.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-sms.xml"
+                                        <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/kafka.properties"
                                                  value="file:${application.root}/conf/kafka.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
                                     </tasks>
                                 </configuration>

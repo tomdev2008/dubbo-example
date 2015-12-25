@@ -1,5 +1,5 @@
 #!/bin/sh
-MAIN_CLASS="com.fansz.event.Main"
+MAIN_CLASS="com.fansz.event.EventStarter"
   
 #  
 cd `dirname $0`/..  
@@ -18,7 +18,7 @@ JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
   
 JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"  
 JAVA_OPTS="$JAVA_OPTS -Xloggc:$BASE_DIR/logs/gc.log"
-SMS_PID="$BASE_DIR/logs/sms-server.pid"
+EVENT_PID="$BASE_DIR/logs/event-server.pid"
 
 if [ ! -f "$JAVA_HOME/bin/java" ]; then  
   echo "please set JAVA_HOME"  
@@ -26,16 +26,16 @@ if [ ! -f "$JAVA_HOME/bin/java" ]; then
 fi  
   
 LOG_PATH="$BASE_DIR/logs" 
-SMS_OUT="$LOG_PATH/sms.out"
+EVENT_OUT="$LOG_PATH/event-server.out"
   
 if [ ! -d "$LOG_PATH" ]; then                                                                                                                                                   
     mkdir $LOG_PATH  
 fi  
 
 #star sms server
-nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$SMS_OUT" 2>&1 &
+nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$EVENT_OUT" 2>&1 &
 
-echo $! > "$SMS_PID"
+echo $! > "$EVENT_PID"
 
 
 
