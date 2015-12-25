@@ -39,7 +39,7 @@
     <insert id="addSpecialFocusInfo" parameterType="com.fansz.service.model.specialfocus.SpecialFocusParam">
         INSERT INTO  connects_special_scrolling_bar
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="memberSn != null">
+            <if test="currentSn != null">
                 member_sn,
             </if>
             <if test="specialMemberSn != null">
@@ -52,8 +52,8 @@
         </trim>
         <trim  suffixOverrides=",">
             SELECT
-            <if test="memberSn != null">
-                #{memberSn,jdbcType=VARCHAR},
+            <if test="currentSn != null">
+                #{currentSn,jdbcType=VARCHAR},
             </if>
             <if test="specialMemberSn != null">
                  #{specialMemberSn,jdbcType=VARCHAR},
