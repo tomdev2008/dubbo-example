@@ -292,7 +292,7 @@
                 FROM
                     feeds_member_post_like l
                 WHERE
-                    l.member_sn = #{memberSn,jdbcType=VARCHAR}
+                    l.member_sn = #{currentSn,jdbcType=VARCHAR}
                     and l.post_id=p.id
             ) liked,
             p.comment_count comments,

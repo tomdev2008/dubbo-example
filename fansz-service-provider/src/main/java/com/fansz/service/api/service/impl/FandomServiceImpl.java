@@ -87,6 +87,7 @@ public class FandomServiceImpl implements FandomService {
     @Override
     public boolean exitFandom(ExitFandomParam joinFandomParam) {
         FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
+        queryParam.setMemberSn(joinFandomParam.getCurrentSn());
         FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
         if (exist == null) {
             throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
