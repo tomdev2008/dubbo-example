@@ -3,7 +3,7 @@ package com.fansz.auth.service;
 
 import com.fansz.auth.model.VerifyCodeModel;
 import com.fansz.auth.model.VerifyCodeType;
-import com.fansz.service.constant.ErrorCode;
+import com.fansz.common.provider.constant.ErrorCode;
 
 /**
  * Created by allan on 15/11/26.

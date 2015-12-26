@@ -18,7 +18,7 @@
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
         <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
     </resultMap>
-    <resultMap id="userInfoResultMap" type="com.fansz.service.model.profile.UserInfoResult">
+    <resultMap id="userInfoResultMap" type="com.fansz.fandom.model.profile.UserInfoResult">
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>
@@ -31,7 +31,7 @@
         <result column="relationship" jdbcType="VARCHAR" property="relationship"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
     </resultMap>
-    <resultMap id="friendInfoResultMap" type="com.fansz.service.model.relationship.FriendInfoResult">
+    <resultMap id="friendInfoResultMap" type="com.fansz.fandom.model.relationship.FriendInfoResult">
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="email" jdbcType="VARCHAR" property="email"/>

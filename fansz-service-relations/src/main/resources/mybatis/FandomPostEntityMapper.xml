@@ -12,18 +12,8 @@
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <resultMap id="WholeResultMap" type="com.fansz.service.api.model.FandomPostWholeEntity">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="member_sn" property="memberSn" jdbcType="VARCHAR"/>
-        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
-        <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
-        <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
-        <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
-        <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
-        <result column="likeCount" property="likeCount" jdbcType="BIGINT"/>
-    </resultMap>
 
-    <resultMap id="postInfoResultMap" type="com.fansz.service.model.post.PostInfoResult">
+    <resultMap id="postInfoResultMap" type="com.fansz.fandom.model.post.PostInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
@@ -32,9 +22,9 @@
         <result column="liked" property="liked" jdbcType="VARCHAR"/>
         <result column="likes" property="likes" jdbcType="BIGINT"/>
         <result column="comments" property="comments" jdbcType="BIGINT"/>
-        <association property="userInfoResult" javaType="com.fansz.service.model.profile.UserInfoResult"
+        <association property="userInfoResult" javaType="com.fansz.fandom.model.profile.UserInfoResult"
                      resultMap="com.fansz.service.api.repository.UserMapper.userInfoResultMap" columnPrefix="ui_"/>
-        <association property="fandomInfoResult" javaType="com.fansz.service.model.fandom.FandomInfoResult"
+        <association property="fandomInfoResult" javaType="com.fansz.fandom.model.fandom.FandomInfoResult"
                      resultMap="com.fansz.service.api.repository.FandomMapper.fandomAllInfoResultMap" columnPrefix="fi_"/>
     </resultMap>
 
@@ -47,17 +37,6 @@
         <include refid="Base_Column_List"/>
         from feeds_member_post_fandom
         where id = #{id,jdbcType=BIGINT}
-    </select>
-
-    <select id="selectNewByFandomId" resultMap="WholeResultMap" parameterType="java.lang.Long">
-
-        select
-        <include refid="Base_Column_List"/>, likeCount
-        from feeds_member_post_fandom post,
-        (select count(1) likeCount, post_id from feeds_member_post_like group by post_id) post_count
-        where post.id = post_count.post_id
-        and post.fandom_id = #{id,jdbcType=BIGINT}
-        order by post.post_time DESC
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
@@ -278,7 +257,7 @@
         or f.post_content LIKE concat('%',#{searchVal},'%')
     </select>
 
-    <select id="getPost" parameterType="com.fansz.service.model.post.PostParam" resultMap="postInfoResultMap">
+    <select id="getPost" parameterType="com.fansz.fandom.model.post.PostParam" resultMap="postInfoResultMap">
         SELECT
             p.id,
             p.post_title,

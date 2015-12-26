@@ -1,6 +1,7 @@
 package com.fansz.auth.service;
 
-import com.fansz.service.model.session.SessionInfoResult;
+
+import com.fansz.fandom.model.session.SessionInfoResult;
 
 /**
  * Created by allan on 15/12/14.

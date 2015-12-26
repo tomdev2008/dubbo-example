@@ -1,6 +1,7 @@
 package com.fansz.auth.service;
 
-import com.fansz.service.model.account.*;
+
+import com.fansz.fandom.model.account.*;
 
 /**
  * Created by root on 15-11-3.
@@ -22,7 +23,7 @@ public interface AccountService {
      *
      * @param resetPasswordParam 重置密码对象
      */
-    void resetPassword(com.fansz.service.model.account.ResetPasswordParam resetPasswordParam);
+    void resetPassword(ResetPasswordParam resetPasswordParam);
 
     /**
      * 用户登陆

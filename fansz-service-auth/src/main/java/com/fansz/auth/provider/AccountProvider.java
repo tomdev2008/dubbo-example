@@ -4,12 +4,12 @@ package com.fansz.auth.provider;
 import com.fansz.auth.service.AccountService;
 import com.fansz.auth.service.SessionService;
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.service.api.AccountApi;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.account.*;
-import com.fansz.service.model.session.SessionInfoResult;
+import com.fansz.fandom.api.AccountApi;
+import com.fansz.fandom.model.account.*;
+import com.fansz.fandom.model.session.SessionInfoResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

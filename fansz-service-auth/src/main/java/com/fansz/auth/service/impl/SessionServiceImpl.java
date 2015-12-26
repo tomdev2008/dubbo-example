@@ -1,10 +1,10 @@
 package com.fansz.auth.service.impl;
 
 import com.fansz.auth.service.SessionService;
+import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.fandom.model.session.SessionInfoResult;
 import com.fansz.pub.utils.CollectionTools;
-import com.fansz.service.constant.ErrorCode;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.session.SessionInfoResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.StringTools;
 import com.fansz.pub.utils.UUIDTools;

@@ -1,9 +1,9 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
+import com.fansz.event.model.SmsEvent;
 import com.fansz.event.sender.HttpSender;
 import com.fansz.event.type.AsyncEventType;
-import com.fansz.service.model.event.SmsEvent;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

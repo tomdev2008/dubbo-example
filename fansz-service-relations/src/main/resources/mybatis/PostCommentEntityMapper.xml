@@ -100,7 +100,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <select id="getCommentsByPostidFromFandom" resultType="com.fansz.service.model.comment.PostCommentQueryResult" parameterType="java.lang.Object">
+    <select id="getCommentsByPostidFromFandom" resultType="com.fansz.fandom.model.comment.PostCommentQueryResult" parameterType="java.lang.Object">
          SELECT
             t.id,
             t.post_id postId,

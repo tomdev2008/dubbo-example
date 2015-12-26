@@ -14,7 +14,7 @@
         <result column="create_time" property="createTime" jdbcType="DATE"/>
     </resultMap>
 
-    <resultMap id="seedingSpotResult" type="com.fansz.service.model.seedingspot.SeedingSpotResult">
+    <resultMap id="seedingSpotResult" type="com.fansz.fandom.model.seedingspot.SeedingSpotResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="intro" property="intro" jdbcType="VARCHAR"/>
         <result column="priority_no" property="priorityNo" jdbcType="BIGINT"/>

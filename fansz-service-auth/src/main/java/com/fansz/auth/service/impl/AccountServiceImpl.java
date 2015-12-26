@@ -1,16 +1,16 @@
 package com.fansz.auth.service.impl;
 
 
-import com.fansz.auth.repository.UserRepository;
-import com.fansz.auth.entity.UserEntity;
 import com.fansz.auth.model.VerifyCodeModel;
 import com.fansz.auth.model.VerifyCodeType;
 import com.fansz.auth.service.AccountService;
 import com.fansz.auth.service.SessionService;
 import com.fansz.auth.service.VerifyCodeService;
-import com.fansz.service.constant.ErrorCode;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.account.*;
+import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.db.entity.UserEntity;
+import com.fansz.db.repository.UserDAO;
+import com.fansz.fandom.model.account.*;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.SecurityTools;
 import com.fansz.pub.utils.UUIDTools;
@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO userDAO;
 
     @Autowired
     private VerifyCodeService verifyCodeService;
@@ -55,7 +55,7 @@ public class AccountServiceImpl implements AccountService {
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        UserEntity existedUser = userRepository.findByAccount(registerParam.getLoginname());
+        UserEntity existedUser = userDAO.findByAccount(registerParam.getLoginname());
         if (existedUser != null) {
             throw new ApplicationException(ErrorCode.USER_EXISTS.getCode(), ErrorCode.USER_EXISTS.getName());
         }
@@ -71,7 +71,7 @@ public class AccountServiceImpl implements AccountService {
         logger.info("Begin to add profile " + user);
 
         //Save User Info
-        userRepository.save(user);
+        userDAO.save(user);
         logger.info("profile saved:" + user);
     }
 
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(changePasswordParam.getOldPassword());
 
         //Get User Info
-        UserEntity user = userRepository.findBySn(changePasswordParam.getCurrentSn());
+        UserEntity user = userDAO.findBySn(changePasswordParam.getCurrentSn());
         if (user == null) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
@@ -95,7 +95,7 @@ public class AccountServiceImpl implements AccountService {
         }
         //Update New Password
         String encodedNewPwd = SecurityTools.encode(changePasswordParam.getNewPassword());
-        userRepository.updatePassword(user.getId(), encodedNewPwd);
+        userDAO.updatePassword(user.getId(), encodedNewPwd);
     }
 
     /**
@@ -105,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-        UserEntity user = userRepository.findByMobile(resetPasswordParam.getMobile());
+        UserEntity user = userDAO.findByMobile(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
@@ -124,12 +124,12 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(resetPasswordParam.getPassword());
 
         //更新密码
-        userRepository.updatePassword(user.getId(), encodedPwd);
+        userDAO.updatePassword(user.getId(), encodedPwd);
     }
 
     @Override
     public LoginResult login(LoginParam loginParam) {
-        UserEntity user = userRepository.findByAccount(loginParam.getLoginname());
+        UserEntity user = userDAO.findByAccount(loginParam.getLoginname());
         if (user == null) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }

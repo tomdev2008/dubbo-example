@@ -1,12 +1,10 @@
 package com.fansz.relations.service;
 
 import com.fansz.pub.model.QueryResult;
-import com.fansz.service.model.relationship.AddFriendParam;
-import com.fansz.service.model.relationship.FriendInfoResult;
-import com.fansz.service.model.relationship.FriendsQueryParam;
-import com.fansz.service.model.relationship.OpRequestParam;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.fansz.relations.model.AddFriendParam;
+import com.fansz.relations.model.FriendInfoResult;
+import com.fansz.relations.model.FriendsQueryParam;
+import com.fansz.relations.model.OpRequestParam;
 
 /**
  * Created by allan on 15/11/29.

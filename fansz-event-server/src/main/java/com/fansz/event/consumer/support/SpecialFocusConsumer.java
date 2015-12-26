@@ -1,9 +1,11 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
+import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.type.AsyncEventType;
-import com.fansz.service.api.SpecialFocusApi;
-import com.fansz.service.model.event.SpecialFocusEvent;
+import com.fansz.fandom.api.SpecialFocusApi;
+import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
+import com.fansz.pub.utils.BeanTools;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +18,13 @@ import javax.annotation.Resource;
 public class SpecialFocusConsumer implements IEventConsumer {
 
     @Resource(name = "specialFocusProvider")
-    private SpecialFocusApi SpecialFocusApi;
+    private SpecialFocusApi specialFocusApi;
 
     @Override
     public void onEvent(ConsumerRecord<String, String> record) {
         SpecialFocusEvent sfe = JSON.parseObject(record.value(), SpecialFocusEvent.class);
-        SpecialFocusApi.addSpecialFocusInfo(sfe.getParam());
+        SpecialFocusParam param= BeanTools.copyAs(sfe,SpecialFocusParam.class);
+        specialFocusApi.addSpecialFocusInfo(param);
     }
 
     @Override

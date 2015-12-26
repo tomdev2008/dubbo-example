@@ -13,7 +13,7 @@
         <result column="fandom_create_time" property="fandomCreateTime" jdbcType="DATE"/>
     </resultMap>
 
-    <resultMap id="fandomAllInfoResultMap" type="com.fansz.service.model.fandom.FandomInfoResult">
+    <resultMap id="fandomAllInfoResultMap" type="com.fansz.fandom.model.fandom.FandomInfoResult">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="fandom_name" property="fandomName" jdbcType="VARCHAR"/>
         <result column="fandom_parent_id" property="fandomParentId" jdbcType="BIGINT"/>
@@ -26,7 +26,7 @@
         <result column="followed" property="followed" jdbcType="VARCHAR"/>
         <result column="follower_count" property="followerCount" jdbcType="INTEGER"/>
         <result column="post_count" property="postCount" jdbcType="INTEGER"/>
-        <association property="creator" javaType="com.fansz.service.model.profile.UserInfoResult"
+        <association property="creator" javaType="com.fansz.fandom.model.profile.UserInfoResult"
                      resultMap="com.fansz.service.api.repository.UserMapper.userInfoResultMap" columnPrefix="u_"/>
     </resultMap>
 
@@ -258,7 +258,7 @@
             fandom_name = #{fandomName,jdbcType=VARCHAR}
     </select>
 
-    <delete id="delFandom" parameterType="com.fansz.service.model.fandom.DelFandomParam">
+    <delete id="delFandom" parameterType="com.fansz.fandom.model.fandom.DelFandomParam">
       DELETE
         FROM
             feeds_fandom
@@ -267,7 +267,7 @@
         AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </delete>
 
-    <update id="modifyFandom" parameterType="com.fansz.service.model.fandom.ModifyFandomParam">
+    <update id="modifyFandom" parameterType="com.fansz.fandom.model.fandom.ModifyFandomParam">
         update feeds_fandom
         <set>
             <if test="fandomName != null">

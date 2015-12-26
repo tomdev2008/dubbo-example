@@ -11,6 +11,6 @@
 
     <context:component-scan base-package="com.fansz.access"/>
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/dubbo.properties,classpath:/conf/redis.properties"/>
+                                  location="classpath:/conf/dubbo.properties"/>
     <import resource="classpath:/spring/spring-dubbo.xml"/>
 </beans>

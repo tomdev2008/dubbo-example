@@ -13,13 +13,15 @@
     <packaging>pom</packaging>
     <modules>
         <module>fansz-event-server</module>
-        <module>fansz-service-api</module>
-        <module>fansz-service-provider</module>
         <module>fansz-access-layer</module>
         <module>fansz-service-relations</module>
         <module>fansz-service-auth</module>
-        <module>fansz-service-feeds</module>
+        <module>fansz-fandom-api</module>
+        <module>fansz-service-fandom</module>
         <module>fansz-newsfeeds-api</module>
+        <module>fansz-service-newsfeeds</module>
+        <module>fansz-relations-api</module>
+        <module>fansz-dao</module>
     </modules>
     <repositories>
         <repository>
@@ -38,43 +40,23 @@
         <dependencies>
             <dependency>
                 <groupId>com.fansz</groupId>
-                <artifactId>common-utils</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>common-redis</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>common-provider</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>http-server</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>common-dao</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>commons-event</artifactId>
-                <version>${fansz.component.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>service-api</artifactId>
+                <artifactId>fandom-api</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>1.7.2</version>
+                <groupId>com.fansz</groupId>
+                <artifactId>relations-api</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>newsfeeds-api</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-dao</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

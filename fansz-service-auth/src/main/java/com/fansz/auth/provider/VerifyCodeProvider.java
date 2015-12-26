@@ -3,12 +3,11 @@ package com.fansz.auth.provider;
 import com.fansz.auth.model.VerifyCodeType;
 import com.fansz.auth.service.VerifyCodeService;
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.service.api.VerifyCodeApi;
-import com.fansz.service.constant.ErrorCode;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.verifycode.VerifyCodeParam;
+import com.fansz.fandom.api.VerifyCodeApi;
+import com.fansz.fandom.model.verifycode.VerifyCodeParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fansz.service.api.repository.FandomPostLikeEntityMapper">
 
-    <resultMap id="userInfoResult" type="com.fansz.service.model.profile.UserInfoResult">
+    <resultMap id="userInfoResult" type="com.fansz.fandom.model.profile.UserInfoResult">
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
         <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
@@ -15,7 +15,7 @@
     <result column="like_time" property="likeTime" jdbcType="TIMESTAMP"/>
 </resultMap>
 
-    <resultMap id="postLikeInfoResult" type="com.fansz.service.model.post.PostLikeInfoResult">
+    <resultMap id="postLikeInfoResult" type="com.fansz.fandom.model.post.PostLikeInfoResult">
         <id column="id" property="likeId" jdbcType="BIGINT"/>
         <result column="post_id" property="postId" jdbcType="BIGINT"/>
         <result column="like_time" property="likeTime" jdbcType="TIMESTAMP"/>

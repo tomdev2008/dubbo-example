@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.fansz.service.api.repository.MessageCenterMapper">
 
-    <resultMap id="messageCenterResultMap" type="com.fansz.service.model.messagecenter.MessageCenterResult" >
+    <resultMap id="messageCenterResultMap" type="com.fansz.fandom.model.messagecenter.MessageCenterResult" >
         <result property="member_sn" column="memberSn" jdbcType="VARCHAR"/>
         <result property="operation_time" column="operationTime" jdbcType="TIMESTAMP"/>
         <result property="post_id" column="postId" jdbcType="BIGINT"/>

@@ -50,6 +50,10 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
         <!--spring begin-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -90,7 +94,15 @@
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>service-api</artifactId>
+            <artifactId>fandom-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>newsfeeds-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>

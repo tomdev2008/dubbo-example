@@ -1,5 +1,8 @@
 package com.fansz.relations.service.impl;
 
+import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.event.model.AsyncEventObject;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.model.Page;
@@ -7,19 +10,13 @@ import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.relations.constant.RelationShip;
 import com.fansz.relations.entity.UserRelationEntity;
+import com.fansz.relations.model.AddFriendParam;
+import com.fansz.relations.model.FriendInfoResult;
+import com.fansz.relations.model.FriendsQueryParam;
+import com.fansz.relations.model.OpRequestParam;
 import com.fansz.relations.repository.UserRelationRepository;
 import com.fansz.relations.service.RelationShipService;
-import com.fansz.service.constant.ErrorCode;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.event.SpecialFocusEvent;
-import com.fansz.service.model.event.UnSpecialFocusEvent;
-import com.fansz.service.model.relationship.AddFriendParam;
-import com.fansz.service.model.relationship.FriendInfoResult;
-import com.fansz.service.model.relationship.FriendsQueryParam;
-import com.fansz.service.model.relationship.OpRequestParam;
-import com.fansz.service.model.specialfocus.SpecialFocusParam;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -82,13 +79,13 @@ public class RelationShipServiceImpl implements RelationShipService {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(specialFocusParam));
+            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new AsyncEventObject(specialFocusParam));
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
             oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new UnSpecialFocusEvent(specialFocusParam));
+            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new AsyncEventObject(specialFocusParam));
         }
 
         userRelationRepository.update(oldRelation);

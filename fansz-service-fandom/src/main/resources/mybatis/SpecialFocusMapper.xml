@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.fandom.repository.SpecialFocusMapper">
+    <resultMap id="specialFocusResultMap" type="com.fansz.fandom.model.specialfocus.SpecialFocusResult">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="postion_tag" property="postionTag" jdbcType="BIGINT"/>
+        <association property="fandomInfoResult" resultMap="com.fansz.fandom.repository.FandomMapper.fandomAllInfoResultMap" notNullColumn="id" columnPrefix="sf_"/>
+        <association property="userInfoResult" resultMap="com.fansz.fandom.repository.UserMapper.userInfoResultMap" notNullColumn="sn" columnPrefix="su_"/>
+    </resultMap>
+
+    <select id="getSpecialFocusInfo" parameterType="com.fansz.fandom.model.specialfocus.SpecialFocusParam" resultMap="specialFocusResultMap">
+      SELECT
+            b.id,
+            b.postion_tag,
+            p.sn su_sn,
+            p.nickname su_nickname,
+            p.mobile su_mobile,
+            p.member_avatar su_member_avatar,
+            p.email su_email,
+            p.birthday su_birthday,
+            p.gender su_gender,
+            p.member_type su_member_type,
+            p.profile_createtime su_profile_createtime,
+            f.id sf_id,
+            f.fandom_name sf_fandom_name,
+            f.fandom_creator_sn sf_fandom_creator_sn,
+            f.fandom_intro sf_fandom_intro,
+            f.fandom_parent_id sf_fandom_parent_id,
+            f.fandom_avatar_url sf_fandom_avatar_url,
+            f.fandom_create_time sf_fandom_create_time
+        FROM
+            connects_special_scrolling_bar b
+        LEFT JOIN connects_member_profile p ON b.special_member_sn = p.sn
+        LEFT JOIN feeds_fandom f ON b.special_fandom_id = f.id
+        WHERE b.member_sn = #{currentSn,jdbcType=VARCHAR}
+        ORDER BY b.postion_tag ASC
+    </select>
+
+    <insert id="addSpecialFocusInfo" parameterType="com.fansz.fandom.model.specialfocus.SpecialFocusParam">
+        INSERT INTO  connects_special_scrolling_bar
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="currentSn != null">
+                member_sn,
+            </if>
+            <if test="specialMemberSn != null">
+                special_member_sn,
+            </if>
+            <if test="specialFandomId != null">
+                special_fandom_id,
+            </if>
+                postion_tag
+        </trim>
+        <trim  suffixOverrides=",">
+            SELECT
+            <if test="currentSn != null">
+                #{currentSn,jdbcType=VARCHAR},
+            </if>
+            <if test="specialMemberSn != null">
+                 #{specialMemberSn,jdbcType=VARCHAR},
+            </if>
+            <if test="specialFandomId != null">
+                #{specialFandomId,jdbcType=BIGINT},
+            </if>
+            ifnull(MAX(postion_tag),0)+1 as new_postion_tag FROM connects_special_scrolling_bar WHERE member_sn = #{currentSn,jdbcType=VARCHAR}
+        </trim>
+    </insert>
+
+    <update id="modifySpecialFocusInfo" parameterType="java.util.Map">
+            UPDATE connects_special_scrolling_bar
+            SET postion_tag = #{postingTag,jdbcType=BIGINT}
+            WHERE
+            member_sn = #{currentSn,jdbcType=VARCHAR}
+            <if test="specialMemberSn != null">
+                AND special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
+            </if>
+           <if test="specialFandomId != null">
+               AND special_fandom_id = #{specialFandomId,jdbcType=BIGINT}
+           </if>
+    </update>
+
+    <delete id="delSpecialFocusInfo" parameterType="java.lang.Long">
+        DELETE FROM connects_special_scrolling_bar
+        WHERE
+        member_sn = #{currentSn,jdbcType=VARCHAR}
+        <if test="specialMemberSn != null">
+            AND special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
+        </if>
+        <if test="specialFandomId != null">
+            AND special_fandom_id = #{specialFandomId,jdbcType=BIGINT}
+        </if>
+    </delete>
+
+    <select id="getCount" parameterType="com.fansz.fandom.model.specialfocus.SpecialFocusParam" resultType="java.lang.Integer">
+        SELECT
+            COUNT(1)
+        FROM
+            connects_special_scrolling_bar
+        WHERE
+            member_sn = #{currentSn,jdbcType=VARCHAR}
+        <if test="specialMemberSn != null">
+            AND  special_member_sn = #{specialMemberSn,jdbcType=VARCHAR}
+        </if>
+        <if test="specialFandomId != null">
+            AND  special_fandom_id = #{specialFandomId,jdbcType=BIGINT}
+        </if>
+    </select>
+
+</mapper>

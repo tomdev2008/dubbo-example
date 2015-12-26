@@ -1,16 +1,15 @@
 package com.fansz.auth.service.impl;
 
-import com.fansz.auth.entity.UserEntity;
 import com.fansz.auth.model.VerifyCodeModel;
 import com.fansz.auth.model.VerifyCodeType;
-import com.fansz.auth.repository.UserRepository;
 import com.fansz.auth.service.VerifyCodeService;
 import com.fansz.auth.utils.VerifyCodeGenerator;
+import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.db.entity.UserEntity;
+import com.fansz.db.repository.UserDAO;
+import com.fansz.event.model.SmsEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
-import com.fansz.service.constant.ErrorCode;
-import com.fansz.service.exception.ApplicationException;
-import com.fansz.service.model.event.SmsEvent;
 import com.fansz.pub.utils.StringTools;
 import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.support.JedisCallback;
@@ -34,7 +33,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
     private JedisTemplate jedisTemplate;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO userDAO;
 
     @Resource(name = "verifyCodeGenerator")
     private VerifyCodeGenerator verifyCodeGenerator;
@@ -60,7 +59,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
      */
     @Override
     public ErrorCode createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        UserEntity user = userRepository.findByMobile(mobile);
+        UserEntity user = userDAO.findByMobile(mobile);
         String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用
