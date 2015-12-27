@@ -8,7 +8,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "feeds_member_post_fandom")
-public class FandomPostEntity {
+public class FandomPost {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -21,10 +21,6 @@
 
 	<context:property-placeholder ignore-resource-not-found="false"
 								  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties,classpath:/conf/application.properties"/>
-	<util:properties location="classpath:/conf/application.properties"
-		id="applicationProps" />
-	<util:properties location="classpath:/conf/sms.properties"
-					 id="smsProperties" />
 	<import resource="classpath:/spring/spring-datasource.xml" />
 	<import resource="classpath:/spring/spring-dubbo.xml" />
 	<import resource="classpath:/spring/spring-kafka.xml" />

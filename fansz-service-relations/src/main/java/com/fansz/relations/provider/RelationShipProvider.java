@@ -11,8 +11,6 @@ import com.fansz.relations.model.FriendInfoResult;
 import com.fansz.relations.model.FriendsQueryParam;
 import com.fansz.relations.model.OpRequestParam;
 import com.fansz.relations.service.RelationShipService;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,16 +27,13 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     @Override
     public CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam) {
         // 获得好友详细信息
-        PageBounds pageBounds = new PageBounds(friendsParam.getPageNum(), friendsParam.getPageSize());
         QueryResult<FriendInfoResult> friends = relationShipService.getFriends(friendsParam, false);
         return renderPagedSuccess(friends);
-
     }
 
     @Override
     public CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam) {
         // 获得特别好友详细信息
-        PageBounds pageBounds = new PageBounds(friendsParam.getPageNum(), friendsParam.getPageSize());
         QueryResult<FriendInfoResult> friends = relationShipService.getFriends(friendsParam, true);
         return renderPagedSuccess(friends);
     }

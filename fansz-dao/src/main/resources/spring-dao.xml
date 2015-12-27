@@ -58,6 +58,7 @@
         <property name="configLocations">
             <list>
                 <value>classpath:/sql/user.xml</value>
+                <value>classpath:/sql/relation.xml</value>
             </list>
         </property>
         <property name="nativeSqlReturnMap" value="true"/>

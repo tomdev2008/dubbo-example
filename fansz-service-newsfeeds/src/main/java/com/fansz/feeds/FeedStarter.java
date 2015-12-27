@@ -7,7 +7,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class FeedStarter {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-auth.xml");
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-feeds.xml");
         ac.start();
     }
 }

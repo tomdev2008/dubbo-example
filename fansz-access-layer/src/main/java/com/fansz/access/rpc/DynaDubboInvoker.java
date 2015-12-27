@@ -152,7 +152,7 @@ public class DynaDubboInvoker implements RpcInvoker {
 
         Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
 
-        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.convert2FormatJSONString(result, SerializerFeature.WriteMapNullValue);
+        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.convertObject2JSONString(result);
     }
 
     private boolean isValid(SessionInfoResult session) {

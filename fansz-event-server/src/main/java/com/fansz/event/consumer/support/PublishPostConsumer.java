@@ -1,22 +1,20 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.db.entity.NewsfeedsPostEntity;
-import com.fansz.db.entity.PushPostEntity;
-import com.fansz.db.entity.UserRelationEntity;
+import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.entity.PushPost;
+import com.fansz.db.entity.UserRelation;
 import com.fansz.db.repository.NewsfeedsPostDAO;
 import com.fansz.db.repository.PushPostDAO;
 import com.fansz.db.repository.UserRelationDAO;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.type.AsyncEventType;
-import com.fansz.newsfeed.api.PostApi;
 
 
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.redis.JedisTemplate;
-import com.fansz.newsfeed.model.post.AddPostParam;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,20 +44,20 @@ public class PublishPostConsumer implements IEventConsumer {
         final PublishPostEvent publishPostEvent = JSON.parseObject(record.value(), PublishPostEvent.class);
         Long postId = publishPostEvent.getPostId();
         if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
-            NewsfeedsPostEntity entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPostEntity.class);
+            NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
         }
-        List<UserRelationEntity> friendList = userRelationDAO.findMyFriends(publishPostEvent.getMemberSn());
+        List<UserRelation> friendList = userRelationDAO.findMyFriends(publishPostEvent.getMemberSn());
         if (CollectionTools.isNullOrEmpty(friendList)) {
             return;
         }
-        for (UserRelationEntity friend : friendList) {
-            PushPostEntity pushPostEntity = new PushPostEntity();
-            pushPostEntity.setMemberSn(friend.getFriendMemberSn());
-            pushPostEntity.setPostId(postId);
-            pushPostEntity.setCeratetime(new Date());
-            pushPostDAO.save(pushPostEntity);
+        for (UserRelation friend : friendList) {
+            PushPost pushPost = new PushPost();
+            pushPost.setMemberSn(friend.getFriendMemberSn());
+            pushPost.setPostId(postId);
+            pushPost.setCeratetime(new Date());
+            pushPostDAO.save(pushPost);
         }
     }
 

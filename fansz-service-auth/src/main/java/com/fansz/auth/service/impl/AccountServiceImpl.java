@@ -8,7 +8,7 @@ import com.fansz.auth.service.SessionService;
 import com.fansz.auth.service.VerifyCodeService;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.db.entity.UserEntity;
+import com.fansz.db.entity.User;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.fandom.model.account.*;
 import com.fansz.pub.utils.BeanTools;
@@ -55,13 +55,13 @@ public class AccountServiceImpl implements AccountService {
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        UserEntity existedUser = userDAO.findByAccount(registerParam.getLoginname());
+        User existedUser = userDAO.findByAccount(registerParam.getLoginname());
         if (existedUser != null) {
             throw new ApplicationException(ErrorCode.USER_EXISTS.getCode(), ErrorCode.USER_EXISTS.getName());
         }
         //Create User
         String encodedPwd = SecurityTools.encode(registerParam.getPassword());
-        UserEntity user = new UserEntity();
+        User user = new User();
         BeanUtils.copyProperties(registerParam, user);
         user.setSn(UUIDTools.generate());
         user.setProfileCreatetime(new Date());
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(changePasswordParam.getOldPassword());
 
         //Get User Info
-        UserEntity user = userDAO.findBySn(changePasswordParam.getCurrentSn());
+        User user = userDAO.findBySn(changePasswordParam.getCurrentSn());
         if (user == null) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
@@ -105,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) {
-        UserEntity user = userDAO.findByMobile(resetPasswordParam.getMobile());
+        User user = userDAO.findByMobile(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
@@ -129,7 +129,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public LoginResult login(LoginParam loginParam) {
-        UserEntity user = userDAO.findByAccount(loginParam.getLoginname());
+        User user = userDAO.findByAccount(loginParam.getLoginname());
         if (user == null) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }

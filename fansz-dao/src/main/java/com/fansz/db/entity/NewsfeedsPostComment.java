@@ -9,7 +9,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "newsfeeds_member_comment")
-public class PostCommentEntity implements java.io.Serializable {
+public class NewsfeedsPostComment implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -35,10 +35,10 @@ public class PostCommentEntity implements java.io.Serializable {
     @Column(name = "comment_source")
     private String commentSource;
 
-    public PostCommentEntity() {
+    public NewsfeedsPostComment() {
     }
 
-    public PostCommentEntity(Long postId, Long commentParentId, String commentatorSn, String commentContent, Date commentTime, String commentSource) {
+    public NewsfeedsPostComment(Long postId, Long commentParentId, String commentatorSn, String commentContent, Date commentTime, String commentSource) {
         this.postId = postId;
         this.commentParentId = commentParentId;
         this.commentatorSn = commentatorSn;

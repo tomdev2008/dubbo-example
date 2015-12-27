@@ -1,4 +1,4 @@
-package com.fansz.relations.entity;
+package com.fansz.db.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -6,11 +6,11 @@ import java.io.Serializable;
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "connects_member_relation")
-public class UserRelationEntity implements Serializable {
+public class UserRelation implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
     @Column(name = "my_member_sn")

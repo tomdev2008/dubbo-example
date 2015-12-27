@@ -2,25 +2,30 @@ package com.fansz.relations.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.event.model.AsyncEventObject;
+import com.fansz.db.entity.User;
+import com.fansz.db.entity.UserRelation;
+import com.fansz.db.repository.UserDAO;
+import com.fansz.db.repository.UserRelationDAO;
+import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.CollectionTools;
 import com.fansz.relations.constant.RelationShip;
-import com.fansz.relations.entity.UserRelationEntity;
 import com.fansz.relations.model.AddFriendParam;
 import com.fansz.relations.model.FriendInfoResult;
 import com.fansz.relations.model.FriendsQueryParam;
 import com.fansz.relations.model.OpRequestParam;
-import com.fansz.relations.repository.UserRelationRepository;
 import com.fansz.relations.service.RelationShipService;
-import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by allan on 15/11/29.
@@ -30,95 +35,103 @@ import org.springframework.transaction.annotation.Transactional;
 public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
-    private UserRelationRepository userRelationRepository;
+    private UserRelationDAO userRelationDAO;
 
     @Autowired
     private EventProducer eventProducer;
 
     @Override
     public QueryResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam, boolean isSpecial) {
-        Page p=new Page();
+        Page p = new Page();
         p.setPage(friendsParam.getPageNum());
         p.setPageSize(friendsParam.getPageSize());
+        QueryResult<User> userList = null;
         if (isSpecial) {
-            return userRelationRepository.findSpecialFriends(p,friendsParam.getCurrentSn());
+            userList = userRelationDAO.findSpecialFriends(p, friendsParam.getCurrentSn());
         } else {
-            return userRelationRepository.findFriends(p,friendsParam.getCurrentSn());
+            userList = userRelationDAO.findFriends(p, friendsParam.getCurrentSn());
         }
+        return renderResult(userList);
     }
 
     @Override
     public boolean addFriendRequest(AddFriendParam addFriendParam) {
-        UserRelationEntity oldRelation = userRelationRepository.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        UserRelation oldRelation = userRelationDAO.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_ADD.getCode())) {
             throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
         }
         if (oldRelation == null) {
-            UserRelationEntity userRelation = BeanTools.copyAs(addFriendParam, UserRelationEntity.class);
-            userRelation.setRelationStatus(RelationShip.TO_ADD.getCode());
-            userRelationRepository.save(userRelation);
+            UserRelation my = BeanTools.copyAs(addFriendParam, UserRelation.class);
+            my.setRelationStatus(RelationShip.TO_ADD.getCode());
+            userRelationDAO.save(my);
 
-            String myMemberSn = userRelation.getFriendMemberSn();
-            String friendMemberSn = userRelation.getMyMemberSn();
-            userRelation.setMyMemberSn(myMemberSn);
-            userRelation.setFriendMemberSn(friendMemberSn);
-            userRelation.setRelationStatus(RelationShip.BE_ADDED.getCode());
-            userRelationRepository.save(userRelation);
+            UserRelation friend = new UserRelation();
+            friend.setMyMemberSn(my.getFriendMemberSn());
+            friend.setFriendMemberSn(my.getMyMemberSn());
+            friend.setRelationStatus(RelationShip.BE_ADDED.getCode());
+            userRelationDAO.save(friend);
         }
         return true;
     }
 
     @Override
     public boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add) {
-        UserRelationEntity oldRelation = userRelationRepository.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setCurrentSn(addFriendParam.getCurrentSn());
-        specialFocusParam.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
+        UserRelation oldRelation = userRelationDAO.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        SpecialFocusEvent specialFocusEvent = new SpecialFocusEvent();
+        specialFocusEvent.setCurrentSn(addFriendParam.getCurrentSn());
+        specialFocusEvent.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
         if (add) {//添加特殊好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode())) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new AsyncEventObject(specialFocusParam));
+            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, specialFocusEvent);
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
             oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, new AsyncEventObject(specialFocusParam));
+            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, specialFocusEvent);
         }
 
-        userRelationRepository.update(oldRelation);
+        userRelationDAO.update(oldRelation);
         return true;
     }
 
     @Override
     public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
-        UserRelationEntity oldRelation = userRelationRepository.findRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
+        UserRelation oldRelation = userRelationDAO.findRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
         if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.BE_ADDED.getCode())) {
             throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
         }
-        userRelationRepository.updateRelationStatus(oldRelation.getId(),RelationShip.FRIEND.getCode());
+        userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
 
-        oldRelation = userRelationRepository.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getCurrentSn());
-        userRelationRepository.update(oldRelation);
+        oldRelation = userRelationDAO.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getCurrentSn());
+        userRelationDAO.update(oldRelation);
         return true;
     }
 
     @Override
     public QueryResult<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam) {
-        Page p=new Page();
+        Page p = new Page();
         p.setPage(friendsQueryParam.getPageNum());
         p.setPageSize(friendsQueryParam.getPageSize());
-        return userRelationRepository.listAddMeRequest(p,friendsQueryParam.getCurrentSn());
+        return renderResult(userRelationDAO.listAddMeRequest(p, friendsQueryParam.getCurrentSn()));
     }
 
     @Override
     public QueryResult<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam) {
-        Page p=new Page();
+        Page p = new Page();
         p.setPage(friendsQueryParam.getPageNum());
         p.setPageSize(friendsQueryParam.getPageSize());
-        return userRelationRepository.listMySendRequest(p,friendsQueryParam.getCurrentSn());
+        return renderResult(userRelationDAO.listMySendRequest(p, friendsQueryParam.getCurrentSn()));
     }
 
+    private QueryResult<FriendInfoResult> renderResult(QueryResult<User> userList){
+        if(CollectionTools.isNullOrEmpty(userList.getResultlist())){
+            return new QueryResult<>(new ArrayList<FriendInfoResult>(), 0);
+        }
+        List<FriendInfoResult> friendList = BeanTools.copyAs(userList.getResultlist(), FriendInfoResult.class);
+        return new QueryResult<>(friendList, userList.getTotalrecord());
+    }
 }

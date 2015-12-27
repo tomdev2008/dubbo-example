@@ -51,7 +51,7 @@
     <aop:config>
         <!-- 拦截规则 -->
         <aop:pointcut id="servicePointcut"
-                      expression="execution(* com.fansz.auth.service.*.*(..)) and !execution(* com.fansz.auth.service.VerifyCodeService.*(..))"/>
+                      expression="execution(* com.fansz.feeds.service.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut"/>
     </aop:config>
 

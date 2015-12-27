@@ -10,7 +10,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "newsfeeds_member_post")
-public class NewsfeedsPostEntity implements java.io.Serializable {
+public class NewsfeedsPost implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -36,10 +36,10 @@ public class NewsfeedsPostEntity implements java.io.Serializable {
     @Column(name = "comment_count")
     private Long commentCount;
 
-    public NewsfeedsPostEntity() {
+    public NewsfeedsPost() {
     }
 
-    public NewsfeedsPostEntity(String memberSn, String postContent, Date postTime, String postTitle, Long likeCount, Long commentCount) {
+    public NewsfeedsPost(String memberSn, String postContent, Date postTime, String postTitle, Long likeCount, Long commentCount) {
         this.memberSn = memberSn;
         this.postContent = postContent;
         this.postTime = postTime;

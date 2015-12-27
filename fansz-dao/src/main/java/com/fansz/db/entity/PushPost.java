@@ -8,7 +8,7 @@ import java.util.Date;
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 @Table(name = "feeds_member_push_post")
-public class PushPostEntity implements java.io.Serializable {
+public class PushPost implements java.io.Serializable {
 
     private static final long serialVersionUID = 6504188403343423076L;
 

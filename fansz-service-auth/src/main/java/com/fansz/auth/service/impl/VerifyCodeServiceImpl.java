@@ -5,7 +5,7 @@ import com.fansz.auth.model.VerifyCodeType;
 import com.fansz.auth.service.VerifyCodeService;
 import com.fansz.auth.utils.VerifyCodeGenerator;
 import com.fansz.common.provider.constant.ErrorCode;
-import com.fansz.db.entity.UserEntity;
+import com.fansz.db.entity.User;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.event.model.SmsEvent;
 import com.fansz.event.producer.EventProducer;
@@ -59,7 +59,7 @@ public class VerifyCodeServiceImpl implements VerifyCodeService {
      */
     @Override
     public ErrorCode createVerifyCode(String mobile, VerifyCodeType verifyCodeType) {
-        UserEntity user = userDAO.findByMobile(mobile);
+        User user = userDAO.findByMobile(mobile);
         String template = "";
         switch (verifyCodeType) {
             case REGISTER://用户注册时,要求号码未被使用

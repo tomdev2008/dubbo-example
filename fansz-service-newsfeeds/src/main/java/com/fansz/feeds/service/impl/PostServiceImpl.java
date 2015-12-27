@@ -1,8 +1,8 @@
 package com.fansz.feeds.service.impl;
 
 
-import com.fansz.db.entity.NewsfeedsPostEntity;
-import com.fansz.db.entity.UserEntity;
+import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.entity.User;
 import com.fansz.db.repository.NewsfeedsPostDAO;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.event.model.PublishPostEvent;
@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Long addPost(AddPostParam addPostParam) {
-        NewsfeedsPostEntity entity = BeanTools.copyAs(addPostParam, NewsfeedsPostEntity.class);
+        NewsfeedsPost entity = BeanTools.copyAs(addPostParam, NewsfeedsPost.class);
         newsfeedsPostDAO.save(entity);
         PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(),entity.getPostTime());
         eventProducer.produce(AsyncEventType.PUBLISH_POST, publishPostEvent);
@@ -43,10 +43,10 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostInfoResult getPost(GetPostByIdParam postParam) {
-        NewsfeedsPostEntity entity = newsfeedsPostDAO.load(postParam.getPostId());
+        NewsfeedsPost entity = newsfeedsPostDAO.load(postParam.getPostId());
         PostInfoResult result = BeanTools.copyAs(entity, PostInfoResult.class);
-        UserEntity userEntity = userDAO.findBySn(entity.getMemberSn());
-        UserInfoResult userInfoResult = BeanTools.copyAs(userEntity, UserInfoResult.class);
+        User user = userDAO.findBySn(entity.getMemberSn());
+        UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);
         result.setUserInfoResult(userInfoResult);
         return result;
     }
