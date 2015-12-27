@@ -94,15 +94,19 @@
 
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>fandom-api</artifactId>
+            <artifactId>fansz-fandom-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>relations-api</artifactId>
+            <artifactId>fansz-auth-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>newsfeeds-api</artifactId>
+            <artifactId>fansz-relations-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-newsfeeds-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>

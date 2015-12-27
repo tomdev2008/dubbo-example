@@ -14,13 +14,10 @@
     <modules>
         <module>fansz-event-server</module>
         <module>fansz-access-layer</module>
-        <module>fansz-service-relations</module>
-        <module>fansz-service-auth</module>
-        <module>fansz-fandom-api</module>
-        <module>fansz-service-fandom</module>
-        <module>fansz-newsfeeds-api</module>
-        <module>fansz-service-newsfeeds</module>
-        <module>fansz-relations-api</module>
+        <module>fansz-auth</module>
+        <module>fansz-fandom</module>
+        <module>fansz-newsfeeds</module>
+        <module>fansz-relations</module>
         <module>fansz-dao</module>
     </modules>
     <repositories>
@@ -40,22 +37,27 @@
         <dependencies>
             <dependency>
                 <groupId>com.fansz</groupId>
-                <artifactId>fandom-api</artifactId>
+                <artifactId>fansz-fandom-api</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.fansz</groupId>
-                <artifactId>relations-api</artifactId>
-                <version>2.0.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fansz</groupId>
-                <artifactId>newsfeeds-api</artifactId>
+                <artifactId>fansz-newsfeeds-api</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.fansz</groupId>
                 <artifactId>fansz-dao</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-auth-api</artifactId>
+                <version>2.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-relations-api</artifactId>
                 <version>2.0.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
