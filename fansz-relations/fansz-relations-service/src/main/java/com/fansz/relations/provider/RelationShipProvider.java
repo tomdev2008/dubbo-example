@@ -6,11 +6,9 @@ import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.relations.api.RelationShipApi;
-import com.fansz.relations.model.AddFriendParam;
-import com.fansz.relations.model.FriendInfoResult;
-import com.fansz.relations.model.FriendsQueryParam;
-import com.fansz.relations.model.OpRequestParam;
+import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -72,5 +70,11 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     public CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam) {
         QueryResult<FriendInfoResult> dataResult = relationShipService.listMySendRequest(friendsQueryParam);
         return renderPagedSuccess(dataResult);
+    }
+
+    @Override
+    public CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam) {
+        QueryResult<FriendInfoResult> dataResult = relationShipService.findRelationByMobiles(contractQueryParam);
+        return super.renderPagedSuccess(dataResult);
     }
 }

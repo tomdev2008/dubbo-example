@@ -30,22 +30,22 @@ public class NewsfeedsPost implements java.io.Serializable {
     @Column(name = "post_title")
     private String postTitle;
 
-    @Column(name = "like_count")
-    private Long likeCount;
+    @Column(name = "source_from")
+    private String sourceFrom;
 
-    @Column(name = "comment_count")
-    private Long commentCount;
+    @Column(name = "source_post_id")
+    private Long sourcePostId;
 
     public NewsfeedsPost() {
     }
 
-    public NewsfeedsPost(String memberSn, String postContent, Date postTime, String postTitle, Long likeCount, Long commentCount) {
+    public NewsfeedsPost(String memberSn, String postContent, Date postTime, String postTitle, String sourceFrom, Long sourcePostId) {
         this.memberSn = memberSn;
         this.postContent = postContent;
         this.postTime = postTime;
         this.postTitle = postTitle;
-        this.likeCount = likeCount;
-        this.commentCount = commentCount;
+        this.sourceFrom = sourceFrom;
+        this.sourcePostId = sourcePostId;
     }
 
 
@@ -93,24 +93,21 @@ public class NewsfeedsPost implements java.io.Serializable {
     }
 
 
-    public Long getLikeCount() {
-        return this.likeCount;
+    public String getSourceFrom() {
+        return sourceFrom;
     }
 
-    public void setLikeCount(Long likeCount) {
-        this.likeCount = likeCount;
+    public void setSourceFrom(String sourceFrom) {
+        this.sourceFrom = sourceFrom;
     }
 
-
-    public Long getCommentCount() {
-        return this.commentCount;
+    public Long getSourcePostId() {
+        return sourcePostId;
     }
 
-    public void setCommentCount(Long commentCount) {
-        this.commentCount = commentCount;
+    public void setSourcePostId(Long sourcePostId) {
+        this.sourcePostId = sourcePostId;
     }
-
-
 }
 
 

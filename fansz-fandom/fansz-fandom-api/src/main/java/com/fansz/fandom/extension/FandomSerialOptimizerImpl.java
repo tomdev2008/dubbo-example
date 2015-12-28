@@ -17,6 +17,7 @@ import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.fansz.fandom.model.specialfocus.SpecialFocusResult;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -27,7 +28,8 @@ import java.util.List;
  */
 public class FandomSerialOptimizerImpl implements SerializationOptimizer {
     public Collection<Class> getSerializableClasses() {
-        List<Class> classes = new LinkedList<Class>();
+        List<Class> classes = new LinkedList<>();
+        classes.add(PageList.class);
         classes.add(CommonResult.class);
         classes.add(PostCommentQueryResult.class);
         classes.add(FandomInfoResult.class);

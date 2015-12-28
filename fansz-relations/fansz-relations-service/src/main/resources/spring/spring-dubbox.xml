@@ -7,13 +7,10 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="members-service-relations" owner="relations" organization="fansz"/>
+    <dubbo:application name="fansz-service-relations" owner="relations" organization="fansz"/>
 
-    <!-- 用rest协议在7001端口暴露服务 -->
-    <!--<dubbo:protocol name="rest" port="${dubbo.rest.port}" server="netty" serialization="jackson" iothreads="5" threads="100"  extension="com.fansz.service.extension.ApplicationExceptionMapper,com.fansz.service.extension.ValidationExceptionMapper"/>-->
     <!--7002端口提供RPC服务-->
-    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.fandom.extension.MembersSerialOptimizerImpl" server="netty4"/>
+    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4"/>
 
     <!-- 使用redis注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>

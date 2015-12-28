@@ -2,6 +2,7 @@ package com.fansz.db.repository;
 
 import com.fansz.db.entity.User;
 import com.fansz.db.entity.UserRelation;
+import com.fansz.db.model.FriendInfo;
 import com.fansz.orm.dao.IBaseDAO;
 import com.fansz.orm.dao.annotation.DAO;
 import com.fansz.orm.dao.annotation.NamedExec;
@@ -29,17 +30,17 @@ public interface UserRelationDAO extends IBaseDAO<UserRelation> {
     UserRelation findRelation(String memberSn, String friendSn);
 
     @NamedQuery(queryId = "relation.findFriends", parameters = {"page", "myMemberSn"})
-    QueryResult<User> findFriends(Page page, String userSn);
+    QueryResult<FriendInfo> findFriends(Page page, String userSn);
 
     @NamedQuery(queryId = "relation.findSpecialFriends", parameters = {"page", "myMemberSn"})
-    QueryResult<User> findSpecialFriends(Page page, String userSn);
+    QueryResult<FriendInfo> findSpecialFriends(Page page, String userSn);
 
-    @NamedQuery(queryId = "relation.findRelationByMobiles", parameters = {"memberSn", "mobileList"})
-    QueryResult<User> findRelationByMobiles(Page page, String memberSn, List<String> mobileList);
+    @NamedQuery(queryId = "relation.findRelationByMobiles", parameters = {"page","memberSn", "mobileList"})
+    QueryResult<FriendInfo> findRelationByMobiles(Page page, String memberSn, List<String> mobileList);
 
     @NamedQuery(queryId = "relation.listAddMeRequest", parameters = {"page", "memberSn"})
-    QueryResult<User> listAddMeRequest(Page page, String memberSn);
+    QueryResult<FriendInfo> listAddMeRequest(Page page, String memberSn);
 
     @NamedQuery(queryId = "relation.listMySendRequest", parameters = {"page", "memberSn"})
-    QueryResult<User> listMySendRequest(Page page, String memberSn);
+    QueryResult<FriendInfo> listMySendRequest(Page page, String memberSn);
 }

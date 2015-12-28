@@ -1,10 +1,7 @@
 package com.fansz.relations.service;
 
 import com.fansz.pub.model.QueryResult;
-import com.fansz.relations.model.AddFriendParam;
-import com.fansz.relations.model.FriendInfoResult;
-import com.fansz.relations.model.FriendsQueryParam;
-import com.fansz.relations.model.OpRequestParam;
+import com.fansz.relations.model.*;
 
 /**
  * Created by allan on 15/11/29.
@@ -22,5 +19,7 @@ public interface RelationShipService {
     QueryResult<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam);
 
     QueryResult<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam);
+
+    QueryResult<FriendInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 
 }

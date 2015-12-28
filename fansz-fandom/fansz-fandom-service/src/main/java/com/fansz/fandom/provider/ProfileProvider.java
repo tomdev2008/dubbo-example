@@ -87,12 +87,6 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
         return renderSuccess(result);
     }
 
-    @Override
-    public CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam) {
-        PageList<ContactInfoResult> dataResult = profileService.findRelationByMobiles(contractQueryParam);
-        return super.renderPagedSuccess(dataResult);
-    }
-
 
     @Override
     public CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dynamic-query xmlns="http://fansz.com/xml/ns/dynamic-query"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://fansz.com/xml/ns/dynamic-query http://fansz.com/xml/ns/dynamic-query_1_0.xsd"
+               version="1.0">
+    <native-query name="specialfocus.delSpecialFocusInfo">
+        <![CDATA[
+         DELETE FROM connects_special_scrolling_bar
+        WHERE member_sn = :currentSn
+        <#if specialMemberSn?? && specialMemberSn != "">
+         AND special_member_sn = :specialMemberSn
+		</#if>
+        <#if specialFandomId?? && specialFandomId != "">
+			AND special_fandom_id = :specialFandomId
+		</#if>
+        ]]>
+    </native-query>
+    </dynamic-query>

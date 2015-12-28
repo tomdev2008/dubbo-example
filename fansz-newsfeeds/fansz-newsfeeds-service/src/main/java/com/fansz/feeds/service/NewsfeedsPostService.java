@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
  * Created by root on 15-11-3.
  */
 public interface NewsfeedsPostService {
+
     Long addPost(AddPostParam addPostParam);
 
-    PostInfoResult getPost(GetPostByIdParam postParam);
+    PostInfoResult getPost(Long postId);
 }

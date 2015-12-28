@@ -22,7 +22,7 @@ public interface NeswfeedsPostApi {
      * @param addPostParam 帖子信息
      * @return resp 返回对象
      */
-    @DubboxMethod("publishNewsfeedsPost")
+    @DubboxMethod("publishNewfeed")
     CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException;
 
     /**

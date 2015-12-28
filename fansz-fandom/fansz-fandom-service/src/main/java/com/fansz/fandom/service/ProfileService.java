@@ -18,8 +18,6 @@ public interface ProfileService {
 
     int setMemberType(SetMemberParam setMemberParam);
 
-    PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
-
     PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam);
 
     PageList<UserInfoResult> searchMembers(String searchKey,String sn,PageBounds pageBounds);

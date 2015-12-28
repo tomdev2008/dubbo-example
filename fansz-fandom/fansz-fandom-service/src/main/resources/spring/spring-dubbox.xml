@@ -11,7 +11,7 @@
 
     <!--7003端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.fandom.extension.FandomSerialOptimizerImpl" server="netty4"/>
+                     server="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
@@ -19,24 +19,24 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.fandom.api.CommentApi" ref="commentProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.FandomApi" ref="fandomProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.FandomPostApi" ref="postProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.ProfileApi" ref="profileProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.SeedingSpotApi" ref="seedingSpotProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.SpecialFocusApi" ref="specialFocusProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.fandom.api.MessageCenterApi" ref="messageCenterProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+                   connections="500" version="0.0.1" retries="0"  group="${provider.group}"/>
 
 </beans>

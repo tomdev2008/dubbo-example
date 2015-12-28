@@ -16,9 +16,10 @@
           WHERE a.id=:id
         ]]>
     </native-query>
+
     <native-query name="relation.findFriends">
         <![CDATA[
-          SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
+          SELECT a.relation_status AS relationship,b.* FROM connects_member_relation a,connects_member_profile b
             WHERE a.my_member_sn=:myMemberSn
             AND a.friend_member_sn=b.sn AND a.relation_status IN('10','11')
         ]]>
@@ -34,7 +35,7 @@
 
     <native-query name="relation.findSpecialFriends">
         <![CDATA[
-           SELECT b.*,a.relation_status relationship FROM connects_member_relation a,connects_member_profile b
+           SELECT b.*,a.relation_status AS relationship FROM connects_member_relation a,connects_member_profile b
         WHERE a.my_member_sn=:myMemberSn
         AND a.friend_member_sn=b.sn
         AND a.relation_status ='11'
@@ -60,15 +61,16 @@
 
     <native-query name="relation.findRelationByMobiles">
         <![CDATA[
-        SELECT a.*, b.relation_status
+        SELECT a.*, b.relation_status AS relationship
         FROM connects_member_profile a
         LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=a.sn AND  b.my_member_sn=:memberSn
         WHERE a.mobile IN (
         <#list mobileList as item>
-        #{item,jdbcType=VARCHAR}
+        ${item}
          <#if item_has_next>,</#if>
-        </#list>)
+        </#list>
+        )
          ]]>
     </native-query>
 
@@ -80,14 +82,14 @@
         ON b.friend_member_sn=a.sn AND  b.my_member_sn=:memberSn
         WHERE a.mobile IN (
         <#list mobileList as item>
-        #{item,jdbcType=VARCHAR}
+        ${item}
          <#if item_has_next>,</#if>
         </#list>)
          ]]>
     </native-query>
 
     <native-query name="relation.listAddMeRequest">
-        SELECT a.*,b.relation_status relationship
+        SELECT a.*,b.relation_status AS relationship
         FROM connects_member_profile a LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=a.sn
         WHERE b.my_member_sn=:sn AND b.relation_status!='00'
@@ -101,7 +103,7 @@
     </native-query>
 
     <native-query name="relation.listMySendRequest">
-        SELECT a.*,b.relation_status relationship
+        SELECT a.*,b.relation_status AS relationship
         FROM connects_member_profile a LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
         WHERE b.my_member_sn=:sn AND b.relation_status!='01'
     </native-query>

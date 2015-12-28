@@ -83,11 +83,7 @@ public class ProfileServiceImpl implements ProfileService {
         return userMapper.updateByUidSelective(user);
     }
 
-    @Override
-    public PageList<ContactInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
-        PageBounds pageBounds = new PageBounds(contactQueryParam.getPageNum(), contactQueryParam.getPageSize());
-        return userRelationEntityMapper.findRelationByMobiles(contactQueryParam.getCurrentSn(), contactQueryParam.getMobileList(), pageBounds);
-    }
+
 
     @Override
     public PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam) {

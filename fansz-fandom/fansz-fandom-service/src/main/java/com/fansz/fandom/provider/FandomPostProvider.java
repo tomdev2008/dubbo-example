@@ -11,6 +11,7 @@ import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.api.FandomPostApi;
 import com.fansz.fandom.model.post.*;
 import com.fansz.fandom.service.PostService;
+import com.fansz.pub.model.QueryResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;

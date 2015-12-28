@@ -6,10 +6,7 @@ import com.fansz.common.provider.annotation.DubboxService;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.relations.model.AddFriendParam;
-import com.fansz.relations.model.FriendInfoResult;
-import com.fansz.relations.model.FriendsQueryParam;
-import com.fansz.relations.model.OpRequestParam;
+import com.fansz.relations.model.*;
 
 /**
  * 关系服务
@@ -88,4 +85,12 @@ public interface RelationShipApi {
      */
     @DubboxMethod("getRequesters")
     CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);
+
+    /**
+     * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
+     */
+    @DubboxMethod("searchContacts")
+    CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
+
+
 }

@@ -13,14 +13,17 @@ import com.fansz.newsfeeds.model.post.AddPostParam;
 import com.fansz.newsfeeds.model.post.GetPostByIdParam;
 import com.fansz.newsfeeds.model.post.PostInfoResult;
 import com.fansz.newsfeeds.model.profile.UserInfoResult;
+import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by root on 15-11-3.
  */
-@Service("postService")
+@Service("newsfeedsPostServiceImpl")
 public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Autowired
@@ -34,16 +37,21 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Override
     public Long addPost(AddPostParam addPostParam) {
-        NewsfeedsPost entity = BeanTools.copyAs(addPostParam, NewsfeedsPost.class);
+        NewsfeedsPost entity = new NewsfeedsPost();
+        entity.setPostTitle(addPostParam.getPostTitle());
+        entity.setPostContent(addPostParam.getPostContent());
+        entity.setPostTime(new Date());
+        entity.setMemberSn(addPostParam.getCurrentSn());
+        entity.setSourceFrom(InformationSource.NEWSFEEDS.getCode());
         newsfeedsPostDAO.save(entity);
-        PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(),entity.getPostTime());
+        PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(), entity.getPostTime(), InformationSource.NEWSFEEDS);
         eventProducer.produce(AsyncEventType.PUBLISH_POST, publishPostEvent);
         return entity.getId();
     }
 
     @Override
-    public PostInfoResult getPost(GetPostByIdParam postParam) {
-        NewsfeedsPost entity = newsfeedsPostDAO.load(postParam.getPostId());
+    public PostInfoResult getPost(Long postId) {
+        NewsfeedsPost entity = newsfeedsPostDAO.load(postId);
         PostInfoResult result = BeanTools.copyAs(entity, PostInfoResult.class);
         User user = userDAO.findBySn(entity.getMemberSn());
         UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);

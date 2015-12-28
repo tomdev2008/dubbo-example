@@ -45,6 +45,8 @@ public class PublishPostConsumer implements IEventConsumer {
         Long postId = publishPostEvent.getPostId();
         if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
             NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
+            entity.setSourceFrom(InformationSource.FANDOM.getCode());
+            entity.setSourcePostId(postId);
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
         }

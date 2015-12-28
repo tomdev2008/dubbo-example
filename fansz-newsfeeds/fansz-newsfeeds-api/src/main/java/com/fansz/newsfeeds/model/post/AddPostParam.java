@@ -7,31 +7,24 @@ import org.hibernate.validator.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
- * 发post传入参数
+ * 朋友圈发post传入参数
  */
 public class AddPostParam implements AccessTokenAware, Serializable {
 
-    private static final long serialVersionUID = -9003165341407262234L;
+    private static final long serialVersionUID = 8343923749399762119L;
 
-    @JSONField(name="access_token")
+    @JSONField(name = "access_token")
     private String accessToken;
 
-    @JSONField(name="member_sn")
+    @JSONField(name = "member_sn")
     private String currentSn;
 
-    @JSONField(name="fandom_id")
-    private Long fandomId;
-
-    @JSONField(name="post_title")
+    @JSONField(name = "post_title")
     private String postTitle;
 
     @NotBlank
-    @JSONField(name="post_content")
+    @JSONField(name = "post_content")
     private String postContent;
-
-    @JSONField(name="post_newsfeeds")
-    private String postNewsfeeds;
-
 
     @Override
     public String getCurrentSn() {
@@ -41,14 +34,6 @@ public class AddPostParam implements AccessTokenAware, Serializable {
     @Override
     public void setCurrentSn(String currentSn) {
         this.currentSn = currentSn;
-    }
-
-    public Long getFandomId() {
-        return fandomId;
-    }
-
-    public void setFandomId(Long fandomId) {
-        this.fandomId = fandomId;
     }
 
     public String getPostTitle() {
@@ -67,13 +52,6 @@ public class AddPostParam implements AccessTokenAware, Serializable {
         this.postContent = postContent;
     }
 
-    public String getPostNewsfeeds() {
-        return postNewsfeeds;
-    }
-
-    public void setPostNewsfeeds(String postNewsfeeds) {
-        this.postNewsfeeds = postNewsfeeds;
-    }
 
     @Override
     public String getAccessToken() {

@@ -4,6 +4,7 @@ import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.db.entity.User;
 import com.fansz.db.entity.UserRelation;
+import com.fansz.db.model.FriendInfo;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.db.repository.UserRelationDAO;
 import com.fansz.event.model.SpecialFocusEvent;
@@ -14,11 +15,10 @@ import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.relations.constant.RelationShip;
-import com.fansz.relations.model.AddFriendParam;
-import com.fansz.relations.model.FriendInfoResult;
-import com.fansz.relations.model.FriendsQueryParam;
-import com.fansz.relations.model.OpRequestParam;
+import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,7 +45,7 @@ public class RelationShipServiceImpl implements RelationShipService {
         Page p = new Page();
         p.setPage(friendsParam.getPageNum());
         p.setPageSize(friendsParam.getPageSize());
-        QueryResult<User> userList = null;
+        QueryResult<FriendInfo> userList = null;
         if (isSpecial) {
             userList = userRelationDAO.findSpecialFriends(p, friendsParam.getCurrentSn());
         } else {
@@ -127,11 +127,20 @@ public class RelationShipServiceImpl implements RelationShipService {
         return renderResult(userRelationDAO.listMySendRequest(p, friendsQueryParam.getCurrentSn()));
     }
 
-    private QueryResult<FriendInfoResult> renderResult(QueryResult<User> userList){
-        if(CollectionTools.isNullOrEmpty(userList.getResultlist())){
+    private QueryResult<FriendInfoResult> renderResult(QueryResult<FriendInfo> userList) {
+        if (CollectionTools.isNullOrEmpty(userList.getResultlist())) {
             return new QueryResult<>(new ArrayList<FriendInfoResult>(), 0);
         }
         List<FriendInfoResult> friendList = BeanTools.copyAs(userList.getResultlist(), FriendInfoResult.class);
         return new QueryResult<>(friendList, userList.getTotalrecord());
+    }
+
+    @Override
+    public QueryResult<FriendInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam) {
+        Page p = new Page();
+        p.setPage(contactQueryParam.getPageNum());
+        p.setPageSize(contactQueryParam.getPageSize());
+        QueryResult<FriendInfo> friendList = userRelationDAO.findRelationByMobiles(p, contactQueryParam.getCurrentSn(), contactQueryParam.getMobileList());
+        return renderResult(friendList);
     }
 }

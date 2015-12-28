@@ -64,11 +64,5 @@ public interface ProfileApi {
     @DubboxMethod("getMembersAlbum")
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam);
 
-    /**
-     * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
-     */
-    @DubboxMethod("searchContacts")
-    CommonPagedResult<ContactInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
-
 
 }
