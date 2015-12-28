@@ -11,7 +11,7 @@
 
     <!--7003端口提供RPC服务-->
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.fandom.extension.MembersSerialOptimizerImpl" server="netty4"/>
+                    optimizer="com.fansz.fandom.extension.FandomSerialOptimizerImpl" server="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
