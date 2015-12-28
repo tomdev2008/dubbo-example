@@ -5,19 +5,19 @@
                version="1.0">
     <hql-query name="user.findByMobile">
         <![CDATA[
-          from UserEntity u where u.mobile=:mobile  and u.memberStatus='1'
+          from User u where u.mobile=:mobile  and u.memberStatus='1'
         ]]>
     </hql-query>
 
     <hql-query name="user.findByAccoount">
         <![CDATA[
-          from UserEntity u where u.loginname=:loginname and u.memberStatus='1'
+          from User u where u.loginname=:loginname and u.memberStatus='1'
         ]]>
     </hql-query>
 
     <hql-query name="user.findBySn">
         <![CDATA[
-          from UserEntity u where u.sn=:sn  and u.memberStatus='1'
+          from User u where u.sn=:sn  and u.memberStatus='1'
         ]]>
     </hql-query>
 

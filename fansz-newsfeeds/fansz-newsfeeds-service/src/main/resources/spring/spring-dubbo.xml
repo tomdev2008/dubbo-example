@@ -16,10 +16,6 @@
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.fansz.service.api.AccountApi" ref="accountProvider" validation="true" timeout="5000"
+    <dubbo:service interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" ref="neswfeedsPostProvider" validation="true" timeout="5000"
                    connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
-
-    <dubbo:service interface="com.fansz.service.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
-
 </beans>

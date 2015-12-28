@@ -5,7 +5,7 @@
                version="1.0">
     <hql-query name="relation.findMyFriends">
         <![CDATA[
-          from UserRelationEntity u where u.myMemberSn=:myMemberSn  and u.relationStatus in('10','11')
+          from UserRelation u where u.myMemberSn=:myMemberSn  and u.relationStatus in('10','11')
         ]]>
     </hql-query>
 

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * 帖子接口类
  * Created by root on 15-11-3.
  */
-@Component("postProvider")
+@Component("neswfeedsPostProvider")
 public class NeswfeedsPostProvider extends AbstractProvider implements NeswfeedsPostApi {
 
     /**

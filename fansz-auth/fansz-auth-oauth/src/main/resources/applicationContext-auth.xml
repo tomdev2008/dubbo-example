@@ -25,7 +25,7 @@
 		id="applicationProps" />
 	<util:properties location="classpath:/conf/sms.properties"
 					 id="smsProperties" />
-	<bean id="verifyCodeGenerator" class="com.fansz.VerifyCodeGenerator"/>
+	<bean id="verifyCodeGenerator" class="com.fansz.auth.utils.VerifyCodeGenerator"/>
 	<import resource="classpath:/spring/spring-datasource.xml" />
 	<import resource="classpath:/spring/spring-dubbo.xml" />
 	<import resource="classpath:/spring/spring-kafka.xml" />

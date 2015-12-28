@@ -263,15 +263,15 @@
                                                 message="********************** copy resources to classpath*************************"/>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/jdbc.properties"
                                                  value="file:${application.root}/conf/jdbc.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/redis.properties"
                                                  value="file:${application.root}/conf/redis.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
@@ -307,15 +307,15 @@
                                                 message="********************** copy resources to classpath*************************"/>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/jdbc.properties"
                                                  value="file:${application.root}/conf/jdbc.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/redis.properties"
                                                  value="file:${application.root}/conf/redis.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-provider.xml"
+                                        <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
