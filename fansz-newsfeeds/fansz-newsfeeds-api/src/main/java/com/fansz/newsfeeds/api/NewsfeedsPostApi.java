@@ -3,19 +3,17 @@ package com.fansz.newsfeeds.api;
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.newsfeeds.model.post.AddPostParam;
-import com.fansz.newsfeeds.model.post.GetPostByIdParam;
-import com.fansz.newsfeeds.model.post.PostInfoResult;
-import com.fansz.newsfeeds.model.post.RemovePostParam;
+import com.fansz.newsfeeds.model.post.*;
 
 
 /**
  * newsfeeds帖子相关接口
  */
 @DubboxService("newsfeeds")
-public interface NeswfeedsPostApi {
+public interface NewsfeedsPostApi {
     /**
      * 发帖子接口
      *
@@ -43,4 +41,6 @@ public interface NeswfeedsPostApi {
     @DubboxMethod("getNewsfeedsPost")
     CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
 
+    @DubboxMethod("showMyNewsfeedsList")
+    CommonPagedResult<NewsfeedsInfoResult> getMyNewsfeedsList() throws ApplicationException;
 }

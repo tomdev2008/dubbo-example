@@ -4,7 +4,7 @@ import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.newsfeeds.api.NeswfeedsPostApi;
+import com.fansz.newsfeeds.api.NewsfeedsPostApi;
 import com.fansz.newsfeeds.model.post.AddPostParam;
 import com.fansz.newsfeeds.model.post.GetPostByIdParam;
 import com.fansz.newsfeeds.model.post.PostInfoResult;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * Created by root on 15-11-3.
  */
 @Component("neswfeedsPostProvider")
-public class NeswfeedsPostProvider extends AbstractProvider implements NeswfeedsPostApi {
+public class NewsfeedsPostProvider extends AbstractProvider implements NewsfeedsPostApi {
 
     /**
      * 发帖子接口
