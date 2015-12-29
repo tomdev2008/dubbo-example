@@ -107,7 +107,7 @@ public class RelationShipServiceImpl implements RelationShipService {
         userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
 
         oldRelation = userRelationDAO.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getCurrentSn());
-        userRelationDAO.update(oldRelation);
+        userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
         return true;
     }
 
