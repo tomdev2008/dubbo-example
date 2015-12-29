@@ -1,10 +1,12 @@
 package com.fansz.newsfeeds.model.post;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 import com.fansz.newsfeeds.model.profile.UserInfoResult;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * POST信息模型
@@ -29,6 +31,12 @@ public class PostInfoResult implements Serializable {
     @JSONField(name = "post_member")
     private UserInfoResult userInfoResult;
 
+    @JSONField(name = "liked_list")
+    private List<UserInfoResult> likedList;
+
+    //TODO comment bean 需要改为heli新增的comment对象
+    @JSONField(name = "comment_list")
+    private List<PostCommentQueryResult> commentList;
     public Long getId() {
         return id;
     }
@@ -80,5 +88,19 @@ public class PostInfoResult implements Serializable {
         this.postTime = postTime;
     }
 
+    public List<UserInfoResult> getLikedList() {
+        return likedList;
+    }
 
+    public void setLikedList(List<UserInfoResult> likedList) {
+        this.likedList = likedList;
+    }
+
+    public List<PostCommentQueryResult> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<PostCommentQueryResult> commentList) {
+        this.commentList = commentList;
+    }
 }

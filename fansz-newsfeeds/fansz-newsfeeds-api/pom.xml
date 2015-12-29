@@ -28,5 +28,9 @@
          <groupId>com.fansz</groupId>
          <artifactId>common-provider</artifactId>
      </dependency>
+     <dependency>
+         <groupId>com.alibaba</groupId>
+         <artifactId>dubbo</artifactId>
+     </dependency>
  </dependencies>
 </project>

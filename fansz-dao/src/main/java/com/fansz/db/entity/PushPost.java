@@ -25,7 +25,7 @@ public class PushPost implements java.io.Serializable {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "createtime")
-    private Date ceratetime;
+    private Date createtime;
 
     public Long getId() {
         return id;
@@ -51,12 +51,12 @@ public class PushPost implements java.io.Serializable {
         this.postId = postId;
     }
 
-    public Date getCeratetime() {
-        return ceratetime;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setCeratetime(Date ceratetime) {
-        this.ceratetime = ceratetime;
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }
 

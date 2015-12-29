@@ -6,6 +6,8 @@ import com.fansz.orm.dao.annotation.DAO;
 import com.fansz.orm.dao.annotation.NamedExec;
 import com.fansz.orm.dao.annotation.NamedQuery;
 
+import java.util.List;
+
 /**
  * Created by allan on 15/12/23.
  */
@@ -22,4 +24,7 @@ public interface UserDAO extends IBaseDAO<User> {
 
     @NamedExec(execId = "user.updatePassword", parameters = {"userId", "password"})
     int updatePassword(Long id, String password);
+
+    @NamedQuery(queryId = "user.findBySnList", parameters = {"memberSnList"})
+    List<User> findBySnString(List<String> memberSnList);
 }

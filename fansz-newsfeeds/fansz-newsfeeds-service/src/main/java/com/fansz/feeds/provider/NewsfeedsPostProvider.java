@@ -3,15 +3,14 @@ package com.fansz.feeds.provider;
 import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.db.entity.NewsfeedsPost;
 import com.fansz.feeds.service.NewsfeedsPostService;
-import com.fansz.newsfeeds.api.NeswfeedsPostApi;
-import com.fansz.newsfeeds.model.post.AddPostParam;
-import com.fansz.newsfeeds.model.post.GetPostByIdParam;
-import com.fansz.newsfeeds.model.post.PostInfoResult;
-import com.fansz.newsfeeds.model.post.RemovePostParam;
+import com.fansz.newsfeeds.api.NewsfeedsPostApi;
+import com.fansz.newsfeeds.model.post.*;
+import com.fansz.pub.model.Page;
 import com.fansz.pub.utils.BeanTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,8 +19,8 @@ import org.springframework.stereotype.Component;
  * 帖子接口类
  * Created by root on 15-11-3.
  */
-@Component("neswfeedsPostProvider")
-public class NeswfeedsPostProvider extends AbstractProvider implements NeswfeedsPostApi {
+@Component("newsfeedsPostProvider")
+public class NewsfeedsPostProvider extends AbstractProvider implements NewsfeedsPostApi {
 
     @Autowired
     private NewsfeedsPostService newsfeedsPostService;
@@ -36,7 +35,8 @@ public class NeswfeedsPostProvider extends AbstractProvider implements Neswfeeds
         Long postId = newsfeedsPostService.addPost(addPostParam);
         GetPostByIdParam param = new GetPostByIdParam();
         param.setPostId(postId);
-        return getPost(param);
+        //return getPost(param);
+        return null;
     }
 
 
@@ -49,17 +49,6 @@ public class NeswfeedsPostProvider extends AbstractProvider implements Neswfeeds
             return renderSuccess(postInfoResult);
         }
         return renderFail(ErrorCode.POST_NOT_ALLOW_DEL.getCode());
-    }
-
-    /**
-     * 获取帖子信息接口
-     *
-     * @param postParam 帖子
-     * @return resp 返回对象
-     */
-    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException {
-        PostInfoResult postInfoResult = newsfeedsPostService.getPost(postParam.getPostId());
-        return renderSuccess(postInfoResult);
     }
 
     /**
@@ -91,5 +80,48 @@ public class NeswfeedsPostProvider extends AbstractProvider implements Neswfeeds
         }
         return renderSuccess();
     }
+    /**
+     * 单查某一条朋友圈的详情:N008
+     * 根据postid来查询post的详情,APP可根据缓存跳转
+     *
+     * @param postParam 帖子
+     * @return resp 返回对象
+     */
+    public PostInfoResult getPost(GetPostByIdParam postParam) throws ApplicationException {
+        PostInfoResult postInfoResult = newsfeedsPostService.getPost(postParam);
+        return postInfoResult;
+    }
 
+    /**
+     * 查询我的朋友圈内容列表：N007
+     * 显示我的所有好友发表的朋友圈的内容列表
+     *
+     * @param memberParam
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException {
+        Page page = new Page();
+        page.setPage(memberParam.getPageNum());
+        page.setPageSize(memberParam.getPageSize());
+        return renderPagedSuccess(newsfeedsPostService.findNewsfeedsListByMemberSn(memberParam.getCurrentSn(), page));
+    }
+
+    /**
+     * 查询某一个人发布的所有的所有朋友圈内容:N009
+     * 根据会员号sn查询某人发布的朋友圈内容
+     *
+     * @param memberPostsParam
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonPagedResult<PostInfoResult> getFriendsFeedsList(GetMemberPostsParam memberPostsParam) throws ApplicationException {
+        Page page = new Page();
+        page.setPage(memberPostsParam.getPageNum());
+        page.setPageSize(memberPostsParam.getPageSize());
+        return renderPagedSuccess(newsfeedsPostService.findFriendsNewsfeedsListBySn(memberPostsParam.getCurrentSn(),
+                memberPostsParam.getFriendSn(), page));
+    }
 }
