@@ -5,7 +5,7 @@
                version="1.0">
     <hql-query name="pushPost.findPushPostByMemberSn">
         <![CDATA[
-          from PushPost p where p.memberSn=:memberSn
+          from PushPost p where p.memberSn=:memberSn order by p.id desc
         ]]>
     </hql-query>
 
@@ -70,4 +70,16 @@
                             AND r.friend_member_sn = c.commentator_sn) in ('10','11'))
         ]]>
     </native-query>
+
+    <hql-query name="newsfeedsPost.findNewsfeedsPostBySn">
+        <![CDATA[
+          from NewsfeedsPost p where p.memberSn=:memberSn order by p.id desc
+        ]]>
+    </hql-query>
+
+    <hql-query name="newsfeedsPost.findNewsfeedsPostBySn.counter">
+        <![CDATA[
+          select count(*) from NewsfeedsPost p where p.memberSn=:memberSn
+        ]]>
+    </hql-query>
 </dynamic-query>

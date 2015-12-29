@@ -33,12 +33,12 @@ public interface NewsfeedsPostApi {
     CommonResult<NullResult> removePost(RemovePostParam removePostrParam) throws ApplicationException;
 
     /**
-     * 根据postId获取帖子信息接口
-     *
+     * 单查某一条朋友圈的详情:N008
+     * 根据postid来查询post的详情,APP可根据缓存跳转
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    @DubboxMethod("getNewsfeedsPost")
+    @DubboxMethod("showNewsfeedsDetail")
     CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
 
     /**
@@ -50,4 +50,14 @@ public interface NewsfeedsPostApi {
      */
     @DubboxMethod("showMyNewsfeedsList")
     CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException;
+
+    /**
+     * 查询某一个人发布的所有的所有朋友圈内容:N009
+     * 根据会员号sn查询某人发布的朋友圈内容
+     * @param memberPostsParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("showNewsfeedsBySn")
+    CommonPagedResult<PostInfoResult> getFriendsFeedsList(GetMemberPostsParam memberPostsParam) throws ApplicationException;
 }

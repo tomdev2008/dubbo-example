@@ -30,35 +30,60 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
      * @return resp 返回对象
      */
     @Override
-    public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam)  throws ApplicationException {
-        PostInfoResult postInfoResult=null;
+    public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException {
+        PostInfoResult postInfoResult = null;
         return renderSuccess(postInfoResult);
     }
 
 
-
     @Override
-    public CommonResult<NullResult> removePost(RemovePostParam removePostrParam)  throws ApplicationException{
+    public CommonResult<NullResult> removePost(RemovePostParam removePostrParam) throws ApplicationException {
         return renderSuccess(PRESENCE);
     }
 
     /**
-     * 获取帖子信息接口
+     * 单查某一条朋友圈的详情:N008
+     * 根据postid来查询post的详情,APP可根据缓存跳转
      *
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam)  throws ApplicationException{
-        PostInfoResult postInfoResult=null;
+    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException {
+        PostInfoResult postInfoResult = newsfeedsPostService.getPost(postParam);
         return renderSuccess(postInfoResult);
     }
 
+    /**
+     * 查询我的朋友圈内容列表：N007
+     * 显示我的所有好友发表的朋友圈的内容列表
+     *
+     * @param memberParam
+     * @return
+     * @throws ApplicationException
+     */
     @Override
     public CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException {
         Page page = new Page();
         page.setPage(memberParam.getPageNum());
         page.setPageSize(memberParam.getPageSize());
         return renderPagedSuccess(newsfeedsPostService.findNewsfeedsListByMemberSn(memberParam.getCurrentSn(), page));
+    }
+
+    /**
+     * 查询某一个人发布的所有的所有朋友圈内容:N009
+     * 根据会员号sn查询某人发布的朋友圈内容
+     *
+     * @param memberPostsParam
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonPagedResult<PostInfoResult> getFriendsFeedsList(GetMemberPostsParam memberPostsParam) throws ApplicationException {
+        Page page = new Page();
+        page.setPage(memberPostsParam.getPageNum());
+        page.setPageSize(memberPostsParam.getPageSize());
+        return renderPagedSuccess(newsfeedsPostService.findFriendsNewsfeedsListBySn(memberPostsParam.getCurrentSn(),
+                memberPostsParam.getFriendSn(), page));
     }
 
 

@@ -17,4 +17,6 @@ public interface NewsfeedsPostService {
     PostInfoResult getPost(GetPostByIdParam postParam);
 
     QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page);
+
+    QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page);
 }

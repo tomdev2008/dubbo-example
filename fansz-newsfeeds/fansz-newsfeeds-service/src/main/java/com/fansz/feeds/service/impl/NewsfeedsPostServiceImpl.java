@@ -1,7 +1,9 @@
 package com.fansz.feeds.service.impl;
 
 
-import com.fansz.db.entity.*;
+import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.entity.PushPost;
+import com.fansz.db.entity.User;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
 import com.fansz.db.model.NewsfeedsPostVO;
@@ -24,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,105 +56,133 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     public Long addPost(AddPostParam addPostParam) {
         NewsfeedsPost entity = BeanTools.copyAs(addPostParam, NewsfeedsPost.class);
         newsfeedsPostDAO.save(entity);
-        PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(),entity.getPostTime());
+        PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(), entity.getPostTime());
         eventProducer.produce(AsyncEventType.PUBLISH_POST, publishPostEvent);
         return entity.getId();
     }
 
     @Override
     public PostInfoResult getPost(GetPostByIdParam postParam) {
-        NewsfeedsPost entity = newsfeedsPostDAO.load(postParam.getPostId());
-        PostInfoResult result = BeanTools.copyAs(entity, PostInfoResult.class);
-        User user = userDAO.findBySn(entity.getMemberSn());
-        UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);
-        result.setUserInfoResult(userInfoResult);
-        return result;
+        NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(postParam.getPostId());
+        List<NewsfeedsPost> newsfeedsPostList = new ArrayList<>();
+        newsfeedsPostList.add(newsfeedsPost);
+        return this.assemblePostInfoResult(newsfeedsPostList, postParam.getCurrentSn()).get(0);
     }
 
     @Override
     public QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page) {
         QueryResult<PushPost> pushPosts = pushPostDAO.findPushPostByMemberSn(page, memberSn);
-        QueryResult<PostInfoResult> postResult = new QueryResult<>();
 
-        if(!CollectionTools.isNullOrEmpty(pushPosts.getResultlist())){
+        if (!CollectionTools.isNullOrEmpty(pushPosts.getResultlist())) {
+            QueryResult<PostInfoResult> postResult = new QueryResult<>();
             //获取postIds查询参数
             List<String> postIds = new ArrayList<>();
-            for(PushPost pushPost: pushPosts.getResultlist()){
+            for (PushPost pushPost : pushPosts.getResultlist()) {
                 postIds.add(pushPost.getPostId().toString());
             }
-
-            HashSet<String> memberSnSet = new HashSet<>();
-            //所有的post
             List<NewsfeedsPostVO> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostByIds(postIds);
-            for(NewsfeedsPostVO post: newsfeedsPosts){
-                memberSnSet.add(post.getMemberSn());
-            }
-            //TODO 所有的评论
-            List<NewsfeedsCommentVO> commentList = newsfeedsCommentDAO.findByPostIdsAndMemberSn(postIds, memberSn);
-
-            //所有的like
-            List<NewsfeedsMemberLikeVO> memberLikeList = newsfeedsMemberLikeDAO.findLikesByPostIdsAndMemberSn(postIds, memberSn);
-            for(NewsfeedsMemberLikeVO memberLike: memberLikeList){
-                memberSnSet.add(memberLike.getMemberSn());
-            }
-            List<String> memberSnList = new ArrayList<>(memberSnSet);
-
-
-            //NewsfeedsPost convert to PostInfoResult
-            List<PostInfoResult> postInfoResultList = BeanTools.copyAs(newsfeedsPosts, PostInfoResult.class);
-
-            //批量查询所需的user info
-            //TODO 从缓存中获取user information
-            List<User> userList = userDAO.findBySnString(memberSnList);
-            //遍历memberLikeList, 往PostInfoResult中赋值
-            for(NewsfeedsMemberLikeVO memberLike: memberLikeList){
-                PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", memberLike.getPostId());
-                User user = CollectionTools.find(userList, "sn", memberLike.getMemberSn());
-                UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);
-                if(CollectionTools.isNullOrEmpty(postInfoResult.getLikedList())){
-                    postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
-                }
-                postInfoResult.getLikedList().add(userInfoResult);
-                if(memberSn.equals(memberLike.getMemberSn())){
-                    postInfoResult.setLiked(Boolean.TRUE.toString());
-                }
-            }
-
-//            List<PostCommentQueryResult> commentQueryResultList
-            //遍历comment
-            List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
-            for(PostCommentQueryResult postComment: commentQueryResultList){
-                User commentUser = CollectionTools.find(userList, "sn", postComment.getCommentatorSn());
-                postComment.setCommentatorAvatar(commentUser.getMemberAvatar());
-                //find parent comment && set value
-                if(postComment.getCommentParentId() != null){
-                    PostCommentQueryResult originComment = CollectionTools.find(commentQueryResultList, "id", postComment.getCommentParentId());
-                    postComment.setOrginAvatar(originComment.getCommentatorAvatar());
-                    postComment.setOrginContent(originComment.getCommentContent());
-                    postComment.setOrginNickname(originComment.getCommentatorNickname());
-                    postComment.setOrginSn(originComment.getCommentatorSn());
-                }
-
-                PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", postComment.getPostId());
-                if(CollectionTools.isNullOrEmpty(postInfoResult.getCommentList())){
-                    postInfoResult.setCommentList(new ArrayList<PostCommentQueryResult>());
-                }
-                postInfoResult.getCommentList().add(postComment);
-            }
-
-            //发布用户信息
-            for(PostInfoResult postInfoResult: postInfoResultList){
-                User postUser = CollectionTools.find(userList, "sn", memberSn);
-                UserInfoResult postUserInfo = BeanTools.copyAs(postUser, UserInfoResult.class);
-                postInfoResult.setUserInfoResult(postUserInfo);
-            }
-
+            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts, memberSn);
             postResult.setResultlist(postInfoResultList);
             postResult.setTotalrecord(postInfoResultList.size());
-
             return postResult;
-        }else {
+        } else {
             return new QueryResult<>(null, 0);
         }
+    }
+
+    @Override
+    public QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page) {
+        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, friendSn);
+        if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())){
+            QueryResult<PostInfoResult> postResult = new QueryResult<>();
+            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberSn);
+            postResult.setResultlist(postInfoResultList);
+            postResult.setTotalrecord(postInfoResultList.size());
+            return postResult;
+        } else {
+            return new QueryResult<>(null, 0);
+        }
+    }
+
+    /**
+     * 组装postInfoResult
+     *
+     * @param newsfeedsPosts postList
+     * @param memberSn 登陆用户sn
+     * @return
+     */
+    private List<PostInfoResult> assemblePostInfoResult(List<? extends NewsfeedsPost> newsfeedsPosts, String memberSn) {
+        //所有的post
+        if (CollectionTools.isNullOrEmpty(newsfeedsPosts)) {
+            return null;
+        }
+        HashSet<String> memberSnSet = new HashSet<>();
+        HashSet<String> postIdSet = new HashSet<>();
+        for (NewsfeedsPost post : newsfeedsPosts) {
+            memberSnSet.add(post.getMemberSn());
+            postIdSet.add(String.valueOf(post.getId()));
+        }
+        List<String> postIds = new ArrayList<>(postIdSet);
+        //所有的comment
+        List<NewsfeedsCommentVO> commentList = newsfeedsCommentDAO.findByPostIdsAndMemberSn(postIds, memberSn);
+
+        //所有的like
+        List<NewsfeedsMemberLikeVO> memberLikeList = newsfeedsMemberLikeDAO.findLikesByPostIdsAndMemberSn(postIds, memberSn);
+        for (NewsfeedsMemberLikeVO memberLike : memberLikeList) {
+            memberSnSet.add(memberLike.getMemberSn());
+        }
+        List<String> memberSnList = new ArrayList<>(memberSnSet);
+
+        //批量查询所需的user info
+        //TODO 从缓存中获取user information
+        List<User> userList = userDAO.findBySnString(memberSnList);
+
+        //NewsfeedsPost convert to PostInfoResult
+        List<PostInfoResult> postInfoResultList = new ArrayList<>();
+        //convert newsfeedPost to PostInfoResult
+        for(NewsfeedsPost newsfeedsPost: newsfeedsPosts){
+            PostInfoResult postInfoResult = BeanTools.copyAs(newsfeedsPost, PostInfoResult.class);
+            User postUser = CollectionTools.find(userList, "sn", newsfeedsPost.getMemberSn());
+            UserInfoResult postUserInfo = BeanTools.copyAs(postUser, UserInfoResult.class);
+            postInfoResult.setUserInfoResult(postUserInfo);
+            postInfoResultList.add(postInfoResult);
+        }
+
+        //遍历memberLikeList, 往PostInfoResult中赋值
+        for (NewsfeedsMemberLikeVO memberLike : memberLikeList) {
+            PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", memberLike.getPostId());
+            User user = CollectionTools.find(userList, "sn", memberLike.getMemberSn());
+            UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);
+            if (CollectionTools.isNullOrEmpty(postInfoResult.getLikedList())) {
+                postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
+            }
+            postInfoResult.getLikedList().add(userInfoResult);
+            if (memberSn.equals(memberLike.getMemberSn())) {
+                postInfoResult.setLiked(Boolean.TRUE.toString());
+            }
+        }
+        //遍历comment
+        List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
+        for (PostCommentQueryResult postComment : commentQueryResultList) {
+            User commentUser = CollectionTools.find(userList, "sn", postComment.getCommentatorSn());
+            postComment.setCommentatorAvatar(commentUser.getMemberAvatar());
+            //find parent comment && set value
+            if (postComment.getCommentParentId() != null) {
+                PostCommentQueryResult originComment = CollectionTools.find(commentQueryResultList, "id", postComment.getCommentParentId());
+                postComment.setOrginAvatar(originComment.getCommentatorAvatar());
+                postComment.setOrginContent(originComment.getCommentContent());
+                postComment.setOrginNickname(originComment.getCommentatorNickname());
+                postComment.setOrginSn(originComment.getCommentatorSn());
+            }
+
+            PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", postComment.getPostId());
+            if (CollectionTools.isNullOrEmpty(postInfoResult.getCommentList())) {
+                postInfoResult.setCommentList(new ArrayList<PostCommentQueryResult>());
+            }
+            postInfoResult.getCommentList().add(postComment);
+        }
+
+
+        return postInfoResultList;
     }
 }

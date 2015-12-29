@@ -10,7 +10,7 @@
     <dubbo:application name="members-service-feeds" owner="feeds" organization="fansz"/>
 
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
-                    optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
+                    server="netty"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
