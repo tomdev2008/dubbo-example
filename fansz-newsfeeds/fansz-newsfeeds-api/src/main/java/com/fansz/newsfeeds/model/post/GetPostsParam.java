@@ -5,7 +5,7 @@ import com.fansz.common.provider.model.AccessTokenAware;
 import com.fansz.common.provider.model.PageParam;
 
 /**
- * 分页查询用户所有fandom的post信息
+ * 分页查询用户所有newsfeeds的post信息
  */
 public class GetPostsParam extends PageParam implements AccessTokenAware {
 

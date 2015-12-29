@@ -41,6 +41,13 @@ public interface NewsfeedsPostApi {
     @DubboxMethod("getNewsfeedsPost")
     CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
 
+    /**
+     * 查询我的朋友圈内容列表：N007
+     * 显示我的所有好友发表的朋友圈的内容列表
+     * @param memberParam
+     * @return
+     * @throws ApplicationException
+     */
     @DubboxMethod("showMyNewsfeedsList")
-    CommonPagedResult<NewsfeedsInfoResult> getMyNewsfeedsList() throws ApplicationException;
+    CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException;
 }

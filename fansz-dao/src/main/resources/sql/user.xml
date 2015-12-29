@@ -27,4 +27,15 @@
            UPDATE connects_member_profile SET  password = :password WHERE id =:userId
         ]]>
     </native-query>
+
+    <hql-query name="user.findBySnList">
+        <![CDATA[
+          from User u where u.sn in (
+          <#list memberSnList as item>
+                    '${item}'
+                     <#if item_has_next>,</#if>
+                  </#list>
+          )  and u.memberStatus='1'
+        ]]>
+    </hql-query>
 </dynamic-query>

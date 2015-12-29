@@ -2,21 +2,26 @@ package com.fansz.feeds.provider;
 
 import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
+import com.fansz.feeds.service.NewsfeedsPostService;
 import com.fansz.newsfeeds.api.NewsfeedsPostApi;
-import com.fansz.newsfeeds.model.post.AddPostParam;
-import com.fansz.newsfeeds.model.post.GetPostByIdParam;
-import com.fansz.newsfeeds.model.post.PostInfoResult;
-import com.fansz.newsfeeds.model.post.RemovePostParam;
+import com.fansz.newsfeeds.model.post.*;
+import com.fansz.pub.model.Page;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * 帖子接口类
  * Created by root on 15-11-3.
  */
-@Component("neswfeedsPostProvider")
+@Component("newsfeedsPostProvider")
 public class NewsfeedsPostProvider extends AbstractProvider implements NewsfeedsPostApi {
+
+    @Autowired
+    private NewsfeedsPostService newsfeedsPostService;
 
     /**
      * 发帖子接口
@@ -48,7 +53,13 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
         return renderSuccess(postInfoResult);
     }
 
-
+    @Override
+    public CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException {
+        Page page = new Page();
+        page.setPage(memberParam.getPageNum());
+        page.setPageSize(memberParam.getPageSize());
+        return renderPagedSuccess(newsfeedsPostService.findNewsfeedsListByMemberSn(memberParam.getCurrentSn(), page));
+    }
 
 
 }

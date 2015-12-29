@@ -56,7 +56,7 @@ public class PublishPostConsumer implements IEventConsumer {
             PushPost pushPost = new PushPost();
             pushPost.setMemberSn(friend.getFriendMemberSn());
             pushPost.setPostId(postId);
-            pushPost.setCeratetime(new Date());
+            pushPost.setCreatetime(new Date());
             pushPostDAO.save(pushPost);
         }
     }

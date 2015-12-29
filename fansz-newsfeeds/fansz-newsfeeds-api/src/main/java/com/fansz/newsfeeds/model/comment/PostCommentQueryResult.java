@@ -2,13 +2,14 @@ package com.fansz.newsfeeds.model.comment;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 /**
  * Created by xuyubiao on 15/12/1.
  */
-public class PostCommentQueryResult {
+public class PostCommentQueryResult implements Serializable {
 
     @JSONField(name="id")
     private Long id;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dynamic-query xmlns="http://fansz.com/xml/ns/dynamic-query"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://fansz.com/xml/ns/dynamic-query http://fansz.com/xml/ns/dynamic-query_1_0.xsd"
+               version="1.0">
+    <hql-query name="pushPost.findPushPostByMemberSn">
+        <![CDATA[
+          from PushPost p where p.memberSn=:memberSn
+        ]]>
+    </hql-query>
+
+    <hql-query name="pushPost.findPushPostByMemberSn.counter">
+        <![CDATA[
+          select count(*) from PushPost p where p.memberSn=:memberSn
+        ]]>
+    </hql-query>
+
+    <native-query name="newsfeedsPost.findNewsfeedsPostByIds">
+        <![CDATA[
+          select * from newsfeeds_member_post p where p.id in (
+          <#list postIds as item>
+            ${item}
+             <#if item_has_next>,</#if>
+          </#list>)
+        ]]>
+    </native-query>
+
+    <native-query name="newsfeedsLike.findLikesByPostIdsAndMemberSn">
+        <![CDATA[
+          SELECT
+                l.*
+            FROM
+                newsfeeds_member_like l
+            WHERE
+                l.post_id IN (
+                  <#list postIds as item>
+                    ${item}
+                     <#if item_has_next>,</#if>
+                  </#list>)
+                    AND (l.member_sn = :memberSn
+                    OR (SELECT
+                        relation_status
+                    FROM
+                        connects_member_relation r
+                    WHERE
+                        r.my_member_sn = :memberSn
+                            AND r.friend_member_sn = l.member_sn) in ('10','11'))
+        ]]>
+    </native-query>
+    
+    <native-query name="newsfeedsComments.findCommentsByPostIdsAndMemberSn">
+        <![CDATA[
+          SELECT
+                c.*
+            FROM
+                newsfeeds_member_comment c
+            WHERE
+                c.post_id IN (
+                  <#list postIds as item>
+                    ${item}
+                     <#if item_has_next>,</#if>
+                  </#list>)
+                    AND (c.commentator_sn = :memberSn
+                    OR (SELECT
+                        relation_status
+                    FROM
+                        connects_member_relation r
+                    WHERE
+                        r.my_member_sn = :memberSn
+                            AND r.friend_member_sn = c.commentator_sn) in ('10','11'))
+        ]]>
+    </native-query>
+</dynamic-query>

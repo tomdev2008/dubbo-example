@@ -59,6 +59,7 @@
             <list>
                 <value>classpath:/sql/user.xml</value>
                 <value>classpath:/sql/relation.xml</value>
+                <value>classpath:/sql/newsfeeds.xml</value>
             </list>
         </property>
         <property name="nativeSqlReturnMap" value="true"/>
