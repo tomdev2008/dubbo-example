@@ -7,7 +7,7 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="members-service-feeds" owner="feeds" organization="fansz"/>
+    <dubbo:application name="fansz-service-newsfeeds" owner="newsfeeds" organization="fansz"/>
 
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4"/>
 
@@ -16,5 +16,8 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" ref="neswfeedsPostProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="0" group="${provider.group}"/>
+
+    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" ref="newsfeedsCommentProvider" validation="true" timeout="5000"
                    connections="500" version="0.0.1" retries="0" group="${provider.group}"/>
 </beans>

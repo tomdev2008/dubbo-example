@@ -1,6 +1,5 @@
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fansz.event.model.PublishPostEvent;
-import com.fansz.event.sender.HttpSender;
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.JsonHelper;
 

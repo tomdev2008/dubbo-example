@@ -9,8 +9,6 @@ import com.fansz.db.repository.PushPostDAO;
 import com.fansz.db.repository.UserRelationDAO;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.type.AsyncEventType;
-
-
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;

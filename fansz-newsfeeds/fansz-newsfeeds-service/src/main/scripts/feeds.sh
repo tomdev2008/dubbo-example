@@ -18,7 +18,7 @@ JAVA_OPTS="$JAVA_OPTS -XX:+UseG1GC -XX:MaxGCPauseMillis=200"
   
 JAVA_OPTS="$JAVA_OPTS -XX:+HeapDumpOnOutOfMemoryError"  
 JAVA_OPTS="$JAVA_OPTS -Xloggc:$BASE_DIR/logs/gc.log"
-CONSUMER_PID="$BASE_DIR/logs/consumer.pid"
+FEEDS_PID="$BASE_DIR/logs/feeds.pid"
 
 if [ ! -f "$JAVA_HOME/bin/java" ]; then  
   echo "please set JAVA_HOME"  
@@ -26,16 +26,16 @@ if [ ! -f "$JAVA_HOME/bin/java" ]; then
 fi  
   
 LOG_PATH="$BASE_DIR/logs" 
-CONSUMER_OUT="$LOG_PATH/consumer.out"
+FEEDS_OUT="$LOG_PATH/feeds.out"
   
 if [ ! -d "$LOG_PATH" ]; then                                                                                                                                                   
     mkdir $LOG_PATH  
 fi  
 
-#star member server
-nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$CONSUMER_OUT" 2>&1 &
+#star feeds server
+nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$FEEDS_OUT" 2>&1 &
 
-echo $! > "$CONSUMER_PID"
+echo $! > "$FEEDS_PID"
 
 
 

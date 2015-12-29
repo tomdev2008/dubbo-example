@@ -1,7 +1,6 @@
 package com.fansz.newsfeeds.model.post;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fansz.newsfeeds.model.fandom.FandomInfoResult;
 import com.fansz.newsfeeds.model.profile.UserInfoResult;
 
 import java.io.Serializable;

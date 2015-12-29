@@ -1,12 +1,12 @@
 package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.fandom.service.SpecialFocusService;
-import com.fansz.fandom.tools.Constants;
-import com.fansz.fandom.repository.SpecialFocusMapper;
 import com.fansz.fandom.model.specialfocus.ModifySpecialFocusParam;
 import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
 import com.fansz.fandom.model.specialfocus.SpecialFocusResult;
+import com.fansz.fandom.repository.SpecialFocusMapper;
+import com.fansz.fandom.service.SpecialFocusService;
+import com.fansz.fandom.tools.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;

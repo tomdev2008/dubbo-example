@@ -1,10 +1,13 @@
 package com.fansz.event;
 
 import com.fansz.event.consumer.KafkaConsumerRunner;
-import com.fansz.event.exception.SmsConsumerException;
+import com.fansz.event.exception.EventConsumerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 短消息发送线程启动入口
@@ -16,11 +19,12 @@ public class EventStarter {
         KafkaConsumerRunner kafkaConsumerRunner = null;
         ClassPathXmlApplicationContext ac = null;
         try {
-            ac= new ClassPathXmlApplicationContext("applicationContext-event.xml");
+            ac = new ClassPathXmlApplicationContext("applicationContext-event.xml");
             ac.start();
             kafkaConsumerRunner = (KafkaConsumerRunner) ac.getBean("kafkaConsumerRunner");
-            kafkaConsumerRunner.start();
-        } catch (SmsConsumerException e) {
+            ExecutorService executor = Executors.newFixedThreadPool(4);
+            executor.submit(kafkaConsumerRunner);
+        } catch (EventConsumerException e) {
             logger.error("SMS sending thread error,please restart the application!", e);
             if (kafkaConsumerRunner != null) {
                 kafkaConsumerRunner.shutdown();

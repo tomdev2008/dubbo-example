@@ -2,49 +2,51 @@ package com.fansz.newsfeeds.model.comment;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 /**
  * Created by xuyubiao on 15/12/1.
  */
-public class PostCommentQueryResult {
+public class PostCommentQueryResult implements Serializable {
 
-    @JSONField(name="id")
+    private static final long serialVersionUID = -3314595763754474476L;
+
     private Long id;
 
-    @JSONField(name="post_id")
+    @JSONField(name = "post_id")
     private Long postId;
 
-    @JSONField(name="comment_parent_id")
+    @JSONField(name = "comment_parent_id")
     private Long commentParentId;
 
-    @JSONField(name="comment_content")
+    @JSONField(name = "comment_content")
     private String commentContent;
 
-    @JSONField(name="commentator_sn")
+    @JSONField(name = "commentator_sn")
     private String commentatorSn;
 
-    @JSONField(name="commentator_nickname")
+    @JSONField(name = "commentator_nickname")
     private String commentatorNickname;
 
-    @JSONField(name="comment_time")
+    @JSONField(name = "comment_time")
     private Date commentTime;
 
-    @JSONField(name="commentator_avatar")
+    @JSONField(name = "commentator_avatar")
     private String commentatorAvatar;
 
-    @JSONField(name="orgin_sn")
-    private String orginSn;
+    @JSONField(name = "origin_sn")
+    private String originSn;
 
-    @JSONField(name="orgin_content")
-    private String orginContent;
+    @JSONField(name = "origin_content")
+    private String originContent;
 
-    @JSONField(name="orgin_nickname")
-    private String orginNickname;
+    @JSONField(name = "origin_nickname")
+    private String originNickname;
 
-    @JSONField(name="orgin_avatar")
-    private String orginAvatar;
+    @JSONField(name = "origin_avatar")
+    private String originAvatar;
 
     public Long getId() {
         return id;
@@ -110,35 +112,35 @@ public class PostCommentQueryResult {
         this.commentatorAvatar = commentatorAvatar;
     }
 
-    public String getOrginSn() {
-        return orginSn;
+    public String getOriginSn() {
+        return originSn;
     }
 
-    public void setOrginSn(String orginSn) {
-        this.orginSn = orginSn;
+    public void setOriginSn(String originSn) {
+        this.originSn = originSn;
     }
 
-    public String getOrginContent() {
-        return orginContent;
+    public String getOriginContent() {
+        return originContent;
     }
 
-    public void setOrginContent(String orginContent) {
-        this.orginContent = orginContent;
+    public void setOriginContent(String originContent) {
+        this.originContent = originContent;
     }
 
-    public String getOrginNickname() {
-        return orginNickname;
+    public String getOriginNickname() {
+        return originNickname;
     }
 
-    public void setOrginNickname(String orginNickname) {
-        this.orginNickname = orginNickname;
+    public void setOriginNickname(String originNickname) {
+        this.originNickname = originNickname;
     }
 
-    public String getOrginAvatar() {
-        return orginAvatar;
+    public String getOriginAvatar() {
+        return originAvatar;
     }
 
-    public void setOrginAvatar(String orginAvatar) {
-        this.orginAvatar = orginAvatar;
+    public void setOriginAvatar(String originAvatar) {
+        this.originAvatar = originAvatar;
     }
 }

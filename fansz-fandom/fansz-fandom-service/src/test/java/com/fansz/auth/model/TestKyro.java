@@ -1,6 +1,5 @@
 package com.fansz.auth.model;
 
-import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.PageParam;
 import com.fansz.fandom.model.post.PostInfoResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;

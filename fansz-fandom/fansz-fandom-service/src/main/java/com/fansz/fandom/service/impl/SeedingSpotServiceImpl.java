@@ -1,10 +1,10 @@
 package com.fansz.fandom.service.impl;
 
-import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.fansz.fandom.entity.SeedingSpotEntity;
+import com.fansz.fandom.model.seedingspot.SeedingSpotParam;
+import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.fansz.fandom.repository.SeedingSpotEntityMapper;
 import com.fansz.fandom.service.SeedingSpotService;
-import com.fansz.fandom.model.seedingspot.SeedingSpotParam;
 import com.fansz.pub.utils.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;

@@ -32,9 +32,6 @@ public class NewsfeedsPostComment implements java.io.Serializable {
     @Column(name = "comment_time")
     private Date commentTime;
 
-    @Column(name = "comment_source")
-    private String commentSource;
-
     public NewsfeedsPostComment() {
     }
 
@@ -44,7 +41,6 @@ public class NewsfeedsPostComment implements java.io.Serializable {
         this.commentatorSn = commentatorSn;
         this.commentContent = commentContent;
         this.commentTime = commentTime;
-        this.commentSource = commentSource;
     }
 
 
@@ -99,16 +95,6 @@ public class NewsfeedsPostComment implements java.io.Serializable {
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
     }
-
-
-    public String getCommentSource() {
-        return this.commentSource;
-    }
-
-    public void setCommentSource(String commentSource) {
-        this.commentSource = commentSource;
-    }
-
 
 }
 

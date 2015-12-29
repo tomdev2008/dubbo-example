@@ -2,12 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
-       xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
-	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
-	 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
-	 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <dubbo:application name="fansz-access-layer" owner="fansz-access" organization="fansz" logger="slf4j"/>
 
     <dubbo:registry address="${dubbo.registry.address}"/>
@@ -46,5 +42,18 @@
 
     <dubbo:reference interface="com.fansz.fandom.api.MessageCenterApi" id="messageCenterProvider" validation="true"
                      timeout="5000"
+                     connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="1" group="${provider.group}"/>
+
+    <dubbo:reference interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" id="newsfeedsCommentProvider" validation="true"
+                     timeout="5000"
                      connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
+
+    <dubbo:reference interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" id="neswfeedsPostProvider" validation="true"
+                     timeout="5000"
+                     connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
+
+    <dubbo:reference interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" id="neswfeedsPostProvider" validation="true"
+                     timeout="5000"
+                     connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
+
 </beans>

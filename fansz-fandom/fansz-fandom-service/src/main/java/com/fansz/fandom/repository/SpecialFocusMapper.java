@@ -1,7 +1,7 @@
 package com.fansz.fandom.repository;
 
-import com.fansz.fandom.model.specialfocus.SpecialFocusResult;
 import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
+import com.fansz.fandom.model.specialfocus.SpecialFocusResult;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;

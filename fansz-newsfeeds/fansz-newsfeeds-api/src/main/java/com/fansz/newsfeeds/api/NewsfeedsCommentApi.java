@@ -4,7 +4,7 @@ import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
-import com.fansz.newsfeeds.model.comment.AddCommentParam;
+import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
 import com.fansz.newsfeeds.model.comment.DelCommentParam;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 
@@ -14,20 +14,23 @@ import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 @DubboxService("newsfeeds")
 public interface NewsfeedsCommentApi {
     /**
-     * 发布帖子评论接口
+     * 评论朋友圈
      *
-     * @param commentPara 评论信息
+     * @param addCommentPara 评论信息
+     *
      * @return resp 返回对象
      */
-    @DubboxMethod("commentPost")
-    CommonResult<PostCommentQueryResult> addPostComment(AddCommentParam commentPara);
+    @interface addPostComment{}
+    @DubboxMethod("commentNewfeed")
+    CommonResult<PostCommentQueryResult> addPostComment(NewsfeedsCommentParam addCommentPara);
 
     /**
-     * 删除评论接口
+     * 删除朋友圈中我发表的评论
      *
      * @param delCommentParam 评论id
      * @return resp 返回对象
      */
-    @DubboxMethod("deleteComment")
-    CommonResult<NullResult> removeCommet(DelCommentParam delCommentParam);
+    @DubboxMethod("delMyNewsfeedComment")
+    CommonResult<PostCommentQueryResult> removeCommet(NewsfeedsCommentParam delCommentParam);
+
 }

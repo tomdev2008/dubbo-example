@@ -8,7 +8,6 @@ import com.fansz.pub.model.QueryResult;
 import com.fansz.relations.api.RelationShipApi;
 import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

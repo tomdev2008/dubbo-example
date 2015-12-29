@@ -1,6 +1,5 @@
 package com.fansz.db.repository;
 
-import com.fansz.db.entity.User;
 import com.fansz.db.entity.UserRelation;
 import com.fansz.db.model.FriendInfo;
 import com.fansz.orm.dao.IBaseDAO;
@@ -26,7 +25,7 @@ public interface UserRelationDAO extends IBaseDAO<UserRelation> {
     @NamedQuery(queryId = "relation.findFriendRelationBySns", parameters = {"memberSn", "friendSn"})
     UserRelation findFriendRelationBySns(String memberSn, String friendSn);
 
-    @NamedQuery(queryId = "relation.findRelation", parameters = {"memberSn", "friendSn"})
+    @NamedQuery(queryId = "relation.findFriendRelationBySns", parameters = {"memberSn", "friendSn"})
     UserRelation findRelation(String memberSn, String friendSn);
 
     @NamedQuery(queryId = "relation.findFriends", parameters = {"page", "myMemberSn"})

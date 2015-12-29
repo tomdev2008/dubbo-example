@@ -2,10 +2,8 @@ package com.fansz.relations.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.db.entity.User;
 import com.fansz.db.entity.UserRelation;
 import com.fansz.db.model.FriendInfo;
-import com.fansz.db.repository.UserDAO;
 import com.fansz.db.repository.UserRelationDAO;
 import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
@@ -17,8 +15,6 @@ import com.fansz.pub.utils.CollectionTools;
 import com.fansz.relations.constant.RelationShip;
 import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -107,7 +103,7 @@ public class RelationShipServiceImpl implements RelationShipService {
         userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
 
         oldRelation = userRelationDAO.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getCurrentSn());
-        userRelationDAO.update(oldRelation);
+        userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
         return true;
     }
 

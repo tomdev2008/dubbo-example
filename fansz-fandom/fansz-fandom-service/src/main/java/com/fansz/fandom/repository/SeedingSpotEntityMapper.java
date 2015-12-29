@@ -1,7 +1,7 @@
 package com.fansz.fandom.repository;
 
-import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.fansz.fandom.entity.SeedingSpotEntity;
+import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
