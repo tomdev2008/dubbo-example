@@ -2,7 +2,6 @@ package com.fansz.newsfeeds.model.post;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
-import com.fansz.newsfeeds.model.fandom.FandomInfoResult;
 import com.fansz.newsfeeds.model.profile.UserInfoResult;
 
 import java.io.Serializable;
@@ -47,7 +46,6 @@ public class PostInfoResult implements Serializable {
     @JSONField(name = "liked_list")
     private List<UserInfoResult> likedList;
 
-    //TODO comment bean 需要改为heli新增的comment对象
     @JSONField(name = "comment_list")
     private List<PostCommentQueryResult> commentList;
 
