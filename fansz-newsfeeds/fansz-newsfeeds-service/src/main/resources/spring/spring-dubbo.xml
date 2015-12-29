@@ -9,13 +9,20 @@
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="members-service-feeds" owner="feeds" organization="fansz"/>
 
+    <!--
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}"
                     optimizer="com.fansz.service.extension.MembersSerialOptimizerImpl" server="netty4"/>
-
+    -->
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <!-- 声明需要暴露的服务接口 -->
+    <dubbo:service interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" ref="neswfeedsPostProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+
+    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" ref="newsfeedsCommentProvider" validation="true" timeout="5000"
+                   connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
+
     <dubbo:service interface="com.fansz.newsfeeds.api.NeswfeedsPostApi" ref="neswfeedsPostProvider" validation="true" timeout="5000"
                    connections="500" version="0.0.1" retries="1" group="${provider.group}"/>
 </beans>
