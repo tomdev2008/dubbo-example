@@ -9,6 +9,7 @@ import com.fansz.newsfeeds.model.post.AddPostParam;
 import com.fansz.newsfeeds.model.post.GetPostByIdParam;
 import com.fansz.newsfeeds.model.post.PostInfoResult;
 import com.fansz.newsfeeds.model.post.RemovePostParam;
+import sun.applet.AppletListener;
 
 
 /**
@@ -31,8 +32,8 @@ public interface NeswfeedsPostApi {
      * @param removePostrParam 帖子id
      * @return resp 返回对象
      */
-    @DubboxMethod("deleteNewsfeedsPost")
-    CommonResult<NullResult> removePost(RemovePostParam removePostrParam) throws ApplicationException;
+    @DubboxMethod("delMyNewsfeedPost")
+    CommonResult<PostInfoResult> removePost(RemovePostParam removePostrParam) throws ApplicationException;
 
     /**
      * 根据postId获取帖子信息接口
@@ -42,5 +43,23 @@ public interface NeswfeedsPostApi {
      */
     @DubboxMethod("getNewsfeedsPost")
     CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
+
+    /**
+     * 给朋友圈内容点赞
+     * @param postParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("voteNewsfeedLike")
+    CommonResult<NullResult> voteNewsfeedLike(GetPostByIdParam postParam)throws ApplicationException;
+
+    /**
+     * 取消给朋友圈内容点赞
+     * @param postParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("delNewsfeedLike")
+    CommonResult<NullResult> delNewsfeedLike(GetPostByIdParam postParam)throws ApplicationException;
 
 }
