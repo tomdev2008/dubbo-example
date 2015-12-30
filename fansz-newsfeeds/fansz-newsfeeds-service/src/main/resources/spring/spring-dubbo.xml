@@ -7,17 +7,18 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="fansz-service-newsfeeds" owner="newsfeeds" organization="fansz"/>
+    <dubbo:application name="fansz-service-newsfeeds" owner="backend" organization="fansz"/>
 
-    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty" optimizer="com.fansz.newsfeeds.extension.FeedsSerialOptimizerImpl"/>
+    <dubbo:protocol name="dubbo" server="netty4" client="netty4"  serialization="kryo" accepts="1000"
+                    port="${dubbo.rpc.port}" charset="UTF-8"  transporter="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" ref="newsfeedsPostProvider" validation="true" timeout="50000"
+    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" ref="newsfeedsPostProvider" validation="true" timeout="5000"
                    connections="500" version="0.0.1" retries="0" group="${provider.group}" protocol="dubbo"/>
 
-    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" ref="newsfeedsCommentProvider" validation="true" timeout="50000"
+    <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" ref="newsfeedsCommentProvider" validation="true" timeout="5000"
                    connections="500" version="0.0.1" retries="0" group="${provider.group}" protocol="dubbo"/>
 </beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="fansz-access-layer" owner="fansz-access" organization="fansz" logger="slf4j"/>
+
+    <dubbo:registry address="zookeeper://192.168.88.109:2181"/>
+
+    <!--<dubbo:monitor protocol="registry"/>-->
+
+    <dubbo:reference interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" id="newsfeedsPostProvider" validation="true"
+                     timeout="5000"  scope="remote"
+                     connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="allan"/>
+    <dubbo:reference interface="com.fansz.auth.api.AccountApi" id="accountProvider" validation="true"
+                     timeout="5000" scope="remote"
+                     connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="allan"/>
+
+</beans>

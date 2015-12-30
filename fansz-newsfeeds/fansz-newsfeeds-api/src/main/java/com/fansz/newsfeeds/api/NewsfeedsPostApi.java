@@ -39,7 +39,7 @@ public interface NewsfeedsPostApi {
      * @return resp 返回对象
      */
     @DubboxMethod("showNewsfeedsDetail")
-    PostInfoResult getPost(GetPostByIdParam postParam) throws ApplicationException;
+    CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException;
 
     /**
      * 查询我的朋友圈内容列表：N007

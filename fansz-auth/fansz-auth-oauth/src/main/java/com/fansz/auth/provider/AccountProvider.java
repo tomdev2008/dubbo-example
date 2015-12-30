@@ -89,7 +89,8 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     }
 
     @Override
-    public SessionInfoResult getSession(String accessToken) {
-        return sessionService.getSession(accessToken);
+    public SessionInfoResult getSession(SessionQueryParam sessionQueryParam) {
+        SessionInfoResult sessionInfoResult= sessionService.getSession(sessionQueryParam.getAccessToken());
+        return sessionInfoResult;
     }
 }

@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class SessionInfoResult implements Serializable {
 
-    private static final long serialVersionUID = -2719486823622356082L;
+    private static final long serialVersionUID = 3288324419494345905L;
 
     private Long id;
 

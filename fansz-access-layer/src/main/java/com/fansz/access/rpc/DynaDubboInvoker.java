@@ -8,10 +8,13 @@ import com.fansz.access.utils.ConsumerConstants;
 import com.fansz.access.utils.ResponseUtils;
 import com.fansz.auth.api.AccountApi;
 import com.fansz.auth.model.SessionInfoResult;
+import com.fansz.auth.model.SessionQueryParam;
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.AccessTokenAware;
+import com.fansz.newsfeeds.api.NewsfeedsPostApi;
+import com.fansz.newsfeeds.model.post.GetPostByIdParam;
 import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
 import org.reflections.Reflections;
@@ -34,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component("dynaDubboInvoker")
 public class DynaDubboInvoker implements RpcInvoker {
 
-    private final static String[] BASE_PACKAGE = new String[]{"com.fansz.auth.api","com.fansz.relations.api","com.fansz.fandom.api","com.fansz.newsfeeds.api"};
+    private final static String[] BASE_PACKAGE = new String[]{"com.fansz.auth.api", "com.fansz.relations.api", "com.fansz.fandom.api", "com.fansz.newsfeeds.api"};
 
     private Logger logger = LoggerFactory.getLogger(DynaDubboInvoker.class);
 
@@ -42,10 +45,6 @@ public class DynaDubboInvoker implements RpcInvoker {
 
     @Autowired
     private ApplicationContext applicationContext;
-
-    @Resource(name = "accountProvider")
-    private AccountApi accountApi;
-
 
     @PostConstruct
     private void init() throws Exception {
@@ -132,24 +131,27 @@ public class DynaDubboInvoker implements RpcInvoker {
             return ResponseUtils.renderMethodNameError();
         }
 
+        Object invoker = applicationContext.getBean(m.getDeclaringClass());
         Class[] args = m.getParameterTypes();
         Object[] values = new Object[args.length];
         values[0] = JsonHelper.copyAs(params, args[0]);
+
         if (values[0] instanceof AccessTokenAware) {
             AccessTokenAware at = (AccessTokenAware) values[0];
             String accessToken = at.getAccessToken();
             if (StringTools.isBlank(accessToken)) {
                 return ResponseUtils.renderAccessTokenError();//accessToken不能为空
             }
-
-            SessionInfoResult session = accountApi.getSession(accessToken);
+            SessionQueryParam param = new SessionQueryParam();
+            param.setAccessToken(accessToken);
+            AccountApi accountApi=applicationContext.getBean(AccountApi.class);
+            SessionInfoResult session = accountApi.getSession(param);
             if (!isValid(session)) {
                 return ResponseUtils.renderAccessTokenError();//accessToken不能为空
             }
             at.setCurrentSn(session.getSn());
         }
-
-        Object result = m.invoke(applicationContext.getBean(m.getDeclaringClass()), values);
+        Object result = m.invoke(invoker, values);
 
         return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.convertObject2JSONString(result);
     }

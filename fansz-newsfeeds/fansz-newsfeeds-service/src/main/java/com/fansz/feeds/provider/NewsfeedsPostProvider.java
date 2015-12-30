@@ -24,6 +24,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
 
     @Autowired
     private NewsfeedsPostService newsfeedsPostService;
+
     /**
      * 发帖子接口
      *
@@ -40,12 +41,11 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
     }
 
 
-
     @Override
-    public CommonResult<PostInfoResult> removePost(RemovePostParam removePostrParam)  throws ApplicationException{
+    public CommonResult<PostInfoResult> removePost(RemovePostParam removePostrParam) throws ApplicationException {
         NewsfeedsPost newsfeedsPost = newsfeedsPostService.deletePostById(removePostrParam);
-        if(null != newsfeedsPost){
-            PostInfoResult postInfoResult = BeanTools.copyAs(newsfeedsPost,PostInfoResult.class);
+        if (null != newsfeedsPost) {
+            PostInfoResult postInfoResult = BeanTools.copyAs(newsfeedsPost, PostInfoResult.class);
             return renderSuccess(postInfoResult);
         }
         return renderFail(ErrorCode.POST_NOT_ALLOW_DEL.getCode());
@@ -53,6 +53,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
 
     /**
      * 给朋友圈内容点赞
+     *
      * @param postParam
      * @return
      * @throws ApplicationException
@@ -60,7 +61,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
     @Override
     public CommonResult<NullResult> voteNewsfeedLike(GetPostByIdParam postParam) throws ApplicationException {
         String code = newsfeedsPostService.saveNewsfeedLike(postParam);
-        if(null != code){
+        if (null != code) {
             return renderFail(code);
         }
         return renderSuccess();
@@ -68,6 +69,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
 
     /**
      * 取消给朋友圈内容点赞
+     *
      * @param postParam
      * @return
      * @throws ApplicationException
@@ -75,11 +77,12 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
     @Override
     public CommonResult<NullResult> delNewsfeedLike(GetPostByIdParam postParam) throws ApplicationException {
         String code = newsfeedsPostService.deleteNewsfeedLike(postParam);
-        if(null != code){
+        if (null != code) {
             return renderFail(code);
         }
         return renderSuccess();
     }
+
     /**
      * 单查某一条朋友圈的详情:N008
      * 根据postid来查询post的详情,APP可根据缓存跳转
@@ -87,9 +90,9 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
      * @param postParam 帖子
      * @return resp 返回对象
      */
-    public PostInfoResult getPost(GetPostByIdParam postParam) throws ApplicationException {
+    public CommonResult<PostInfoResult> getPost(GetPostByIdParam postParam) throws ApplicationException {
         PostInfoResult postInfoResult = newsfeedsPostService.getPost(postParam);
-        return postInfoResult;
+        return renderSuccess(postInfoResult);
     }
 
     /**

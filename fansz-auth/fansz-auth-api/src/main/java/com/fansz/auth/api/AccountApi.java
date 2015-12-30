@@ -62,5 +62,6 @@ public interface AccountApi {
     @DubboxMethod("refreshToken")
     CommonResult<LoginResult> refreshToken(String refreshToken);
 
-    SessionInfoResult getSession(String accessToken);
+    @DubboxMethod("getSession")
+    SessionInfoResult getSession(SessionQueryParam sessionQueryParam);
 }

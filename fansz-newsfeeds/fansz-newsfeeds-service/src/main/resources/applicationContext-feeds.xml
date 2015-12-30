@@ -14,8 +14,8 @@
 
 	<context:property-placeholder ignore-resource-not-found="false"
 								  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
-	<!--<import resource="classpath:/spring/spring-datasource.xml" />-->
+	<import resource="classpath:/spring/spring-datasource.xml" />
 	<import resource="classpath:/spring/spring-dubbo.xml" />
-	<!--<import resource="classpath:/spring/spring-kafka.xml" />
-	<import resource="classpath:/spring/spring-redis.xml" />-->
+	<import resource="classpath:/spring/spring-kafka.xml" />
+	<import resource="classpath:/spring/spring-redis.xml" />
 </beans>

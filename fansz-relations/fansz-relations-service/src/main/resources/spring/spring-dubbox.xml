@@ -10,7 +10,8 @@
     <dubbo:application name="fansz-service-relations" owner="relations" organization="fansz"/>
 
     <!--7002端口提供RPC服务-->
-    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4"/>
+    <dubbo:protocol name="dubbo" server="netty4" client="netty4"  serialization="kryo" accepts="1000"
+                    port="${dubbo.rpc.port}" charset="UTF-8"  transporter="netty4"/>
 
     <!-- 使用redis注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
