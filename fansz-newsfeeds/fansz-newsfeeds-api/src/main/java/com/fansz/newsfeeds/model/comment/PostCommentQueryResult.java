@@ -35,17 +35,17 @@ public class PostCommentQueryResult implements Serializable {
     @JSONField(name="commentator_avatar")
     private String commentatorAvatar;
 
-    @JSONField(name="orgin_sn")
-    private String orginSn;
+    @JSONField(name="origin_sn")
+    private String originSn;
 
-    @JSONField(name="orgin_content")
-    private String orginContent;
+    @JSONField(name="origin_content")
+    private String originContent;
 
-    @JSONField(name="orgin_nickname")
-    private String orginNickname;
+    @JSONField(name="origin_nickname")
+    private String originNickname;
 
-    @JSONField(name="orgin_avatar")
-    private String orginAvatar;
+    @JSONField(name="origin_avatar")
+    private String originAvatar;
 
     public Long getId() {
         return id;
@@ -111,35 +111,35 @@ public class PostCommentQueryResult implements Serializable {
         this.commentatorAvatar = commentatorAvatar;
     }
 
-    public String getOrginSn() {
-        return orginSn;
+    public String getOriginSn() {
+        return originSn;
     }
 
-    public void setOrginSn(String orginSn) {
-        this.orginSn = orginSn;
+    public void setOriginSn(String originSn) {
+        this.originSn = originSn;
     }
 
-    public String getOrginContent() {
-        return orginContent;
+    public String getOriginContent() {
+        return originContent;
     }
 
-    public void setOrginContent(String orginContent) {
-        this.orginContent = orginContent;
+    public void setOriginContent(String originContent) {
+        this.originContent = originContent;
     }
 
-    public String getOrginNickname() {
-        return orginNickname;
+    public String getOriginNickname() {
+        return originNickname;
     }
 
-    public void setOrginNickname(String orginNickname) {
-        this.orginNickname = orginNickname;
+    public void setOriginNickname(String originNickname) {
+        this.originNickname = originNickname;
     }
 
-    public String getOrginAvatar() {
-        return orginAvatar;
+    public String getOriginAvatar() {
+        return originAvatar;
     }
 
-    public void setOrginAvatar(String orginAvatar) {
-        this.orginAvatar = orginAvatar;
+    public void setOriginAvatar(String originAvatar) {
+        this.originAvatar = originAvatar;
     }
 }

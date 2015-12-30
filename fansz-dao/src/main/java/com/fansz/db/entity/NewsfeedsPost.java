@@ -30,14 +30,22 @@ public class NewsfeedsPost implements java.io.Serializable {
     @Column(name = "post_title")
     private String postTitle;
 
+    @Column(name = "source_from")
+    private String sourceFrom;
+
+    @Column(name = "source_post_id")
+    private Long sourcePostId;
+
     public NewsfeedsPost() {
     }
 
-    public NewsfeedsPost(String memberSn, String postContent, Date postTime, String postTitle) {
+    public NewsfeedsPost(String memberSn, String postContent, Date postTime, String postTitle, String sourceFrom, Long sourcePostId) {
         this.memberSn = memberSn;
         this.postContent = postContent;
         this.postTime = postTime;
         this.postTitle = postTitle;
+        this.sourceFrom = sourceFrom;
+        this.sourcePostId = sourcePostId;
     }
 
 
@@ -84,6 +92,22 @@ public class NewsfeedsPost implements java.io.Serializable {
         this.postTitle = postTitle;
     }
 
+
+    public String getSourceFrom() {
+        return sourceFrom;
+    }
+
+    public void setSourceFrom(String sourceFrom) {
+        this.sourceFrom = sourceFrom;
+    }
+
+    public Long getSourcePostId() {
+        return sourcePostId;
+    }
+
+    public void setSourcePostId(Long sourcePostId) {
+        this.sourcePostId = sourcePostId;
+    }
 }
 
 

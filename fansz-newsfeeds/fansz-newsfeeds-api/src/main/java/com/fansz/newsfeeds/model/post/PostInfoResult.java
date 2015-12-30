@@ -15,32 +15,26 @@ public class PostInfoResult implements Serializable {
 
     private static final long serialVersionUID = 7239881991070394937L;
 
-    @JSONField(name="post_id")
     private Long id;
 
-
-    @JSONField(name="post_title")
+    @JSONField(name = "post_title")
     private String postTitle;
 
-    @JSONField(name="post_content")
+    @JSONField(name = "post_content")
     private String postContent;
 
-    @JSONField(name="post_newsfeeds")
-    private String postNewsfeeds;
-
-    @JSONField(name="post_time")
+    @JSONField(name = "post_time")
     private Date postTime;
+
+    @JSONField(name = "source_from")
+    private String sourceFrom;
+
+    @JSONField(name = "source_post_id")
+    private Long sourcePostId;
 
     private String liked;
 
-    @JSONField(name="like_count")
-    private Long likes;
-
-    @JSONField(name="comments_count")
-    private Long comments;
-
-
-    @JSONField(name="post_member")
+    @JSONField(name = "post_member")
     private UserInfoResult userInfoResult;
 
     @JSONField(name = "liked_list")
@@ -48,6 +42,15 @@ public class PostInfoResult implements Serializable {
 
     @JSONField(name = "comment_list")
     private List<PostCommentQueryResult> commentList;
+
+    @JSONField(name="fandom_id")
+    private String fandomId;
+
+    @JSONField(name="fandom_avatar")
+    private String fandomAvatarUrl;
+
+    @JSONField(name="fandom_name")
+    private String fandomName;
 
     public Long getId() {
         return id;
@@ -66,13 +69,6 @@ public class PostInfoResult implements Serializable {
         this.postContent = postContent;
     }
 
-    public String getPostNewsfeeds() {
-        return postNewsfeeds;
-    }
-
-    public void setPostNewsfeeds(String postNewsfeeds) {
-        this.postNewsfeeds = postNewsfeeds;
-    }
 
     public String getLiked() {
         return liked;
@@ -90,21 +86,6 @@ public class PostInfoResult implements Serializable {
         this.postTitle = postTitle;
     }
 
-    public Long getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Long likes) {
-        this.likes = likes;
-    }
-
-    public Long getComments() {
-        return comments;
-    }
-
-    public void setComments(Long comments) {
-        this.comments = comments;
-    }
 
     public UserInfoResult getUserInfoResult() {
         return userInfoResult;
@@ -136,5 +117,45 @@ public class PostInfoResult implements Serializable {
 
     public void setCommentList(List<PostCommentQueryResult> commentList) {
         this.commentList = commentList;
+    }
+
+    public String getFandomId() {
+        return fandomId;
+    }
+
+    public void setFandomId(String fandomId) {
+        this.fandomId = fandomId;
+    }
+
+    public String getFandomAvatarUrl() {
+        return fandomAvatarUrl;
+    }
+
+    public void setFandomAvatarUrl(String fandomAvatarUrl) {
+        this.fandomAvatarUrl = fandomAvatarUrl;
+    }
+
+    public String getFandomName() {
+        return fandomName;
+    }
+
+    public void setFandomName(String fandomName) {
+        this.fandomName = fandomName;
+    }
+
+    public String getSourceFrom() {
+        return sourceFrom;
+    }
+
+    public void setSourceFrom(String sourceFrom) {
+        this.sourceFrom = sourceFrom;
+    }
+
+    public Long getSourcePostId() {
+        return sourcePostId;
+    }
+
+    public void setSourcePostId(Long sourcePostId) {
+        this.sourcePostId = sourcePostId;
     }
 }
