@@ -14,42 +14,47 @@
                      timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    <!--<dubbo:reference interface="com.fansz.auth.api.VerifyCodeApi" id="verifyCodeProvider" validation="true" timeout="5000"
+    <dubbo:reference interface="com.fansz.auth.api.VerifyCodeApi" id="verifyCodeProvider" validation="true"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    <dubbo:reference interface="com.fansz.fandom.api.CommentApi" id="commentProvider" validation="true" timeout="5000"
+    <dubbo:reference interface="com.fansz.fandom.api.CommentApi" id="commentProvider" validation="true"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    <dubbo:reference interface="com.fansz.fandom.api.FandomApi" id="fandomProvider" validation="true" timeout="5000"
+    <dubbo:reference interface="com.fansz.fandom.api.FandomApi" id="fandomProvider" validation="true"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    <dubbo:reference interface="com.fansz.fandom.api.FandomPostApi" id="postProvider" validation="true" timeout="5000"
+    <dubbo:reference interface="com.fansz.fandom.api.FandomPostApi" id="postProvider" validation="true"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    <dubbo:reference interface="com.fansz.fandom.api.ProfileApi" id="profileProvider" validation="true" timeout="5000"
+    <dubbo:reference interface="com.fansz.fandom.api.ProfileApi" id="profileProvider" validation="true"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.relations.api.RelationShipApi" id="relationShipProvider" validation="true"
-                     timeout="5000"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.fandom.api.SeedingSpotApi" id="seedingSpotProvider" validation="true"
-                     timeout="5000"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.fandom.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
-                     timeout="5000"
+                     timeout="5000" scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.fandom.api.MessageCenterApi" id="messageCenterProvider" validation="true"
-                     timeout="5000"
+                     timeout="5000" scope="remote"
                      connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="1" group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" id="newsfeedsCommentProvider" validation="true"
-                     timeout="5000"
+                     timeout="5000" scope="remote"
                      connections="100" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
-    --><dubbo:reference interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" id="newsfeedsPostProvider" validation="true"
+    <dubbo:reference interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" id="newsfeedsPostProvider" validation="true"
                      timeout="5000"  scope="remote"
                      connections="500" protocol="dubbo" client="netty4" version="0.0.1" retries="0" group="${provider.group}"/>
 
