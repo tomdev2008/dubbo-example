@@ -17,8 +17,8 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsPostApi" ref="newsfeedsPostProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="0" group="${provider.group}" protocol="dubbo"/>
+                   connections="500" version="${provider.version}" retries="0" group="${provider.group}" protocol="dubbo"/>
 
     <dubbo:service interface="com.fansz.newsfeeds.api.NewsfeedsCommentApi" ref="newsfeedsCommentProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="0" group="${provider.group}" protocol="dubbo"/>
+                   connections="500" version="${provider.version}" retries="0" group="${provider.group}" protocol="dubbo"/>
 </beans>

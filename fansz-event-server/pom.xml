@@ -71,6 +71,16 @@
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.sgroschupf</groupId>
@@ -100,15 +110,6 @@
             <groupId>com.fansz</groupId>
             <artifactId>fansz-dao</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>fansz-newsfeeds-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>fansz-fandom-api</artifactId>
-        </dependency>
-        <!--spring end-->
     </dependencies>
     <profiles>
         <profile>

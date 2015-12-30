@@ -15,7 +15,9 @@ public class PostInfoResult implements Serializable {
 
     private static final long serialVersionUID = 7239881991070394937L;
 
+    @JSONField(name = "post_id")
     private Long id;
+
 
     @JSONField(name = "post_title")
     private String postTitle;
@@ -26,6 +28,12 @@ public class PostInfoResult implements Serializable {
     @JSONField(name = "post_time")
     private Date postTime;
 
+    @JSONField(name = "source_from")
+    private String sourceFrom;
+
+    @JSONField(name = "source_post_id")
+    private Long sourcePostId;
+
     private String liked;
 
     @JSONField(name = "post_member")
@@ -34,9 +42,18 @@ public class PostInfoResult implements Serializable {
     @JSONField(name = "liked_list")
     private List<UserInfoResult> likedList;
 
-    //TODO comment bean 需要改为heli新增的comment对象
     @JSONField(name = "comment_list")
     private List<PostCommentQueryResult> commentList;
+
+    @JSONField(name = "fandom_id")
+    private String fandomId;
+
+    @JSONField(name = "fandom_avatar")
+    private String fandomAvatarUrl;
+
+    @JSONField(name = "fandom_name")
+    private String fandomName;
+
     public Long getId() {
         return id;
     }
@@ -102,5 +119,45 @@ public class PostInfoResult implements Serializable {
 
     public void setCommentList(List<PostCommentQueryResult> commentList) {
         this.commentList = commentList;
+    }
+
+    public String getSourceFrom() {
+        return sourceFrom;
+    }
+
+    public void setSourceFrom(String sourceFrom) {
+        this.sourceFrom = sourceFrom;
+    }
+
+    public Long getSourcePostId() {
+        return sourcePostId;
+    }
+
+    public void setSourcePostId(Long sourcePostId) {
+        this.sourcePostId = sourcePostId;
+    }
+
+    public String getFandomId() {
+        return fandomId;
+    }
+
+    public void setFandomId(String fandomId) {
+        this.fandomId = fandomId;
+    }
+
+    public String getFandomAvatarUrl() {
+        return fandomAvatarUrl;
+    }
+
+    public void setFandomAvatarUrl(String fandomAvatarUrl) {
+        this.fandomAvatarUrl = fandomAvatarUrl;
+    }
+
+    public String getFandomName() {
+        return fandomName;
+    }
+
+    public void setFandomName(String fandomName) {
+        this.fandomName = fandomName;
     }
 }

@@ -6,6 +6,7 @@ import com.fansz.db.entity.NewsfeedsMemberLike;
 import com.fansz.db.entity.NewsfeedsPost;
 import com.fansz.db.entity.PushPost;
 import com.fansz.db.entity.User;
+import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
 import com.fansz.db.model.NewsfeedsPostVO;
@@ -172,9 +173,13 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         }
         HashSet<String> memberSnSet = new HashSet<>();
         HashSet<String> postIdSet = new HashSet<>();
+        HashSet<String> fandomPostIdSet = new HashSet<>();
         for (NewsfeedsPost post : newsfeedsPosts) {
             memberSnSet.add(post.getMemberSn());
             postIdSet.add(String.valueOf(post.getId()));
+            if (InformationSource.FANDOM.getCode().equals(post.getSourceFrom())){
+                fandomPostIdSet.add(String.valueOf(post.getSourcePostId()));
+            }
         }
         List<String> postIds = new ArrayList<>(postIdSet);
         //所有的comment
@@ -191,6 +196,12 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //TODO 从缓存中获取user information
         List<User> userList = userDAO.findBySnString(memberSnList);
 
+        //查询所有朋友圈动态的fandom信息
+        List<NewsFeedsFandomPostVO> newsFeedsFandomPostVOs = null;
+        if(!CollectionTools.isNullOrEmpty(fandomPostIdSet)){
+            newsFeedsFandomPostVOs = newsfeedsPostDAO.findNewsfeedsFandomPostInfoByPostId(new ArrayList<String>(fandomPostIdSet));
+        }
+
         //NewsfeedsPost convert to PostInfoResult
         List<PostInfoResult> postInfoResultList = new ArrayList<>();
         //convert newsfeedPost to PostInfoResult
@@ -199,6 +210,17 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             User postUser = CollectionTools.find(userList, "sn", newsfeedsPost.getMemberSn());
             UserInfoResult postUserInfo = BeanTools.copyAs(postUser, UserInfoResult.class);
             postInfoResult.setUserInfoResult(postUserInfo);
+            //liked default 0
+            postInfoResult.setLiked("0");
+            //如果该朋友圈是来自fandom的动态,补充fandom信息
+            if(InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null){
+                NewsFeedsFandomPostVO fandomPostVO = CollectionTools.find(newsFeedsFandomPostVOs, "id", newsfeedsPost.getSourcePostId());
+                postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
+                postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
+                postInfoResult.setFandomName(fandomPostVO.getFandomName());
+
+            }
+
             postInfoResultList.add(postInfoResult);
         }
 
@@ -211,9 +233,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
                 postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
             }
             postInfoResult.getLikedList().add(userInfoResult);
-            if (memberSn.equals(memberLike.getMemberSn())) {
-                postInfoResult.setLiked(Boolean.TRUE.toString());
-            }
+            postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
         }
         //遍历comment
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);

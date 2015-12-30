@@ -46,9 +46,7 @@
         <property name="freemarkerConfiguration" ref="freemarkerConfiguration"/>
         <property name="configLocations">
             <list>
-                <value>classpath:/sql/user.xml</value>
-                <value>classpath:/sql/relation.xml</value>
-                <value>classpath:/sql/newsfeeds.xml</value>
+                <value>classpath:/sql/*.xml</value>
             </list>
         </property>
         <property name="nativeSqlReturnMap" value="true"/>

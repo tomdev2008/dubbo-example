@@ -17,6 +17,6 @@
     <dubbo:registry address="${dubbo.registry.address}"/>
 
     <dubbo:service interface="com.fansz.relations.api.RelationShipApi" ref="relationShipProvider" validation="true"
-                   timeout="5000" connections="500" version="0.0.1" group="${provider.group}"/>
+                   timeout="5000" connections="500" version="${provider.version}" group="${provider.group}"/>
 
 </beans>

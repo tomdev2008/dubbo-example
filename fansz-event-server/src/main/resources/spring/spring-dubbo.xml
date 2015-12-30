@@ -16,6 +16,6 @@
     <!--<dubbo:reference id="userService2" interface="com.fansz.service.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
 
     <dubbo:reference interface="com.fansz.fandom.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
-                     timeout="5000" connections="500" protocol="dubbo" version="0.0.1" retries="1"
+                     timeout="5000" connections="500" protocol="dubbo" version="${provider.version}" retries="1"
                      group="${provider.group}" client="netty4"/>
 </beans>

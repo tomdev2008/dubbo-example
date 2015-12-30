@@ -16,9 +16,9 @@
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.auth.api.AccountApi" ref="accountProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1" retries="0" group="${provider.group}"/>
+                   connections="500" version="${provider.version}" retries="0" group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.auth.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
-                   connections="500" version="0.0.1"  retries="0" group="${provider.group}"/>
+                   connections="500" version="${provider.version}"  retries="0" group="${provider.group}"/>
 
 </beans>

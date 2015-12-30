@@ -1,6 +1,7 @@
 package com.fansz.db.repository;
 
 import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsPostVO;
 import com.fansz.orm.dao.IBaseDAO;
 import com.fansz.orm.dao.annotation.DAO;
@@ -27,4 +28,7 @@ public interface NewsfeedsPostDAO extends IBaseDAO<NewsfeedsPost> {
 
     @NamedQuery(queryId = "newsfeedsPost.findNewsfeedsPostBySn", parameters = {"page", "memberSn"})
     QueryResult<NewsfeedsPost> findNewsfeedsPostBySn(Page page, String memberSn);
+
+    @NamedQuery(queryId = "newsfeedsPost.findFandomPostInfo", parameters = {"postIds"})
+    List<NewsFeedsFandomPostVO> findNewsfeedsFandomPostInfoByPostId(List<String> postIds);
 }

@@ -82,4 +82,20 @@
           select count(*) from NewsfeedsPost p where p.memberSn=:memberSn
         ]]>
     </hql-query>
+
+    <native-query name="newsfeedsPost.findFandomPostInfo">
+        <![CDATA[
+          SELECT
+                p.*, f.fandom_name, f.fandom_avatar_url
+            FROM
+                feeds_member_post_fandom p, feeds_fandom f
+            WHERE
+                p.fandom_id = f.id
+            AND p.id IN (
+            <#list postIds as item>
+                ${item}
+                <#if item_has_next>,</#if>
+            </#list>)
+        ]]>
+    </native-query>
 </dynamic-query>
