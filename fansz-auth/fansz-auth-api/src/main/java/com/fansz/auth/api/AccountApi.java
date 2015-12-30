@@ -60,7 +60,7 @@ public interface AccountApi {
     CommonResult<NullResult> logout(LogoutParam logoutParam);
 
     @DubboxMethod("refreshToken")
-    CommonResult<LoginResult> refreshToken(String refreshToken);
+    CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException;
 
     @DubboxMethod("getSession")
     SessionInfoResult getSession(SessionQueryParam sessionQueryParam);

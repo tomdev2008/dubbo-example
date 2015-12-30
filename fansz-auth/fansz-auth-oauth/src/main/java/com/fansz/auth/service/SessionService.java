@@ -10,7 +10,9 @@ public interface SessionService {
 
     SessionInfoResult getSession(String accessToken);
 
-    void saveSession(String accessToken, String refreshToken, Long id, String sn);
+    Long saveSession(String accessToken, String refreshToken, Long id, String sn);
 
     void invalidateSession(String accessToken);
+
+    SessionInfoResult refreshToken(String refreshToken);
 }

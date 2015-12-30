@@ -19,16 +19,15 @@ public class SessionInfoResult implements Serializable {
 
     private Long lastAccessTime;
 
+    private Long expiresAt;
+
     public SessionInfoResult() {
 
     }
 
-    public SessionInfoResult(Long id, String sn, String accessToken, String refreshToken, Long lastAccessTime) {
-        this.id = id;
-        this.sn = sn;
+    public SessionInfoResult(String accessToken, Long expiresAt) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
-        this.lastAccessTime = lastAccessTime;
+        this.expiresAt = expiresAt;
     }
 
     public Long getId() {
@@ -69,5 +68,13 @@ public class SessionInfoResult implements Serializable {
 
     public void setLastAccessTime(Long lastAccessTime) {
         this.lastAccessTime = lastAccessTime;
+    }
+
+    public Long getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(Long expiresAt) {
+        this.expiresAt = expiresAt;
     }
 }

@@ -139,12 +139,15 @@ public class AccountServiceImpl implements AccountService {
 
         String accessKey = UUIDTools.generate();
         String refreshKey = UUIDTools.generate();
+        Long expireAt=sessionService.saveSession(accessKey, refreshKey, user.getId(),user.getSn());
+
+
         LoginResult result = BeanTools.copyAs(user, LoginResult.class);
         result.setAccessToken(accessKey);
         result.setRefreshToken(refreshKey);
-        result.setExpiresAt(-1);
+        result.setExpiresAt(expireAt);
 
-        sessionService.saveSession(accessKey, refreshKey, user.getId(),user.getSn());
+
         return result;
     }
 

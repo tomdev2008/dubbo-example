@@ -84,13 +84,17 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     }
 
     @Override
-    public CommonResult<LoginResult> refreshToken(String refreshToken) {
-        return null;
+    public CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException{
+        SessionInfoResult sessionInfoResult = sessionService.refreshToken(refreshTokenParam.getRefreshToken());
+        LoginResult result = new LoginResult();
+        result.setAccessToken(sessionInfoResult.getAccessToken());
+        result.setExpiresAt(sessionInfoResult.getExpiresAt());
+        return renderSuccess(result);
     }
 
     @Override
     public SessionInfoResult getSession(SessionQueryParam sessionQueryParam) {
-        SessionInfoResult sessionInfoResult= sessionService.getSession(sessionQueryParam.getAccessToken());
+        SessionInfoResult sessionInfoResult = sessionService.getSession(sessionQueryParam.getAccessToken());
         return sessionInfoResult;
     }
 }
