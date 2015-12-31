@@ -18,8 +18,8 @@ public class TagFandomRelation implements java.io.Serializable {
     @Column(name = "fandom_id")
     private Long fandomId;
 
-    @Column(name = "tag_id")
-    private Long tagId;
+    @Column(name = "tag_name")
+    private String tagName;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_time")
@@ -33,10 +33,10 @@ public class TagFandomRelation implements java.io.Serializable {
         this.id = id;
     }
 
-    public TagFandomRelation(Long id, Long fandomId, Long tagId, Date createTime) {
+    public TagFandomRelation(Long id, Long fandomId, String tagName, Date createTime) {
         this.id = id;
         this.fandomId = fandomId;
-        this.tagId = tagId;
+        this.tagName = tagName;
         this.createTime = createTime;
     }
 
@@ -59,12 +59,12 @@ public class TagFandomRelation implements java.io.Serializable {
     }
 
 
-    public Long getTagId() {
-        return this.tagId;
+    public String getTagId() {
+        return this.tagName;
     }
 
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
+    public void setTagId(String tagName) {
+        this.tagName = tagName;
     }
 
 

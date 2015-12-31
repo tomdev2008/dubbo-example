@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fansz.fandom.repository.FandomTagMapper">
+
+    <resultMap id="fandomTagMap" type="com.fansz.fandom.model.fandom.FandomTagResult">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="fandom_id" property="fandomId" jdbcType="BIGINT"/>
+        <result column="tag_name" property="tagName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectFandomTagsByFandomId" parameterType="java.lang.Long" resultMap="fandomTagMap">
+        SELECT
+            id,
+            fandom_id,
+            create_time,
+            tag_name
+        FROM
+            tag_fandom_relation
+        WHERE
+            fandom_id = #{fandomId,jdbcType=BIGINT}
+    </select>
+
+    <delete id="deleteFandomTagByTagId" parameterType="java.lang.Long">
+        DELETE
+        FROM
+            tag_fandom_relation
+        WHERE
+            id = #{tagId,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteFandomTagByFandomId" parameterType="com.fansz.fandom.model.fandom.FandomTagParam">
+        DELETE
+        FROM
+            tag_fandom_relation
+        WHERE
+            fandom_id =#{fandomId,jdbcType=BIGINT}
+    </delete>
+
+    <insert id="saveTagByfandomId" parameterType="com.fansz.fandom.model.fandom.FandomTagParam">
+        insert into tag_fandom_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fandomId != null">
+                fandom_id,
+            </if>
+            <if test="tagName != null">
+                tag_name
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fandomId != null">
+                #{fandomId,jdbcType=BIGINT},
+            </if>
+            <if test="tagName != null">
+                #{tagName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getTagCountByName" parameterType="java.lang.Object" resultType="java.lang.Integer">
+        SELECT
+            count(1)
+        FROM
+            tag_fandom_relation
+        WHERE
+            tag_name = #{tagName,jdbcType=VARCHAR}
+            and #{fandomId,jdbcType=BIGINT}
+    </select>
+
+    <select id="getFandomTagById" parameterType="java.lang.Long" resultMap="fandomTagMap">
+        SELECT
+            id,
+            fandom_id,
+            create_time,
+            tag_name
+        FROM
+            tag_fandom_relation
+        WHERE
+            id = #{tagId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

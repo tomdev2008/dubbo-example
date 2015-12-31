@@ -2,10 +2,10 @@ package com.fansz.newsfeeds.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
-import com.fansz.common.provider.model.NullResult;
-import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
 import com.fansz.newsfeeds.model.comment.DelCommentParam;
+import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 
 /**
@@ -13,6 +13,7 @@ import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
  */
 @DubboxService("newsfeeds")
 public interface NewsfeedsCommentApi {
+
     /**
      * 评论朋友圈
      *
@@ -20,9 +21,8 @@ public interface NewsfeedsCommentApi {
      *
      * @return resp 返回对象
      */
-    @interface addPostComment{}
     @DubboxMethod("commentNewfeed")
-    CommonResult<PostCommentQueryResult> addPostComment(NewsfeedsCommentParam addCommentPara);
+    CommonResult<PostCommentQueryResult> addPostComment(NewsfeedsCommentParam addCommentPara) throws ApplicationException;
 
     /**
      * 删除朋友圈中我发表的评论
@@ -31,6 +31,5 @@ public interface NewsfeedsCommentApi {
      * @return resp 返回对象
      */
     @DubboxMethod("delMyNewsfeedComment")
-    CommonResult<PostCommentQueryResult> removeCommet(NewsfeedsCommentParam delCommentParam);
-
+    CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam);
 }

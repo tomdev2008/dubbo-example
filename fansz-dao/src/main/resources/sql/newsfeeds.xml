@@ -3,83 +3,38 @@
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://fansz.com/xml/ns/dynamic-query http://fansz.com/xml/ns/dynamic-query_1_0.xsd"
                version="1.0">
-    <hql-query name="pushPost.findPushPostByMemberSn">
-        <![CDATA[
-          from PushPost p where p.memberSn=:memberSn order by p.id desc
-        ]]>
-    </hql-query>
 
-    <hql-query name="pushPost.findPushPostByMemberSn.counter">
+    <native-query name="newsfeeds.removeCommetByPostId">
         <![CDATA[
-          select count(*) from PushPost p where p.memberSn=:memberSn
-        ]]>
-    </hql-query>
-
-    <native-query name="newsfeedsPost.findNewsfeedsPostByIds">
-        <![CDATA[
-          select * from newsfeeds_member_post p where p.id in (
-          <#list postIds as item>
-            ${item}
-             <#if item_has_next>,</#if>
-          </#list>)
-        ]]>
-    </native-query>
-
-    <native-query name="newsfeedsLike.findLikesByPostIdsAndMemberSn">
-        <![CDATA[
-          SELECT
-                l.*
+            DELETE
             FROM
-                newsfeeds_member_like l
+                newsfeeds_member_comment
             WHERE
-                l.post_id IN (
-                  <#list postIds as item>
-                    ${item}
-                     <#if item_has_next>,</#if>
-                  </#list>)
-                    AND (l.member_sn = :memberSn
-                    OR (SELECT
-                        relation_status
-                    FROM
-                        connects_member_relation r
-                    WHERE
-                        r.my_member_sn = :memberSn
-                            AND r.friend_member_sn = l.member_sn) in ('10','11'))
+                post_id =:postId
         ]]>
     </native-query>
-    
-    <native-query name="newsfeedsComments.findCommentsByPostIdsAndMemberSn">
+
+    <native-query name="newsfeeds.isLiked">
         <![CDATA[
-          SELECT
-                c.*
+            SELECT
+                count(1)
             FROM
-                newsfeeds_member_comment c
+                newsfeeds_member_like
             WHERE
-                c.post_id IN (
-                  <#list postIds as item>
-                    ${item}
-                     <#if item_has_next>,</#if>
-                  </#list>)
-                    AND (c.commentator_sn = :memberSn
-                    OR (SELECT
-                        relation_status
-                    FROM
-                        connects_member_relation r
-                    WHERE
-                        r.my_member_sn = :memberSn
-                            AND r.friend_member_sn = c.commentator_sn) in ('10','11'))
+                member_sn =:memberSn
+            AND post_id =:postId
         ]]>
     </native-query>
 
-    <hql-query name="newsfeedsPost.findNewsfeedsPostBySn">
+    <native-query name="newsfeeds.removeLikeByPostId">
         <![CDATA[
-          from NewsfeedsPost p where p.memberSn=:memberSn order by p.id desc
+            DELETE
+            FROM
+                newsfeeds_member_like
+            WHERE
+                post_id =:postId
         ]]>
-    </hql-query>
+    </native-query>
 
-    <hql-query name="newsfeedsPost.findNewsfeedsPostBySn.counter">
-        <![CDATA[
-          select count(*) from NewsfeedsPost p where p.memberSn=:memberSn
-        ]]>
-    </hql-query>
+
 </dynamic-query>

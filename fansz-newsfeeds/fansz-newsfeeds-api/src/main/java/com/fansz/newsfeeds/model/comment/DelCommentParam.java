@@ -15,8 +15,6 @@ public class DelCommentParam extends AbstractToken {
     @JSONField(name="comment_id")
     private Long commentId;
 
-    @NotBlank
-    @JSONField(name="commentator_sn")
     private String currentSn;
 
     public Long getCommentId() {
