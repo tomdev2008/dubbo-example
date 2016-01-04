@@ -9,6 +9,7 @@ import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomParam;
+import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 
 import java.util.List;
@@ -40,11 +41,11 @@ public interface FandomApi {
     /**
      * 加入fandom
      *
-     * @param joinFandomParam
+     * @param joinFandomsParam
      * @return
      */
     @DubboxMethod("joinFandom")
-    CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam);
+    CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam);
 
     /**
      * 特殊关注fandom
