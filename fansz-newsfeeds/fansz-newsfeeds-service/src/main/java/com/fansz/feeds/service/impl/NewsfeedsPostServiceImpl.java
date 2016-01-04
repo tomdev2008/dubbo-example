@@ -215,10 +215,11 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             //如果该朋友圈是来自fandom的动态,补充fandom信息
             if(InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null){
                 NewsFeedsFandomPostVO fandomPostVO = CollectionTools.find(newsFeedsFandomPostVOs, "id", newsfeedsPost.getSourcePostId());
-                postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
-                postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
-                postInfoResult.setFandomName(fandomPostVO.getFandomName());
-
+                if(fandomPostVO != null){
+                    postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
+                    postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
+                    postInfoResult.setFandomName(fandomPostVO.getFandomName());
+                }
             }
 
             postInfoResultList.add(postInfoResult);
