@@ -97,6 +97,7 @@ public class DynaDubboInvoker implements RpcInvoker {
             try {
                 response = invokeRpc(method, params);
             } catch (Exception e) {
+                logger.error("调用RPC服务出错!", e);
                 if (e.getCause() != null && e.getCause() instanceof ApplicationException) {
                     logger.error("调用时逻辑错误,抛出异常!", e);
                     ApplicationException ae = (ApplicationException) e.getCause();
@@ -107,7 +108,6 @@ public class DynaDubboInvoker implements RpcInvoker {
                         response = ResponseUtils.renderParamError();
                     }
                 } else {
-                    logger.error("调用RPC服务出错!", e);
                     response = ResponseUtils.renderAppError();
                 }
             }
@@ -144,7 +144,7 @@ public class DynaDubboInvoker implements RpcInvoker {
             }
             SessionQueryParam param = new SessionQueryParam();
             param.setAccessToken(accessToken);
-            AccountApi accountApi=applicationContext.getBean(AccountApi.class);
+            AccountApi accountApi = applicationContext.getBean(AccountApi.class);
             SessionInfoResult session = accountApi.getSession(param);
             if (!isValid(session)) {
                 return ResponseUtils.renderAccessTokenError();//accessToken不能为空
@@ -157,7 +157,10 @@ public class DynaDubboInvoker implements RpcInvoker {
     }
 
     private boolean isValid(SessionInfoResult session) {
-        if (session != null) return true;
-        return false;
+        if (session == null || StringTools.isBlank(session.getSn())) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

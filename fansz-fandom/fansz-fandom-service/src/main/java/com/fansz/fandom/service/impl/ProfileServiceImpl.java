@@ -42,7 +42,7 @@ public class ProfileServiceImpl implements ProfileService {
     public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
         UserEntity user = userMapper.selectByUid(queryUserParam.getFriendSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
-        if (StringTools.isNotBlank(queryUserParam.getFriendSn())) {
+        if (StringTools.isNotBlank(queryUserParam.getCurrentSn())) {
             UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
             if (userRelationEntity != null) {
                 result.setRelationship(userRelationEntity.getRelationStatus());

@@ -12,6 +12,7 @@ import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.DateTools;
 import com.fansz.redis.JedisTemplate;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +53,19 @@ public class PublishPostConsumer implements IEventConsumer {
         if (CollectionTools.isNullOrEmpty(friendList)) {
             return;
         }
+        Date now = DateTools.getSysDate();
         for (UserRelation friend : friendList) {
             PushPost pushPost = new PushPost();
             pushPost.setMemberSn(friend.getFriendMemberSn());
             pushPost.setPostId(postId);
-            pushPost.setCreatetime(new Date());
+            pushPost.setCreatetime(now);
             pushPostDAO.save(pushPost);
         }
+        PushPost pushPost = new PushPost();
+        pushPost.setMemberSn(publishPostEvent.getMemberSn());
+        pushPost.setPostId(postId);
+        pushPost.setCreatetime(now);
+        pushPostDAO.save(pushPost);
     }
 
     @Override

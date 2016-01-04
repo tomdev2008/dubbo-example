@@ -1,4 +1,3 @@
-#!/bin/sh
 MAIN_CLASS="com.fansz.access.AccessStarter"
   
 #  
