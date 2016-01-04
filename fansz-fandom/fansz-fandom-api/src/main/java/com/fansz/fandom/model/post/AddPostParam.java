@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fansz.common.provider.model.AccessTokenAware;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -19,6 +20,7 @@ public class AddPostParam implements AccessTokenAware, Serializable {
     @JSONField(name="member_sn")
     private String currentSn;
 
+    @NotNull
     @JSONField(name="fandom_id")
     private Long fandomId;
 

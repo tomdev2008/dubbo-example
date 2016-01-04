@@ -18,6 +18,12 @@
                       scope="remote"
                       protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>
 
+    <dubbo:reference interface="com.fansz.auth.api.OssApi" id="ossProvider" validation="true"
+                     scope="remote"
+                     protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>
+
+
+
     <dubbo:reference interface="com.fansz.fandom.api.CommentApi" id="commentProvider" validation="true"
                       scope="remote"
                       protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>

@@ -22,4 +22,7 @@
     <dubbo:service interface="com.fansz.auth.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
                    connections="100" version="${provider.version}"  retries="0" group="${provider.group}"/>
 
+    <dubbo:service interface="com.fansz.auth.api.OssApi" ref="ossProvider" validation="true" timeout="5000"
+                   connections="100" version="${provider.version}"  retries="0" group="${provider.group}"/>
+
 </beans>

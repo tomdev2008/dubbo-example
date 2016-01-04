@@ -1,0 +1,19 @@
+{
+  "header": {
+    "terminal_type": "IOS",
+    "local": "ZH_cn"
+  },
+  "response": [
+    {
+      "method": "getOssToken",
+      "message": "Success",
+      "result": {
+        "access_key_id": "STS.KLN2y8EwwwzCnM9fPn4O",
+        "access_key_secret": "FXDJ8iMgIurXXf4b8QuGkSqcTS5P8Sw4ADuI6xYb",
+        "security_token": "CAESmwQIARKAARoaFS4PjG0LduOjszMTP14jbz3IgBQ7w2Gd4WdrIMoadiEsBidE8g5omqVM0C0TqWptqHRBVpmh+TvMxynvocWO9pUXe6RRFnLe42ECuVlJf6sLNbxo3Sm0X1Buyv0RSKGvrKYsScGHsdnS5fgHXLfnJhjc3w5xXGxbSmv1XpTSGhhTVFMuS0xOMnk4RXd3d3pDbk05ZlBuNE8iEjM0MTQyMDY1MDg0MjA2MTQ1OSoRZXh0ZXJuYWwtdXNlcm5hbWUwj77t4KAqOgZSc2FNRDVC5gEKATEa4AEKBUFsbG93EoIBCgxBY3Rpb25FcXVhbHMSBkFjdGlvbhpqCg1vc3M6R2V0T2JqZWN0Cg1vc3M6UHV0T2JqZWN0ChBvc3M6RGVsZXRlT2JqZWN0Cg1vc3M6TGlzdFBhcnRzChhvc3M6QWJvcnRNdWx0aXBhcnRVcGxvYWQKD29zczpMaXN0T2JqZWN0cxJSCg5SZXNvdXJjZUVxdWFscxIIUmVzb3VyY2UaNgoaYWNzOm9zczoqOio6JEJVQ0tFVF9OQU1FLyoKGGFjczpvc3M6KjoqOiRCVUNLRVRfTkFNRUoQMTk2NjU0MTc4NjQ5MjI2NVIFMjY4NDJaD0Fzc3VtZWRSb2xlVXNlcmAAahIzNDE0MjA2NTA4NDIwNjE0NTlyG2FsaXl1bm9zc3Rva2VuZ2VuZXJhdG9ycm9sZQ==",
+        "expiration": "2016-01-04T10:07:46Z"
+      },
+      "status": "0"
+    }
+  ]
+}
