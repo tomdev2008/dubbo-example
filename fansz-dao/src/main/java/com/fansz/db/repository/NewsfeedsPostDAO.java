@@ -29,6 +29,9 @@ public interface NewsfeedsPostDAO extends IBaseDAO<NewsfeedsPost> {
     @NamedQuery(queryId = "newsfeedsPost.findNewsfeedsPostBySn", parameters = {"page", "memberSn"})
     QueryResult<NewsfeedsPost> findNewsfeedsPostBySn(Page page, String memberSn);
 
+    @NamedQuery(queryId = "newsfeedsPost.findNewsfeedsPostByPushPostMemberSn", parameters = {"page", "memberSn"})
+    QueryResult<NewsfeedsPost> findNewsfeedsPostByPushPostMemberSn(Page page, String memberSn);
+
     @NamedQuery(queryId = "newsfeedsPost.findFandomPostInfo", parameters = {"postIds"})
     List<NewsFeedsFandomPostVO> findNewsfeedsFandomPostInfoByPostId(List<String> postIds);
 }
