@@ -45,6 +45,7 @@
                     WHERE
                         r.my_member_sn = :memberSn
                             AND r.friend_member_sn = l.member_sn) in ('10','11'))
+            ORDER BY l.id ASC
         ]]>
     </native-query>
     
@@ -68,6 +69,7 @@
                     WHERE
                         r.my_member_sn = :memberSn
                             AND r.friend_member_sn = c.commentator_sn) in ('10','11'))
+            ORDER BY c.id ASC
         ]]>
     </native-query>
 
