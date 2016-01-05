@@ -8,7 +8,7 @@
 
     <dubbo:registry address="${dubbo.registry.address}"/>
 
-    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
+    <dubbo:monitor protocol="registry"/>
 
     <dubbo:reference interface="com.fansz.auth.api.AccountApi" id="accountProvider" validation="true"
                       scope="remote"

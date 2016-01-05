@@ -15,7 +15,7 @@
 
     <!-- 使用redis注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
-    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
+    <dubbo:monitor protocol="registry"/>
 
     <dubbo:service interface="com.fansz.relations.api.RelationShipApi" ref="relationShipProvider" validation="true"
                    timeout="5000" connections="100" version="${provider.version}" group="${provider.group}"/>

@@ -9,7 +9,7 @@
 
     <dubbo:registry address="${dubbo.registry.address}"/>
 
-    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
+    <dubbo:monitor protocol="registry"/>
     <dubbo:reference interface="com.fansz.fandom.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
                      timeout="5000" connections="500" protocol="dubbo" version="${provider.version}" retries="1"
                      group="${provider.group}" client="netty4"/>
