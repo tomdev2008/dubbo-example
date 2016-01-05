@@ -126,37 +126,26 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     }
     @Override
     public QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page) {
-        QueryResult<PushPost> pushPosts = pushPostDAO.findPushPostByMemberSn(page, memberSn);
-
-        if (!CollectionTools.isNullOrEmpty(pushPosts.getResultlist())) {
-            QueryResult<PostInfoResult> postResult = new QueryResult<>();
-            //获取postIds查询参数
-            List<String> postIds = new ArrayList<>();
-            for (PushPost pushPost : pushPosts.getResultlist()) {
-                postIds.add(pushPost.getPostId().toString());
-            }
-            List<NewsfeedsPostVO> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostByIds(postIds);
-            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts, memberSn);
+        QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
+        QueryResult<NewsfeedsPost> postQueryResult = newsfeedsPostDAO.findNewsfeedsPostByPushPostMemberSn(page, memberSn);
+        if (!CollectionTools.isNullOrEmpty(postQueryResult.getResultlist())) {
+            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(postQueryResult.getResultlist(), memberSn);
             postResult.setResultlist(postInfoResultList);
             postResult.setTotalrecord(postInfoResultList.size());
-            return postResult;
-        } else {
-            return new QueryResult<>(null, 0);
         }
+        return postResult;
     }
 
     @Override
     public QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page) {
+        QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
         QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, friendSn);
         if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())){
-            QueryResult<PostInfoResult> postResult = new QueryResult<>();
             List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberSn);
             postResult.setResultlist(postInfoResultList);
             postResult.setTotalrecord(postInfoResultList.size());
-            return postResult;
-        } else {
-            return new QueryResult<>(null, 0);
         }
+        return postResult;
     }
 
     /**
@@ -215,10 +204,11 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             //如果该朋友圈是来自fandom的动态,补充fandom信息
             if(InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null){
                 NewsFeedsFandomPostVO fandomPostVO = CollectionTools.find(newsFeedsFandomPostVOs, "id", newsfeedsPost.getSourcePostId());
-                postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
-                postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
-                postInfoResult.setFandomName(fandomPostVO.getFandomName());
-
+                if(fandomPostVO != null){
+                    postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
+                    postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
+                    postInfoResult.setFandomName(fandomPostVO.getFandomName());
+                }
             }
 
             postInfoResultList.add(postInfoResult);

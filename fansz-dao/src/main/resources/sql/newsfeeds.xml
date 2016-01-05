@@ -98,4 +98,21 @@
             </#list>)
         ]]>
     </native-query>
+
+    <native-query name="newsfeedsPost.findNewsfeedsPostByPushPostMemberSn">
+        <![CDATA[
+          select p.* from newsfeeds_member_post p, feeds_member_push_post mp
+          where p.id = mp.post_id
+           and mp.member_sn = :memberSn
+           order by p.post_time desc
+        ]]>
+    </native-query>
+
+    <native-query name="newsfeedsPost.findNewsfeedsPostByPushPostMemberSn.counter">
+        <![CDATA[
+          select count(*) from newsfeeds_member_post p, feeds_member_push_post mp
+          where p.id = mp.post_id
+           and mp.member_sn = :memberSn
+        ]]>
+    </native-query>
 </dynamic-query>
