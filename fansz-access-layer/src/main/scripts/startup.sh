@@ -24,7 +24,7 @@ while [ -h "$PRG" ] ; do
 done
 
 PRGDIR=`dirname "$PRG"`
-EXECUTABLE=consumer.sh
+EXECUTABLE=access.sh
 
 # Check that target executable exists
 if $os400; then

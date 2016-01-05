@@ -36,8 +36,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
         Long postId = newsfeedsPostService.addPost(addPostParam);
         GetPostByIdParam param = new GetPostByIdParam();
         param.setPostId(postId);
-        //return getPost(param);
-        return null;
+        return getPost(param);
     }
 
 

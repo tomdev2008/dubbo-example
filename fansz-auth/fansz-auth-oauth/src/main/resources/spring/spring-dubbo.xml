@@ -7,18 +7,23 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="fansz-service-auth" owner="backend" organization="fansz"/>
+    <dubbo:application name="fansz-auth-service" owner="backend-team" organization="fansz"/>
 
-    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4" client="netty4"  charset="UTF-8" accepts="1000" transporter="netty4"/>
+    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4"
+                    client="netty4"  charset="UTF-8" accepts="1000" transporter="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
     <dubbo:registry address="${dubbo.registry.address}"/>
+    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
 
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="com.fansz.auth.api.AccountApi" ref="accountProvider" validation="true" timeout="5000"
-                   connections="500" version="${provider.version}" retries="0" group="${provider.group}"/>
+                   connections="100" version="${provider.version}" retries="0" group="${provider.group}"/>
 
     <dubbo:service interface="com.fansz.auth.api.VerifyCodeApi" ref="verifyCodeProvider" validation="true" timeout="5000"
-                   connections="500" version="${provider.version}"  retries="0" group="${provider.group}"/>
+                   connections="100" version="${provider.version}"  retries="0" group="${provider.group}"/>
+
+    <dubbo:service interface="com.fansz.auth.api.OssApi" ref="ossProvider" validation="true" timeout="5000"
+                   connections="100" version="${provider.version}"  retries="0" group="${provider.group}"/>
 
 </beans>
