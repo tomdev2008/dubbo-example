@@ -19,8 +19,6 @@ public interface FandomMapper {
 
     int insertSelective(FandomEntity record);
 
-    List<FandomEntity> selectByParentId(Long id);
-
     List<FandomInfoResult> listByCondition(FandomEntity param);
 
     PageList<FandomInfoResult> getRecommendFandom(@Param("memberSn") String memberSn, PageBounds pageBounds);

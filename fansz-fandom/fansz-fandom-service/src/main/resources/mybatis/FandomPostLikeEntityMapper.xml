@@ -26,18 +26,6 @@
     id, member_id, post_id, like_time
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from feeds_member_post_like
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from feeds_member_post_like
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-
     <insert id="insert" parameterType="com.fansz.fandom.entity.FandomPostLikeEntity">
         insert into feeds_member_post_like (member_sn, post_id, like_time)
         values (#{memberSn,jdbcType=BIGINT}, #{postId,jdbcType=BIGINT},#{likeTime,jdbcType=TIMESTAMP})
@@ -45,59 +33,6 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
-
-    <insert id="insertSelective" parameterType="com.fansz.fandom.entity.FandomPostLikeEntity">
-        insert into feeds_member_post_like
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="memberId != null">
-                member_id,
-            </if>
-            <if test="postId != null">
-                post_id,
-            </if>
-            <if test="likeTime != null">
-                like_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="memberId != null">
-                #{memberId,jdbcType=BIGINT},
-            </if>
-            <if test="postId != null">
-                #{postId,jdbcType=BIGINT},
-            </if>
-            <if test="likeTime != null">
-                #{likeTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.fandom.entity.FandomPostLikeEntity">
-        update feeds_member_post_like
-        <set>
-            <if test="memberId != null">
-                member_id = #{memberId,jdbcType=BIGINT},
-            </if>
-            <if test="postId != null">
-                post_id = #{postId,jdbcType=BIGINT},
-            </if>
-            <if test="likeTime != null">
-                like_time = #{likeTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-
-    <update id="updateByPrimaryKey" parameterType="com.fansz.fandom.entity.FandomPostLikeEntity">
-    update feeds_member_post_like
-    set member_id = #{memberId,jdbcType=BIGINT},
-      post_id = #{postId,jdbcType=BIGINT},
-      like_time = #{likeTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 
     <select id="listPostVotes" resultMap="postLikeInfoResult" parameterType="java.lang.Long">
          select

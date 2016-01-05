@@ -53,78 +53,6 @@
         </selectKey>
     </insert>
 
-    <insert id="insertSelective" parameterType="com.fansz.fandom.entity.FandomPostEntity">
-        insert into feeds_member_post_fandom
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="memberId != null">
-                member_sn,
-            </if>
-            <if test="fandomId != null">
-                fandom_id,
-            </if>
-            <if test="postTitle != null">
-                post_title,
-            </if>
-            <if test="postContent != null">
-                post_content,
-            </if>
-            <if test="postNewsfeeds!=null">
-                post_newsfeeds,
-            </if>
-            <if test="postTime != null">
-                post_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="memberSn != null">
-                #{memberSn,jdbcType=VARCHAR},
-            </if>
-            <if test="fandomId != null">
-                #{fandomId,jdbcType=BIGINT},
-            </if>
-            <if test="postTitle != null">
-                #{postTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="postContent != null">
-                #{postContent,jdbcType=VARCHAR},
-            </if>
-            <if test="postNewsfeeds!=null">
-                #{postNewsfeeds,jdbcType=VARCHAR},
-            </if>
-            <if test="postTime != null">
-                #{postTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.fandom.entity.FandomPostEntity">
-        update feeds_member_post_fandom
-        <set>
-            <if test="memberSn != null">
-                member_sn = #{memberSn,jdbcType=BIGINT},
-            </if>
-            <if test="fandomId != null">
-                fandom_id = #{fandomId,jdbcType=BIGINT},
-            </if>
-            <if test="postTitle != null">
-                post_title=#{postTitle,jdbcType=VARCHAR},
-            </if>
-            <if test="postContent != null">
-                post_content = #{postContent,jdbcType=VARCHAR},
-            </if>
-            <if test="postNewsfeeds != null">
-                post_newsfeeds = #{postNewsfeeds,jdbcType=VARCHAR},
-            </if>
-            <if test="postTime != null">
-                post_time = #{postTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-
     <update id="incrLikeCountById" parameterType="java.lang.Long">
         UPDATE feeds_member_post_fandom
         SET like_count=IFNULL(like_count,0)+1
@@ -148,17 +76,6 @@
         SET comment_count=CASE WHEN IFNULL(comment_count,0)-1 <![CDATA[<]]> 0 THEN 0 ELSE IFNULL(comment_count,0)-1 END
         WHERE id = #{id,jdbcType=BIGINT}
     </update>
-
-    <update id="updateByPrimaryKey" parameterType="com.fansz.fandom.entity.FandomPostEntity">
-    update feeds_member_post_fandom
-    set member_sn = #{memberSn,jdbcType=VARCHAR},
-      fandom_id = #{fandomId,jdbcType=BIGINT},
-      post_title=#{postTitle,jdbcType=VARCHAR},
-      post_content = #{postContent,jdbcType=VARCHAR},
-      post_newsfeeds = #{postNewsfeeds,jdbcType=VARCHAR},
-      post_time = #{postTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 
     <select id="findPostsOfMyFandoms" parameterType="java.lang.String" resultMap="postInfoResultMap">
         SELECT

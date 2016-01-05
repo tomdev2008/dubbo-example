@@ -54,203 +54,6 @@
         ${alias}.profile_createtime u_profile_createtime, ${alias}.profile_updatetime u_profile_updatetime, ${alias}.member_type u_member_type, ${alias}.member_status u_member_status
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from connects_member_profile
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-
-    <select id="isExistsMobile" parameterType="java.lang.String" resultType="java.lang.Integer">
-    select count(1) from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR}
-    </select>
-
-    <select id="findByMoblie" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from connects_member_profile where mobile=#{mobile,jdbcType=VARCHAR} and member_status='1'
-    </select>
-
-    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR} and member_status='1'
-    </select>
-
-    <select id="isExistsNickname"  resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM connects_member_profile WHERE nickname=#{nickname,jdbcType=VARCHAR} AND member_status='1'
-        AND sn!=#{exlucdeSn,jdbcType=VARCHAR}
-    </select>
-
-    <select id="getFandomFollowers" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-    profile.id id, sn, loginname,  mobile, email, nickname, gender, birthday, member_avatar,signature,
-    profile_createtime, profile_updatetime, member_type, member_status
-    from feeds_member_fandom fandom, connects_member_profile profile
-    where fandom.member_id = profile.id
-    and   fandom.fandom_id = #{id,jdbcType=BIGINT}
-  </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from connects_member_profile where id = #{id,jdbcType=BIGINT}
-  </delete>
-
-    <insert id="insert" parameterType="com.fansz.fandom.entity.UserEntity">
-        insert into connects_member_profile (sn, loginname,
-        password, mobile, email,
-        nickname, gender, birthday,
-        member_avatar, signature,profile_createtime, profile_updatetime,
-        member_type, member_status)
-        values (#{sn,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR},
-        #{password,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-        #{nickname,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR},
-        #{memberAvatar,jdbcType=VARCHAR},#{signature,jdbcType=VARCHAR}, #{profileCreatetime,jdbcType=TIMESTAMP},
-        #{profileUpdatetime,jdbcType=TIMESTAMP},
-        #{memberType,jdbcType=VARCHAR}, #{memberStatus,jdbcType=VARCHAR})
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-    </insert>
-    <insert id="insertSelective" parameterType="com.fansz.fandom.entity.UserEntity">
-        insert into connects_member_profile
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                sn,
-            </if>
-            <if test="loginname != null">
-                loginname,
-            </if>
-            <if test="password != null">
-                password,
-            </if>
-            <if test="mobile != null">
-                mobile,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="nickname != null">
-                nickname,
-            </if>
-            <if test="gender != null">
-                gender,
-            </if>
-            <if test="birthday != null">
-                birthday,
-            </if>
-            <if test="memberAvatar != null">
-                member_avatar,
-            </if>
-            <if test="signature != null">
-                signature,
-            </if>
-            <if test="profileCreatetime != null">
-                profile_createtime,
-            </if>
-            <if test="profileUpdatetime != null">
-                profile_updatetime,
-            </if>
-            <if test="memberType != null">
-                member_type,
-            </if>
-            <if test="memberStatus != null">
-                member_status,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                #{sn,jdbcType=VARCHAR},
-            </if>
-            <if test="loginname != null">
-                #{loginname,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="mobile != null">
-                #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="nickname != null">
-                #{nickname,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null">
-                #{gender,jdbcType=VARCHAR},
-            </if>
-            <if test="birthday != null">
-                #{birthday,jdbcType=VARCHAR},
-            </if>
-            <if test="memberAvatar != null">
-                #{memberAvatar,jdbcType=VARCHAR},
-            </if>
-            <if test="signature != null">
-                #{signature,jdbcType=VARCHAR},
-            </if>
-            <if test="profileCreatetime != null">
-                #{profileCreatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="profileUpdatetime != null">
-                #{profileUpdatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="memberType != null">
-                #{memberType,jdbcType=VARCHAR},
-            </if>
-            <if test="memberStatus != null">
-                #{memberStatus,jdbcType=VARCHAR},
-            </if>
-        </trim>
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.fandom.entity.UserEntity">
-        update connects_member_profile
-        <set>
-            <if test="sn != null">
-                sn = #{sn,jdbcType=VARCHAR},
-            </if>
-            <if test="loginname != null">
-                loginname = #{loginname,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
-            <if test="mobile != null">
-                mobile = #{mobile,jdbcType=VARCHAR},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="nickname != null">
-                nickname = #{nickname,jdbcType=VARCHAR},
-            </if>
-            <if test="gender != null">
-                gender = #{gender,jdbcType=VARCHAR},
-            </if>
-            <if test="birthday != null">
-                birthday = #{birthday,jdbcType=VARCHAR},
-            </if>
-            <if test="memberAvatar != null">
-                member_avatar = #{memberAvatar,jdbcType=VARCHAR},
-            </if>
-            <if test="signature != null">
-                signature = #{signature,jdbcType=VARCHAR},
-            </if>
-            <if test="profileCreatetime != null">
-                profile_createtime = #{profileCreatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="profileUpdatetime != null">
-                profile_updatetime = #{profileUpdatetime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="memberType != null">
-                member_type = #{memberType,jdbcType=VARCHAR},
-            </if>
-            <if test="memberStatus != null">
-                member_status = #{memberStatus,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-
     <update id="updateByUidSelective" parameterType="com.fansz.fandom.entity.UserEntity">
         update connects_member_profile
         <set>
@@ -297,46 +100,14 @@
         where sn = #{sn,jdbcType=VARCHAR} and member_status='1'
     </update>
 
-    <update id="updateByPrimaryKey" parameterType="com.fansz.fandom.entity.UserEntity">
-    update connects_member_profile
-    set sn = #{sn,jdbcType=VARCHAR},
-      loginname = #{loginname,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      mobile = #{mobile,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      nickname = #{nickname,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=VARCHAR},
-      birthday = #{birthday,jdbcType=VARCHAR},
-      member_avatar = #{memberAvatar,jdbcType=VARCHAR},
-      signature = #{signature,jdbcType=VARCHAR},
-      profile_createtime = #{profileCreatetime,jdbcType=TIMESTAMP},
-      profile_updatetime = #{profileUpdatetime,jdbcType=TIMESTAMP},
-      member_type = #{memberType,jdbcType=VARCHAR},
-      member_status = #{memberStatus,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 
-    <update id="updateByUid" parameterType="com.fansz.fandom.entity.UserEntity">
-        UPDATE
-          connects_member_profile
-        SET
-            mobile = #{mobile,jdbcType=VARCHAR},
-            email = #{email,jdbcType=VARCHAR},
-            nickname = #{nickname,jdbcType=VARCHAR},
-            gender = #{gender,jdbcType=VARCHAR},
-            birthday = #{birthday,jdbcType=VARCHAR},
-            member_avatar = #{memberAvatar,jdbcType=VARCHAR},
-            signature = #{signature,jdbcType=VARCHAR},
-            profile_updatetime = #{profileUpdatetime,jdbcType=TIMESTAMP},
-            member_type = #{memberType,jdbcType=VARCHAR}
-        WHERE sn = #{sn,jdbcType=VARCHAR} and member_status='1'
-   </update>
+    <select id="isExistsNickname" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM connects_member_profile WHERE nickname=#{nickname,jdbcType=VARCHAR} AND member_status='1'
+        AND sn!=#{exlucdeSn,jdbcType=VARCHAR}
+    </select>
 
-    <select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from connects_member_profile
-        where loginname = #{loginAccount,jdbcType=VARCHAR}
+    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR} and member_status='1'
     </select>
 
     <select id="searchMembers" resultMap="userInfoResultMap">
@@ -362,19 +133,11 @@
         SELECT a.* ,b.relation_status relationship
         FROM connects_member_profile a
         LEFT JOIN connects_member_relation b
-        ON b.friend_member_sn=a.sn AND  b.my_member_sn=#{sn,jdbcType=VARCHAR}
+        ON b.friend_member_sn=a.sn AND b.my_member_sn=#{sn,jdbcType=VARCHAR}
         <if test="searchKey != null">
             WHERE nickname = #{searchKey,jdbcType=VARCHAR}
             OR mobile = #{searchKey,jdbcType=VARCHAR}
             OR loginname = #{searchKey,jdbcType=VARCHAR}
         </if>
     </select>
-    <update id="setMemberType" parameterType="com.fansz.fandom.entity.UserEntity">
-       UPDATE connects_member_profile
-        SET member_type = #{memberType,jdbcType=VARCHAR},
-         profile_updatetime = NOW()
-        WHERE
-            sn = #{sn,jdbcType=VARCHAR}
-    </update>
-
 </mapper>

@@ -1,6 +1,7 @@
 package com.fansz.fandom.service;
 
 
+import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.*;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public interface PostService {
 
-    Long addPost(AddPostParam addPostParam);
+    FandomPostEntity addPost(AddPostParam addPostParam);
 
     void removePost(RemovePostParam removePostrParam);
 

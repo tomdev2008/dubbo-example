@@ -1,17 +1,140 @@
 {
   "header": {
-    "terminal_type": "IOS",
-    "local": "ZH_cn"
+    "local": "zh_CN",
+    "terminal_type": "ANDROID"
   },
   "response": [
     {
-      "method": "getOssToken",
+      "method": "showNewsfeedsBySn",
       "message": "Success",
       "result": {
-        "access_key_id": "STS.KLN2y8EwwwzCnM9fPn4O",
-        "access_key_secret": "FXDJ8iMgIurXXf4b8QuGkSqcTS5P8Sw4ADuI6xYb",
-        "security_token": "CAESmwQIARKAARoaFS4PjG0LduOjszMTP14jbz3IgBQ7w2Gd4WdrIMoadiEsBidE8g5omqVM0C0TqWptqHRBVpmh+TvMxynvocWO9pUXe6RRFnLe42ECuVlJf6sLNbxo3Sm0X1Buyv0RSKGvrKYsScGHsdnS5fgHXLfnJhjc3w5xXGxbSmv1XpTSGhhTVFMuS0xOMnk4RXd3d3pDbk05ZlBuNE8iEjM0MTQyMDY1MDg0MjA2MTQ1OSoRZXh0ZXJuYWwtdXNlcm5hbWUwj77t4KAqOgZSc2FNRDVC5gEKATEa4AEKBUFsbG93EoIBCgxBY3Rpb25FcXVhbHMSBkFjdGlvbhpqCg1vc3M6R2V0T2JqZWN0Cg1vc3M6UHV0T2JqZWN0ChBvc3M6RGVsZXRlT2JqZWN0Cg1vc3M6TGlzdFBhcnRzChhvc3M6QWJvcnRNdWx0aXBhcnRVcGxvYWQKD29zczpMaXN0T2JqZWN0cxJSCg5SZXNvdXJjZUVxdWFscxIIUmVzb3VyY2UaNgoaYWNzOm9zczoqOio6JEJVQ0tFVF9OQU1FLyoKGGFjczpvc3M6KjoqOiRCVUNLRVRfTkFNRUoQMTk2NjU0MTc4NjQ5MjI2NVIFMjY4NDJaD0Fzc3VtZWRSb2xlVXNlcmAAahIzNDE0MjA2NTA4NDIwNjE0NTlyG2FsaXl1bm9zc3Rva2VuZ2VuZXJhdG9ycm9sZQ==",
-        "expiration": "2016-01-04T10:07:46Z"
+        "data": [
+          {
+            "fandom_avatar": "/g1/M00/CB/39/wKhYAlZ1P4OAMV7xAAAPh_BkfLw548.jpg",
+            "fandom_id": "10771",
+            "fandom_name": "我现在",
+            "liked": "0",
+            "post_id": 34,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451958963000,
+            "source_from": "T",
+            "source_post_id": 860
+          },
+          {
+            "fandom_avatar": "/g1/M00/CB/39/wKhYAlZ1P4OAMV7xAAAPh_BkfLw548.jpg",
+            "fandom_id": "10771",
+            "fandom_name": "我现在",
+            "liked": "0",
+            "post_id": 33,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451958882000,
+            "source_from": "T",
+            "source_post_id": 859
+          },
+          {
+            "fandom_avatar": "/g1/M00/CB/39/wKhYAlZ1P4OAMV7xAAAPh_BkfLw548.jpg",
+            "fandom_id": "10771",
+            "fandom_name": "我现在",
+            "liked": "0",
+            "post_id": 29,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451891428000,
+            "source_from": "T",
+            "source_post_id": 834
+          },
+          {
+            "fandom_avatar": "/g1/M00/21/69/wKhYB1Z1Jb-AJKYwAAAY5uuhWnM267.img",
+            "fandom_id": "10767",
+            "fandom_name": "99999999",
+            "liked": "0",
+            "post_id": 27,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451890753000,
+            "source_from": "T",
+            "source_post_id": 833
+          },
+          {
+            "fandom_avatar": "/g1/M00/21/69/wKhYB1Z1Jb-AJKYwAAAY5uuhWnM267.img",
+            "fandom_id": "10767",
+            "fandom_name": "99999999",
+            "liked": "0",
+            "post_id": 26,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451890671000,
+            "source_from": "T",
+            "source_post_id": 832
+          },
+          {
+            "fandom_avatar": "/g1/M00/21/69/wKhYB1Z1Jb-AJKYwAAAY5uuhWnM267.img",
+            "fandom_id": "10767",
+            "fandom_name": "99999999",
+            "liked": "0",
+            "post_id": 25,
+            "post_member": {
+              "birthday": "1608272479886",
+              "gender": "M",
+              "member_avatar": "/g1/M00/FE/D4/wKhYAlZzpdiAKQ2FAAATDhF8tIE385.jpg",
+              "mobile": "13861697297",
+              "nickname": "家里",
+              "profile_createtime": 1450344276000,
+              "signature": "程序猿1号",
+              "sn": "328b7bd8d95b4cae8fb7fa8edb5ed39a"
+            },
+            "post_time": 1451890641000,
+            "source_from": "T",
+            "source_post_id": 831
+          }
+        ],
+        "pager": {
+          "page_num": 1,
+          "page_size": 10,
+          "total_num": 6
+        }
       },
       "status": "0"
     }

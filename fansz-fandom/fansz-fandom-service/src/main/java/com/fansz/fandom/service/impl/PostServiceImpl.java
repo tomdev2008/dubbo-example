@@ -34,12 +34,12 @@ public class PostServiceImpl implements PostService {
     private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
 
     @Override
-    public Long addPost(AddPostParam addPostParam) {
+    public FandomPostEntity addPost(AddPostParam addPostParam) {
         FandomPostEntity fandomPostEntity = BeanTools.copyAs(addPostParam, FandomPostEntity.class);
         fandomPostEntity.setMemberSn(addPostParam.getCurrentSn());
         fandomPostEntity.setPostTime(new Date());
         fandomPostEntityMapper.insert(fandomPostEntity);
-        return fandomPostEntity.getId();
+        return fandomPostEntity;
     }
 
     @Override

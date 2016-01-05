@@ -14,16 +14,8 @@ public interface PostCommentEntityMapper {
 
     int insert(PostCommentEntity record);
 
-    int insertSelective(PostCommentEntity record);
-
-    PostCommentEntity selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(PostCommentEntity record);
-
-    int updateByPrimaryKey(PostCommentEntity record);
 
     PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(@Param("postId") Long postId, @Param("commentSource") String commentSource, PageBounds pageBounds);
-
 
     /**
      * 删除我的评论

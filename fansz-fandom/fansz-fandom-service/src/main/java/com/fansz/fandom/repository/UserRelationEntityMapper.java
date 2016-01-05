@@ -12,19 +12,6 @@ import java.util.List;
 
 @MapperScan
 public interface UserRelationEntityMapper {
-
-    int deleteByPrimaryKey(Long id);
-
-    int insert(UserRelationEntity record);
-
-    int insertSelective(UserRelationEntity record);
-
-    UserRelationEntity selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(UserRelationEntity record);
-
-    int updateByPrimaryKey(UserRelationEntity record);
-
     /**
      * 查询用户是否是好友
      *
@@ -34,15 +21,4 @@ public interface UserRelationEntityMapper {
      */
     UserRelationEntity findFriendRelationBySns(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
 
-    UserRelationEntity findRelation(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn);
-
-    PageList<FriendInfoResult> findFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
-
-    PageList<FriendInfoResult> findSpecialFriends(@Param("myMemberSn") String userSn, PageBounds pageBounds);
-
-    PageList<ContactInfoResult> findRelationByMobiles(@Param("memberSn") String memberSn, @Param("mobileList") List<String> mobileList, PageBounds pageBounds);
-
-    PageList<FriendInfoResult> listAddMeRequest(String memberSn, PageBounds pageBounds);
-
-    PageList<FriendInfoResult> listMySendRequest(String memberSn, PageBounds pageBounds);
 }

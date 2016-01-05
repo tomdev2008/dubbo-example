@@ -12,10 +12,4 @@ public interface UserAlbumMapper {
     int insert(UserAlbumEntity record);
 
     int insertSelective(UserAlbumEntity record);
-
-    UserAlbumEntity selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(UserAlbumEntity record);
-
-    int updateByPrimaryKey(UserAlbumEntity record);
 }

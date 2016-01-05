@@ -14,18 +14,11 @@ public interface FandomPostEntityMapper {
 
     int insert(FandomPostEntity record);
 
-    int insertSelective(FandomPostEntity record);
-
     FandomPostEntity selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(FandomPostEntity record);
-
-    int updateByPrimaryKey(FandomPostEntity record);
 
     int incrLikeCountById(Long postId);
 
     int decrLikeCountById(Long postId);
-
 
     int incrCommentCountById(Long postId);
 

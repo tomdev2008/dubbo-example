@@ -14,40 +14,14 @@ import java.util.List;
 @Service
 public interface UserMapper {
 
-    int deleteByPrimaryKey(Long id);
-
-    int insert(UserEntity record);
-
-    int insertSelective(UserEntity record);
-
-    UserEntity selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(UserEntity record);
-
     int updateByUidSelective(UserEntity record);
 
-    int updateByUid(UserEntity record);
-
-    int updateByPrimaryKey(UserEntity record);
-
-    int isExistsMobile(String mobile);
-
-    int isExistsNickname(@Param("nickname")String nickname,@Param("exlucdeSn")String exlucdeSn);
-
-    UserEntity findByMoblie(@Param("mobile") String mobile);
+    int isExistsNickname(@Param("nickname") String nickname, @Param("exlucdeSn") String exlucdeSn);
 
     UserEntity selectByUid(String uid);
 
-    UserEntity findByAccount(String loginAccount);
+    PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType, @Param("loginname") String loginname, PageBounds pageBounds);
 
-    List<UserEntity> getFandomFollowers(Integer id);
-
-
-    PageList<UserInfoResult> searchMembers(@Param("nickname") String nickname, @Param("mobile") String mobile, @Param("memberType") String memberType,@Param("loginname") String loginname, PageBounds pageBounds);
-
-    PageList<UserInfoResult> searchMembersByKey(@Param("searchKey") String searchKey,@Param("sn")String sn, PageBounds pageBounds);
-
-
-    int setMemberType(UserEntity record);
+    PageList<UserInfoResult> searchMembersByKey(@Param("searchKey") String searchKey, @Param("sn") String sn, PageBounds pageBounds);
 
 }

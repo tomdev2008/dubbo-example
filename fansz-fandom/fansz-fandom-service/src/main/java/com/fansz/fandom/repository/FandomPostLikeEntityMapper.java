@@ -9,17 +9,8 @@ import java.util.List;
 
 @MapperScan
 public interface FandomPostLikeEntityMapper {
-    int deleteByPrimaryKey(Integer id);
 
     int insert(FandomPostLikeEntity record);
-
-    int insertSelective(FandomPostLikeEntity record);
-
-    FandomPostLikeEntity selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(FandomPostLikeEntity record);
-
-    int updateByPrimaryKey(FandomPostLikeEntity record);
 
     List<PostLikeInfoResult> listPostVotes(Long id);
 

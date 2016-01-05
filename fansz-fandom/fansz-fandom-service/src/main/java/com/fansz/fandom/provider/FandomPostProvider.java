@@ -9,6 +9,7 @@ import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.api.FandomPostApi;
+import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.*;
 import com.fansz.fandom.service.PostService;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -39,12 +40,12 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
      * @return resp 返回对象
      */
     public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException {
-        Long postId = postService.addPost(addPostParam);
+        FandomPostEntity fandomPost = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
-        postParam.setPostId(postId);
+        postParam.setPostId(fandomPost.getId());
         postParam.setCurrentSn(addPostParam.getCurrentSn());
         if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
-            PublishPostEvent postPublishEvent = new PublishPostEvent(postId, addPostParam.getCurrentSn());
+            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent());
             eventProducer.produce(AsyncEventType.PUBLISH_POST, postPublishEvent);
         }
         return getPost(postParam);

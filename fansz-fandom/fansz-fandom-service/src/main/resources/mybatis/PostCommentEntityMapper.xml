@@ -16,13 +16,6 @@
     id, post_id, commentator_sn, comment_content, comment_time
   </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from feeds_member_post_comment
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from feeds_member_post_comment
     where id = #{id,jdbcType=BIGINT}
@@ -36,69 +29,6 @@
             select LAST_INSERT_ID()
         </selectKey>
     </insert>
-
-    <insert id="insertSelective" parameterType="com.fansz.fandom.entity.PostCommentEntity">
-        insert into feeds_member_post_comment
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="postId != null">
-                post_id,
-            </if>
-            <if test="commentatorSn != null">
-                commentator_sn,
-            </if>
-            <if test="commentContent != null">
-                comment_content,
-            </if>
-            <if test="commentTime != null">
-                comment_time,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="postId != null">
-                #{postId,jdbcType=BIGINT},
-            </if>
-            <if test="commentatorSn != null">
-                #{commentator_sn,jdbcType=VARCHAR},
-            </if>
-            <if test="commentContent != null">
-                #{commentContent,jdbcType=VARCHAR},
-            </if>
-            <if test="commentTime != null">
-                #{commentTime,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-        <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
-            select LAST_INSERT_ID()
-        </selectKey>
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="com.fansz.fandom.entity.PostCommentEntity">
-        update feeds_member_post_comment
-        <set>
-            <if test="postId != null">
-                post_id = #{postId,jdbcType=BIGINT},
-            </if>
-            <if test="commentatorSn != null">
-                commentator_sn = #{commentatorId,jdbcType=VARCHAR},
-            </if>
-            <if test="commentContent != null">
-                comment_content = #{commentContent,jdbcType=VARCHAR},
-            </if>
-            <if test="commentTime != null">
-                comment_time = #{commentTime,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
-
-    <update id="updateByPrimaryKey" parameterType="com.fansz.fandom.entity.PostCommentEntity">
-    update feeds_member_post_comment
-    set post_id = #{postId,jdbcType=BIGINT},
-      commentator_sn = #{commentatorSn,jdbcType=VARCHAR},
-      comment_content = #{commentContent,jdbcType=VARCHAR},
-      comment_time = #{commentTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
 
     <select id="getCommentsByPostidFromFandom" resultType="com.fansz.fandom.model.comment.PostCommentQueryResult" parameterType="java.lang.Object">
          SELECT
