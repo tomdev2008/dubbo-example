@@ -228,6 +228,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
         for (PostCommentQueryResult postComment : commentQueryResultList) {
             User commentUser = CollectionTools.find(userList, "sn", postComment.getCommentatorSn());
+            postComment.setCommentatorNickname(commentUser.getNickname());
             postComment.setCommentatorAvatar(commentUser.getMemberAvatar());
             //find parent comment && set value
             if (postComment.getCommentParentId() != null) {
