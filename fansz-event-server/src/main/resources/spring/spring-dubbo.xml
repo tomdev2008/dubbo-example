@@ -5,16 +5,11 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <dubbo:application name="members-event-server" owner="fansz-evernt-server" organization="fansz"/>
+    <dubbo:application name="members-event-server" owner="backend-team" organization="fansz"/>
 
     <dubbo:registry address="${dubbo.registry.address}"/>
 
-    <!--uncomment this if you want to test dubbo's monitor-->
-    <!--<dubbo:monitor protocol="registry"/>-->
-
-    <!-- directly connect to provider to simulate the access to non-dubbo rest services -->
-    <!--<dubbo:reference id="userService2" interface="com.fansz.service.api.LoginServicee" url="rest://localhost:7001/users/"/>-->
-
+    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
     <dubbo:reference interface="com.fansz.fandom.api.SpecialFocusApi" id="specialFocusProvider" validation="true"
                      timeout="5000" connections="500" protocol="dubbo" version="${provider.version}" retries="1"
                      group="${provider.group}" client="netty4"/>

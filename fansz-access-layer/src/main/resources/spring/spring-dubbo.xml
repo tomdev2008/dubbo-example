@@ -4,11 +4,11 @@
        xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
 	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
-    <dubbo:application name="fansz-access-layer" owner="fansz-access" organization="fansz" logger="slf4j"/>
+    <dubbo:application name="fansz-access-layer" owner="backend-team" organization="fansz" logger="slf4j"/>
 
     <dubbo:registry address="${dubbo.registry.address}"/>
 
-    <!--<dubbo:monitor protocol="registry"/>-->
+    <dubbo:monitor protocol="dubbo" address="${dubbo.registry.address}"/>
 
     <dubbo:reference interface="com.fansz.auth.api.AccountApi" id="accountProvider" validation="true"
                       scope="remote"
