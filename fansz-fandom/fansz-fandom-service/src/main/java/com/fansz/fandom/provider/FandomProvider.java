@@ -9,6 +9,7 @@ import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomParam;
+import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 import com.fansz.fandom.service.FandomService;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -37,8 +38,18 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> joinFandom(JoinFandomParam joinFandomParam) {
-        fandomService.joinFandom(joinFandomParam);
+    public CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) {
+        List<String> fandomIds = joinFandomsParam.getFandomIds();
+        String memberSn = joinFandomsParam.getMemberSn();
+        String accessToken = joinFandomsParam.getAccessToken();
+        JoinFandomParam joinFandomParam = null;
+        for (String fandomId:fandomIds) {
+            joinFandomParam = new JoinFandomParam();
+            joinFandomParam.setMemberSn(memberSn);
+            joinFandomParam.setAccessToken(accessToken);
+            joinFandomParam.setFandomId(fandomId);
+            fandomService.joinFandom(joinFandomParam);
+        }
         return renderSuccess();
     }
 

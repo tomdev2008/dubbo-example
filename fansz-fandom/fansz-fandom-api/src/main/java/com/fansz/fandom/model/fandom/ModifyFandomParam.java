@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by dell on 2015/12/16.
@@ -35,6 +36,9 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
 
     @JSONField(name="fandom_intro")
     private String fandomIntro;
+
+    @JSONField(name="fandom_tag_list")
+    private List<FandomTagParam> fandomTagParam;
 
     public String getAdminSn() {
         return adminSn;
@@ -93,5 +97,13 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
 
     public void setFandomIntro(String fandomIntro) {
         this.fandomIntro = fandomIntro;
+    }
+
+    public List<FandomTagParam> getFandomTagParam() {
+        return fandomTagParam;
+    }
+
+    public void setFandomTagParam(List<FandomTagParam> fandomTagParam) {
+        this.fandomTagParam = fandomTagParam;
     }
 }

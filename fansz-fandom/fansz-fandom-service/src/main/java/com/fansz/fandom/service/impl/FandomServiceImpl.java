@@ -13,6 +13,7 @@ import com.fansz.fandom.model.relationship.ExitFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomParam;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomMemberEntityMapper;
+import com.fansz.fandom.repository.FandomTagMapper;
 import com.fansz.fandom.service.FandomService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
@@ -46,6 +47,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Resource(name = "eventProducer")
     private EventProducer eventProducer;
+
+    @Autowired
+    private FandomTagMapper fandomTagMapper;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -174,10 +178,18 @@ public class FandomServiceImpl implements FandomService {
             }
         }
         int count2 = fandomMapper.modifyFandom(modifyFandomParam);
+        //删除当前fandom的所有tag信息
+        fandomTagMapper.deleteFandomTagByFandomId(modifyFandomParam.getId());
+        //重新添加当前fandom的tag信息
+        for(FandomTagParam fandomTagParam:modifyFandomParam.getFandomTagParam()){
+            fandomTagMapper.saveTagByfandomId(fandomTagParam);
+        }
         if (count2 == 0) {
             throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "No fandom modify permissions");
         }
+        List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(modifyFandomParam.getId());
         FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(), null);
+        fandomInfoResult.setFandomTagResultList(fandomTagList);
         return fandomInfoResult;
     }
 }

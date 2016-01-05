@@ -2,6 +2,7 @@ package com.fansz.feeds.provider;
 
 import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.model.CommonResult;
+import com.fansz.common.provider.model.NullResult;
 import com.fansz.db.entity.NewsfeedsPostComment;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.NewsfeedsCommentDAO;
@@ -9,6 +10,7 @@ import com.fansz.db.repository.UserDAO;
 import com.fansz.feeds.service.NewsfeedsCommentService;
 import com.fansz.newsfeeds.api.NewsfeedsCommentApi;
 import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
+import com.fansz.newsfeeds.model.comment.DelCommentParam;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 import com.fansz.pub.utils.BeanTools;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,11 +51,11 @@ public class NewsfeedsCommentProvider extends AbstractProvider implements Newsfe
     }
 
     @Override
-    public CommonResult<PostCommentQueryResult> removeCommet(NewsfeedsCommentParam delCommentParam) {
+    public CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam) {
         String code = newsfeedsCommentService.deleteCommet(delCommentParam);
         if (null == code) {
             PostCommentQueryResult postCommentQueryResult = new PostCommentQueryResult();
-            postCommentQueryResult.setId(delCommentParam.getId());
+            postCommentQueryResult.setId(delCommentParam.getCommentId());
             return renderSuccess(postCommentQueryResult);
         }
         return renderFail(code);

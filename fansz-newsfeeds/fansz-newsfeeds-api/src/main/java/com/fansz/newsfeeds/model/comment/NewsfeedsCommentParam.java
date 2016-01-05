@@ -17,18 +17,16 @@ public class NewsfeedsCommentParam extends AbstractToken {
     @JSONField(name="comment_id")
     private Long id;
 
-    @NotNull(groups = NewsfeedsCommentApi.addPostComment.class)
+    @NotNull
     @JSONField(name="post_id")
     private Long postId;
 
     @JSONField(name="comment_parent_id")
     private Long commentParentId;
 
-    @NotBlank(groups = NewsfeedsCommentApi.addPostComment.class)
-    @JSONField(name="commentator_sn")
-    private String commentatorSn;
+    private String currentSn;
 
-    @NotBlank(groups = NewsfeedsCommentApi.addPostComment.class)
+    @NotNull
     @JSONField(name="comment_content")
     private String commentContent;
 
@@ -60,14 +58,6 @@ public class NewsfeedsCommentParam extends AbstractToken {
         this.commentParentId = commentParentId;
     }
 
-    public String getCommentatorSn() {
-        return commentatorSn;
-    }
-
-    public void setCommentatorSn(String commentatorSn) {
-        this.commentatorSn = commentatorSn;
-    }
-
     public String getCommentContent() {
         return commentContent;
     }
@@ -94,11 +84,12 @@ public class NewsfeedsCommentParam extends AbstractToken {
 
     @Override
     public String getCurrentSn() {
-        return null;
+        return currentSn;
     }
 
     @Override
-    public void setCurrentSn(String s) {
-
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 }
+

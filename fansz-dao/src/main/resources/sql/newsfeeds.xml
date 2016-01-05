@@ -115,4 +115,36 @@
            and mp.member_sn = :memberSn
         ]]>
     </native-query>
+
+    <native-query name="newsfeeds.removeCommetByPostId">
+        <![CDATA[
+            DELETE
+            FROM
+                newsfeeds_member_comment
+            WHERE
+                post_id =:postId
+        ]]>
+    </native-query>
+
+    <native-query name="newsfeeds.isLiked">
+        <![CDATA[
+            SELECT
+                count(1)
+            FROM
+                newsfeeds_member_like
+            WHERE
+                member_sn =:memberSn
+            AND post_id =:postId
+        ]]>
+    </native-query>
+
+    <native-query name="newsfeeds.removeLikeByPostId">
+        <![CDATA[
+            DELETE
+            FROM
+                newsfeeds_member_like
+            WHERE
+                post_id =:postId
+        ]]>
+    </native-query>
 </dynamic-query>

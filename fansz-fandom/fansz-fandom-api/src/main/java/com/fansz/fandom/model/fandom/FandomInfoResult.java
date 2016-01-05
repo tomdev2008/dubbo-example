@@ -5,6 +5,7 @@ import com.fansz.fandom.model.profile.UserInfoResult;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户关注的fandom信息
@@ -50,6 +51,9 @@ public class FandomInfoResult implements Serializable {
 
     @JSONField(name="creator")
     private UserInfoResult creator;
+
+    @JSONField(name="fandom_tag_list")
+    private List<FandomTagResult> fandomTagResultList;
 
     public Long getId() {
         return id;
@@ -154,5 +158,13 @@ public class FandomInfoResult implements Serializable {
 
     public void setFandomParentName(String fandomParentName) {
         this.fandomParentName = fandomParentName;
+    }
+
+    public List<FandomTagResult> getFandomTagResultList() {
+        return fandomTagResultList;
+    }
+
+    public void setFandomTagResultList(List<FandomTagResult> fandomTagResultList) {
+        this.fandomTagResultList = fandomTagResultList;
     }
 }
