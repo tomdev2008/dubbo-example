@@ -6,14 +6,9 @@ import com.fansz.db.repository.NewsfeedsCommentDAO;
 import com.fansz.feeds.service.NewsfeedsCommentService;
 import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
 import com.fansz.pub.utils.BeanTools;
-import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by dell on 2015/12/28.

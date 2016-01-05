@@ -4,13 +4,14 @@ package com.fansz.feeds.service.impl;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.db.entity.NewsfeedsMemberLike;
 import com.fansz.db.entity.NewsfeedsPost;
-import com.fansz.db.entity.PushPost;
 import com.fansz.db.entity.User;
 import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
-import com.fansz.db.model.NewsfeedsPostVO;
-import com.fansz.db.repository.*;
+import com.fansz.db.repository.NewsfeedsCommentDAO;
+import com.fansz.db.repository.NewsfeedsMemberLikeDAO;
+import com.fansz.db.repository.NewsfeedsPostDAO;
+import com.fansz.db.repository.UserDAO;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
@@ -47,9 +48,6 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     private UserDAO userDAO;
 
     @Autowired
-    private PushPostDAO pushPostDAO;
-
-    @Autowired
     private EventProducer eventProducer;
 
     @Autowired
@@ -79,12 +77,12 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Override
     public NewsfeedsPost deletePostById(RemovePostParam postParam) {
-        Map<String,Object> map = new HashMap();
-        map.put("id",postParam.getPostId());
+        Map<String, Object> map = new HashMap();
+        map.put("id", postParam.getPostId());
         List<NewsfeedsPost> newsfeedsPostList = newsfeedsPostDAO.findBy(map);
-        if(null != newsfeedsPostList && newsfeedsPostList.size() > 0){
+        if (null != newsfeedsPostList && newsfeedsPostList.size() > 0) {
             NewsfeedsPost newsfeedsPost = newsfeedsPostList.get(0);
-            if(!newsfeedsPost.getMemberSn().equals(postParam.getCurrentSn())){
+            if (!newsfeedsPost.getMemberSn().equals(postParam.getCurrentSn())) {
                 return null;
             }
             //删除当前post下所有评论
@@ -101,8 +99,8 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     @Override
     public String saveNewsfeedLike(GetPostByIdParam postParam) {
         //判断是否重复点赞
-        int count = newsfeedsMemberLikeDAO.isLiked(postParam.getCurrentSn(),postParam.getPostId());
-        if(count > 0){
+        int count = newsfeedsMemberLikeDAO.isLiked(postParam.getCurrentSn(), postParam.getPostId());
+        if (count > 0) {
             return ErrorCode.LIKED_REPEATED.getCode();
         }
         NewsfeedsMemberLike newsfeedsMemberLike = new NewsfeedsMemberLike();
@@ -114,16 +112,17 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Override
     public String deleteNewsfeedLike(GetPostByIdParam postParam) {
-        Map<String,Object> map = new HashMap();
-        map.put("memberSn",postParam.getCurrentSn());
-        map.put("postId",postParam.getPostId());
+        Map<String, Object> map = new HashMap();
+        map.put("memberSn", postParam.getCurrentSn());
+        map.put("postId", postParam.getPostId());
         List<NewsfeedsMemberLike> newsfeedsMemberLikeList = newsfeedsMemberLikeDAO.findBy(map);
-        if(CollectionTools.isNullOrEmpty(newsfeedsMemberLikeList)){
+        if (CollectionTools.isNullOrEmpty(newsfeedsMemberLikeList)) {
             return ErrorCode.LIKED_NO_DELETE.getCode();
         }
         newsfeedsMemberLikeDAO.delete(newsfeedsMemberLikeList.get(0));
         return null;
     }
+
     @Override
     public QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page) {
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
@@ -140,7 +139,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     public QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page) {
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
         QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, friendSn);
-        if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())){
+        if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())) {
             List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberSn);
             postResult.setResultlist(postInfoResultList);
             postResult.setTotalrecord(postInfoResultList.size());
@@ -152,7 +151,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
      * 组装postInfoResult
      *
      * @param newsfeedsPosts postList
-     * @param memberSn 登陆用户sn
+     * @param memberSn       登陆用户sn
      * @return
      */
     private List<PostInfoResult> assemblePostInfoResult(List<? extends NewsfeedsPost> newsfeedsPosts, String memberSn) {
@@ -166,7 +165,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         for (NewsfeedsPost post : newsfeedsPosts) {
             memberSnSet.add(post.getMemberSn());
             postIdSet.add(String.valueOf(post.getId()));
-            if (InformationSource.FANDOM.getCode().equals(post.getSourceFrom())){
+            if (InformationSource.FANDOM.getCode().equals(post.getSourceFrom())) {
                 fandomPostIdSet.add(String.valueOf(post.getSourcePostId()));
             }
         }
@@ -187,14 +186,14 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
         //查询所有朋友圈动态的fandom信息
         List<NewsFeedsFandomPostVO> newsFeedsFandomPostVOs = null;
-        if(!CollectionTools.isNullOrEmpty(fandomPostIdSet)){
+        if (!CollectionTools.isNullOrEmpty(fandomPostIdSet)) {
             newsFeedsFandomPostVOs = newsfeedsPostDAO.findNewsfeedsFandomPostInfoByPostId(new ArrayList<String>(fandomPostIdSet));
         }
 
         //NewsfeedsPost convert to PostInfoResult
         List<PostInfoResult> postInfoResultList = new ArrayList<>();
         //convert newsfeedPost to PostInfoResult
-        for(NewsfeedsPost newsfeedsPost: newsfeedsPosts){
+        for (NewsfeedsPost newsfeedsPost : newsfeedsPosts) {
             PostInfoResult postInfoResult = BeanTools.copyAs(newsfeedsPost, PostInfoResult.class);
             User postUser = CollectionTools.find(userList, "sn", newsfeedsPost.getMemberSn());
             UserInfoResult postUserInfo = BeanTools.copyAs(postUser, UserInfoResult.class);
@@ -202,9 +201,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             //liked default 0
             postInfoResult.setLiked("0");
             //如果该朋友圈是来自fandom的动态,补充fandom信息
-            if(InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null){
+            if (InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null) {
                 NewsFeedsFandomPostVO fandomPostVO = CollectionTools.find(newsFeedsFandomPostVOs, "id", newsfeedsPost.getSourcePostId());
-                if(fandomPostVO != null){
+                if (fandomPostVO != null) {
                     postInfoResult.setFandomId(String.valueOf(fandomPostVO.getFandomId()));
                     postInfoResult.setFandomAvatarUrl(fandomPostVO.getFandomAvatarUrl());
                     postInfoResult.setFandomName(fandomPostVO.getFandomName());
