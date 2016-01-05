@@ -192,7 +192,7 @@
                     and l.post_id=p.id
             ) liked,
             p.comment_count comments,
-            f.id fi_fandom_id,
+            f.id fi_id,
             f.fandom_name fi_fandom_name,
             f.fandom_parent_id fi_fandom_parent_id,
             f.fandom_creator_sn fi_fandom_creator_sn,

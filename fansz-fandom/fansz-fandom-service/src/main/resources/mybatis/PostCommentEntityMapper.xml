@@ -51,6 +51,7 @@
         LEFT JOIN connects_member_profile q ON p.commentator_sn = q.sn
         WHERE
             t.post_id = #{postId,jdbcType=BIGINT} AND t.comment_source=#{commentSource,jdbcType=VARCHAR}
+            ORDER BY t.id ASC
     </select>
 
     <select id="selectByIdAndSn" resultMap="BaseResultMap">
