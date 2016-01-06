@@ -172,6 +172,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         List<String> postIds = new ArrayList<>(postIdSet);
         //所有的comment
         List<NewsfeedsCommentVO> commentList = newsfeedsCommentDAO.findByPostIdsAndMemberSn(postIds, memberSn);
+        for(NewsfeedsCommentVO commentVO : commentList){
+            memberSnSet.add(commentVO.getCommentatorSn());
+        }
 
         //所有的like
         List<NewsfeedsMemberLikeVO> memberLikeList = newsfeedsMemberLikeDAO.findLikesByPostIdsAndMemberSn(postIds, memberSn);
