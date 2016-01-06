@@ -10,6 +10,7 @@ import com.fansz.newsfeeds.model.comment.DelCommentParam;
 import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,7 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService{
     public NewsfeedsPostComment savePostComment(NewsfeedsCommentParam commentPara){
         NewsfeedsPostComment newsfeedsPostComment = BeanTools.copyAs(commentPara,NewsfeedsPostComment.class);
         newsfeedsPostComment.setCommentatorSn(commentPara.getCurrentSn());
+        newsfeedsPostComment.setCommentTime(DateTools.getSysDate());
         newsfeedsCommentDAO.save(newsfeedsPostComment);
         return newsfeedsPostComment;
     }

@@ -216,6 +216,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //遍历memberLikeList, 往PostInfoResult中赋值
         for (NewsfeedsMemberLikeVO memberLike : memberLikeList) {
             PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", memberLike.getPostId());
+            if(postInfoResult == null){
+                continue;
+            }
             User user = CollectionTools.find(userList, "sn", memberLike.getMemberSn());
             UserInfoResult userInfoResult = BeanTools.copyAs(user, UserInfoResult.class);
             if (CollectionTools.isNullOrEmpty(postInfoResult.getLikedList())) {
@@ -227,19 +230,25 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //遍历comment
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
         for (PostCommentQueryResult postComment : commentQueryResultList) {
+            PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", postComment.getPostId());
+            if(postInfoResult == null){
+                continue;
+            }
+
             User commentUser = CollectionTools.find(userList, "sn", postComment.getCommentatorSn());
             postComment.setCommentatorNickname(commentUser.getNickname());
             postComment.setCommentatorAvatar(commentUser.getMemberAvatar());
             //find parent comment && set value
             if (postComment.getCommentParentId() != null) {
                 PostCommentQueryResult originComment = CollectionTools.find(commentQueryResultList, "id", postComment.getCommentParentId());
-                postComment.setOriginAvatar(originComment.getCommentatorAvatar());
-                postComment.setOriginContent(originComment.getCommentContent());
-                postComment.setOriginNickname(originComment.getCommentatorNickname());
-                postComment.setOriginSn(originComment.getCommentatorSn());
+                if (originComment != null) {
+                    postComment.setOriginAvatar(originComment.getCommentatorAvatar());
+                    postComment.setOriginContent(originComment.getCommentContent());
+                    postComment.setOriginNickname(originComment.getCommentatorNickname());
+                    postComment.setOriginSn(originComment.getCommentatorSn());
+                }
             }
 
-            PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", postComment.getPostId());
             if (CollectionTools.isNullOrEmpty(postInfoResult.getCommentList())) {
                 postInfoResult.setCommentList(new ArrayList<PostCommentQueryResult>());
             }
