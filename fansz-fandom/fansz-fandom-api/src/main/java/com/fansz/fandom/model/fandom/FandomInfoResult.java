@@ -28,7 +28,7 @@ public class FandomInfoResult implements Serializable {
     @JSONField(name="fandom_admin_sn")
     private String fandomAdminSn;
 
-    @JSONField(name="fandom_create_sn")
+    @JSONField(name="fandom_creator_sn")
     private String fandomCreatorSn;
 
     @JSONField(name="fandom_avatar_url")
