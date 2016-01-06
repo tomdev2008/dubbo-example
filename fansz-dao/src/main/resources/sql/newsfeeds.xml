@@ -106,7 +106,13 @@
           select p.* from newsfeeds_member_post p, feeds_member_push_post mp
           where p.id = mp.post_id
            and mp.member_sn = :memberSn
-           order by p.post_time desc
+           <#if (sinceId >0) >
+           and p.id > :sinceId
+           </#if>
+           <#if (maxId >0) >
+           and p.id < :maxId
+           </#if>
+           order by p.id desc
         ]]>
     </native-query>
 
@@ -115,6 +121,12 @@
           select count(*) from newsfeeds_member_post p, feeds_member_push_post mp
           where p.id = mp.post_id
            and mp.member_sn = :memberSn
+           <#if (sinceId >0) >
+           and p.id > :sinceId
+           </#if>
+           <#if (maxId >0) >
+           and p.id < :maxId
+           </#if>
         ]]>
     </native-query>
 

@@ -15,6 +15,12 @@ public class GetPostsParam extends PageParam implements AccessTokenAware {
     @JSONField(name="member_sn")
     private String currentSn;
 
+    @JSONField(name = "since_id")
+    private Long sinceId = 0L;
+
+    @JSONField(name = "max_id")
+    private Long maxId = 0L;
+
     @Override
     public String getAccessToken() {
         return accessToken;
@@ -32,5 +38,21 @@ public class GetPostsParam extends PageParam implements AccessTokenAware {
     @Override
     public void setCurrentSn(String currentSn) {
         this.currentSn = currentSn;
+    }
+
+    public Long getSinceId() {
+        return sinceId;
+    }
+
+    public void setSinceId(Long sinceId) {
+        this.sinceId = sinceId;
+    }
+
+    public Long getMaxId() {
+        return maxId;
+    }
+
+    public void setMaxId(Long maxId) {
+        this.maxId = maxId;
     }
 }

@@ -17,10 +17,7 @@ import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.feeds.service.NewsfeedsPostService;
 import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
-import com.fansz.newsfeeds.model.post.AddPostParam;
-import com.fansz.newsfeeds.model.post.GetPostByIdParam;
-import com.fansz.newsfeeds.model.post.PostInfoResult;
-import com.fansz.newsfeeds.model.post.RemovePostParam;
+import com.fansz.newsfeeds.model.post.*;
 import com.fansz.newsfeeds.model.profile.UserInfoResult;
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.model.Page;
@@ -124,25 +121,31 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     }
 
     @Override
-    public QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page) {
+    public QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(GetPostsParam postsParam) {
+        Page page = new Page();
+        page.setPage(postsParam.getPageNum());
+        page.setPageSize(postsParam.getPageSize());
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
-        QueryResult<NewsfeedsPost> postQueryResult = newsfeedsPostDAO.findNewsfeedsPostByPushPostMemberSn(page, memberSn);
+        QueryResult<NewsfeedsPost> postQueryResult = newsfeedsPostDAO.findNewsfeedsPostByPushPostMemberSn(page, postsParam.getCurrentSn(), postsParam.getSinceId(), postsParam.getMaxId());
         if (!CollectionTools.isNullOrEmpty(postQueryResult.getResultlist())) {
-            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(postQueryResult.getResultlist(), memberSn);
+            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(postQueryResult.getResultlist(), postsParam.getCurrentSn());
             postResult.setResultlist(postInfoResultList);
-            postResult.setTotalrecord(postInfoResultList.size());
+            postResult.setTotalrecord(postQueryResult.getTotalrecord());
         }
         return postResult;
     }
 
     @Override
-    public QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page) {
+    public QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(GetMemberPostsParam memberPostsParam) {
+        Page page = new Page();
+        page.setPage(memberPostsParam.getPageNum());
+        page.setPageSize(memberPostsParam.getPageSize());
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
-        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, friendSn);
+        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, memberPostsParam.getCurrentSn(), memberPostsParam.getSinceId(), memberPostsParam.getMaxId());
         if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())) {
-            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberSn);
+            List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberPostsParam.getCurrentSn());
             postResult.setResultlist(postInfoResultList);
-            postResult.setTotalrecord(postInfoResultList.size());
+            postResult.setTotalrecord(newsfeedsPosts.getTotalrecord());
         }
         return postResult;
     }
@@ -172,7 +175,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         List<String> postIds = new ArrayList<>(postIdSet);
         //所有的comment
         List<NewsfeedsCommentVO> commentList = newsfeedsCommentDAO.findByPostIdsAndMemberSn(postIds, memberSn);
-        for(NewsfeedsCommentVO commentVO : commentList){
+        for (NewsfeedsCommentVO commentVO : commentList) {
             memberSnSet.add(commentVO.getCommentatorSn());
         }
 
@@ -219,7 +222,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //遍历memberLikeList, 往PostInfoResult中赋值
         for (NewsfeedsMemberLikeVO memberLike : memberLikeList) {
             PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", memberLike.getPostId());
-            if(postInfoResult == null){
+            if (postInfoResult == null) {
                 continue;
             }
             User user = CollectionTools.find(userList, "sn", memberLike.getMemberSn());
@@ -234,7 +237,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
         for (PostCommentQueryResult postComment : commentQueryResultList) {
             PostInfoResult postInfoResult = CollectionTools.find(postInfoResultList, "id", postComment.getPostId());
-            if(postInfoResult == null){
+            if (postInfoResult == null) {
                 continue;
             }
 
