@@ -34,7 +34,7 @@ public interface FandomPostApi {
     CommonResult<NullResult> removePost(RemovePostParam removePostrParam) throws ApplicationException;
 
     /**
-     * 根据postId获取帖子信息接口
+     * F025:根据postId获取帖子信息接口
      *
      * @param postParam 帖子
      * @return resp 返回对象

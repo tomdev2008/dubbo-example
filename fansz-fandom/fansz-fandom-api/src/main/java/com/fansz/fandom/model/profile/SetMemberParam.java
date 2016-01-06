@@ -8,11 +8,10 @@ import com.fansz.common.provider.model.AbstractToken;
  */
 public class SetMemberParam extends AbstractToken {
 
-    @JSONField(name="member_sn")
     private String currentSn;
 
-    @JSONField(name="operator_sn")
-    private String operatorSn;
+    @JSONField(name="member_sn")
+    private String memberSn;
 
     @JSONField(name="member_type")
     private String memberType;
@@ -28,12 +27,12 @@ public class SetMemberParam extends AbstractToken {
         this.currentSn = currentSn;
     }
 
-    public String getOperatorSn() {
-        return operatorSn;
+    public String getMemberSn() {
+        return memberSn;
     }
 
-    public void setOperatorSn(String operatorSn) {
-        this.operatorSn = operatorSn;
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
     }
 
     public String getMemberType() {
