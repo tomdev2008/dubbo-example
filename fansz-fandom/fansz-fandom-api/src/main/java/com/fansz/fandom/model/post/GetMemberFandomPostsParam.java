@@ -18,6 +18,8 @@ public class GetMemberFandomPostsParam extends PageParam implements AccessTokenA
 
     @NotBlank
     @JSONField(name="member_sn")
+    private String memberSn;
+
     private String currentSn;
 
     @JSONField(name="access_token")
@@ -51,4 +53,11 @@ public class GetMemberFandomPostsParam extends PageParam implements AccessTokenA
         this.accessToken = accessToken;
     }
 
+    public String getMemberSn() {
+        return memberSn;
+    }
+
+    public void setMemberSn(String memberSn) {
+        this.memberSn = memberSn;
+    }
 }
