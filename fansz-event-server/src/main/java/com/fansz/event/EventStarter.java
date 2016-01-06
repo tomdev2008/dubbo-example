@@ -25,7 +25,7 @@ public class EventStarter {
             ExecutorService executor = Executors.newFixedThreadPool(4);
             executor.submit(kafkaConsumerRunner);
         } catch (EventConsumerException e) {
-            logger.error("SMS sending thread error,please restart the application!", e);
+            logger.error("event server error,please restart the application!", e);
             if (kafkaConsumerRunner != null) {
                 kafkaConsumerRunner.shutdown();
             }

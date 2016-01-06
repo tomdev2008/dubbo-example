@@ -12,13 +12,14 @@ public class AccessStarter {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-access.xml");
         ac.start();
         HttpRequestRouter httpRequestRouter = ac.getBean(HttpRequestRouter.class);
-        NettyHttpService service=null;
+        NettyHttpService service = null;
         try {
-            service=NettyHttpService.builder().setPort(3000).setHttpRequestRouter(httpRequestRouter).build();
+            service = NettyHttpService.builder().setPort(3000).setHttpRequestRouter(httpRequestRouter).build();
             service.startUp();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            System.out.println("Access layer server stop running!");
             try {
                 service.shutDown();
             } catch (Exception e) {

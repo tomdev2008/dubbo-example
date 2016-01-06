@@ -9,15 +9,19 @@
           p:minEvictableIdleTimeMillis="${redis.pool.minEvictableIdleTimeMillis}"
           p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
           p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
-
-    <bean id="jedisSentinelPool" class="com.fansz.redis.support.CustomedSentinelPool"
-          scope="singleton">
-        <constructor-arg index="0" value="${redis.sentinel.master}"/>
-        <constructor-arg index="1" value="${redis.sentinel.nodes}"/>
-        <constructor-arg index="2" ref="jedisPoolConfig"/>
-        <constructor-arg index="3" value="${redis.password}"/>
+    <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
+        <property name="proxyDir" value="/zk/codis/db_${reids.product.name}/proxy"/>
+        <property name="zkAddress" value="${redis.zk.address}"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
     </bean>
+    <!--<bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
+        <property name="host" value="${redis.host}"/>
+        <property name="port" value="${redis.port}"/>
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+        <property name="password" ref="${redis.password}"/>
+    </bean>
+    -->
     <bean id="jedisTemplate" class="com.fansz.redis.JedisTemplate">
-        <property name="jedisPool" ref="jedisSentinelPool"/>
+        <property name="jedisPool" ref="jedisResourcePool"/>
     </bean>
 </beans>

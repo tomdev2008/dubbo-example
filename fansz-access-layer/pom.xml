@@ -116,7 +116,7 @@
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>common-utils</artifactId>
+            <artifactId>commons-utils</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>

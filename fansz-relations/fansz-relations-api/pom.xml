@@ -16,10 +16,6 @@
             <artifactId>fastjson</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>common-provider</artifactId>
-        </dependency>
-        <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
@@ -27,7 +23,10 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>commons-provider</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
