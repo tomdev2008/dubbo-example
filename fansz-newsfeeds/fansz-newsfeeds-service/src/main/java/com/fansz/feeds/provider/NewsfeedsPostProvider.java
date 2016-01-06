@@ -104,10 +104,7 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
      */
     @Override
     public CommonPagedResult<PostInfoResult> getMyNewsfeedsList(GetPostsParam memberParam) throws ApplicationException {
-        Page page = new Page();
-        page.setPage(memberParam.getPageNum());
-        page.setPageSize(memberParam.getPageSize());
-        return renderPagedSuccess(newsfeedsPostService.findNewsfeedsListByMemberSn(memberParam.getCurrentSn(), page));
+        return renderPagedSuccess(newsfeedsPostService.findNewsfeedsListByMemberSn(memberParam));
     }
 
     /**
@@ -120,10 +117,6 @@ public class NewsfeedsPostProvider extends AbstractProvider implements Newsfeeds
      */
     @Override
     public CommonPagedResult<PostInfoResult> getFriendsFeedsList(GetMemberPostsParam memberPostsParam) throws ApplicationException {
-        Page page = new Page();
-        page.setPage(memberPostsParam.getPageNum());
-        page.setPageSize(memberPostsParam.getPageSize());
-        return renderPagedSuccess(newsfeedsPostService.findFriendsNewsfeedsListBySn(memberPostsParam.getCurrentSn(),
-                memberPostsParam.getFriendSn(), page));
+        return renderPagedSuccess(newsfeedsPostService.findFriendsNewsfeedsListBySn(memberPostsParam));
     }
 }

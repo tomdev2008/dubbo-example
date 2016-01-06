@@ -2,10 +2,7 @@ package com.fansz.feeds.service;
 
 
 import com.fansz.db.entity.NewsfeedsPost;
-import com.fansz.newsfeeds.model.post.AddPostParam;
-import com.fansz.newsfeeds.model.post.GetPostByIdParam;
-import com.fansz.newsfeeds.model.post.PostInfoResult;
-import com.fansz.newsfeeds.model.post.RemovePostParam;
+import com.fansz.newsfeeds.model.post.*;
 import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import org.springframework.stereotype.Service;
@@ -20,9 +17,9 @@ public interface NewsfeedsPostService {
 
     PostInfoResult getPost(GetPostByIdParam postParam);
 
-    QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(String memberSn, Page page);
+    QueryResult<PostInfoResult> findNewsfeedsListByMemberSn(GetPostsParam postsParam);
 
-    QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(String memberSn, String friendSn, Page page);
+    QueryResult<PostInfoResult> findFriendsNewsfeedsListBySn(GetMemberPostsParam memberPostsParam);
 
     NewsfeedsPost deletePostById(RemovePostParam postParam);
 
