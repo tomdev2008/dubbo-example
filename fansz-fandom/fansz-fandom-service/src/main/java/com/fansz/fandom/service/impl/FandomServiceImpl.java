@@ -137,7 +137,7 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public PageList<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
+    public PageList<FandomInfoResult> searchFandoms(SearchFandomParam searchFandomParam) {
         PageBounds pageBounds = new PageBounds(searchFandomParam.getPageNum(), searchFandomParam.getPageSize());
         return fandomMapper.searchFandoms(searchFandomParam.getCurrentSn(), searchFandomParam.getSearchVal(), pageBounds);
     }

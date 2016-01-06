@@ -137,7 +137,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("searchFandoms")
-    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+    CommonPagedResult<FandomInfoResult> searchFandoms(SearchFandomParam searchFandomParam);
 
     /**
      * 删除fandom

@@ -5,7 +5,6 @@ import com.fansz.common.provider.model.CommonResult;
 import com.fansz.fandom.model.comment.PostCommentQueryResult;
 import com.fansz.fandom.model.fandom.FandomCategory;
 import com.fansz.fandom.model.fandom.FandomInfoResult;
-import com.fansz.fandom.model.fandom.SearchFandomResult;
 import com.fansz.fandom.model.messagecenter.MessageCenterResult;
 import com.fansz.fandom.model.post.GetPostInfoResult;
 import com.fansz.fandom.model.post.PostInfoResult;
@@ -34,7 +33,6 @@ public class FandomSerialOptimizerImpl implements SerializationOptimizer {
         classes.add(PostCommentQueryResult.class);
         classes.add(FandomInfoResult.class);
         classes.add(FandomCategory.class);
-        classes.add(SearchFandomResult.class);
 
         classes.add(MessageCenterResult.class);
 
