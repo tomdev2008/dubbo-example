@@ -40,7 +40,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
     @Override
     public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam) {
         PageBounds pageBounds = new PageBounds(searchMemberParam.getPageNum(), searchMemberParam.getPageSize());
-        PageList<UserInfoResult> data = profileService.searchMembers(searchMemberParam.getSearchVal(), searchMemberParam.getMemberSn(), pageBounds);
+        PageList<UserInfoResult> data = profileService.searchMembers(searchMemberParam.getSearchVal(), searchMemberParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(data);
     }
 

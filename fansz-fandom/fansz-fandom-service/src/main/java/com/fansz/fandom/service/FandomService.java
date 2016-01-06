@@ -3,7 +3,7 @@ package com.fansz.fandom.service;
 import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.JoinFandomParam;
+import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
@@ -19,7 +19,7 @@ public interface FandomService {
 
     PageList<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds);
 
-    boolean joinFandom(JoinFandomParam joinFandomParam);
+    boolean joinFandom(JoinFandomsParam joinFandomParam);
 
     boolean exitFandom(ExitFandomParam joinFandomParam);
 

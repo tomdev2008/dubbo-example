@@ -10,7 +10,7 @@ import com.fansz.fandom.entity.FandomMemberEntity;
 import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.JoinFandomParam;
+import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomMemberEntityMapper;
 import com.fansz.fandom.repository.FandomTagMapper;
@@ -18,6 +18,7 @@ import com.fansz.fandom.service.FandomService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -69,18 +70,26 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public boolean joinFandom(JoinFandomParam joinFandomParam) {
-        FandomMemberEntity fandomMemberEntity = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
-        FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMemberEntity);
-        if (exist != null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
-        }
-        fandomMemberEntity.setInfatuation("1");//1表示特别关注
-        fandomMemberEntityMapper.insertSelective(fandomMemberEntity);
+    public boolean joinFandom(JoinFandomsParam joinFandomsParam) {
+        String memberSn = joinFandomsParam.getCurrentSn();
+        Date now = DateTools.getSysDate();
+        for (String fandomId : joinFandomsParam.getFandomIds()) {
+            FandomMemberEntity fandomMember = new FandomMemberEntity();
+            fandomMember.setMemberSn(memberSn);
+            fandomMember.setFandomId(fandomId);
+            fandomMember.setJoinTime(now);
+            fandomMember.setInfatuation("1");//1表示特别关注
+            FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMember);
+            if (exist != null) {
+                throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
+            }
 
-        //添加特别关注记录
-        eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(joinFandomParam.getMemberSn(),null,Long.parseLong(joinFandomParam.getFandomId()),null));
-        return false;
+            fandomMemberEntityMapper.insertSelective(fandomMember);
+
+            //添加特别关注记录
+            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(memberSn, null, Long.parseLong(fandomId), null));
+        }
+        return true;
     }
 
 
@@ -102,7 +111,6 @@ public class FandomServiceImpl implements FandomService {
         eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, unSpecialFocusEvent);
         return false;
     }
-
 
 
     public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
@@ -181,7 +189,7 @@ public class FandomServiceImpl implements FandomService {
         //删除当前fandom的所有tag信息
         fandomTagMapper.deleteFandomTagByFandomId(modifyFandomParam.getId());
         //重新添加当前fandom的tag信息
-        for(FandomTagParam fandomTagParam:modifyFandomParam.getFandomTagParam()){
+        for (FandomTagParam fandomTagParam : modifyFandomParam.getFandomTagParam()) {
             fandomTagMapper.saveTagByfandomId(fandomTagParam);
         }
         if (count2 == 0) {

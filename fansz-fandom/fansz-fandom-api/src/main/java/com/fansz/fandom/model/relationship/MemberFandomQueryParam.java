@@ -1,6 +1,7 @@
 package com.fansz.fandom.model.relationship;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fansz.common.provider.model.AccessTokenAware;
 import com.fansz.common.provider.model.PageParam;
 
 import java.io.Serializable;
@@ -8,16 +9,16 @@ import java.io.Serializable;
 /**
  * 获取用户关注的fandom请求参数模型
  */
-public class MemberFandomQueryParam extends PageParam implements Serializable {
+public class MemberFandomQueryParam extends PageParam implements AccessTokenAware {
 
     private static final long serialVersionUID = 394668565041221041L;
 
     @JSONField(name="access_token")
     private String accessToken;
 
-    private String sn;
+    private String currentSn;
 
-
+    @Override
     public String getAccessToken() {
         return accessToken;
     }
@@ -26,11 +27,13 @@ public class MemberFandomQueryParam extends PageParam implements Serializable {
         this.accessToken = accessToken;
     }
 
-    public String getSn() {
-        return sn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setSn(String sn) {
-        this.sn = sn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 }

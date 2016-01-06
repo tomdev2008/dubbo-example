@@ -10,8 +10,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class AddFandomParam extends AbstractToken {
 
-    @NotBlank
-    @JSONField(name="fandom_creator_sn")
     private String currentSn;
 
     @NotBlank

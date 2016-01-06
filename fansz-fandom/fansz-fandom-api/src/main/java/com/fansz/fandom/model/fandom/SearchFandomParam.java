@@ -10,13 +10,13 @@ import com.fansz.common.provider.model.PageParam;
 public class SearchFandomParam extends PageParam implements AccessTokenAware {
 
     private static final long serialVersionUID = 5059191023562439861L;
-    @JSONField(name="member_sn")
+
     private String currentSn;
 
-    @JSONField(name="access_token")
+    @JSONField(name = "access_token")
     private String accessToken;
 
-    @JSONField(name="search_val")
+    @JSONField(name = "search_val")
     private String searchVal;
 
     @Override
@@ -29,6 +29,7 @@ public class SearchFandomParam extends PageParam implements AccessTokenAware {
         this.currentSn = currentSn;
     }
 
+    @Override
     public String getAccessToken() {
         return accessToken;
     }

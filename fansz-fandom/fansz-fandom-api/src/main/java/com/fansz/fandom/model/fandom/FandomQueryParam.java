@@ -14,7 +14,6 @@ public class FandomQueryParam extends PageParam implements AccessTokenAware {
     @JSONField(name="access_token")
     private String accessToken;
 
-    @JSONField(name="member_sn")
     private String currentSn;
 
     @JSONField(name="fandom_id")

@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class NicknameCheckParam extends AbstractToken {
 
-    @JSONField(name="sn")
     private String currentSn;
 
     @NotBlank

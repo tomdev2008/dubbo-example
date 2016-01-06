@@ -12,7 +12,6 @@ public class FriendsQueryParam extends PageParam implements AccessTokenAware {
 
     private static final long serialVersionUID = 1170651723025637518L;
 
-    @JSONField(name = "member_sn")
     private String currentSn;
 
     @JSONField(name = "access_token")

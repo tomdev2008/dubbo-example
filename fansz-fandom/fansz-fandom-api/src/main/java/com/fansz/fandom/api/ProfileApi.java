@@ -33,7 +33,11 @@ public interface ProfileApi {
     @DubboxMethod("searchMembers")
     CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam);
 
-
+    /**
+     * C021:获取某类型（名人、明星、名企等）的会员列表
+     * @param searchMemberParam
+     * @return
+     */
     @DubboxMethod("getFamousers")
     CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam);
 
@@ -47,7 +51,7 @@ public interface ProfileApi {
     CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam);
 
     /**
-     * 校验用户的nickName是否唯一
+     * C022:校验用户的nickName是否唯一
      *
      * @param nicknameCheckParam
      * @return

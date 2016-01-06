@@ -24,7 +24,7 @@ public interface RelationShipApi {
     CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
 
     /**
-     * 获取特别用户好友列表
+     * C020:获取特别用户好友列表
      *
      * @return resp 返回对象
      */
@@ -78,7 +78,7 @@ public interface RelationShipApi {
     CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
 
     /**
-     * 获取我发出的好友请求列表
+     * C019:获取我发出的好友请求列表
      *
      * @param friendsQueryParam
      * @return

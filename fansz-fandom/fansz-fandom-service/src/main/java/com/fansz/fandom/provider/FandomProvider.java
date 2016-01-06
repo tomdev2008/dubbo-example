@@ -8,7 +8,6 @@ import com.fansz.fandom.api.FandomApi;
 import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.JoinFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 import com.fansz.fandom.service.FandomService;
@@ -17,6 +16,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,17 +39,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Override
     public CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) {
-        List<String> fandomIds = joinFandomsParam.getFandomIds();
-        String memberSn = joinFandomsParam.getMemberSn();
-        String accessToken = joinFandomsParam.getAccessToken();
-        JoinFandomParam joinFandomParam = null;
-        for (String fandomId:fandomIds) {
-            joinFandomParam = new JoinFandomParam();
-            joinFandomParam.setMemberSn(memberSn);
-            joinFandomParam.setAccessToken(accessToken);
-            joinFandomParam.setFandomId(fandomId);
-            fandomService.joinFandom(joinFandomParam);
-        }
+        fandomService.joinFandom(joinFandomsParam);
         return renderSuccess();
     }
 
@@ -59,16 +49,6 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return renderSuccess();
     }
 
-    /**
-     * @Override public CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam) {
-     * fandomService.markAsSpecial(joinFandomParam);
-     * return renderSuccess(PRESENCE);
-     * }
-     * @Override public CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam) {
-     * fandomService.unmarkAsSpecial(joinFandomParam);
-     * return renderSuccess(PRESENCE);
-     * }
-     **/
 
     public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
         FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
@@ -85,7 +65,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) {
         // 获得我关注的fandom
         PageBounds pageBounds = new PageBounds(fandomParam.getPageNum(), fandomParam.getPageSize());
-        PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getSn(), pageBounds);
+        PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(fandoms);
     }
 
@@ -133,10 +113,10 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     @Override
     public CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) {
         FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
-        JoinFandomParam joinFandomParam = new JoinFandomParam();
-        joinFandomParam.setMemberSn(fandomInfoResult.getFandomCreatorSn());
-        joinFandomParam.setFandomId(String.valueOf(fandomInfoResult.getId()));
-        fandomService.joinFandom(joinFandomParam);
+        JoinFandomsParam joinFandomsParam = new JoinFandomsParam();
+        joinFandomsParam.setCurrentSn(fandomInfoResult.getFandomCreatorSn());
+        joinFandomsParam.setFandomIds(Arrays.asList(String.valueOf(fandomInfoResult.getId())));
+        fandomService.joinFandom(joinFandomsParam);
         return renderSuccess(fandomInfoResult);
     }
 

@@ -1,6 +1,7 @@
 package com.fansz.fandom.model.relationship;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fansz.common.provider.model.AbstractToken;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -12,27 +13,23 @@ import java.util.List;
 /**
  * Created by dell on 2016/1/4.
  */
-public class JoinFandomsParam implements Serializable {
-    private static final long serialVersionUID = 942909119420766685L;
+public class JoinFandomsParam extends AbstractToken {
 
-    @NotBlank
-    @JSONField(name="member_sn")
-    private String memberSn;
+    private String currentSn;
 
     @NotNull
-    @Size(min=1)
-    @JSONField(name="fandom_ids")
+    @Size(min = 1)
+    @JSONField(name = "fandom_ids")
     private List<String> fandomIds;
 
-    @JSONField(name="access_token")
-    private String accessToken;
-
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public List<String> getFandomIds() {
@@ -41,13 +38,5 @@ public class JoinFandomsParam implements Serializable {
 
     public void setFandomIds(List<String> fandomIds) {
         this.fandomIds = fandomIds;
-    }
-
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
     }
 }

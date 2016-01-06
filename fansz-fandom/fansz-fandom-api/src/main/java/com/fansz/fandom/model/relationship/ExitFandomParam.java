@@ -9,12 +9,10 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class ExitFandomParam extends AbstractToken {
 
-    @NotBlank
-    @JSONField(name="member_sn")
     private String currentSn;
 
     @NotBlank
-    @JSONField(name="fandom_id")
+    @JSONField(name = "fandom_id")
     private String fandomId;
 
     @Override

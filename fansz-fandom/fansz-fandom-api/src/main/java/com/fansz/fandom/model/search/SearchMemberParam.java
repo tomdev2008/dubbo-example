@@ -1,6 +1,7 @@
 package com.fansz.fandom.model.search;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fansz.common.provider.model.AccessTokenAware;
 import com.fansz.common.provider.model.PageParam;
 
 import java.io.Serializable;
@@ -8,27 +9,27 @@ import java.io.Serializable;
 /**
  * Created by dell on 2015/12/2.
  */
-public class SearchMemberParam extends PageParam implements Serializable {
+public class SearchMemberParam extends PageParam implements AccessTokenAware {
 
-    private static final long serialVersionUID = -3581758642463346451L;
-    @JSONField(name="sn")
-    private String memberSn;
+    private String currentSn;
 
-    @JSONField(name="access_token")
+    @JSONField(name = "access_token")
     private String accessToken;
 
-    @JSONField(name="search_val")
+    @JSONField(name = "search_val")
     private String searchVal;
 
-    @JSONField(name="member_type")
+    @JSONField(name = "member_type")
     private String memberType;
 
-    public String getMemberSn() {
-        return memberSn;
+    @Override
+    public String getCurrentSn() {
+        return currentSn;
     }
 
-    public void setMemberSn(String memberSn) {
-        this.memberSn = memberSn;
+    @Override
+    public void setCurrentSn(String currentSn) {
+        this.currentSn = currentSn;
     }
 
     public String getAccessToken() {

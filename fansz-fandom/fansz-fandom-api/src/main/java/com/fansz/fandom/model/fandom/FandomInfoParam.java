@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
  */
 public class FandomInfoParam extends AbstractToken {
 
-    @JSONField(name="member_sn")
     private String currentSn;
 
     @NotNull

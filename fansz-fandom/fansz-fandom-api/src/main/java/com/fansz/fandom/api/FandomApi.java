@@ -8,7 +8,6 @@ import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.JoinFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 
@@ -46,26 +45,6 @@ public interface FandomApi {
      */
     @DubboxMethod("joinFandom")
     CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam);
-
-    /**
-     * 特殊关注fandom
-     * @param joinFandomParam
-     * @return
-     */
-    // @POST
-    // @Path("/fandom/beSpecial")
-    //@DubboxMethod("beMySpecialFandom")
-    //CommonResult<NullResult> markSpecialFandom(JoinFandomParam joinFandomParam);
-
-    /**
-     * 取消特别关注fandom
-     * @param joinFandomParam
-     * @return
-     */
-    // @POST
-    // @Path("/fandom/notSpecial")
-    // @DubboxMethod("removeMySpecialFandom")
-    //CommonResult<NullResult> removeSpecialFandom(JoinFandomParam joinFandomParam);
 
     /**
      * 退出fandom
