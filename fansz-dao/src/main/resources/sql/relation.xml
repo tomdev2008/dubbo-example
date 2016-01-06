@@ -92,25 +92,25 @@
         SELECT a.*,b.relation_status AS relationship
         FROM connects_member_profile a LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=a.sn
-        WHERE b.my_member_sn=:sn AND b.relation_status!='00'
+        WHERE b.my_member_sn=:memberSn AND b.relation_status!='00'
     </native-query>
 
     <native-query name="relation.listAddMeRequest.counter">
         SELECT count(1)
         FROM connects_member_profile a LEFT JOIN connects_member_relation b
         ON b.friend_member_sn=a.sn
-        WHERE b.my_member_sn=:sn AND b.relation_status!='00'
+        WHERE b.my_member_sn=:memberSn AND b.relation_status!='00'
     </native-query>
 
     <native-query name="relation.listMySendRequest">
         SELECT a.*,b.relation_status AS relationship
         FROM connects_member_profile a LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
-        WHERE b.my_member_sn=:sn AND b.relation_status!='01'
+        WHERE b.my_member_sn=:memberSn AND b.relation_status!='01'
     </native-query>
 
     <native-query name="relation.listMySendRequest.counter">
         SELECT count(1)
         FROM connects_member_profile a LEFT JOIN connects_member_relation b on b.friend_member_sn=a.sn
-        WHERE b.my_member_sn=:sn AND b.relation_status!='01'
+        WHERE b.my_member_sn=:memberSn AND b.relation_status!='01'
     </native-query>
 </dynamic-query>
