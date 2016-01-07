@@ -1,6 +1,7 @@
 package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.fandom.api.MessageCenterApi;
 import com.fansz.fandom.model.messagecenter.MessageCenterResult;
@@ -20,7 +21,7 @@ public class MessageCenterProvider extends AbstractProvider implements MessageCe
     private MessageCenterService messageCenterService;
 
     @Override
-    public CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam) {
+    public CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam) throws ApplicationException {
         PageList<MessageCenterResult> pageList = messageCenterService.getMessageByMemberSn(queryMessageParam);
         return super.renderPagedSuccess(pageList);
     }

@@ -66,9 +66,6 @@ public class AccountServiceImpl implements AccountService {
         user.setProfileUpdatetime(new Date());
         user.setPassword(encodedPwd);
         user.setMemberStatus(USER_STATUS_OK);
-        logger.info("Begin to add profile " + user);
-
-        //Save User Info
         userDAO.save(user);
         logger.info("profile saved:" + user);
     }

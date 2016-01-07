@@ -58,6 +58,7 @@ public class RelationShipServiceImpl implements RelationShipService {
         }
         if (oldRelation == null) {
             UserRelation my = BeanTools.copyAs(addFriendParam, UserRelation.class);
+            my.setMyMemberSn(addFriendParam.getCurrentSn());
             my.setRelationStatus(RelationShip.TO_ADD.getCode());
             userRelationDAO.save(my);
 

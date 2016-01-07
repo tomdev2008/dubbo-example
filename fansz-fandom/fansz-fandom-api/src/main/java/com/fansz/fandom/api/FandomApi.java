@@ -2,6 +2,7 @@ package com.fansz.fandom.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -26,7 +27,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("createFandom")
-    CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam);
+    CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) throws ApplicationException;
 
     /**
      * 关注fandom
@@ -35,7 +36,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("addJoinFandom")
-    CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam);
+    CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) throws ApplicationException;
 
     /**
      * 加入fandom
@@ -44,7 +45,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("joinFandom")
-    CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam);
+    CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) throws ApplicationException;
 
     /**
      * 退出fandom
@@ -53,7 +54,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("exitFandom")
-    CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam);
+    CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam) throws ApplicationException;
 
     /**
      * 获取用户关注的fandoms列表
@@ -61,7 +62,7 @@ public interface FandomApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getMyfandoms")
-    CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam);
+    CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) throws ApplicationException;
 
     /**
      * 查询所有的fandom
@@ -70,7 +71,7 @@ public interface FandomApi {
      * @return CommonResult<List<FandomInfoResult>> 返回对象
      */
     @DubboxMethod("listAllFandoms")
-    CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam);
+    CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
 
     /**
@@ -80,7 +81,7 @@ public interface FandomApi {
      * @return CommonResult<List<FandomInfoResult>> 返回对象
      */
     @DubboxMethod("getRecommendFandom")
-    CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
+    CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /**
      * 获取圈子fandom分类接口
@@ -89,7 +90,7 @@ public interface FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @DubboxMethod("getFandomCategory")
-    CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam);
+    CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /**
      * 获取圈子成员列表接口
@@ -98,7 +99,7 @@ public interface FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @DubboxMethod("getFandomMembers")
-    CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
+    CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /* 获取圈子信息接口
      *
@@ -106,7 +107,7 @@ public interface FandomApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getFandomInfo")
-    CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam);
+    CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) throws ApplicationException;
 
 
     /**
@@ -116,7 +117,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("searchFandoms")
-    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam);
+    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException;
 
     /**
      * 删除fandom
@@ -125,7 +126,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("deleteFandom")
-    CommonResult<NullResult> delFandom(DelFandomParam delFandomParam);
+    CommonResult<NullResult> delFandom(DelFandomParam delFandomParam) throws ApplicationException;
 
     /**
      * 修改fandom信息
@@ -134,5 +135,5 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("modifyFandom")
-    CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam);
+    CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam) throws ApplicationException;
 }

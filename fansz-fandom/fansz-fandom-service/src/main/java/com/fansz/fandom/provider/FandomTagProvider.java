@@ -2,6 +2,7 @@ package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.api.FandomTagApi;
@@ -23,13 +24,13 @@ public class FandomTagProvider extends AbstractProvider implements FandomTagApi{
     private FandomTagService fandomTagService;
 
     @Override
-    public CommonResult<List<FandomTagResult>> selectFandomTagsByFandomId(FandomTagParam fandomTagParam) {
+    public CommonResult<List<FandomTagResult>> selectFandomTagsByFandomId(FandomTagParam fandomTagParam) throws ApplicationException {
         List<FandomTagResult> fandomTagResultList = fandomTagService.selectFandomTagsByFandomId(fandomTagParam);
         return renderSuccess(fandomTagResultList);
     }
 
     @Override
-    public CommonResult<FandomTagResult> delFandomTagByTagId(FandomTagParam fandomTagParam) {
+    public CommonResult<FandomTagResult> delFandomTagByTagId(FandomTagParam fandomTagParam) throws ApplicationException{
         FandomTagResult fandomTagResult = fandomTagService.deleteFandomTagByTagId(fandomTagParam);
         if(null == fandomTagResult){
             return renderFail(ErrorCode.TAG_NOT_FOUND.getCode());
@@ -38,7 +39,7 @@ public class FandomTagProvider extends AbstractProvider implements FandomTagApi{
     }
 
     @Override
-    public CommonResult<NullResult> addTagByfandomId(FandomTagParam fandomTagParam) {
+    public CommonResult<NullResult> addTagByfandomId(FandomTagParam fandomTagParam) throws ApplicationException{
         String code = fandomTagService.saveTagByfandomId(fandomTagParam);
         if(code == null){
             return renderSuccess();

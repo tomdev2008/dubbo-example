@@ -49,11 +49,19 @@ public class PublishPostConsumer implements IEventConsumer {
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
         }
+
+        Date now = DateTools.getSysDate();
+
+        PushPost myPost = new PushPost();
+        myPost.setMemberSn(publishPostEvent.getMemberSn());
+        myPost.setPostId(postId);
+        myPost.setCreatetime(now);
+        pushPostDAO.save(myPost);
         List<UserRelation> friendList = userRelationDAO.findMyFriends(publishPostEvent.getMemberSn());
         if (CollectionTools.isNullOrEmpty(friendList)) {
             return;
         }
-        Date now = DateTools.getSysDate();
+
         for (UserRelation friend : friendList) {
             PushPost pushPost = new PushPost();
             pushPost.setMemberSn(friend.getFriendMemberSn());
@@ -61,11 +69,6 @@ public class PublishPostConsumer implements IEventConsumer {
             pushPost.setCreatetime(now);
             pushPostDAO.save(pushPost);
         }
-        PushPost pushPost = new PushPost();
-        pushPost.setMemberSn(publishPostEvent.getMemberSn());
-        pushPost.setPostId(postId);
-        pushPost.setCreatetime(now);
-        pushPostDAO.save(pushPost);
     }
 
     @Override

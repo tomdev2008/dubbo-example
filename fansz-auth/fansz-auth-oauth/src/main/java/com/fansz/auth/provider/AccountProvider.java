@@ -31,7 +31,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @param registerParam 注册对象
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> register(RegisterParam registerParam) {
+    public CommonResult<NullResult> register(RegisterParam registerParam) throws ApplicationException {
         accountService.register(registerParam);
         return renderSuccess();
     }
@@ -42,7 +42,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @param resetPasswordParam 密码对象
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) {
+    public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException {
         accountService.resetPassword(resetPasswordParam);
         return renderSuccess();
     }
@@ -54,7 +54,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @param changePasswordParam 修改密码对象
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) {
+    public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) throws ApplicationException {
         accountService.changePassword(changePasswordParam);
         return renderSuccess();
     }
@@ -78,13 +78,13 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @return
      */
     @Override
-    public CommonResult<NullResult> logout(LogoutParam logoutParam) {
+    public CommonResult<NullResult> logout(LogoutParam logoutParam) throws ApplicationException {
         accountService.logout(logoutParam);
         return renderSuccess();
     }
 
     @Override
-    public CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException{
+    public CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException {
         SessionInfoResult sessionInfoResult = sessionService.refreshToken(refreshTokenParam.getRefreshToken());
         LoginResult result = new LoginResult();
         result.setAccessToken(sessionInfoResult.getAccessToken());
@@ -93,7 +93,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     }
 
     @Override
-    public SessionInfoResult getSession(SessionQueryParam sessionQueryParam) {
+    public SessionInfoResult getSession(SessionQueryParam sessionQueryParam) throws ApplicationException {
         SessionInfoResult sessionInfoResult = sessionService.getSession(sessionQueryParam.getAccessToken());
         return sessionInfoResult;
     }

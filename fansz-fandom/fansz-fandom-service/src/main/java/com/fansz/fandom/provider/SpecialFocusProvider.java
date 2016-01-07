@@ -1,6 +1,7 @@
 package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.api.SpecialFocusApi;
@@ -23,25 +24,25 @@ public class SpecialFocusProvider extends AbstractProvider implements SpecialFoc
     private SpecialFocusService specialFocusService;
 
     @Override
-    public CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
+    public CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException {
         List<SpecialFocusResult> pageList = specialFocusService.getSpecialFocusInfo(specialFocusParam);
         return renderSuccess(pageList);
     }
 
     @Override
-    public CommonResult<NullResult> addSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
+    public CommonResult<NullResult> addSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException{
         int count = specialFocusService.addSpecialFocusInfo(specialFocusParam);
         return renderSuccess();
     }
 
     @Override
-    public CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam) {
+    public CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam) throws ApplicationException{
         specialFocusService.modifySpecialFocusInfo(specialFocusParam);
         return renderSuccess();
     }
 
     @Override
-    public CommonResult<NullResult> delSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
+    public CommonResult<NullResult> delSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException{
         specialFocusService.delSpecialFocusInfo(specialFocusParam);
         return renderSuccess();
     }

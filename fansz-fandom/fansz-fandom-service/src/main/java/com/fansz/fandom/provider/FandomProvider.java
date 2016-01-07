@@ -1,6 +1,7 @@
 package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -31,7 +32,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     private FandomService fandomService;
 
     @Override
-    public CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam) {
+    public CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam) throws ApplicationException {
         fandomQueryParam.setCurrentSn(null);
         fandomQueryParam.setFandomId(null);
         fandomQueryParam.setFandomParentId(null);
@@ -40,7 +41,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) {
+    public CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) throws ApplicationException{
         List<String> fandomIdList=joinFandomsParam.getFandomIds();
         if(fandomIdList==null){
             fandomIdList=new ArrayList<String>();
@@ -54,25 +55,25 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam) {
+    public CommonResult<NullResult> exitFandom(ExitFandomParam exitFandomParam) throws ApplicationException{
         fandomService.exitFandom(exitFandomParam);
         return renderSuccess();
     }
 
 
-    public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) {
+    public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) throws ApplicationException{
         FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
         return renderSuccess(result);
     }
 
     @Override
-    public CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) {
+    public CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) throws ApplicationException{
         FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
         return renderSuccess(fandomInfoResult);
     }
 
     @Override
-    public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) {
+    public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) throws ApplicationException{
         // 获得我关注的fandom
         PageBounds pageBounds = new PageBounds(fandomParam.getPageNum(), fandomParam.getPageSize());
         PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getCurrentSn(), pageBounds);
@@ -85,7 +86,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomInfoResult>> 返回对象
      */
-    public CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
+    public CommonPagedResult<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) throws ApplicationException{
         PageList<FandomInfoResult> result = fandomService.getRecommendFandom(fandomQueryParam);
         return renderPagedSuccess(result);
     }
@@ -97,7 +98,7 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @Override
-    public CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) {
+    public CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException{
         List<FandomCategory> result = fandomService.getFandomCategory(fandomQueryParam);
         return renderSuccess(result);
     }
@@ -109,19 +110,19 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @Override
-    public CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
+    public CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException{
         PageList<ContactInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
         return renderPagedSuccess(result);
     }
 
     @Override
-    public CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) {
+    public CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException{
         PageList<SearchFandomResult> pageList = fandomService.searchFandoms(searchFandomParam);
         return super.renderPagedSuccess(pageList);
     }
 
     @Override
-    public CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) {
+    public CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) throws ApplicationException{
         FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
         JoinFandomsParam joinFandomsParam = new JoinFandomsParam();
         joinFandomsParam.setCurrentSn(fandomInfoResult.getFandomCreatorSn());
@@ -131,13 +132,13 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonResult<NullResult> delFandom(DelFandomParam delFandomParam) {
+    public CommonResult<NullResult> delFandom(DelFandomParam delFandomParam) throws ApplicationException{
         fandomService.delFandom(delFandomParam);
         return renderSuccess();
     }
 
     @Override
-    public CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam) {
+    public CommonResult<FandomInfoResult> modifyFandom(ModifyFandomParam modifyFandomParam) throws ApplicationException{
         FandomInfoResult fandomInfoResult = fandomService.modifyFandom(modifyFandomParam);
         return renderSuccess(fandomInfoResult);
     }

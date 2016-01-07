@@ -19,7 +19,7 @@ public interface AccountApi {
      * @return resp 返回对象
      */
     @DubboxMethod("register")
-    CommonResult<NullResult> register(RegisterParam registerParam);
+    CommonResult<NullResult> register(RegisterParam registerParam) throws ApplicationException;
 
     /**
      * 用户登陆
@@ -37,7 +37,7 @@ public interface AccountApi {
      * @return resp 返回对象
      */
     @DubboxMethod("resetPassword")
-    CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam);
+    CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException;
 
 
     /**
@@ -47,7 +47,7 @@ public interface AccountApi {
      * @return resp 返回对象
      */
     @DubboxMethod("modifyPassword")
-    CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam);
+    CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) throws ApplicationException;
 
     /**
      * 用户登出
@@ -57,11 +57,11 @@ public interface AccountApi {
      * @return resp 返回对象
      */
     @DubboxMethod("logout")
-    CommonResult<NullResult> logout(LogoutParam logoutParam);
+    CommonResult<NullResult> logout(LogoutParam logoutParam) throws ApplicationException;
 
     @DubboxMethod("refreshToken")
     CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException;
 
     @DubboxMethod("getSession")
-    SessionInfoResult getSession(SessionQueryParam sessionQueryParam);
+    SessionInfoResult getSession(SessionQueryParam sessionQueryParam) throws ApplicationException;
 }

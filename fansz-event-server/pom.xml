@@ -144,6 +144,10 @@
                                                  token="classpath:/conf/sms.properties"
                                                  value="file:${application.root}/conf/sms.properties"
                                                  encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
+                                                 token="classpath:/conf/jdbc.properties"
+                                                 value="file:${application.root}/conf/jdbc.properties"
+                                                 encoding="utf-8"/>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
                                         <replace file="target/classes/applicationContext-event.xml"
@@ -191,6 +195,10 @@
                                         <replace file="target/classes/applicationContext-event.xml"
                                                  token="classpath:/conf/sms.properties"
                                                  value="file:${application.root}/conf/sms.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-event.xml"
+                                                 token="classpath:/conf/jdbc.properties"
+                                                 value="file:${application.root}/conf/jdbc.properties"
                                                  encoding="utf-8"/>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>

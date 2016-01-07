@@ -2,6 +2,7 @@ package com.fansz.fandom.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.fandom.model.messagecenter.MessageCenterResult;
 import com.fansz.fandom.model.messagecenter.QueryMessageParam;
@@ -19,6 +20,6 @@ public interface MessageCenterApi {
      * @return
      */
     @DubboxMethod("myRemindCenter")
-    CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam);
+    CommonPagedResult<MessageCenterResult> getMessageByMemberSn(QueryMessageParam queryMessageParam) throws ApplicationException;
 
 }

@@ -2,6 +2,7 @@ package com.fansz.fandom.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -23,10 +24,10 @@ public interface CommentApi {
      * @return resp 返回对象
      */
     @DubboxMethod("commentPost")
-    CommonResult<PostCommentQueryResult> addPostComment(AddCommentParam commentPara);
+    CommonResult<PostCommentQueryResult> addPostComment(AddCommentParam commentPara) throws ApplicationException;
 
     @DubboxMethod("replyComment")
-    CommonResult<PostCommentQueryResult> replyComment(AddCommentParam commentPara);
+    CommonResult<PostCommentQueryResult> replyComment(AddCommentParam commentPara) throws ApplicationException;
 
     /**
      * 删除评论接口
@@ -35,7 +36,7 @@ public interface CommentApi {
      * @return resp 返回对象
      */
     @DubboxMethod("deleteComment")
-    CommonResult<NullResult> removeCommet(DelCommentParam delCommentParam);
+    CommonResult<NullResult> removeCommet(DelCommentParam delCommentParam) throws ApplicationException;
 
     /**
      * 查询帖子下所有的评论列表
@@ -44,6 +45,6 @@ public interface CommentApi {
      * @return
      */
     @DubboxMethod("listPostComments")
-    CommonPagedResult<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom);
+    CommonPagedResult<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom) throws ApplicationException;
 
 }

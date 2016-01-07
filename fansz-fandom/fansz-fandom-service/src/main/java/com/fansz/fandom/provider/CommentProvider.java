@@ -1,6 +1,7 @@
 package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -33,7 +34,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return resp 返回对象
      */
     @Override
-    public CommonResult<PostCommentQueryResult> addPostComment(AddCommentParam commentPara) {
+    public CommonResult<PostCommentQueryResult> addPostComment(AddCommentParam commentPara) throws ApplicationException {
         return renderSuccess(commentService.addComment(commentPara));
     }
 
@@ -44,7 +45,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return resp 返回对象
      */
     @Override
-    public CommonResult<PostCommentQueryResult> replyComment(AddCommentParam commentPara) {
+    public CommonResult<PostCommentQueryResult> replyComment(AddCommentParam commentPara) throws ApplicationException{
         return this.addPostComment(commentPara);
     }
 
@@ -55,7 +56,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return resp 返回对象
      */
     @Override
-    public CommonResult<NullResult> removeCommet(DelCommentParam delCommentParam) {
+    public CommonResult<NullResult> removeCommet(DelCommentParam delCommentParam) throws ApplicationException{
         commentService.removeComment(delCommentParam);
         return renderSuccess();
     }
@@ -67,7 +68,7 @@ public class CommentProvider extends AbstractProvider implements CommentApi {
      * @return
      */
     @Override
-    public CommonPagedResult<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom) {
+    public CommonPagedResult<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom) throws ApplicationException{
         PageBounds pageBounds = new PageBounds(commentQueryFromFandom.getPageNum(), commentQueryFromFandom.getPageSize());
         return renderPagedSuccess(commentService.getCommentsByPostidFromFandom(commentQueryFromFandom, pageBounds));
     }

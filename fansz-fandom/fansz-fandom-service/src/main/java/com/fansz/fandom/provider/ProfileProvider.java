@@ -1,6 +1,7 @@
 package com.fansz.fandom.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -32,20 +33,20 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      * @return
      */
     @Override
-    public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) {
+    public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) throws ApplicationException {
         UserInfoResult userInfoResult = profileService.getProfile(queryUserParam);
         return renderSuccess(userInfoResult);
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam) {
+    public CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam) throws ApplicationException{
         PageBounds pageBounds = new PageBounds(searchMemberParam.getPageNum(), searchMemberParam.getPageSize());
         PageList<UserInfoResult> data = profileService.searchMembers(searchMemberParam.getSearchVal(), searchMemberParam.getCurrentSn(), pageBounds);
         return renderPagedSuccess(data);
     }
 
     @Override
-    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) {
+    public CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) throws ApplicationException{
         PageList<UserInfoResult> data = profileService.searchMembers(searchMemberParam);
         return renderPagedSuccess(data);
     }
@@ -57,7 +58,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      * @return
      */
     @Override
-    public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) {
+    public CommonResult<NullResult> modifyProfile(ModifyProfileParam modifyProfileParam) throws ApplicationException{
         profileService.modifyProfile(modifyProfileParam);
         return renderSuccess();
     }
@@ -68,7 +69,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      * @param modifyProfileParam
      * @return
      */
-    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam) {
+    public CommonResult<NullResult> setMemberType(SetMemberParam modifyProfileParam) throws ApplicationException{
         profileService.setMemberType(modifyProfileParam);
         return renderSuccess();
     }
@@ -80,7 +81,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      * @return
      */
     @Override
-    public CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam NicknameCheckParam) {
+    public CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam NicknameCheckParam) throws ApplicationException{
         int total = profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getCurrentSn());
         ProfileValidateResult result = new ProfileValidateResult();
         result.setUnique(total > 0 ? false : true);
@@ -89,7 +90,7 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
 
 
     @Override
-    public CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) {
+    public CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) throws ApplicationException{
         List<String> images = profileService.getImages(contractQueryParam);
         return super.renderSuccess(images);
     }

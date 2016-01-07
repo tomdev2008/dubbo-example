@@ -2,6 +2,7 @@ package com.fansz.fandom.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.model.fandom.FandomTagParam;
@@ -21,7 +22,7 @@ public interface FandomTagApi {
      * @return
      */
     @DubboxMethod("selectFandomTagsByFandomId")
-    CommonResult<List<FandomTagResult>> selectFandomTagsByFandomId(FandomTagParam fandomTagParam);
+    CommonResult<List<FandomTagResult>> selectFandomTagsByFandomId(FandomTagParam fandomTagParam) throws ApplicationException;
 
     /**
      * 删除某一条fandom的标签
@@ -29,7 +30,7 @@ public interface FandomTagApi {
      * @return
      */
     @DubboxMethod("delFandomTagByTagId")
-    CommonResult<FandomTagResult> delFandomTagByTagId(FandomTagParam fandomTagParam);
+    CommonResult<FandomTagResult> delFandomTagByTagId(FandomTagParam fandomTagParam) throws ApplicationException;
 
     /**
      * 新增一个fandom的标签
@@ -37,6 +38,6 @@ public interface FandomTagApi {
      * @return
      */
     @DubboxMethod("addTagByfandomId")
-    CommonResult<NullResult> addTagByfandomId(FandomTagParam fandomTagParam);
+    CommonResult<NullResult> addTagByfandomId(FandomTagParam fandomTagParam) throws ApplicationException;
 
 }

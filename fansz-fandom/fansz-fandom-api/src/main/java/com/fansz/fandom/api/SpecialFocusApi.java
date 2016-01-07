@@ -2,6 +2,7 @@ package com.fansz.fandom.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.model.specialfocus.ModifySpecialFocusParam;
@@ -23,7 +24,7 @@ public interface SpecialFocusApi {
      * @return
      */
     @DubboxMethod("getAllSpecialFocus")
-    CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam);
+    CommonResult<List<SpecialFocusResult>> getSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException;
 
     /**
      * 添加特别关注关联信息
@@ -31,7 +32,7 @@ public interface SpecialFocusApi {
      * @param specialFocusParam
      * @return
      */
-    CommonResult<NullResult> addSpecialFocusInfo(SpecialFocusParam specialFocusParam);
+    CommonResult<NullResult> addSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException;
 
     /**
      * 修改特别关注关联信息
@@ -40,7 +41,7 @@ public interface SpecialFocusApi {
      * @return
      */
     @DubboxMethod("setSpecialFocusOrder")
-    CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam);
+    CommonResult<NullResult> modifySpecialFocusInfo(ModifySpecialFocusParam specialFocusParam) throws ApplicationException;
 
     /**
      * 删除特别关注关联信息
@@ -48,6 +49,6 @@ public interface SpecialFocusApi {
      * @param specialFocusParam
      * @return
      */
-    CommonResult<NullResult> delSpecialFocusInfo(SpecialFocusParam specialFocusParam);
+    CommonResult<NullResult> delSpecialFocusInfo(SpecialFocusParam specialFocusParam) throws ApplicationException;
 
 }
