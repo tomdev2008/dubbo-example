@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fansz.common.provider.model.AbstractToken;
 import org.hibernate.validator.constraints.NotBlank;
 
+import java.util.List;
+
 /**
  * Created by LiZhe on 12/5/2015.
  * 创建fandom传入参数
@@ -26,6 +28,9 @@ public class AddFandomParam extends AbstractToken {
 
     @JSONField(name="fandom_intro")
     private String fandomIntro;
+
+    @JSONField(name="fandom_tag_list")
+    private List<FandomTagParam> fandomTagParam;
 
     @Override
     public String getCurrentSn() {
@@ -67,5 +72,13 @@ public class AddFandomParam extends AbstractToken {
 
     public void setFandomIntro(String fandomIntro) {
         this.fandomIntro = fandomIntro;
+    }
+
+    public List<FandomTagParam> getFandomTagParam() {
+        return fandomTagParam;
+    }
+
+    public void setFandomTagParam(List<FandomTagParam> fandomTagParam) {
+        this.fandomTagParam = fandomTagParam;
     }
 }

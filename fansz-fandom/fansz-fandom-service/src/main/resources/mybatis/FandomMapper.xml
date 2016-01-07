@@ -291,6 +291,9 @@
             <if test="fandomIntro != null">
                 fandom_intro = #{fandomIntro,jdbcType=VARCHAR},
             </if>
+            <if test="recommend != null">
+                recommend = #{recommend,jdbcType=VARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </update>

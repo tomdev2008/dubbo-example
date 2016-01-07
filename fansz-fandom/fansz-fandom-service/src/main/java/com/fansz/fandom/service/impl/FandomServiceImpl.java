@@ -156,7 +156,11 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomName(addFandomParam.getFandomName());
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
         this.fandomMapper.insert(fandomEntity);
-        return BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
+
+        List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(),addFandomParam.getFandomTagParam());
+        FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
+        fandomInfoResult.setFandomTagResultList(fandomTagResultList);
+        return fandomInfoResult;
 
     }
 
@@ -178,18 +182,34 @@ public class FandomServiceImpl implements FandomService {
             }
         }
         int count2 = fandomMapper.modifyFandom(modifyFandomParam);
-        //删除当前fandom的所有tag信息
-        fandomTagMapper.deleteFandomTagByFandomId(modifyFandomParam.getId());
-        //重新添加当前fandom的tag信息
-        for(FandomTagParam fandomTagParam:modifyFandomParam.getFandomTagParam()){
-            fandomTagMapper.saveTagByfandomId(fandomTagParam);
-        }
         if (count2 == 0) {
             throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "No fandom modify permissions");
         }
-        List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(modifyFandomParam.getId());
+        List<FandomTagResult> fandomTagList = saveTagByfandomId(modifyFandomParam.getId(),modifyFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(), null);
         fandomInfoResult.setFandomTagResultList(fandomTagList);
         return fandomInfoResult;
     }
+
+    /**
+     * 添加fandomTag
+     * @param fandomId
+     * @param fandomTagParamsList
+     * @return
+     */
+    private List<FandomTagResult> saveTagByfandomId(Long fandomId,List<FandomTagParam> fandomTagParamsList){
+        if(null != fandomTagParamsList && null != fandomId) {
+            //删除当前fandom的所有tag信息
+            fandomTagMapper.deleteFandomTagByFandomId(fandomId);
+            //重新添加当前fandom的tag信息
+            for (int i=0;i<fandomTagParamsList.size();i++) {
+                FandomTagParam fandomTagParam = fandomTagParamsList.get(i);
+                fandomTagParam.setFandomId(fandomId);
+                fandomTagMapper.saveTagByfandomId(fandomTagParam);
+            }
+            return fandomTagMapper.selectFandomTagsByFandomId(fandomId);
+        }
+        return null;
+    }
+
 }
