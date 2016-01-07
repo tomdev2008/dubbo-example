@@ -35,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
     private FandomPostEntityMapper fandomPostEntityMapper;
 
     @Override
-    public PostCommentQueryResult addComment(AddCommentParam commentPara) {
+    public PostCommentQueryResult addComment(AddCommentParam commentPara) throws ApplicationException {
         PostCommentEntity postCommentEntity = new PostCommentEntity();
         postCommentEntity.setPostId(commentPara.getPostId());
         postCommentEntity.setCommentatorSn(commentPara.getCurrentSn());
@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
      * @param delCommentParam
      */
     @Override
-    public void removeComment(DelCommentParam delCommentParam) {
+    public void removeComment(DelCommentParam delCommentParam) throws ApplicationException {
         PostCommentEntity postCommentEntity=postCommentEntityMapper.selectByIdAndSn(delCommentParam.getCurrentSn(), delCommentParam.getCommentId());
         if(postCommentEntity==null){
             throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE,"No authority to delete Comment");
@@ -64,7 +64,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom, PageBounds pageBounds) {
+    public PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom, PageBounds pageBounds) throws ApplicationException{
         return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(),commentQueryFromFandom.getCommentSource(), pageBounds);
     }
 

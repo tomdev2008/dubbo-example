@@ -1,5 +1,6 @@
 package com.fansz.fandom.service;
 
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.model.comment.AddCommentParam;
 import com.fansz.fandom.model.comment.DelCommentParam;
 import com.fansz.fandom.model.comment.PostCommentQueryParam;
@@ -14,14 +15,14 @@ import org.springframework.stereotype.Service;
 @Service
 public interface CommentService {
 
-    PostCommentQueryResult addComment(AddCommentParam commentPara);
+    PostCommentQueryResult addComment(AddCommentParam commentPara) throws ApplicationException;
 
     /**
      * 删除评论
      * @param delCommentParam
      */
-    void removeComment(DelCommentParam delCommentParam);
+    void removeComment(DelCommentParam delCommentParam) throws ApplicationException;
 
-    PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam centQueryFromFandom, PageBounds pageBounds);
+    PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam centQueryFromFandom, PageBounds pageBounds) throws ApplicationException;
 
 }
