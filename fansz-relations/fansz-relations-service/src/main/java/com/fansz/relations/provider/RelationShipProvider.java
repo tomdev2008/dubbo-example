@@ -1,6 +1,7 @@
 package com.fansz.relations.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -75,5 +76,11 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     public CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam) {
         QueryResult<FriendInfoResult> dataResult = relationShipService.findRelationByMobiles(contractQueryParam);
         return super.renderPagedSuccess(dataResult);
+    }
+
+    @Override
+    public CommonResult<AddContactsRemarkResult> addContactsRemark(AddContactsRemarkParam addContactsRemarkParam) throws ApplicationException {
+        AddContactsRemarkResult addContactsRemarkResult = relationShipService.addContactsRemark(addContactsRemarkParam);
+        return super.renderSuccess(addContactsRemarkResult);
     }
 }

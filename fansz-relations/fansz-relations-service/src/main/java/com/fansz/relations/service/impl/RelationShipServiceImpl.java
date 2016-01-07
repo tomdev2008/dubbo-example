@@ -139,4 +139,15 @@ public class RelationShipServiceImpl implements RelationShipService {
         QueryResult<FriendInfo> friendList = userRelationDAO.findRelationByMobiles(p, contactQueryParam.getCurrentSn(), contactQueryParam.getMobileList());
         return renderResult(friendList);
     }
+
+    @Override
+    public AddContactsRemarkResult addContactsRemark(AddContactsRemarkParam addContactsRemarkParam) {
+        UserRelation oldRelation = userRelationDAO.findRelation(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn());
+        if (oldRelation == null || (!oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode()) && !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode()))) {
+            throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
+        }
+        oldRelation.setRemark(addContactsRemarkParam.getRemark());
+        userRelationDAO.update(oldRelation);
+        return BeanTools.copyAs(oldRelation, AddContactsRemarkResult.class);
+    }
 }

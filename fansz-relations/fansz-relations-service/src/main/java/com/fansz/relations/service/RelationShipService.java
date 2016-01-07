@@ -22,4 +22,5 @@ public interface RelationShipService {
 
     QueryResult<FriendInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 
+    AddContactsRemarkResult addContactsRemark(AddContactsRemarkParam addContactsRemarkParam);
 }
