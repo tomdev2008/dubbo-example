@@ -117,7 +117,7 @@ public interface FandomApi {
      * @return
      */
     @DubboxMethod("searchFandoms")
-    CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException;
+    CommonPagedResult<FandomInfoResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException;
 
     /**
      * 删除fandom

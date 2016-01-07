@@ -22,6 +22,9 @@ public class UserRelation implements Serializable{
     @Column(name = "relation_status")
     private String relationStatus;
 
+    @Column(name = "remark")
+    private String remark;
+
     public Long getId() {
         return id;
     }
@@ -52,5 +55,13 @@ public class UserRelation implements Serializable{
 
     public void setRelationStatus(String relationStatus) {
         this.relationStatus = relationStatus == null ? null : relationStatus.trim();
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

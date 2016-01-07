@@ -93,5 +93,12 @@ public interface RelationShipApi {
     @DubboxMethod("searchContacts")
     CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam) throws ApplicationException;
 
+    /**
+     * 对联系人添加备注
+     * @param addContactsRemarkParam
+     * @return
+     */
+    @DubboxMethod("addContactsRemark")
+    CommonResult<AddContactsRemarkResult> addContactsRemark(AddContactsRemarkParam addContactsRemarkParam);
 
 }

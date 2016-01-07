@@ -77,4 +77,10 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
         QueryResult<FriendInfoResult> dataResult = relationShipService.findRelationByMobiles(contractQueryParam);
         return super.renderPagedSuccess(dataResult);
     }
+
+    @Override
+    public CommonResult<AddContactsRemarkResult> addContactsRemark(AddContactsRemarkParam addContactsRemarkParam) throws ApplicationException {
+        AddContactsRemarkResult addContactsRemarkResult = relationShipService.addContactsRemark(addContactsRemarkParam);
+        return super.renderSuccess(addContactsRemarkResult);
+    }
 }
