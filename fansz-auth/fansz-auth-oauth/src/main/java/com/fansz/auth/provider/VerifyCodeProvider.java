@@ -6,6 +6,7 @@ import com.fansz.auth.model.VerifyCodeType;
 import com.fansz.auth.service.VerifyCodeService;
 import com.fansz.common.provider.AbstractProvider;
 import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class VerifyCodeProvider extends AbstractProvider implements VerifyCodeAp
      * @param verifyCodeParam 手机号码
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam) {
+    public CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam) throws ApplicationException {
         ErrorCode result = verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.RESET);
         if (ErrorCode.SUCCESS.equals(result)) {
             return renderSuccess();
@@ -42,7 +43,7 @@ public class VerifyCodeProvider extends AbstractProvider implements VerifyCodeAp
      * @param verifyCodeParam 手机号码
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam) {
+    public CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam) throws ApplicationException {
         ErrorCode result =verifyCodeService.createVerifyCode(verifyCodeParam.getMobile(), VerifyCodeType.REGISTER);
         if (ErrorCode.SUCCESS.equals(result)) {
             return renderSuccess();
