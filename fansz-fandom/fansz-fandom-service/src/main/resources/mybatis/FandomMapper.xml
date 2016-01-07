@@ -175,15 +175,24 @@
     </select>
 
     <select id="getRecommendFandom" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
-            SELECT  f.*,m.count follower_count,p.member_avatar,p.sn u_sn,p.nickname u_nickname,
-            (select count(1) from feeds_member_fandom t where t.fandom_id=f.id and t.member_sn=#{memberSn,jdbcType=VARCHAR}) followed,
-            (select count(1) from feeds_member_post_fandom g where g.fandom_id=f.id) post_count
-            from feeds_fandom  f,
-            (select  count(1)  count, fandom_id from feeds_member_fandom  group by fandom_id)  m,
-            connects_member_profile p
-            where f.id = m.fandom_id
-            and   f.fandom_creator_sn = p.sn
-            order by m.count desc
+            SELECT
+                f.*, p.member_avatar,
+                (
+                    SELECT
+                        count(1)
+                    FROM
+                        feeds_member_fandom t
+                    WHERE
+                        t.fandom_id = f.id
+                    AND t.member_sn = #{memberSn,jdbcType=VARCHAR}
+                ) followed
+            FROM
+                feeds_fandom f
+            LEFT JOIN connects_member_profile p ON f.fandom_creator_sn = p.sn
+            WHERE
+                f.recommend = '1'
+            ORDER BY
+                f.fandom_create_time DESC
     </select>
 
     <select id="getFandomDetail" resultMap="fandomAllInfoResultMap">
