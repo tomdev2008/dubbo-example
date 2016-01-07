@@ -53,7 +53,7 @@ public interface AccountApi {
      * 用户登出
      *
      * @param logoutParam
-     * @param logoutParam 修改密码对象
+     * @param logoutParam 登出对象
      * @return resp 返回对象
      */
     @DubboxMethod("logout")
