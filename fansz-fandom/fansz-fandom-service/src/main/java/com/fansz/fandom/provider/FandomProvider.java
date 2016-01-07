@@ -11,11 +11,13 @@ import com.fansz.fandom.model.relationship.ExitFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 import com.fansz.fandom.service.FandomService;
+import com.fansz.pub.utils.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,6 +41,14 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
 
     @Override
     public CommonResult<NullResult> joinFandom(JoinFandomsParam joinFandomsParam) {
+        List<String> fandomIdList=joinFandomsParam.getFandomIds();
+        if(fandomIdList==null){
+            fandomIdList=new ArrayList<String>();
+        }
+        if(StringTools.isNotBlank(joinFandomsParam.getFandomId())){
+            fandomIdList.add(joinFandomsParam.getFandomId());
+        }
+        joinFandomsParam.setFandomIds(fandomIdList);
         fandomService.joinFandom(joinFandomsParam);
         return renderSuccess();
     }

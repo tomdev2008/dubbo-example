@@ -2,11 +2,7 @@ package com.fansz.fandom.model.relationship;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fansz.common.provider.model.AbstractToken;
-import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serializable;
 import java.util.List;
 
 
@@ -17,10 +13,12 @@ public class JoinFandomsParam extends AbstractToken {
 
     private String currentSn;
 
-    @NotNull
-    @Size(min = 1)
+
     @JSONField(name = "fandom_ids")
     private List<String> fandomIds;
+
+    @JSONField(name = "fandom_id")
+    private String fandomId;
 
     @Override
     public String getCurrentSn() {
@@ -38,5 +36,13 @@ public class JoinFandomsParam extends AbstractToken {
 
     public void setFandomIds(List<String> fandomIds) {
         this.fandomIds = fandomIds;
+    }
+
+    public String getFandomId() {
+        return fandomId;
+    }
+
+    public void setFandomId(String fandomId) {
+        this.fandomId = fandomId;
     }
 }
