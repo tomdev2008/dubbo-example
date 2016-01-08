@@ -141,7 +141,10 @@ public class FandomServiceImpl implements FandomService {
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
-        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
+        FandomInfoResult fandomInfoResult = fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
+        List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(fandomInfoParam.getFandomId());
+        fandomInfoResult.setFandomTagResultList(fandomTagList);
+        return fandomInfoResult;
     }
 
     @Override
