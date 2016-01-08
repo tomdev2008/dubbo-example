@@ -147,7 +147,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             page.setPageSize(1);
         }
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
-        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, memberPostsParam.getCurrentSn(), memberPostsParam.getSinceId(), memberPostsParam.getMaxId());
+        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, memberPostsParam.getFriendSn(), memberPostsParam.getSinceId(), memberPostsParam.getMaxId());
         if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())) {
             List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberPostsParam.getCurrentSn());
             postResult.setResultlist(postInfoResultList);
