@@ -42,7 +42,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @param resetPasswordParam 密码对象
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException {
+    public CommonResult<NullResult> resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException{
         accountService.resetPassword(resetPasswordParam);
         return renderSuccess();
     }
@@ -54,7 +54,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
      * @param changePasswordParam 修改密码对象
      * @return resp 返回对象
      */
-    public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam) throws ApplicationException {
+    public CommonResult<NullResult> changePassword(ChangePasswordParam changePasswordParam)  throws ApplicationException{
         accountService.changePassword(changePasswordParam);
         return renderSuccess();
     }
@@ -84,7 +84,7 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     }
 
     @Override
-    public CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException {
+    public CommonResult<LoginResult> refreshToken(RefreshTokenParam refreshTokenParam) throws ApplicationException{
         SessionInfoResult sessionInfoResult = sessionService.refreshToken(refreshTokenParam.getRefreshToken());
         LoginResult result = new LoginResult();
         result.setAccessToken(sessionInfoResult.getAccessToken());

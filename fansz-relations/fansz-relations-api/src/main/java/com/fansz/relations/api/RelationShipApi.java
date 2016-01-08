@@ -3,6 +3,7 @@ package com.fansz.relations.api;
 
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
@@ -21,7 +22,7 @@ public interface RelationShipApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getFriends")
-    CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam);
+    CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam) throws ApplicationException;
 
     /**
      * C020:获取特别用户好友列表
@@ -29,7 +30,7 @@ public interface RelationShipApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getSpecialFriend")
-    CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam);
+    CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam) throws ApplicationException;
 
     /**
      * 请求添加为好友
@@ -38,7 +39,7 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("requestToBeFriends")
-    CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam);
+    CommonResult<NullResult> addFriendRequest(AddFriendParam addFriendParam) throws ApplicationException;
 
     /**
      * 添加为特别好友
@@ -47,7 +48,7 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("beMySpecialFriend")
-    CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam);
+    CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam) throws ApplicationException;
 
     /**
      * 取消特别好友
@@ -56,7 +57,7 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("removeMySpecialFriend")
-    CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam);
+    CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam) throws ApplicationException;
 
     /**
      * 同意添加好友
@@ -65,7 +66,7 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("agreeAddRequest")
-    CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam);
+    CommonResult<NullResult> agreeRequest(OpRequestParam opRequestParam) throws ApplicationException;
 
 
     /**
@@ -75,7 +76,7 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("getFriendRequests")
-    CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam);
+    CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam) throws ApplicationException;
 
     /**
      * C019:获取我发出的好友请求列表
@@ -84,13 +85,20 @@ public interface RelationShipApi {
      * @return
      */
     @DubboxMethod("getRequesters")
-    CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam);
+    CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam) throws ApplicationException;
 
     /**
      * 上传用户通讯录，搜索出通讯录好友（包含好友状态）
      */
     @DubboxMethod("searchContacts")
-    CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam);
+    CommonPagedResult<FriendInfoResult> getContactInfo(ContactQueryParam contractQueryParam) throws ApplicationException;
 
+    /**
+     * 对联系人添加备注
+     * @param addContactsRemarkParam
+     * @return
+     */
+    @DubboxMethod("addContactsRemark")
+    CommonResult<AddContactsRemarkResult> addContactsRemark(AddContactsRemarkParam addContactsRemarkParam);
 
 }

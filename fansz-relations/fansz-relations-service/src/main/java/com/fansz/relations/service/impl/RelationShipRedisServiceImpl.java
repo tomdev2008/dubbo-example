@@ -4,6 +4,7 @@ import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.utils.RedisKeyUtils;
+import com.fansz.db.entity.UserRelation;
 import com.fansz.db.model.FriendInfo;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.db.repository.UserRelationDAO;
@@ -278,5 +279,23 @@ public class RelationShipRedisServiceImpl implements RelationShipService {
                 }
             }
         });
+    }
+
+    @Override
+    public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
+        jedisTemplate.execute(new JedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(Jedis jedis) throws Exception {
+                //检查对方是否在我的好友列表中,如果不是,返回错误
+                boolean exist = jedis.sismember(RedisKeyUtils.FRIEND_PREFIX + addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn());
+                if (!exist) {
+                    throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
+                }
+                jedis.hset(RedisKeyUtils.getFriendRemarkKey(addContactsRemarkParam.getCurrentSn()), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
+                return true;
+            }
+        });
+
+        return BeanTools.copyAs(addContactsRemarkParam, AddContactsRemarkResult.class);
     }
 }

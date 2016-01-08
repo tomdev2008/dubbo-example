@@ -103,7 +103,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PageList<PostInfoResult> getMemberFandomPosts(GetMemberFandomPostsParam getMemberFandomPostsParam) {
         PageBounds pageBounds = new PageBounds(getMemberFandomPostsParam.getPageNum(), getMemberFandomPostsParam.getPageSize());
-        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getCurrentSn(), null, pageBounds);
+        return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(), null, pageBounds);
     }
 
     @Override

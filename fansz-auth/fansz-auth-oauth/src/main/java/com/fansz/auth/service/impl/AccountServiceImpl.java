@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
      * @param registerParam
      */
     @Override
-    public void register(RegisterParam registerParam) {
+    public void register(RegisterParam registerParam)  throws ApplicationException {
         //验证码校验
         VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
@@ -92,7 +92,7 @@ public class AccountServiceImpl implements AccountService {
      * @param changePasswordParam 修改密码参数
      */
     @Override
-    public void changePassword(ChangePasswordParam changePasswordParam) {
+    public void changePassword(ChangePasswordParam changePasswordParam) throws ApplicationException {
         String encodedPwd = SecurityTools.encode(changePasswordParam.getOldPassword());
 
         //Get User Info
@@ -116,7 +116,7 @@ public class AccountServiceImpl implements AccountService {
      * @param resetPasswordParam 密码对象
      */
     @Override
-    public void resetPassword(ResetPasswordParam resetPasswordParam) {
+    public void resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException {
         User user = userDAO.findByMobile(resetPasswordParam.getMobile());
         if (user == null) {//用户不存在
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
@@ -148,7 +148,7 @@ public class AccountServiceImpl implements AccountService {
      * @return
      */
     @Override
-    public LoginResult login(LoginParam loginParam) {
+    public LoginResult login(LoginParam loginParam) throws ApplicationException {
         User user = userDAO.findByAccount(loginParam.getLoginname());
         if (user == null) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
@@ -177,7 +177,7 @@ public class AccountServiceImpl implements AccountService {
      * @param logoutParam
      */
     @Override
-    public void logout(LogoutParam logoutParam) {
+    public void logout(LogoutParam logoutParam) throws ApplicationException {
         sessionService.invalidateSession(logoutParam.getAccessToken());
     }
 

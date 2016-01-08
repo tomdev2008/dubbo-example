@@ -116,8 +116,8 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     }
 
     @Override
-    public CommonPagedResult<SearchFandomResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException{
-        PageList<SearchFandomResult> pageList = fandomService.searchFandoms(searchFandomParam);
+    public CommonPagedResult<FandomInfoResult> searchFandoms(SearchFandomParam searchFandomParam) throws ApplicationException{
+        PageList<FandomInfoResult> pageList = fandomService.searchFandoms(searchFandomParam);
         return super.renderPagedSuccess(pageList);
     }
 
