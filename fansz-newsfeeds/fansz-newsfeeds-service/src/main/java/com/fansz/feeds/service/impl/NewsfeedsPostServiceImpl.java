@@ -237,7 +237,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
                 postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
             }
             postInfoResult.getLikedList().add(userInfoResult);
-            postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
+            if("0".equals(postInfoResult.getLiked())){
+                postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
+            }
         }
         //遍历comment
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);
