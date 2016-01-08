@@ -12,7 +12,6 @@ import com.fansz.fandom.model.post.PostLikeInfoResult;
 import com.fansz.fandom.model.post.SearchPostResult;
 import com.fansz.fandom.model.profile.ProfileValidateResult;
 import com.fansz.fandom.model.profile.UserInfoResult;
-import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.seedingspot.SeedingSpotResult;
 import com.fansz.fandom.model.specialfocus.SpecialFocusResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -42,8 +41,6 @@ public class FandomSerialOptimizerImpl implements SerializationOptimizer {
 
         classes.add(ProfileValidateResult.class);
         classes.add(UserInfoResult.class);
-
-        classes.add(FriendInfoResult.class);
 
         classes.add(SeedingSpotResult.class);
         classes.add(SpecialFocusResult.class);

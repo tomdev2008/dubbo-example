@@ -9,21 +9,16 @@ import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.UserDAO;
-import com.fansz.pub.utils.BeanTools;
-import com.fansz.pub.utils.JsonHelper;
-import com.fansz.pub.utils.SecurityTools;
-import com.fansz.pub.utils.UUIDTools;
-import com.fansz.redis.JedisTemplate;
-import com.fansz.redis.support.JedisCallback;
+import com.fansz.pub.utils.*;
+import com.fansz.redis.UserTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,18 +30,18 @@ public class AccountServiceImpl implements AccountService {
     private Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 
     @Autowired
-    private UserDAO userDAO;
-
-    @Autowired
     private VerifyCodeService verifyCodeService;
 
     @Autowired
     private SessionService sessionService;
 
-    @Autowired
-    private JedisTemplate jedisTemplate;
+    @Resource(name = "userTemplate")
+    private UserTemplate userTemplate;
 
     private final static String USER_STATUS_OK = "1";
+
+    @Autowired
+    private UserDAO userDAO;
 
     /**
      * 用户注册
@@ -54,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
      * @param registerParam
      */
     @Override
-    public void register(RegisterParam registerParam)  throws ApplicationException {
+    public void register(RegisterParam registerParam) throws ApplicationException {
         //验证码校验
         VerifyCodeModel verifyCode = verifyCodeService.queryVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
@@ -67,22 +62,38 @@ public class AccountServiceImpl implements AccountService {
         //Remove invalid Code
         verifyCodeService.removeVerifyCode(registerParam.getMobile(), VerifyCodeType.REGISTER);
 
-        User existedUser = userDAO.findByAccount(registerParam.getLoginname());
-        if (existedUser != null) {
+        String sn = userTemplate.getSnByAccount(registerParam.getLoginname());
+        if (StringTools.isNotBlank(sn)) {
             throw new ApplicationException(ErrorCode.USER_EXISTS.getCode(), ErrorCode.USER_EXISTS.getName());
         }
+        Date now = DateTools.getSysDate();
         //Create User
         String encodedPwd = SecurityTools.encode(registerParam.getPassword());
-        final User user = new User();
-        BeanUtils.copyProperties(registerParam, user);
+        User user = new User();
+        BeanTools.copy(registerParam, user);
         user.setSn(UUIDTools.generate());
-        user.setProfileCreatetime(new Date());
-        user.setProfileUpdatetime(new Date());
+        user.setProfileCreatetime(now);
+        user.setProfileUpdatetime(now);
         user.setPassword(encodedPwd);
         user.setMemberStatus(USER_STATUS_OK);
         userDAO.save(user);
 
-        saveUserInRedis(user);//将用户信息保存到redis
+        Map<String, Object> userMap = JsonHelper.convertJSONString2Object(JsonHelper.convertObject2JSONString(user), Map.class);
+        /**
+         Map<String, Object> userMap = new HashMap<>();
+         userMap.put("id", userTemplate.generateUserId());
+         userMap.put("sn", UUIDTools.generate());
+         userMap.put("loginname", registerParam.getLoginname());
+         userMap.put("password", registerParam.getPassword());
+         userMap.put("mobile", registerParam.getMobile());
+         userMap.put("member_status", USER_STATUS_OK);
+         userMap.put("profile_createtime", now);
+         userMap.put("profile_updatetime", now);
+         userMap.put("password", encodedPwd);
+         *
+         */
+        //将用户信息保存到redis
+        userTemplate.addUser(userMap);
     }
 
 
@@ -96,18 +107,16 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(changePasswordParam.getOldPassword());
 
         //Get User Info
-        User user = userDAO.findBySn(changePasswordParam.getCurrentSn());
-        if (user == null) {
+        Map<String, String> userMap = userTemplate.get(changePasswordParam.getCurrentSn());
+        if (userMap == null || userMap.isEmpty()) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
-        if (!user.getPassword().equals(encodedPwd)) {
+        if (!userMap.get("password").equals(encodedPwd)) {
             throw new ApplicationException(ErrorCode.PASSWORD_WRONG);
         }
         //Update New Password
         String encodedNewPwd = SecurityTools.encode(changePasswordParam.getNewPassword());
-        userDAO.updatePassword(user.getId(), encodedNewPwd);
-
-        syncDataInRedis(user.getSn(), encodedNewPwd);//更新redis中的密码
+        userTemplate.updatePasswd(changePasswordParam.getCurrentSn(), encodedNewPwd);//更新redis中的密码
     }
 
     /**
@@ -117,8 +126,8 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public void resetPassword(ResetPasswordParam resetPasswordParam) throws ApplicationException {
-        User user = userDAO.findByMobile(resetPasswordParam.getMobile());
-        if (user == null) {//用户不存在
+        String userSn = userTemplate.getSnByMobile(resetPasswordParam.getMobile());
+        if (StringTools.isBlank(userSn)) {//用户不存在
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
 
@@ -136,9 +145,7 @@ public class AccountServiceImpl implements AccountService {
         String encodedPwd = SecurityTools.encode(resetPasswordParam.getPassword());
 
         //更新密码
-        userDAO.updatePassword(user.getId(), encodedPwd);
-
-        syncDataInRedis(user.getSn(), encodedPwd);//更新redis中的密码
+        userTemplate.updatePasswd(userSn, encodedPwd);//更新redis中的密码
     }
 
     /**
@@ -149,11 +156,12 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public LoginResult login(LoginParam loginParam) throws ApplicationException {
-        User user = userDAO.findByAccount(loginParam.getLoginname());
-        if (user == null) {
+        String userSn = userTemplate.getSnByAccount(loginParam.getLoginname());
+        if (StringTools.isBlank(userSn)) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
-        String pswdInDb = user.getPassword();
+        Map<String, String> userMap = userTemplate.get(userSn);
+        String pswdInDb = userMap.get("password");
         String encodedPswd = SecurityTools.encode(loginParam.getPassword());
         if (!pswdInDb.equals(encodedPswd)) {
             throw new ApplicationException(ErrorCode.PASSWORD_WRONG);
@@ -161,9 +169,9 @@ public class AccountServiceImpl implements AccountService {
 
         String accessKey = UUIDTools.generate();
         String refreshKey = UUIDTools.generate();
-        Long expireAt = sessionService.saveSession(accessKey, refreshKey, user.getId(), user.getSn());
+        Long expireAt = sessionService.saveSession(accessKey, refreshKey, Long.valueOf(userMap.get("id")), userSn);
 
-        LoginResult result = BeanTools.copyAs(user, LoginResult.class);
+        LoginResult result = JsonHelper.copyMapAs(userMap, LoginResult.class);
         result.setAccessToken(accessKey);
         result.setRefreshToken(refreshKey);
         result.setExpiresAt(expireAt);
@@ -181,43 +189,5 @@ public class AccountServiceImpl implements AccountService {
         sessionService.invalidateSession(logoutParam.getAccessToken());
     }
 
-    /**
-     * 同步修改redis中的密码
-     *
-     * @param sn
-     * @param passwd
-     */
-    private void syncDataInRedis(final String sn, final String passwd) {
-        jedisTemplate.execute(new JedisCallback<Boolean>() {
-            @Override
-            public Boolean doInRedis(Jedis jedis) throws Exception {
-                jedis.hset("user:{" + sn + "}", "password", passwd);
-                return true;
-            }
-        });
 
-    }
-
-    /**
-     * 将用户信息保存到redis,目前用户信息在数据库和redis中都保存了一份,后续会统一保存到redis;
-     *
-     * @param user
-     */
-    private void saveUserInRedis(final User user) {
-        jedisTemplate.execute(new JedisCallback<Boolean>() {
-            @Override
-            public Boolean doInRedis(Jedis jedis) throws Exception {
-                Map<String, Object> userMap = JsonHelper.convertJSONString2Object(JsonHelper.convertObject2JSONString(user), Map.class);
-                Pipeline pipe = jedis.pipelined();
-                String key = "user:{" + user.getSn() + "}";
-                for (Map.Entry<String, Object> prop : userMap.entrySet()) {
-                    if (prop.getValue() != null) {
-                        pipe.hset(key, prop.getKey(), String.valueOf(prop.getValue()));
-                    }
-                }
-                pipe.sync();
-                return true;
-            }
-        });
-    }
 }

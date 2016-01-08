@@ -7,8 +7,8 @@ import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.api.FandomApi;
 import com.fansz.fandom.model.fandom.*;
+import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 import com.fansz.fandom.service.FandomService;
@@ -110,8 +110,8 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @Override
-    public CommonPagedResult<FriendInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException{
-        PageList<FriendInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
+    public CommonPagedResult<UserInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException{
+        PageList<UserInfoResult> result = fandomService.getFandomMembers(fandomQueryParam);
         return renderPagedSuccess(result);
     }
 

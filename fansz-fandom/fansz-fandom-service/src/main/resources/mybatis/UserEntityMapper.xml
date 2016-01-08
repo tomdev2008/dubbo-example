@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fansz.fandom.repository.UserMapper">
-    <resultMap id="BaseResultMap" type="com.fansz.fandom.entity.UserEntity">
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="loginname" jdbcType="VARCHAR" property="loginname"/>
-        <result column="password" jdbcType="VARCHAR" property="password"/>
-        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
-        <result column="gender" jdbcType="VARCHAR" property="gender"/>
-        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
-        <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
-        <result column="signature" jdbcType="VARCHAR" property="signature"/>
-        <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
-        <result column="profile_updatetime" jdbcType="TIMESTAMP" property="profileUpdatetime"/>
-        <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
-        <result column="member_status" jdbcType="VARCHAR" property="memberStatus"/>
-    </resultMap>
     <resultMap id="userInfoResultMap" type="com.fansz.fandom.model.profile.UserInfoResult">
         <result column="sn" jdbcType="VARCHAR" property="sn"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
@@ -28,21 +11,8 @@
         <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
         <result column="signature" jdbcType="VARCHAR" property="signature"/>
         <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
-        <result column="relationship" jdbcType="VARCHAR" property="relationship"/>
         <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
-    </resultMap>
-    <resultMap id="friendInfoResultMap" type="com.fansz.fandom.model.relationship.FriendInfoResult">
-        <result column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
-        <result column="gender" jdbcType="VARCHAR" property="gender"/>
-        <result column="birthday" jdbcType="VARCHAR" property="birthday"/>
-        <result column="member_avatar" jdbcType="VARCHAR" property="memberAvatar"/>
-        <result column="signature" jdbcType="VARCHAR" property="signature"/>
         <result column="relationship" jdbcType="VARCHAR" property="relationship"/>
-        <result column="profile_createtime" jdbcType="TIMESTAMP" property="profileCreatetime"/>
-        <result column="member_type" jdbcType="VARCHAR" property="memberType"/>
     </resultMap>
     <sql id="Base_Column_List">
     id, sn, loginname, password, mobile, email, nickname, gender, birthday, member_avatar, signature,profile_createtime, profile_updatetime, member_type, member_status
@@ -54,7 +24,7 @@
         ${alias}.profile_createtime u_profile_createtime, ${alias}.profile_updatetime u_profile_updatetime, ${alias}.member_type u_member_type, ${alias}.member_status u_member_status
     </sql>
 
-    <update id="updateByUidSelective" parameterType="com.fansz.fandom.entity.UserEntity">
+    <update id="updateByUidSelective" parameterType="com.fansz.fandom.model.profile.UserInfoResult">
         update connects_member_profile
         <set>
             <if test="loginname != null">
@@ -100,15 +70,6 @@
         where sn = #{sn,jdbcType=VARCHAR} and member_status='1'
     </update>
 
-
-    <select id="isExistsNickname" resultType="java.lang.Integer">
-        SELECT COUNT(1) FROM connects_member_profile WHERE nickname=#{nickname,jdbcType=VARCHAR} AND member_status='1'
-        AND sn!=#{exlucdeSn,jdbcType=VARCHAR}
-    </select>
-
-    <select id="selectByUid" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select * from connects_member_profile where sn=#{sn,jdbcType=VARCHAR} and member_status='1'
-    </select>
 
     <select id="searchMembers" resultMap="userInfoResultMap">
         SELECT

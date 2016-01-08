@@ -88,31 +88,6 @@
          ]]>
     </native-query>
 
-    <native-query name="relation.findUserByMobiles">
-        <![CDATA[
-        SELECT a.*
-        FROM connects_member_profile a
-        WHERE a.mobile IN (
-        <#list mobileList as item>
-        ${item}
-         <#if item_has_next>,</#if>
-        </#list>
-        )
-         ]]>
-    </native-query>
-
-    <native-query name="relation.findUserByMobiles.counter">
-        <![CDATA[
-        SELECT count(1)
-        FROM connects_member_profile a
-        WHERE a.mobile IN (
-        <#list mobileList as item>
-        ${item}
-         <#if item_has_next>,</#if>
-        </#list>)
-         ]]>
-    </native-query>
-
     <native-query name="relation.listAddMeRequest">
         SELECT a.*,b.relation_status AS relationship
         FROM connects_member_profile a LEFT JOIN connects_member_relation b

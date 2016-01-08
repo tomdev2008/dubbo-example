@@ -10,6 +10,7 @@ import com.fansz.fandom.model.profile.*;
 import com.fansz.fandom.model.search.SearchMemberParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户服务
@@ -23,7 +24,7 @@ public interface ProfileApi {
      * @return
      */
     @DubboxMethod("getProfile")
-    CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) throws ApplicationException;
+    CommonResult<Map<String,String>> getProfile(QueryProfileParam queryUserParam) throws ApplicationException;
 
     /**
      * 根据昵称、账号、手机号码搜索会员
@@ -66,6 +67,7 @@ public interface ProfileApi {
     /**
      * 查询用户相册
      */
+    @Deprecated
     @DubboxMethod("getMembersAlbum")
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) throws ApplicationException;
 

@@ -38,4 +38,29 @@
           )  and u.memberStatus='1'
         ]]>
     </hql-query>
+
+    <native-query name="user.findByMobiles">
+        <![CDATA[
+        SELECT a.*
+        FROM connects_member_profile a
+        WHERE a.mobile IN (
+        <#list mobileList as item>
+        ${item}
+         <#if item_has_next>,</#if>
+        </#list>
+        )
+         ]]>
+    </native-query>
+
+    <native-query name="user.findByMobiles.counter">
+        <![CDATA[
+        SELECT count(1)
+        FROM connects_member_profile a
+        WHERE a.mobile IN (
+        <#list mobileList as item>
+        ${item}
+         <#if item_has_next>,</#if>
+        </#list>)
+         ]]>
+    </native-query>
 </dynamic-query>

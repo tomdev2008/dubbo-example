@@ -141,12 +141,16 @@
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>fansz-dao</artifactId>
+            <artifactId>fansz-auth-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>fansz-auth-api</artifactId>
+            <artifactId>fansz-dao</artifactId>
         </dependency>
     </dependencies>
     <build>

@@ -6,17 +6,18 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户配置服务
  */
 public interface ProfileService {
 
-    UserInfoResult getProfile(QueryProfileParam queryUserParam);
+    Map<String,String> getProfile(QueryProfileParam queryUserParam);
 
     void modifyProfile(ModifyProfileParam modifyProfileParam);
 
-    int setMemberType(SetMemberParam setMemberParam);
+    boolean setMemberType(SetMemberParam setMemberParam);
 
     PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam);
 
@@ -24,5 +25,5 @@ public interface ProfileService {
 
     List<String> getImages(ContactQueryParam contractQueryParam);
 
-    int isExistsNickname(String nickname,String excludeSn);
+    boolean isExistsNickname(String nickname,String excludeSn);
 }

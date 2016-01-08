@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 配置服务提供者
@@ -33,8 +34,8 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      * @return
      */
     @Override
-    public CommonResult<UserInfoResult> getProfile(QueryProfileParam queryUserParam) throws ApplicationException {
-        UserInfoResult userInfoResult = profileService.getProfile(queryUserParam);
+    public CommonResult<Map<String,String>> getProfile(QueryProfileParam queryUserParam) throws ApplicationException {
+        Map<String,String> userInfoResult = profileService.getProfile(queryUserParam);
         return renderSuccess(userInfoResult);
     }
 
@@ -82,9 +83,9 @@ public class ProfileProvider extends AbstractProvider implements ProfileApi {
      */
     @Override
     public CommonResult<ProfileValidateResult> validateNickName(NicknameCheckParam NicknameCheckParam) throws ApplicationException{
-        int total = profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getCurrentSn());
+        boolean exists= profileService.isExistsNickname(NicknameCheckParam.getNickname(), NicknameCheckParam.getCurrentSn());
         ProfileValidateResult result = new ProfileValidateResult();
-        result.setUnique(total > 0 ? false : true);
+        result.setUnique(exists);
         return renderSuccess(result);
     }
 

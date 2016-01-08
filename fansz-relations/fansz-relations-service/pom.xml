@@ -131,10 +131,7 @@
             <artifactId>commons-beanutils-bean-collections</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>commons-redis</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.fansz</groupId>
             <artifactId>commons-utils</artifactId>
@@ -155,6 +152,10 @@
         <dependency>
             <groupId>com.fansz</groupId>
             <artifactId>fansz-dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-redis</artifactId>
         </dependency>
     </dependencies>
     <profiles>

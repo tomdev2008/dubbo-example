@@ -1,8 +1,6 @@
 package com.fansz.fandom.service.impl;
 
-import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.common.provider.utils.RedisKeyUtils;
 import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.model.UnSpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
@@ -10,28 +8,25 @@ import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.entity.FandomMemberEntity;
 import com.fansz.fandom.model.fandom.*;
+import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
-import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomMemberEntityMapper;
 import com.fansz.fandom.repository.FandomTagMapper;
 import com.fansz.fandom.service.FandomService;
-import com.fansz.fandom.service.RelationService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
-import com.fansz.redis.JedisTemplate;
-import com.fansz.redis.support.JedisCallback;
+import com.fansz.redis.RelationTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -58,8 +53,8 @@ public class FandomServiceImpl implements FandomService {
     @Autowired
     private FandomTagMapper fandomTagMapper;
 
-    @Resource(name="relationService")
-    private RelationService relationService;
+    @Resource(name = "relationTemplate")
+    private RelationTemplate relationTemplate;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -144,17 +139,20 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public PageList<FriendInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
+    public PageList<UserInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
-        PageList<FriendInfoResult> result = fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getCurrentSn(), pageBounds);
-        for (FriendInfoResult friend : result) {
-            friend.setRelationship(relationService.getRelation(fandomQueryParam.getCurrentSn(), friend.getSn()));
+        PageList<UserInfoResult> result = fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getCurrentSn(), pageBounds);
+        for (UserInfoResult user : result) {
+            user.setRelationship(relationTemplate.getRelation(fandomQueryParam.getCurrentSn(), user.getSn()));
         }
         return result;
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
-        return fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
+        FandomInfoResult fandomInfoResult = fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
+        List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(fandomInfoParam.getFandomId());
+        fandomInfoResult.setFandomTagResultList(fandomTagList);
+        return fandomInfoResult;
     }
 
     @Override
@@ -178,7 +176,7 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
         this.fandomMapper.insert(fandomEntity);
 
-        List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(),addFandomParam.getFandomTagParam());
+        List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(), addFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
         fandomInfoResult.setFandomTagResultList(fandomTagResultList);
         return fandomInfoResult;
@@ -206,7 +204,7 @@ public class FandomServiceImpl implements FandomService {
         if (count2 == 0) {
             throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "No fandom modify permissions");
         }
-        List<FandomTagResult> fandomTagList = saveTagByfandomId(modifyFandomParam.getId(),modifyFandomParam.getFandomTagParam());
+        List<FandomTagResult> fandomTagList = saveTagByfandomId(modifyFandomParam.getId(), modifyFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(), null);
         fandomInfoResult.setFandomTagResultList(fandomTagList);
         return fandomInfoResult;
@@ -214,16 +212,17 @@ public class FandomServiceImpl implements FandomService {
 
     /**
      * 添加fandomTag
+     *
      * @param fandomId
      * @param fandomTagParamsList
      * @return
      */
-    private List<FandomTagResult> saveTagByfandomId(Long fandomId,List<FandomTagParam> fandomTagParamsList){
-        if(null != fandomTagParamsList && null != fandomId) {
+    private List<FandomTagResult> saveTagByfandomId(Long fandomId, List<FandomTagParam> fandomTagParamsList) {
+        if (null != fandomTagParamsList && null != fandomId) {
             //删除当前fandom的所有tag信息
             fandomTagMapper.deleteFandomTagByFandomId(fandomId);
             //重新添加当前fandom的tag信息
-            for (int i=0;i<fandomTagParamsList.size();i++) {
+            for (int i = 0; i < fandomTagParamsList.size(); i++) {
                 FandomTagParam fandomTagParam = fandomTagParamsList.get(i);
                 fandomTagParam.setFandomId(fandomId);
                 fandomTagMapper.saveTagByfandomId(fandomTagParam);

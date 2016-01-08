@@ -16,7 +16,9 @@ public interface FandomMapper {
 
     int insert(FandomEntity record);
 
-    int insertSelective(FandomEntity record);
+    int delFandom(DelFandomParam delFandomParam);
+
+    int modifyFandom(ModifyFandomParam modifyFandomParam);
 
     List<FandomInfoResult> listByCondition(FandomEntity param);
 
@@ -29,10 +31,6 @@ public interface FandomMapper {
     PageList<FandomInfoResult> searchFandoms(@Param("memberSn") String memberSn, @Param("searchVal") String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);
-
-    int delFandom(DelFandomParam delFandomParam);
-
-    int modifyFandom(ModifyFandomParam modifyFandomParam);
 
     FandomInfoResult getFandomInfo(@Param("fandomId") Long fandomId, @Param("fandomName") String fandomName);
 }

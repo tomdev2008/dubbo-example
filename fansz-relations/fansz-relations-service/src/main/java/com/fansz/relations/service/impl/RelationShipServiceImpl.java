@@ -3,133 +3,175 @@ package com.fansz.relations.service.impl;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.db.entity.UserRelation;
-import com.fansz.db.model.FriendInfo;
-import com.fansz.db.repository.UserRelationDAO;
-import com.fansz.event.model.SpecialFocusEvent;
-import com.fansz.event.producer.EventProducer;
-import com.fansz.event.type.AsyncEventType;
+import com.fansz.db.entity.User;
+import com.fansz.db.repository.UserDAO;
 import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.RelationTemplate;
+import com.fansz.redis.UserTemplate;
+import com.fansz.redis.model.CountListResult;
 import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
- * Created by allan on 15/11/29.
+ * Created by allan on 16/1/7.
  */
-@Service
-@Transactional(propagation = Propagation.REQUIRED)
+@Component("relationShipService")
 public class RelationShipServiceImpl implements RelationShipService {
 
-    @Autowired
-    private UserRelationDAO userRelationDAO;
+    @Resource(name = "userTemplate")
+    private UserTemplate userTemplate;
 
-    @Autowired
-    private EventProducer eventProducer;
+    @Resource(name = "relationTemplate")
+    private RelationTemplate relationTemplate;
 
+    @Resource(name = "userDAO")
+    private UserDAO userDAO;
+
+    /**
+     * 查询好友列表
+     *
+     * @param friendsQueryParam
+     * @param isSpecial         如果为true, 查询特殊好友
+     * @return
+     */
     @Override
-    public QueryResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam, boolean isSpecial) {
-        Page p = new Page();
-        p.setPage(friendsParam.getPageNum());
-        p.setPageSize(friendsParam.getPageSize());
-        QueryResult<FriendInfo> userList = null;
+    public QueryResult<Map<String, String>> getFriends(final FriendsQueryParam friendsQueryParam, final boolean isSpecial) {
+        final int offset = (friendsQueryParam.getPageNum() - 1) * friendsQueryParam.getPageSize();
+        final int limit = friendsQueryParam.getPageSize();
+
+        String mySn = friendsQueryParam.getCurrentSn();
+        CountListResult<String> snList = null;
         if (isSpecial) {
-            userList = userRelationDAO.findSpecialFriends(p, friendsParam.getCurrentSn());
+            snList = relationTemplate.listFriend(mySn, offset, limit);
         } else {
-            userList = userRelationDAO.findFriends(p, friendsParam.getCurrentSn());
+            snList = relationTemplate.listSpecialFriend(mySn, offset, limit);
         }
-        return renderResult(userList);
+        if (snList == null || CollectionTools.isNullOrEmpty(snList.getResult())) {
+            return new QueryResult<>(new ArrayList<Map<String, String>>(), 0L);
+        }
+        List<Map<String, String>> friendList = userTemplate.getAll(snList.getResult());
+        for (Map<String, String> record : friendList) {
+            if (isSpecial) {
+                record.put("relationship", RelationShip.SPECIAL_FRIEND.getCode());
+            } else {
+                record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
+            }
+        }
+        return new QueryResult<>(friendList, snList.getTotalCount());
     }
 
+    /**
+     * 发出添加好友请求
+     *
+     * @param addFriendParam
+     * @return
+     */
     @Override
-    public boolean addFriendRequest(AddFriendParam addFriendParam) {
-        UserRelation oldRelation = userRelationDAO.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        if (oldRelation != null && !oldRelation.getRelationStatus().equals(RelationShip.TO_ADD.getCode())) {
+    public boolean addFriendRequest(final AddFriendParam addFriendParam) {
+        String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        if (!StringTools.isBlank(relation)) {
             throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
         }
-        if (oldRelation == null) {
-            UserRelation my = BeanTools.copyAs(addFriendParam, UserRelation.class);
-            my.setMyMemberSn(addFriendParam.getCurrentSn());
-            my.setRelationStatus(RelationShip.TO_ADD.getCode());
-            userRelationDAO.save(my);
-
-            UserRelation friend = new UserRelation();
-            friend.setMyMemberSn(my.getFriendMemberSn());
-            friend.setFriendMemberSn(my.getMyMemberSn());
-            friend.setRelationStatus(RelationShip.BE_ADDED.getCode());
-            userRelationDAO.save(friend);
-        }
-        return true;
+        return relationTemplate.addFriend(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
     }
 
+    /**
+     * 添加或取消特殊关注
+     *
+     * @param addFriendParam
+     * @param add
+     * @return
+     */
     @Override
-    public boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add) {
-        UserRelation oldRelation = userRelationDAO.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        SpecialFocusEvent specialFocusEvent = new SpecialFocusEvent();
-        specialFocusEvent.setCurrentSn(addFriendParam.getCurrentSn());
-        specialFocusEvent.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
-        if (add) {//添加特殊好友
-            if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode())) {
+    public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add) {
+        String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        if (!StringTools.isBlank(relation)) {
+            throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
+        }
+        if (add) {//添加特殊关注,要求是朋友且不能是特殊关注
+            if (!RelationShip.FRIEND.getCode().equals(relation)) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
-            oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, specialFocusEvent);
-        } else {//取消特别好友
-            if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
+            return relationTemplate.addAsSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        } else {//取消特殊关注,要求已经是特殊好友
+            if (!RelationShip.SPECIAL_FRIEND.getCode().equals(relation)) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
-            oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, specialFocusEvent);
+            return relationTemplate.removeSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         }
-
-        userRelationDAO.update(oldRelation);
-        return true;
     }
 
+    /**
+     * 同意好友请求
+     *
+     * @param opRequestParam
+     * @param agree
+     * @return
+     */
     @Override
-    public boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree) {
-        UserRelation oldRelation = userRelationDAO.findRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
-        if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.BE_ADDED.getCode())) {
+    public boolean dealFriendRequest(final OpRequestParam opRequestParam, boolean agree) {
+        String relation = relationTemplate.getRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
+        if (!RelationShip.BE_ADDED.getCode().equals(relation)) { //检查对方是否在我接收到的好友请求列表中,如果不在,则返回错误消息
             throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
         }
-        userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
-
-        oldRelation = userRelationDAO.findRelation(opRequestParam.getFriendMemberSn(), opRequestParam.getCurrentSn());
-        userRelationDAO.updateRelationStatus(oldRelation.getId(), RelationShip.FRIEND.getCode());
-        return true;
+        return relationTemplate.agreeFriend(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
     }
 
+    /**
+     * 分页查询我接收到的好友请求列表,当前为好友\特殊好友关系的数据也返回
+     *
+     * @param friendsQueryParam
+     * @return
+     */
     @Override
-    public QueryResult<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam) {
-        Page p = new Page();
-        p.setPage(friendsQueryParam.getPageNum());
-        p.setPageSize(friendsQueryParam.getPageSize());
-        return renderResult(userRelationDAO.listAddMeRequest(p, friendsQueryParam.getCurrentSn()));
-    }
+    public QueryResult<Map<String, String>> listAddMeRequest(final FriendsQueryParam friendsQueryParam) {
+        final int offset = (friendsQueryParam.getPageNum() - 1) * friendsQueryParam.getPageSize();
+        final int limit = friendsQueryParam.getPageSize();
+        String mySn = friendsQueryParam.getCurrentSn();
 
-    @Override
-    public QueryResult<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam) {
-        Page p = new Page();
-        p.setPage(friendsQueryParam.getPageNum());
-        p.setPageSize(friendsQueryParam.getPageSize());
-        return renderResult(userRelationDAO.listMySendRequest(p, friendsQueryParam.getCurrentSn()));
-    }
-
-    private QueryResult<FriendInfoResult> renderResult(QueryResult<FriendInfo> userList) {
-        if (CollectionTools.isNullOrEmpty(userList.getResultlist())) {
-            return new QueryResult<>(new ArrayList<FriendInfoResult>(), 0);
+        CountListResult<String> snList = relationTemplate.listMyReceiveRequest(mySn, offset, limit);
+        if (snList == null || CollectionTools.isNullOrEmpty(snList.getResult())) {
+            return new QueryResult<>(new ArrayList<Map<String, String>>(), 0L);
         }
-        List<FriendInfoResult> friendList = BeanTools.copyAs(userList.getResultlist(), FriendInfoResult.class);
-        return new QueryResult<>(friendList, userList.getTotalrecord());
+        List<Map<String, String>> friendList = userTemplate.getAll(snList.getResult());
+        for (Map<String, String> record : friendList) {
+            record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
+        }
+        return new QueryResult<>(friendList, snList.getTotalCount());
+    }
+
+    /**
+     * 分页查询我主动添加的好友请求,当前为好友\特殊好友关系的数据也返回
+     *
+     * @param friendsQueryParam
+     * @return
+     */
+    @Override
+    public QueryResult<Map<String, String>> listMySendRequest(final FriendsQueryParam friendsQueryParam) {
+        final int offset = (friendsQueryParam.getPageNum() - 1) * friendsQueryParam.getPageSize();
+        final int limit = friendsQueryParam.getPageSize();
+        String mySn = friendsQueryParam.getCurrentSn();
+
+        CountListResult<String> snList = relationTemplate.listMySendRequest(mySn, offset, limit);
+        if (snList == null || CollectionTools.isNullOrEmpty(snList.getResult())) {
+            return new QueryResult<>(new ArrayList<Map<String, String>>(), 0L);
+        }
+        List<Map<String, String>> friendList = userTemplate.getAll(snList.getResult());
+        for (Map<String, String> record : friendList) {
+            record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
+        }
+        return new QueryResult<>(friendList, snList.getTotalCount());
+
     }
 
     @Override
@@ -137,18 +179,28 @@ public class RelationShipServiceImpl implements RelationShipService {
         Page p = new Page();
         p.setPage(contactQueryParam.getPageNum());
         p.setPageSize(contactQueryParam.getPageSize());
-        QueryResult<FriendInfo> friendList = userRelationDAO.findRelationByMobiles(p, contactQueryParam.getCurrentSn(), contactQueryParam.getMobileList());
-        return renderResult(friendList);
+        QueryResult<User> friendList = userDAO.findByMobiles(p, contactQueryParam.getMobileList());
+        return renderResult(contactQueryParam.getCurrentSn(), friendList);
     }
 
-    @Override
-    public AddContactsRemarkResult addContactsRemark(AddContactsRemarkParam addContactsRemarkParam) {
-        UserRelation oldRelation = userRelationDAO.findRelation(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn());
-        if (oldRelation == null || (!oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode()) && !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode()))) {
-            throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
+    private QueryResult<FriendInfoResult> renderResult(String currentSn, QueryResult<User> userList) {
+        if (CollectionTools.isNullOrEmpty(userList.getResultlist())) {
+            return new QueryResult<>(new ArrayList<FriendInfoResult>(), 0);
         }
-        oldRelation.setRemark(addContactsRemarkParam.getRemark());
-        userRelationDAO.update(oldRelation);
-        return BeanTools.copyAs(oldRelation, AddContactsRemarkResult.class);
+        List<FriendInfoResult> friendList = new ArrayList<>();
+        for (User user : userList.getResultlist()) {
+            FriendInfoResult friendInfoResult = BeanTools.copyAs(user, FriendInfoResult.class);
+            friendInfoResult.setRelationship(relationTemplate.getRelation(currentSn, friendInfoResult.getSn()));
+            friendList.add(friendInfoResult);
+        }
+        return new QueryResult<>(friendList, userList.getTotalrecord());
+    }
+
+
+    @Override
+    public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
+        relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
+
+        return BeanTools.copyAs(addContactsRemarkParam, AddContactsRemarkResult.class);
     }
 }

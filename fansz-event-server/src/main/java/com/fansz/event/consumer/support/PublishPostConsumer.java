@@ -42,26 +42,27 @@ public class PublishPostConsumer implements IEventConsumer {
     public void onEvent(ConsumerRecord<String, String> record) {
         final PublishPostEvent publishPostEvent = JSON.parseObject(record.value(), PublishPostEvent.class);
         Long postId = publishPostEvent.getPostId();
+        Date now = DateTools.getSysDate();
         if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
             NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
             entity.setSourceFrom(InformationSource.FANDOM.getCode());
             entity.setSourcePostId(postId);
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
+
+            //同步推送到自己的朋友圈
+            PushPost myPost = new PushPost();
+            myPost.setMemberSn(publishPostEvent.getMemberSn());
+            myPost.setPostId(postId);
+            myPost.setCreatetime(now);
+            pushPostDAO.save(myPost);
         }
 
-        Date now = DateTools.getSysDate();
-
-        PushPost myPost = new PushPost();
-        myPost.setMemberSn(publishPostEvent.getMemberSn());
-        myPost.setPostId(postId);
-        myPost.setCreatetime(now);
-        pushPostDAO.save(myPost);
         List<UserRelation> friendList = userRelationDAO.findMyFriends(publishPostEvent.getMemberSn());
         if (CollectionTools.isNullOrEmpty(friendList)) {
             return;
         }
-
+        //推送给朋友
         for (UserRelation friend : friendList) {
             PushPost pushPost = new PushPost();
             pushPost.setMemberSn(friend.getFriendMemberSn());

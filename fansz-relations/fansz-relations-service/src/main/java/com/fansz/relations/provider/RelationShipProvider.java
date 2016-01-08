@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * 关系provider
@@ -25,16 +26,16 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
 
 
     @Override
-    public CommonPagedResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam) throws ApplicationException {
+    public CommonPagedResult<Map<String, String>> getFriends(FriendsQueryParam friendsParam) throws ApplicationException {
         // 获得好友详细信息
-        QueryResult<FriendInfoResult> friends = relationShipService.getFriends(friendsParam, false);
+        QueryResult<Map<String, String>> friends = relationShipService.getFriends(friendsParam, false);
         return renderPagedSuccess(friends);
     }
 
     @Override
-    public CommonPagedResult<FriendInfoResult> getSpecialFriends(FriendsQueryParam friendsParam) throws ApplicationException {
+    public CommonPagedResult<Map<String, String>> getSpecialFriends(FriendsQueryParam friendsParam) throws ApplicationException {
         // 获得特别好友详细信息
-        QueryResult<FriendInfoResult> friends = relationShipService.getFriends(friendsParam, true);
+        QueryResult<Map<String, String>> friends = relationShipService.getFriends(friendsParam, true);
         return renderPagedSuccess(friends);
     }
 
@@ -63,14 +64,14 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
     }
 
     @Override
-    public CommonPagedResult<FriendInfoResult> getFriendRquests(FriendsQueryParam friendsQueryParam) throws ApplicationException {
-        QueryResult<FriendInfoResult> dataResult = relationShipService.listAddMeRequest(friendsQueryParam);
+    public CommonPagedResult<Map<String,String>> getFriendRquests(FriendsQueryParam friendsQueryParam) throws ApplicationException {
+        QueryResult<Map<String,String>> dataResult = relationShipService.listAddMeRequest(friendsQueryParam);
         return renderPagedSuccess(dataResult);
     }
 
     @Override
-    public CommonPagedResult<FriendInfoResult> getRequesters(FriendsQueryParam friendsQueryParam) throws ApplicationException {
-        QueryResult<FriendInfoResult> dataResult = relationShipService.listMySendRequest(friendsQueryParam);
+    public CommonPagedResult<Map<String,String>> getRequesters(FriendsQueryParam friendsQueryParam) throws ApplicationException {
+        QueryResult<Map<String,String>> dataResult = relationShipService.listMySendRequest(friendsQueryParam);
         return renderPagedSuccess(dataResult);
     }
 

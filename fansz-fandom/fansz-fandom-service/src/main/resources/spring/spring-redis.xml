@@ -10,19 +10,30 @@
           p:numTestsPerEvictionRun="${redis.pool.numTestsPerEvictionRun}"
           p:timeBetweenEvictionRunsMillis="${redis.pool.timeBetweenEvictionRunsMillis}"/>
 
-    <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
-        <property name="proxyDir" value="/zk/codis/db_${reids.product.name}/proxy"/>
-        <property name="zkAddress" value="${redis.zk.address}"/>
-        <property name="poolConfig" ref="jedisPoolConfig"/>
+    <bean id="userJedisTemplate" class="com.fansz.redis.JedisTemplate">
+        <property name="jedisPool">
+            <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
+                <property name="proxyDir" value="/zk/codis/db_user/proxy"/>
+                <property name="zkAddress" value="${redis.zk.address}"/>
+                <property name="poolConfig" ref="jedisPoolConfig"/>
+            </bean>
+        </property>
     </bean>
-    <!--<bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
-        <property name="host" value="${redis.host}"/>
-        <property name="port" value="${redis.port}"/>
-        <property name="poolConfig" ref="jedisPoolConfig"/>
-        <property name="password" ref="${redis.password}"/>
+
+    <bean id="relationJedisTemplate" class="com.fansz.redis.JedisTemplate">
+        <property name="jedisPool">
+            <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
+                <property name="proxyDir" value="/zk/codis/db_relation/proxy"/>
+                <property name="zkAddress" value="${redis.zk.address}"/>
+                <property name="poolConfig" ref="jedisPoolConfig"/>
+            </bean>
+        </property>
     </bean>
-    -->
-    <bean id="jedisTemplate" class="com.fansz.redis.JedisTemplate">
-        <property name="jedisPool" ref="jedisResourcePool"/>
+
+    <bean id="userTemplate" class="com.fansz.redis.impl.UserTemplateImpl">
+        <property name="jedisTemplate" ref="userJedisTemplate"/>
+    </bean>
+    <bean id="relationTemplate" class="com.fansz.redis.impl.RelationTemplateImpl">
+        <property name="jedisTemplate" ref="relationJedisTemplate"/>
     </bean>
 </beans>

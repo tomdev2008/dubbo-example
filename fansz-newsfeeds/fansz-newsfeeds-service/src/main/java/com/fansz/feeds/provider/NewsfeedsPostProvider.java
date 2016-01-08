@@ -10,7 +10,6 @@ import com.fansz.db.entity.NewsfeedsPost;
 import com.fansz.feeds.service.NewsfeedsPostService;
 import com.fansz.newsfeeds.api.NewsfeedsPostApi;
 import com.fansz.newsfeeds.model.post.*;
-import com.fansz.pub.model.Page;
 import com.fansz.pub.utils.BeanTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

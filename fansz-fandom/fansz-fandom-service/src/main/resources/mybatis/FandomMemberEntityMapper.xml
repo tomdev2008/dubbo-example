@@ -54,9 +54,6 @@
         </selectKey>
     </insert>
 
-    <select id="findFandomsByUserId" parameterType="java.lang.String" resultType="java.lang.String">
-        select fandom_sn from feeds_member_fandom where member_sn = #{memberSn,jdbcType=VARCHAR}
-    </select>
 
     <select id="selectByMemberAndFandom" parameterType="com.fansz.fandom.entity.FandomMemberEntity"
             resultMap="BaseResultMap">
@@ -82,7 +79,7 @@
     </select>
 
     <select id="getFandomMembers"
-            resultMap="com.fansz.fandom.repository.UserMapper.friendInfoResultMap">
+            resultMap="com.fansz.fandom.repository.UserMapper.userInfoResultMap">
         SELECT p.*
         FROM  feeds_member_fandom m
         INNER JOIN connects_member_profile  p

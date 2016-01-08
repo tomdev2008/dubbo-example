@@ -4,14 +4,12 @@ package com.fansz.feeds.service.impl;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.db.entity.NewsfeedsMemberLike;
 import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.entity.PushPost;
 import com.fansz.db.entity.User;
 import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
-import com.fansz.db.repository.NewsfeedsCommentDAO;
-import com.fansz.db.repository.NewsfeedsMemberLikeDAO;
-import com.fansz.db.repository.NewsfeedsPostDAO;
-import com.fansz.db.repository.UserDAO;
+import com.fansz.db.repository.*;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
@@ -24,6 +22,7 @@ import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.DateTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +38,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     private NewsfeedsPostDAO newsfeedsPostDAO;
 
     @Autowired
+    private PushPostDAO pushPostDAO;
+
+    @Autowired
     private NewsfeedsCommentDAO newsfeedsCommentDAO;
 
     @Autowired
@@ -52,13 +54,22 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Override
     public Long addPost(AddPostParam addPostParam) {
+        Date now = DateTools.getSysDate();
         NewsfeedsPost entity = new NewsfeedsPost();
         entity.setPostTitle(addPostParam.getPostTitle());
         entity.setPostContent(addPostParam.getPostContent());
-        entity.setPostTime(new Date());
+        entity.setPostTime(now);
         entity.setMemberSn(addPostParam.getCurrentSn());
         entity.setSourceFrom(InformationSource.NEWSFEEDS.getCode());
         newsfeedsPostDAO.save(entity);
+
+        //由于用户发帖之后,希望自己能马上看到,因此必须同步推送到自己到名下,但对于朋友,可以采用异步;
+        PushPost myPost = new PushPost();
+        myPost.setMemberSn(addPostParam.getCurrentSn());
+        myPost.setPostId(entity.getId());
+        myPost.setCreatetime(now);
+        pushPostDAO.save(myPost);
+
         PublishPostEvent publishPostEvent = new PublishPostEvent(entity.getId(), addPostParam.getCurrentSn(), entity.getPostTime(), InformationSource.NEWSFEEDS);
         eventProducer.produce(AsyncEventType.PUBLISH_POST, publishPostEvent);
         return entity.getId();
@@ -125,7 +136,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         Page page = new Page();
         page.setPage(postsParam.getPageNum());
         page.setPageSize(postsParam.getPageSize());
-        if(postsParam.getSinceId() > 0 || postsParam.getMaxId() > 0){
+        if (postsParam.getSinceId() > 0 || postsParam.getMaxId() > 0) {
             page.setPageSize(1);
         }
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
@@ -143,7 +154,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         Page page = new Page();
         page.setPage(memberPostsParam.getPageNum());
         page.setPageSize(memberPostsParam.getPageSize());
-        if(memberPostsParam.getSinceId() > 0 || memberPostsParam.getMaxId() > 0){
+        if (memberPostsParam.getSinceId() > 0 || memberPostsParam.getMaxId() > 0) {
             page.setPageSize(1);
         }
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);

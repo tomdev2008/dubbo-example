@@ -204,6 +204,10 @@
             <groupId>com.fansz</groupId>
             <artifactId>commons-event</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-redis</artifactId>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>

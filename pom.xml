@@ -19,6 +19,7 @@
         <module>fansz-newsfeeds</module>
         <module>fansz-relations</module>
         <module>fansz-dao</module>
+        <module>fansz-redis</module>
     </modules>
     <repositories>
         <repository>
@@ -58,6 +59,11 @@
             <dependency>
                 <groupId>com.fansz</groupId>
                 <artifactId>fansz-relations-api</artifactId>
+                <version>${fansz.backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-redis</artifactId>
                 <version>${fansz.backend.version}</version>
             </dependency>
         </dependencies>

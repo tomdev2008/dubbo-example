@@ -1,16 +1,18 @@
 package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.fandom.entity.UserEntity;
 import com.fansz.fandom.model.profile.*;
 import com.fansz.fandom.model.search.SearchMemberParam;
 import com.fansz.fandom.repository.MemberAlbumEntityMapper;
 import com.fansz.fandom.repository.UserMapper;
 import com.fansz.fandom.service.ProfileService;
-import com.fansz.fandom.service.RelationService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.DateTools;
+import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.RelationTemplate;
+import com.fansz.redis.UserTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户配置信息服务实现层
@@ -32,53 +36,77 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private UserMapper userMapper;
 
-    @Resource(name = "relationService")
-    private RelationService relationService;
+    @Resource(name = "relationTemplate")
+    private RelationTemplate relationTemplate;
+
+    @Resource(name = "userTemplate")
+    private UserTemplate userTemplate;
 
     @Autowired
     private MemberAlbumEntityMapper memberAlbumEntityMapper;
 
+
     @Override
-    public UserInfoResult getProfile(QueryProfileParam queryUserParam) {
-        UserEntity user = userMapper.selectByUid(queryUserParam.getFriendSn());
-        UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
+    public Map<String, String> getProfile(QueryProfileParam queryUserParam) {
+        Map<String, String> userMap = userTemplate.get(queryUserParam.getFriendSn());
         if (StringTools.isNotBlank(queryUserParam.getCurrentSn())) {
-            String relation = relationService.getRelation(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
-            result.setRelationship(relation);
+            String relation = relationTemplate.getRelation(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
+            userMap.put("relationship", relation);
         }
 
-        return result;
+        return userMap;
     }
 
     @Override
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
+        Map<String, String> user = userTemplate.get(modifyProfilePara.getCurrentSn());
+        if (user == null || user.isEmpty()) {
+            throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
+        }
         if (StringTools.isNotBlank(modifyProfilePara.getNickname())) {
-            int total = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getCurrentSn());
-            if (total > 0) {
+            boolean exist = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getCurrentSn());
+            if (exist) {
                 throw new ApplicationException(Constants.NICK_NAME_REPATEDD, "Nickname repeated");
             }
         }
+        Date now = DateTools.getSysDate();
+        Map<String, Object> userMap = JsonHelper.convertJSONString2Object(JsonHelper.convertObject2JSONString(modifyProfilePara), Map.class);
+        userMap.put("sn", modifyProfilePara.getCurrentSn());
+        userMap.put("profile_updatetime", now.getTime());
+        userTemplate.updateUser(modifyProfilePara.getCurrentSn(), userMap);
 
-        UserEntity user = BeanTools.copyAs(modifyProfilePara, UserEntity.class);
-        user.setSn(modifyProfilePara.getCurrentSn());
-        user.setProfileUpdatetime(new Date());
-        int updated = userMapper.updateByUidSelective(user);
-        if (updated != 1) {
-            throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
-        }
+        UserInfoResult userInfoResult = BeanTools.copyAs(modifyProfilePara, UserInfoResult.class);
+        userInfoResult.setSn(modifyProfilePara.getCurrentSn());
+        userInfoResult.setProfileUpdatetime(now);
+        userMapper.updateByUidSelective(userInfoResult);
     }
 
     @Override
-    public int isExistsNickname(String nickname, String excludeSn) {
-        return userMapper.isExistsNickname(nickname, excludeSn);
+    public boolean isExistsNickname(String nickname, String excludeSn) {
+        String userSn = userTemplate.getSnByNickname(nickname);
+        return StringTools.isNotBlank(userSn) && !excludeSn.equals(userSn);
     }
 
+    /**
+     * 设置会员类别,目前用户信息同时在数据库和redis中保存一份
+     *
+     * @param setMemberParam
+     * @return
+     */
     @Override
-    public int setMemberType(SetMemberParam setMemberParam) {
-        UserEntity user = new UserEntity();
-        user.setSn(setMemberParam.getCurrentSn());
-        user.setMemberType(setMemberParam.getMemberType());
-        return userMapper.updateByUidSelective(user);
+    public boolean setMemberType(SetMemberParam setMemberParam) {
+        Date now = DateTools.getSysDate();
+        Map<String, Object> props = new HashMap<>();
+        props.put("member_type", setMemberParam.getMemberType());
+        props.put("profile_updatetime", now.getTime());
+        userTemplate.updateUser(setMemberParam.getCurrentSn(), props);
+
+        UserInfoResult userInfoResult = new UserInfoResult();
+        userInfoResult.setMemberType(setMemberParam.getMemberType());
+        userInfoResult.setSn(setMemberParam.getCurrentSn());
+        userInfoResult.setProfileUpdatetime(now);
+        userMapper.updateByUidSelective(userInfoResult);
+        return true;
     }
 
 
@@ -92,7 +120,7 @@ public class ProfileServiceImpl implements ProfileService {
     public PageList<UserInfoResult> searchMembers(String searchKey, String sn, PageBounds pageBounds) {
         PageList<UserInfoResult> result = userMapper.searchMembersByKey(searchKey, sn, pageBounds);
         for (UserInfoResult user : result) {
-            user.setRelationship(relationService.getRelation(sn, user.getSn()));
+            user.setRelationship(relationTemplate.getRelation(sn, user.getSn()));
         }
         return result;
     }

@@ -3,12 +3,15 @@ package com.fansz.relations.service;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.relations.model.*;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by allan on 15/11/29.
  */
 public interface RelationShipService {
 
-    QueryResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam, boolean isSpecial);
+    QueryResult<Map<String, String>> getFriends(FriendsQueryParam friendsParam, boolean isSpecial);
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
 
@@ -16,9 +19,9 @@ public interface RelationShipService {
 
     boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
 
-    QueryResult<FriendInfoResult> listAddMeRequest(FriendsQueryParam friendsQueryParam);
+    QueryResult<Map<String,String>> listAddMeRequest(FriendsQueryParam friendsQueryParam);
 
-    QueryResult<FriendInfoResult> listMySendRequest(FriendsQueryParam friendsQueryParam);
+    QueryResult<Map<String,String>> listMySendRequest(FriendsQueryParam friendsQueryParam);
 
     QueryResult<FriendInfoResult> findRelationByMobiles(ContactQueryParam contactQueryParam);
 

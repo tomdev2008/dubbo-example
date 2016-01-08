@@ -30,6 +30,9 @@ public class UserInfoResult implements Serializable {
     @JSONField(name="profile_createtime")
     private Date profileCreatetime;
 
+    @JSONField(name="profile_updatetime")
+    private Date profileUpdatetime;
+
     @JSONField(name="member_type")
     private String memberType;
 
@@ -92,6 +95,14 @@ public class UserInfoResult implements Serializable {
 
     public void setProfileCreatetime(Date profileCreatetime) {
         this.profileCreatetime = profileCreatetime;
+    }
+
+    public Date getProfileUpdatetime() {
+        return profileUpdatetime;
+    }
+
+    public void setProfileUpdatetime(Date profileUpdatetime) {
+        this.profileUpdatetime = profileUpdatetime;
     }
 
     public String getEmail() {

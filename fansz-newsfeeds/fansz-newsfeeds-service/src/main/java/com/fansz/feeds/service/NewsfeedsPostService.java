@@ -3,9 +3,7 @@ package com.fansz.feeds.service;
 
 import com.fansz.db.entity.NewsfeedsPost;
 import com.fansz.newsfeeds.model.post.*;
-import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
-import org.springframework.stereotype.Service;
 
 
 /**

@@ -37,10 +37,6 @@ public interface UserRelationDAO extends IBaseDAO<UserRelation> {
     @NamedQuery(queryId = "relation.findRelationByMobiles", parameters = {"page","memberSn", "mobileList"})
     QueryResult<FriendInfo> findRelationByMobiles(Page page, String memberSn, List<String> mobileList);
 
-    @NamedQuery(queryId = "relation.findUserByMobiles", parameters = {"page","mobileList"})
-    QueryResult<FriendInfo> findUserByMobiles(Page page, List<String> mobileList);
-
-
     @NamedQuery(queryId = "relation.listAddMeRequest", parameters = {"page", "memberSn"})
     QueryResult<FriendInfo> listAddMeRequest(Page page, String memberSn);
 
