@@ -1,6 +1,7 @@
 package com.fansz.relations.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
+import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.db.entity.UserRelation;
 import com.fansz.db.model.FriendInfo;
@@ -12,7 +13,6 @@ import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
-import com.fansz.relations.constant.RelationShip;
 import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
 import org.springframework.beans.factory.annotation.Autowired;

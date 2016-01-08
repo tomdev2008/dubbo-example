@@ -26,8 +26,6 @@ public class FriendInfoResult implements Serializable {
 
     private String signature;
 
-    private String relationship;
-
     @JSONField(name="member_avatar")
     private String memberAvatar;
 
@@ -37,6 +35,8 @@ public class FriendInfoResult implements Serializable {
 
     @JSONField(name="member_type")
     private String memberType;
+
+    private String relationship;
 
     public String getSn() {
         return sn;

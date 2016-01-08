@@ -1,8 +1,8 @@
 package com.fansz.fandom.service;
 
 import com.fansz.fandom.model.fandom.*;
-import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
+import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -27,7 +27,7 @@ public interface FandomService {
 
     List<FandomCategory> getFandomCategory(FandomQueryParam fandomQueryParam);
 
-    PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
+    PageList<FriendInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 
     FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam);
 

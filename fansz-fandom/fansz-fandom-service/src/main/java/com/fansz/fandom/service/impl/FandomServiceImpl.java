@@ -1,6 +1,8 @@
 package com.fansz.fandom.service.impl;
 
+import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.common.provider.utils.RedisKeyUtils;
 import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.model.UnSpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
@@ -8,24 +10,28 @@ import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.entity.FandomMemberEntity;
 import com.fansz.fandom.model.fandom.*;
-import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
+import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomMemberEntityMapper;
 import com.fansz.fandom.repository.FandomTagMapper;
 import com.fansz.fandom.service.FandomService;
+import com.fansz.fandom.service.RelationService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.JedisTemplate;
+import com.fansz.redis.support.JedisCallback;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -51,6 +57,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Autowired
     private FandomTagMapper fandomTagMapper;
+
+    @Resource(name="relationService")
+    private RelationService relationService;
 
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
@@ -135,9 +144,13 @@ public class FandomServiceImpl implements FandomService {
     }
 
     @Override
-    public PageList<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
+    public PageList<FriendInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
-        return fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getCurrentSn(), pageBounds);
+        PageList<FriendInfoResult> result = fandomMemberEntityMapper.getFandomMembers(fandomQueryParam.getFandomId(), fandomQueryParam.getCurrentSn(), pageBounds);
+        for (FriendInfoResult friend : result) {
+            friend.setRelationship(relationService.getRelation(fandomQueryParam.getCurrentSn(), friend.getSn()));
+        }
+        return result;
     }
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
@@ -200,4 +213,7 @@ public class FandomServiceImpl implements FandomService {
         fandomInfoResult.setFandomTagResultList(fandomTagList);
         return fandomInfoResult;
     }
+
+
+
 }

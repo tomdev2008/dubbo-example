@@ -11,7 +11,6 @@ import com.fansz.fandom.model.post.GetPostInfoResult;
 import com.fansz.fandom.model.post.PostInfoResult;
 import com.fansz.fandom.model.post.PostLikeInfoResult;
 import com.fansz.fandom.model.post.SearchPostResult;
-import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.profile.ProfileValidateResult;
 import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.relationship.FriendInfoResult;
@@ -43,7 +42,6 @@ public class FandomSerialOptimizerImpl implements SerializationOptimizer {
         classes.add(PostLikeInfoResult.class);
         classes.add(SearchPostResult.class);
 
-        classes.add(ContactInfoResult.class);
         classes.add(ProfileValidateResult.class);
         classes.add(UserInfoResult.class);
 

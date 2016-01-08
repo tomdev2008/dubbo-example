@@ -7,8 +7,8 @@ import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.model.fandom.*;
-import com.fansz.fandom.model.profile.ContactInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
+import com.fansz.fandom.model.relationship.FriendInfoResult;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 
@@ -99,7 +99,7 @@ public interface FandomApi {
      * @return CommonResult<List<FandomCategory>> 返回对象
      */
     @DubboxMethod("getFandomMembers")
-    CommonPagedResult<ContactInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException;
+    CommonPagedResult<FriendInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /* 获取圈子信息接口
      *

@@ -2,13 +2,12 @@ package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.entity.UserEntity;
-import com.fansz.fandom.entity.UserRelationEntity;
 import com.fansz.fandom.model.profile.*;
 import com.fansz.fandom.model.search.SearchMemberParam;
 import com.fansz.fandom.repository.MemberAlbumEntityMapper;
 import com.fansz.fandom.repository.UserMapper;
-import com.fansz.fandom.repository.UserRelationEntityMapper;
 import com.fansz.fandom.service.ProfileService;
+import com.fansz.fandom.service.RelationService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.StringTools;
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +32,8 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private UserRelationEntityMapper userRelationEntityMapper;
+    @Resource(name = "relationService")
+    private RelationService relationService;
 
     @Autowired
     private MemberAlbumEntityMapper memberAlbumEntityMapper;
@@ -43,10 +43,8 @@ public class ProfileServiceImpl implements ProfileService {
         UserEntity user = userMapper.selectByUid(queryUserParam.getFriendSn());
         UserInfoResult result = BeanTools.copyAs(user, UserInfoResult.class);
         if (StringTools.isNotBlank(queryUserParam.getCurrentSn())) {
-            UserRelationEntity userRelationEntity = userRelationEntityMapper.findFriendRelationBySns(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
-            if (userRelationEntity != null) {
-                result.setRelationship(userRelationEntity.getRelationStatus());
-            }
+            String relation = relationService.getRelation(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
+            result.setRelationship(relation);
         }
 
         return result;
@@ -84,7 +82,6 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
 
-
     @Override
     public PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam) {
         PageBounds pageBounds = new PageBounds(searchMemberParam.getPageNum(), searchMemberParam.getPageSize());
@@ -93,7 +90,11 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public PageList<UserInfoResult> searchMembers(String searchKey, String sn, PageBounds pageBounds) {
-        return userMapper.searchMembersByKey(searchKey, sn, pageBounds);
+        PageList<UserInfoResult> result = userMapper.searchMembersByKey(searchKey, sn, pageBounds);
+        for (UserInfoResult user : result) {
+            user.setRelationship(relationService.getRelation(sn, user.getSn()));
+        }
+        return result;
     }
 
     @Override

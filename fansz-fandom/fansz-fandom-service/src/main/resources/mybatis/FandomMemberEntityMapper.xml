@@ -43,7 +43,7 @@
                 #{fandomId,jdbcType=VARCHAR},
             </if>
             <if test="infatuation != null">
-               #{infatuation,jdbcType=VARCHAR},
+                #{infatuation,jdbcType=VARCHAR},
             </if>
             <if test="joinTime != null">
                 #{joinTime,jdbcType=TIMESTAMP},
@@ -69,21 +69,23 @@
     <select id="findFandomsByMemberSn" parameterType="java.lang.String"
             resultMap="com.fansz.fandom.repository.FandomMapper.fandomAllInfoResultMap">
         SELECT b.id,b.fandom_name,b.fandom_parent_id,b.fandom_avatar_url,b.fandom_intro,b.fandom_create_time,
-        <include refid="com.fansz.fandom.repository.UserMapper.User_Column_List"><property name="alias" value="c"/></include>,
+        <include refid="com.fansz.fandom.repository.UserMapper.User_Column_List">
+            <property name="alias" value="c"/>
+        </include>
+        ,
         (SELECT count(1) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id) follower_count,
         (SELECT count(1) FROM feeds_member_post_fandom WHERE fandom_id=a.fandom_id) post_count,
-        (SELECT count(1)+IFNULL(infatuation,0) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and member_sn=#{memberSn,jdbcType=VARCHAR})followed
+        (SELECT count(1)+IFNULL(infatuation,0) FROM feeds_member_fandom WHERE fandom_id=a.fandom_id and
+        member_sn=#{memberSn,jdbcType=VARCHAR})followed
         FROM feeds_member_fandom a,feeds_fandom b,connects_member_profile c
         WHERE a.member_sn=#{memberSn,jdbcType=VARCHAR} and a.fandom_id=b.id and b.fandom_creator_sn=c.sn;
     </select>
 
     <select id="getFandomMembers"
-            resultMap="com.fansz.fandom.repository.UserRelationEntityMapper.contactInfoMap">
-        SELECT p.*,b.relation_status
+            resultMap="com.fansz.fandom.repository.UserMapper.friendInfoResultMap">
+        SELECT p.*
         FROM  feeds_member_fandom m
         INNER JOIN connects_member_profile  p
-        LEFT JOIN connects_member_relation b
-        ON b.friend_member_sn=p.sn AND  b.my_member_sn=#{memberSn,jdbcType=VARCHAR}
         WHERE m.fandom_id =  #{fandomId,jdbcType=BIGINT}
         AND   m.member_sn=p.sn
         AND p.member_status='1'

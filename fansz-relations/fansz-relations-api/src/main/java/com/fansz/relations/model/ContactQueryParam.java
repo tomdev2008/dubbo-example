@@ -4,6 +4,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fansz.common.provider.model.AccessTokenAware;
 import com.fansz.common.provider.model.PageParam;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
 public class ContactQueryParam extends PageParam implements AccessTokenAware {
 
 
+    @Size(min=1,max=500)
+    @NotNull
     @JSONField(name="mobile_list")
     private List<String> mobileList;
 

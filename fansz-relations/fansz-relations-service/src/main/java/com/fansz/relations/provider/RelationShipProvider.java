@@ -11,13 +11,15 @@ import com.fansz.relations.service.RelationShipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * 关系provider
  */
 @Component("relationShipProvider")
 public class RelationShipProvider extends AbstractProvider implements RelationShipApi {
 
-    @Autowired
+    @Resource(name = "relationShipRedisService")
     private RelationShipService relationShipService;
 
 

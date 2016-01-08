@@ -130,10 +130,8 @@
         </where>
     </select>
     <select id="searchMembersByKey" resultMap="userInfoResultMap">
-        SELECT a.* ,b.relation_status relationship
+        SELECT a.*
         FROM connects_member_profile a
-        LEFT JOIN connects_member_relation b
-        ON b.friend_member_sn=a.sn AND b.my_member_sn=#{sn,jdbcType=VARCHAR}
         <if test="searchKey != null">
             WHERE nickname = #{searchKey,jdbcType=VARCHAR}
             OR mobile = #{searchKey,jdbcType=VARCHAR}

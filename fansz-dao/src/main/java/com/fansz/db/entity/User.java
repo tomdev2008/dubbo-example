@@ -1,5 +1,7 @@
 package com.fansz.db.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -36,22 +38,27 @@ public class User {
     @Column(name = "birthday")
     private String birthday;
 
+    @JSONField(name="member_avatar")
     @Column(name = "member_avatar")
     private String memberAvatar;
 
     @Column(name = "signature")
     private String signature;
 
+    @JSONField(name="member_type")
     @Column(name = "member_type")
     private String memberType;
 
+    @JSONField(name="member_status")
     @Column(name = "member_status")
     private String memberStatus;
 
+    @JSONField(name="profile_createtime")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "profile_createtime")
     private Date profileCreatetime;
 
+    @JSONField(name="profile_updatetime")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "profile_updatetime")
     private Date profileUpdatetime;
