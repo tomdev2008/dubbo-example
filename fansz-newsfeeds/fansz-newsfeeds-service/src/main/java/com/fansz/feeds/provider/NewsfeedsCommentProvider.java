@@ -1,6 +1,7 @@
 package com.fansz.feeds.provider;
 
 import com.fansz.common.provider.AbstractProvider;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.db.entity.NewsfeedsPostComment;
 import com.fansz.feeds.service.NewsfeedsCommentService;
@@ -28,7 +29,7 @@ public class NewsfeedsCommentProvider extends AbstractProvider implements Newsfe
     }
 
     @Override
-    public CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam) {
+    public CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam) throws ApplicationException {
         String code = newsfeedsCommentService.deleteCommet(delCommentParam);
         if (null == code) {
             PostCommentQueryResult postCommentQueryResult = new PostCommentQueryResult();

@@ -4,7 +4,6 @@ import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.model.fandom.DelFandomParam;
 import com.fansz.fandom.model.fandom.FandomInfoResult;
 import com.fansz.fandom.model.fandom.ModifyFandomParam;
-import com.fansz.fandom.model.fandom.SearchFandomResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
@@ -27,7 +26,7 @@ public interface FandomMapper {
 
     List<FandomInfoResult> getFandomCategory(Long id);
 
-    PageList<SearchFandomResult> searchFandoms(@Param("memberSn") String memberSn, @Param("searchVal") String searchVal, PageBounds pageBounds);
+    PageList<FandomInfoResult> searchFandoms(@Param("memberSn") String memberSn, @Param("searchVal") String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);
 

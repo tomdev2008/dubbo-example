@@ -37,6 +37,9 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
     @JSONField(name="fandom_intro")
     private String fandomIntro;
 
+    @JSONField(name="recommend")
+    private String recommend;
+
     @JSONField(name="fandom_tag_list")
     private List<FandomTagParam> fandomTagParam;
 
@@ -97,6 +100,14 @@ public class ModifyFandomParam extends AbstractToken implements Serializable {
 
     public void setFandomIntro(String fandomIntro) {
         this.fandomIntro = fandomIntro;
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
     }
 
     public List<FandomTagParam> getFandomTagParam() {

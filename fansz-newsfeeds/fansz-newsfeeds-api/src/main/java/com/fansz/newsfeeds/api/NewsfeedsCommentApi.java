@@ -31,5 +31,5 @@ public interface NewsfeedsCommentApi {
      * @return resp 返回对象
      */
     @DubboxMethod("delMyNewsfeedComment")
-    CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam);
+    CommonResult<PostCommentQueryResult> removeCommet(DelCommentParam delCommentParam) throws ApplicationException;
 }

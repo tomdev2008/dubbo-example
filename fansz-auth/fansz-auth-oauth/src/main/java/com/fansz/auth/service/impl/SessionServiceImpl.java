@@ -93,7 +93,7 @@ public class SessionServiceImpl implements SessionService {
     }
 
     @Override
-    public void invalidateSession(final String accessToken) {
+    public void invalidateSession(final String accessToken) throws ApplicationException {
         jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {

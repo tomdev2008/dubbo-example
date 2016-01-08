@@ -3,6 +3,7 @@ package com.fansz.auth.api;
 import com.fansz.auth.model.VerifyCodeParam;
 import com.fansz.common.provider.annotation.DubboxMethod;
 import com.fansz.common.provider.annotation.DubboxService;
+import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 
@@ -18,7 +19,7 @@ public interface VerifyCodeApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getVerifyCodeForReset")
-    CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam);
+    CommonResult<NullResult> getVerifyCodeForReset(VerifyCodeParam verifyCodeParam) throws ApplicationException;
 
 
     /**
@@ -28,5 +29,5 @@ public interface VerifyCodeApi {
      * @return resp 返回对象
      */
     @DubboxMethod("getVerifyCodeForRegister")
-    CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam);
+    CommonResult<NullResult> getVerifyCodeForRegister(VerifyCodeParam verifyCodeParam) throws ApplicationException;
 }
