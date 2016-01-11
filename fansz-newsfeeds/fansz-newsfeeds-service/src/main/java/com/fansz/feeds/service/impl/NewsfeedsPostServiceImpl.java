@@ -158,7 +158,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             page.setPageSize(1);
         }
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
-        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, memberPostsParam.getCurrentSn(), memberPostsParam.getSinceId(), memberPostsParam.getMaxId());
+        QueryResult<NewsfeedsPost> newsfeedsPosts = newsfeedsPostDAO.findNewsfeedsPostBySn(page, memberPostsParam.getFriendSn(), memberPostsParam.getSinceId(), memberPostsParam.getMaxId());
         if (!CollectionTools.isNullOrEmpty(newsfeedsPosts.getResultlist())) {
             List<PostInfoResult> postInfoResultList = this.assemblePostInfoResult(newsfeedsPosts.getResultlist(), memberPostsParam.getCurrentSn());
             postResult.setResultlist(postInfoResultList);
@@ -248,7 +248,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
                 postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
             }
             postInfoResult.getLikedList().add(userInfoResult);
-            postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
+            if("0".equals(postInfoResult.getLiked())){
+                postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
+            }
         }
         //遍历comment
         List<PostCommentQueryResult> commentQueryResultList = BeanTools.copyAs(commentList, PostCommentQueryResult.class);

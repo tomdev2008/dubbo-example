@@ -2,6 +2,7 @@ package com.fansz.fandom.repository;
 
 import com.fansz.fandom.model.fandom.FandomTagParam;
 import com.fansz.fandom.model.fandom.FandomTagResult;
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface FandomTagMapper {
 
     int saveTagByfandomId(FandomTagParam fandomTagParam);
 
-    int getTagCountByName(String tagName,Long fandomId);
+    int getTagCountByName(@Param("tagName")String tagName, @Param("fandomId")Long fandomId);
 
     FandomTagResult getFandomTagById(Long tagId);
 
