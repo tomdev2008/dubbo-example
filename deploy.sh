@@ -29,6 +29,7 @@ pssh -P -h hosts.txt $REMOTE_PATH/fansz-newsfeeds-service-2.0.0-SNAPSHOT/bin/sta
 pssh -P -h hosts.txt $REMOTE_PATH/fansz-fandom-service-2.0.0-SNAPSHOT/bin/startup.sh
 pssh -P -h hosts.txt $REMOTE_PATH/event-server-2.0.0-SNAPSHOT/bin/startup.sh
 pssh -P -h hosts.txt $REMOTE_PATH/fansz-auth-oauth-2.0.0-SNAPSHOT/bin/startup.sh
+sleep 3s
 pssh -P -h hosts.txt $REMOTE_PATH/access-layer-2.0.0-SNAPSHOT/bin/startup.sh
 
 
