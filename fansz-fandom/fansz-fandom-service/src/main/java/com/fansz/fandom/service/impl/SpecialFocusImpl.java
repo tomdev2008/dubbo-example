@@ -47,7 +47,7 @@ public class SpecialFocusImpl implements SpecialFocusService {
         for (SpecialFocusParam specialFocusParam:SpecialFocusParamList) {
             map = new HashMap();
             map.put("postingTag",specialFocusParam.getPostingTag());
-            map.put("memberSn",memberSn);
+            map.put("currentSn",memberSn);
             map.put("specialMemberSn",specialFocusParam.getSpecialMemberSn());
             map.put("specialFandomId",specialFocusParam.getSpecialFandomId());
             specialFocusMapper.modifySpecialFocusInfo(map);
