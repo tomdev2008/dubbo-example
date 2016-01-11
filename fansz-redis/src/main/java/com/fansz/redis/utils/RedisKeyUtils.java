@@ -41,6 +41,13 @@ public final class RedisKeyUtils {
 
     private final static String FRIEND_REMARK_PREFIX = "friend_remark:{";
 
+
+    //commons相关
+    //fandom分类在redis存储中的key前缀
+    private static final String CATEGORY_PREFIX = "fandomCategory:";
+
+    //fandom所有一二级分类的id列表的key
+    private static final String CATEGORY_LIST_KEY = "fandomCategoryList";
     /**
      * 我的好友
      *
@@ -138,6 +145,14 @@ public final class RedisKeyUtils {
     }
     public static String getUserSequence(){
         return SEQ_USER;
+    }
+
+    public static String getCategoryListKey(){
+      return CATEGORY_LIST_KEY;
+    }
+
+    public static String getCategoryKey(String categoryId){
+     return CATEGORY_PREFIX+categoryId;
     }
 }
 

@@ -8,6 +8,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 15-11-3.
@@ -25,7 +26,7 @@ public interface FandomService {
 
     PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam);
 
-    List<FandomCategory> getFandomCategory(FandomQueryParam fandomQueryParam);
+    List<Map<String, Object>> getFandomCategory(FandomQueryParam fandomQueryParam);
 
     PageList<UserInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam);
 

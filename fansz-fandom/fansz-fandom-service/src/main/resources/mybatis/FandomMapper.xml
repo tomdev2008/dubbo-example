@@ -212,4 +212,15 @@
         </if>
     </select>
 
+    <select id="getFandomCategory"  resultType="java.util.Map">
+        SELECT
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        FROM feeds_fandom a
+        where a.fandom_parent_id = 0
+        OR (a.fandom_parent_id in (select id from feeds_fandom b where b.fandom_parent_id=0))
+        order by a.id
+    </select>
+
 </mapper>

@@ -36,4 +36,8 @@
     <bean id="relationTemplate" class="com.fansz.redis.impl.RelationTemplateImpl">
         <property name="jedisTemplate" ref="relationJedisTemplate"/>
     </bean>
+
+    <bean id="commonsTemplate" class="com.fansz.redis.impl.CommonsTemplateImpl">
+        <property name="jedisTemplate" ref="userJedisTemplate"/>
+    </bean>
 </beans>

@@ -17,9 +17,9 @@ import com.fansz.fandom.repository.FandomTagMapper;
 import com.fansz.fandom.service.FandomService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
-import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.CommonsTemplate;
 import com.fansz.redis.RelationTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -28,10 +28,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -40,6 +41,7 @@ import java.util.List;
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class FandomServiceImpl implements FandomService {
+
 
     @Autowired
     private FandomMapper fandomMapper;
@@ -56,6 +58,18 @@ public class FandomServiceImpl implements FandomService {
     @Resource(name = "relationTemplate")
     private RelationTemplate relationTemplate;
 
+    @Resource(name = "commonsTemplate")
+    private CommonsTemplate commonsTemplate;
+
+    @PostConstruct
+    private void init() {
+        if (!commonsTemplate.isCategoryInCache()) {
+            //如果从redis中没有查到category,从数据库中查找
+            List<Map<String, Object>> dbCategoryList = fandomMapper.getFandomCategory();
+            commonsTemplate.saveCategory(dbCategoryList);
+        }
+    }
+
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
      *
@@ -68,11 +82,24 @@ public class FandomServiceImpl implements FandomService {
         return fandomMapper.listByCondition(param);
     }
 
+    /**
+     * 获取用户关注的fandom列表
+     *
+     * @param sn
+     * @param pageBounds
+     * @return
+     */
     @Override
     public PageList<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds) {
         return fandomMemberEntityMapper.findFandomsByMemberSn(sn, pageBounds);
     }
 
+    /**
+     * 加入fandom
+     *
+     * @param joinFandomsParam
+     * @return
+     */
     @Override
     public boolean joinFandom(JoinFandomsParam joinFandomsParam) {
         String memberSn = joinFandomsParam.getCurrentSn();
@@ -96,7 +123,12 @@ public class FandomServiceImpl implements FandomService {
         return true;
     }
 
-
+    /**
+     * 退出fandom
+     *
+     * @param joinFandomParam
+     * @return
+     */
     @Override
     public boolean exitFandom(ExitFandomParam joinFandomParam) {
         FandomMemberEntity queryParam = BeanTools.copyAs(joinFandomParam, FandomMemberEntity.class);
@@ -116,28 +148,34 @@ public class FandomServiceImpl implements FandomService {
         return false;
     }
 
-
+    /**
+     * 获取推荐的fandom
+     *
+     * @param fandomQueryParam
+     * @return
+     */
     public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
         return fandomMapper.getRecommendFandom(fandomQueryParam.getCurrentSn(), pageBounds);
     }
 
+    /**
+     * 获取fandom分类
+     *
+     * @param fandomQueryParam
+     * @return
+     */
     @Override
-    public List<FandomCategory> getFandomCategory(FandomQueryParam fandomQueryParam) {
-        List<FandomCategory> result = new ArrayList<>();
-        List<FandomInfoResult> rootCategory = fandomMapper.getFandomCategory(Long.parseLong("0"));
-
-        if (!CollectionTools.isNullOrEmpty(rootCategory)) {
-            for (FandomInfoResult root : rootCategory) {
-                List<FandomInfoResult> childCategory = fandomMapper.getFandomCategory(root.getId());
-                FandomCategory fandomCategory = BeanTools.copyAs(root, FandomCategory.class);
-                fandomCategory.setChildCategory(childCategory);
-                result.add(fandomCategory);
-            }
-        }
-        return result;
+    public List<Map<String, Object>> getFandomCategory(FandomQueryParam fandomQueryParam) {
+        return commonsTemplate.getFandomCategory();
     }
 
+    /**
+     * 获取fandom成员
+     *
+     * @param fandomQueryParam
+     * @return
+     */
     @Override
     public PageList<UserInfoResult> getFandomMembers(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
@@ -150,7 +188,7 @@ public class FandomServiceImpl implements FandomService {
 
     public FandomInfoResult getFandomInfo(FandomInfoParam fandomInfoParam) {
         FandomInfoResult fandomInfoResult = fandomMapper.getFandomDetail(fandomInfoParam.getFandomId(), fandomInfoParam.getCurrentSn());
-        if(null != fandomInfoResult) {
+        if (null != fandomInfoResult) {
             List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(fandomInfoParam.getFandomId());
             fandomInfoResult.setFandomTagResultList(fandomTagList);
         }

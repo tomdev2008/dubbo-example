@@ -13,6 +13,7 @@ import com.fansz.fandom.model.relationship.JoinFandomsParam;
 import com.fansz.fandom.model.relationship.MemberFandomQueryParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * fandom服务
@@ -87,10 +88,10 @@ public interface FandomApi {
      * 获取圈子fandom分类接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategory>> 返回对象
+     * @return CommonResult<List<Map<String, String>>> 返回对象
      */
     @DubboxMethod("getFandomCategory")
-    CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException;
+    CommonResult<List<Map<String, Object>>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /**
      * 获取圈子成员列表接口

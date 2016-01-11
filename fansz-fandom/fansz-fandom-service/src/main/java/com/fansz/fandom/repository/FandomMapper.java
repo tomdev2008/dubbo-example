@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
+import java.util.Map;
 
 @MapperScan
 public interface FandomMapper {
@@ -33,4 +34,6 @@ public interface FandomMapper {
     int getCountByFandomName(String fandomName);
 
     FandomInfoResult getFandomInfo(@Param("fandomId") Long fandomId, @Param("fandomName") String fandomName);
+
+    List<Map<String, Object>> getFandomCategory();
 }
