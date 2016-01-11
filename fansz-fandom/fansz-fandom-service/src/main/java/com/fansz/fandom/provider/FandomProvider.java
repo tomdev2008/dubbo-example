@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 圈子接口类
@@ -95,11 +96,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
      * 获取fandom大小分类接口
      *
      * @param fandomQueryParam 查询参数
-     * @return CommonResult<List<FandomCategory>> 返回对象
+     * @return CommonResult<List<Map<String, Object>>> 返回对象
      */
     @Override
-    public CommonResult<List<FandomCategory>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException{
-        List<FandomCategory> result = fandomService.getFandomCategory(fandomQueryParam);
+    public CommonResult<List<Map<String, Object>>> getFandomCategory(FandomQueryParam fandomQueryParam) throws ApplicationException{
+        List<Map<String, Object>> result = fandomService.getFandomCategory(fandomQueryParam);
         return renderSuccess(result);
     }
 
