@@ -13,7 +13,6 @@
 
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties,classpath:/conf/application.properties"/>
-    <util:properties  id="smsProperties" location="classpath:/conf/sms.properties"/>
     <import resource="classpath:/spring/spring-mybatis.xml"/>
     <import resource="classpath:/spring/spring-redis.xml"/>
     <import resource="classpath:/spring/spring-kafka.xml"/>

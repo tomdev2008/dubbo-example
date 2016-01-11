@@ -21,18 +21,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>**/log4j.xml</exclude>
-                        <exclude>**/jdbc.properties</exclude>
-                        <exclude>**/redis.properties</exclude>
-                        <exclude>**/dubbo.properties</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
@@ -228,6 +216,19 @@
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/log4j.xml</exclude>
+                                <exclude>**/jdbc.properties</exclude>
+                                <exclude>**/kafka.properties</exclude>
+                                <exclude>**/redis.properties</exclude>
+                                <exclude>**/dubbo.properties</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
                         <version>1.8</version>
                         <executions>
@@ -270,6 +271,19 @@
             </properties>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/log4j.xml</exclude>
+                                <exclude>**/jdbc.properties</exclude>
+                                <exclude>**/kafka.properties</exclude>
+                                <exclude>**/redis.properties</exclude>
+                                <exclude>**/dubbo.properties</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
