@@ -1,3 +1,4 @@
+/fansz-redis/target
 target/*
 !.gitignore
 /.idea

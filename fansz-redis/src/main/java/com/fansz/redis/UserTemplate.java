@@ -11,6 +11,8 @@ public interface UserTemplate {
 
     Map<String,String> get(String sn);
 
+    Map<String,String> getWithAuthInfo(String sn);
+
     List<Map<String, String>>  getAll(Collection<String> sns);
 
     void updatePasswd(final String sn, final String passwd);

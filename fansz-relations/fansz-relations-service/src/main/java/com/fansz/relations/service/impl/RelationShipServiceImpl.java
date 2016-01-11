@@ -52,9 +52,9 @@ public class RelationShipServiceImpl implements RelationShipService {
         String mySn = friendsQueryParam.getCurrentSn();
         CountListResult<String> snList = null;
         if (isSpecial) {
-            snList = relationTemplate.listFriend(mySn, offset, limit);
-        } else {
             snList = relationTemplate.listSpecialFriend(mySn, offset, limit);
+        } else {
+            snList = relationTemplate.listFriend(mySn, offset, limit);
         }
         if (snList == null || CollectionTools.isNullOrEmpty(snList.getResult())) {
             return new QueryResult<>(new ArrayList<Map<String, String>>(), 0L);
@@ -95,9 +95,6 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        if (!StringTools.isBlank(relation)) {
-            throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
-        }
         if (add) {//添加特殊关注,要求是朋友且不能是特殊关注
             if (!RelationShip.FRIEND.getCode().equals(relation)) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);

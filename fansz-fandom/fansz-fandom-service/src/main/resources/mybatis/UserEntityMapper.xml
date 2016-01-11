@@ -27,12 +27,6 @@
     <update id="updateByUidSelective" parameterType="com.fansz.fandom.model.profile.UserInfoResult">
         update connects_member_profile
         <set>
-            <if test="loginname != null">
-                loginname = #{loginname,jdbcType=VARCHAR},
-            </if>
-            <if test="password != null">
-                password = #{password,jdbcType=VARCHAR},
-            </if>
             <if test="mobile != null">
                 mobile = #{mobile,jdbcType=VARCHAR},
             </if>
@@ -62,9 +56,6 @@
             </if>
             <if test="memberType != null">
                 member_type = #{memberType,jdbcType=VARCHAR},
-            </if>
-            <if test="memberStatus != null">
-                member_status = #{memberStatus,jdbcType=VARCHAR},
             </if>
         </set>
         where sn = #{sn,jdbcType=VARCHAR} and member_status='1'

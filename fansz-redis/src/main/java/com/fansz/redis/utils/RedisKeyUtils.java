@@ -7,39 +7,39 @@ import com.fansz.pub.utils.UUIDTools;
  */
 public final class RedisKeyUtils {
     //user
-    public final static String USER_PREFIX = "u:{";//用户信息
+    private final static String USER_PREFIX = "u:{";//用户信息
 
-    public final static String IDX_USER_MOBILE_PREFIX = "u:mob:";//用户信息
+    private final static String IDX_USER_MOBILE_PREFIX = "u:mob:";//用户信息
 
-    public final static String IDX_USER_ACCOUNT_PREFIX = "u:ac:";//用户信息
+    private final static String IDX_USER_ACCOUNT_PREFIX = "u:ac:";//用户信息
 
-    public final static String IDX_USER_NICK_PREFIX = "u:nick:";//用户信息
+    private final static String IDX_USER_NICK_PREFIX = "u:nick:";//用户信息
 
-    public final static String SEQ_USER="seq:user";
+    private final static String SEQ_USER="seq:user";
 
     //session
 
-    public final static String SESSION_PREFIX = "session:";
+    private final static String SESSION_PREFIX = "session:";
 
-    public final static String REFRESH_TOKEN_PREFIX = "token:refresh:";
+    private final static String REFRESH_TOKEN_PREFIX = "token:refresh:";
 
-    public final static String VERIFY_KEY_PREFIX = "verify:";
+    private final static String VERIFY_KEY_PREFIX = "verify:";
 
 
     //relation相关
-    public final static String FRIEND_PREFIX = "freind:{";//我的好友
+    private final static String FRIEND_PREFIX = "friend:{";//我的好友
 
-    public final static String SP_FRIEND_PREFIX = "sfriend:{";//我的特别好友
+    private final static String SP_FRIEND_PREFIX = "sfriend:{";//我的特别好友
 
-    public final static String MY_REQUEST = "request:{";//我发出的好友请求
+    private final static String MY_REQUEST = "request:{";//我发出的好友请求
 
-    public final static String MY_REQUESTED = "requested:{";//我接收到的好友请求
+    private final static String MY_REQUESTED = "requested:{";//我接收到的好友请求
 
-    public final static String HASH_TAG_SUFFIX = "}";//HASH TAG后缀
+    private final static String HASH_TAG_SUFFIX = "}";//HASH TAG后缀
 
-    public final static String TMP_PREFIX = "tmp:";//临时key
+    private final static String TMP_PREFIX = "tmp:";//临时key
 
-    public final static String FRIEND_REMARK_PREFIX = "friend_remark:{";
+    private final static String FRIEND_REMARK_PREFIX = "friend_remark:{";
 
     /**
      * 我的好友
@@ -88,7 +88,7 @@ public final class RedisKeyUtils {
      * @return
      */
     public static String getUnionKey(String key) {
-        return TMP_PREFIX + UUIDTools.generate() + ":{" + key + HASH_TAG_SUFFIX;
+        return TMP_PREFIX + UUIDTools.generate() + key ;
     }
 
     /**
@@ -98,7 +98,7 @@ public final class RedisKeyUtils {
      * @return
      */
     public static String getFriendRemarkKey(String sn) {
-        return FRIEND_REMARK_PREFIX + sn + "}";
+        return FRIEND_REMARK_PREFIX + sn + HASH_TAG_SUFFIX;
     }
 
     /**
@@ -108,7 +108,7 @@ public final class RedisKeyUtils {
      * @return
      */
     public static String getUserKey(String sn) {
-        return USER_PREFIX + sn + "}";
+        return USER_PREFIX + sn + HASH_TAG_SUFFIX;
     }
 
     public static String getSessionKey(String accessToken) {

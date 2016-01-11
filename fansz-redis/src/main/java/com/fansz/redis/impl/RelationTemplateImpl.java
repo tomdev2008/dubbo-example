@@ -65,7 +65,7 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
-                jedis.zadd(RedisKeyUtils.SP_FRIEND_PREFIX + mySn, System.currentTimeMillis(), friendSn);
+                jedis.zadd(RedisKeyUtils.getSpeicalFriendKey(mySn), System.currentTimeMillis(), friendSn);
                 return true;
             }
         });
@@ -93,10 +93,12 @@ public class RelationTemplateImpl implements RelationTemplate {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
                 //如果在列表中,则从请求sorted set中删除请求,并添加到朋友sorted set中
+                long now = System.currentTimeMillis();
                 Pipeline pipe = jedis.pipelined();
-                pipe.zadd(RedisKeyUtils.getFriendKey(mySn), System.currentTimeMillis(), friendSn);
-                pipe.zadd(RedisKeyUtils.getMyRequestedKey(friendSn), System.currentTimeMillis(), mySn);
+                pipe.zadd(RedisKeyUtils.getFriendKey(mySn), now, friendSn);
+                pipe.zadd(RedisKeyUtils.getFriendKey(friendSn), now, mySn);
                 pipe.zrem(RedisKeyUtils.getMyRequestedKey(mySn), friendSn);
+                pipe.zrem(RedisKeyUtils.getMyRequestKey(friendSn), mySn);
                 pipe.sync();
                 return true;
             }
@@ -109,8 +111,8 @@ public class RelationTemplateImpl implements RelationTemplate {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
                 //检查对方是否在我的好友列表中,如果不是,返回错误
-                boolean exist = jedis.sismember(RedisKeyUtils.FRIEND_PREFIX + mySn, friendSn);
-                if (!exist) {
+                String relationship = getRelation(mySn, friendSn);
+                if (!RelationShip.FRIEND.getCode().equals(relationship) && !RelationShip.SPECIAL_FRIEND.getCode().equals(relationship)) {
                     throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
                 }
                 jedis.hset(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn, remark);
@@ -196,14 +198,14 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
-                if (jedis.sismember(RedisKeyUtils.getSpeicalFriendKey(currentSn), sn)) {
+                if (jedis.zrank(RedisKeyUtils.getSpeicalFriendKey(currentSn), sn) != null) {
                     return RelationShip.SPECIAL_FRIEND.getCode();
-                } else if (jedis.sismember(RedisKeyUtils.getFriendKey(currentSn), sn)) {
+                } else if (jedis.zrank(RedisKeyUtils.getFriendKey(currentSn), sn) != null) {
                     return RelationShip.FRIEND.getCode();
                 }
-                if (jedis.sismember(RedisKeyUtils.getMyRequestKey(currentSn), sn)) {
+                if (jedis.zrank(RedisKeyUtils.getMyRequestKey(currentSn), sn) != null) {
                     return RelationShip.TO_ADD.getCode();
-                } else if (jedis.sismember(RedisKeyUtils.getMyRequestedKey(currentSn), sn)) {
+                } else if (jedis.zrank(RedisKeyUtils.getMyRequestedKey(currentSn), sn) != null) {
                     return RelationShip.BE_ADDED.getCode();
                 } else {
                     return null;

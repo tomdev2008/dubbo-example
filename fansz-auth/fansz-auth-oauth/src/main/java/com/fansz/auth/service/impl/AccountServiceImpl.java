@@ -160,7 +160,7 @@ public class AccountServiceImpl implements AccountService {
         if (StringTools.isBlank(userSn)) {
             throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
-        Map<String, String> userMap = userTemplate.get(userSn);
+        Map<String, String> userMap = userTemplate.getWithAuthInfo(userSn);
         String pswdInDb = userMap.get("password");
         String encodedPswd = SecurityTools.encode(loginParam.getPassword());
         if (!pswdInDb.equals(encodedPswd)) {

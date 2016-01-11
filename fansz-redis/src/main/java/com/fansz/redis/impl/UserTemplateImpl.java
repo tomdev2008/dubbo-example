@@ -23,24 +23,43 @@ public class UserTemplateImpl implements UserTemplate {
 
     @Override
     public Map<String, String> get(final String sn) {
+        Map<String, String> userMap = getWithAuthInfo(sn);
+        removePrivacy(userMap);
+        return userMap;
+
+    }
+
+    @Override
+    public Map<String, String> getWithAuthInfo(final String sn) {
         return jedisTemplate.execute(new JedisCallback<Map<String, String>>() {
             @Override
             public Map<String, String> doInRedis(Jedis jedis) throws Exception {
-                return jedis.hgetAll(RedisKeyUtils.getUserKey(sn));
+                Map<String, String> userMap = jedis.hgetAll(RedisKeyUtils.getUserKey(sn));
+                return userMap;
             }
         });
     }
 
+    private void removePrivacy(Map<String,String> userMap){
+        if (userMap != null) {
+            userMap.remove("loginname");
+            userMap.remove("password");
+            userMap.remove("id");
+            userMap.remove("access_token");
+            userMap.remove("member_status");
+        }
+    }
     @Override
     public List<Map<String, String>> getAll(final Collection<String> sns) {
         return jedisTemplate.execute(new JedisCallback<List<Map<String, String>>>() {
             @Override
             public List<Map<String, String>> doInRedis(Jedis jedis) throws Exception {
-                List<Map<String, String>> result = new ArrayList<Map<String, String>>();
+                List<Map<String, String>> result = new ArrayList<>();
                 for (String sn : sns) {
-                    Map<String, String> user = jedis.hgetAll(RedisKeyUtils.getUserKey(sn));
-                    if (user != null && !user.isEmpty()) {
-                        result.add(user);
+                    Map<String, String> userMap = jedis.hgetAll(RedisKeyUtils.getUserKey(sn));
+                    removePrivacy(userMap);
+                    if (userMap != null && !userMap.isEmpty()) {
+                        result.add(userMap);
                     }
                 }
                 return result;
@@ -63,7 +82,7 @@ public class UserTemplateImpl implements UserTemplate {
                 Pipeline pipe = jedis.pipelined();
                 String key = RedisKeyUtils.getUserKey((String) user.get("sn"));
                 for (Map.Entry<String, Object> prop : user.entrySet()) {
-                    if (prop.getValue() != null) {
+                    if (prop.getValue() != null && !"access_token".equals(prop.getKey())) {
                         pipe.hset(key, prop.getKey(), String.valueOf(prop.getValue()));
                     }
                 }

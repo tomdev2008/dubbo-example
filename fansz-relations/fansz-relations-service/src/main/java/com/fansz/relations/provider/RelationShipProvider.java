@@ -21,7 +21,7 @@ import java.util.Map;
 @Component("relationShipProvider")
 public class RelationShipProvider extends AbstractProvider implements RelationShipApi {
 
-    @Resource(name = "relationShipRedisService")
+    @Resource(name = "relationShipService")
     private RelationShipService relationShipService;
 
 
