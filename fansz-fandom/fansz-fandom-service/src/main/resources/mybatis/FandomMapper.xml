@@ -304,4 +304,19 @@
         </if>
     </select>
 
+    <select id="getFandomCategoryMap" parameterType="java.lang.Long" resultType="java.util.Map">
+        SELECT
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        ,
+        <include refid="com.fansz.fandom.repository.UserMapper.User_Column_List">
+            <property name="alias" value="b"/>
+        </include>
+        FROM feeds_fandom a LEFT JOIN
+        connects_member_profile b ON a.fandom_creator_sn = b.sn
+        where a.fandom_parent_id = #{id,jdbcType=BIGINT}
+        order by a.id
+    </select>
+
 </mapper>
