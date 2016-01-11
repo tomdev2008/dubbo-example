@@ -39,8 +39,10 @@ import java.util.*;
 @Transactional(propagation = Propagation.REQUIRED)
 public class FandomServiceImpl implements FandomService {
 
+    //fandom分类在redis存储中的key前缀
     public static final String CATEGORY_PREFIX = "fandomCategory:";
 
+    //fandom所有一二级分类的id列表的key
     public static final String CATEGORY_LIST_KEY = "fandomCategoryList";
 
     @Autowired
