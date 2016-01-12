@@ -39,7 +39,4 @@ public interface FandomService {
     int delFandom(DelFandomParam delFandomParam);
 
     FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam);
-
-    Map<String,Object> getFandomParentInfo(Long parentId);
-
 }

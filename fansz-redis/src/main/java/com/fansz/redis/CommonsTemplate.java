@@ -23,4 +23,12 @@ public interface CommonsTemplate {
     void saveCategory(List<Map<String, Object>> categoryList);
 
     Boolean isCategoryInCache();
+
+    /**
+     * 获取fandom一二级
+     * @param parentId
+     * @return
+     */
+    Map<String, Object> getFandomParentInfo(final Long parentId);
+
 }
