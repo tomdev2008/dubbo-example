@@ -40,4 +40,6 @@ public interface FandomService {
 
     FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam);
 
+    Map<String,Object> getFandomParentInfo(Long parentId);
+
 }
