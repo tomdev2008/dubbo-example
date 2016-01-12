@@ -8,6 +8,7 @@ import java.util.Map;
  * Created by allan on 16/1/11.
  */
 public interface CommonsTemplate {
+
     /**
      * 获取fandom的分类
      *

@@ -179,4 +179,5 @@ public class FandomInfoResult implements Serializable {
     public void setFandomParentInfo(Map<String, Object> fandomParentInfo) {
         this.fandomParentInfo = fandomParentInfo;
     }
+
 }

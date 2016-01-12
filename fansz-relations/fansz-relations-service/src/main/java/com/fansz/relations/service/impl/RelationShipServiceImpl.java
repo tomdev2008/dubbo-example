@@ -219,7 +219,6 @@ public class RelationShipServiceImpl implements RelationShipService {
         return new QueryResult<>(friendList, userList.getTotalrecord());
     }
 
-
     @Override
     public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
         relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());

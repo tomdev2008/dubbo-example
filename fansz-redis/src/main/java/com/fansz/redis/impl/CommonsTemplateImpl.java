@@ -123,4 +123,5 @@ public class CommonsTemplateImpl implements CommonsTemplate {
         }
         return categoryFandomsResult;
     }
+
 }
