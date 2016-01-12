@@ -21,7 +21,7 @@
     <bean id="kafkaConsumerRunner" class="com.fansz.event.consumer.KafkaConsumerRunner"/>
 
     <!--<import resource="classpath:/spring/spring-dubbo.xml"/>-->
-    <import resource="classpath:/spring/spring-redis.xml"/>
+    <!--<import resource="classpath:/spring/spring-redis.xml"/>-->
     <import resource="classpath:/spring/spring-datasource.xml"/>
 
 </beans>

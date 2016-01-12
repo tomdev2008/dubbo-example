@@ -11,17 +11,18 @@
     http://www.springframework.org/schema/util/spring-util-3.2.xsd">
 
     <context:annotation-config/>
-    <!-- 排除Controller -->
-    <context:component-scan base-package="com.fansz.auth">
-    </context:component-scan>
+    <context:component-scan base-package="com.fansz.auth"/>
 
     <context:property-placeholder ignore-resource-not-found="false"
                                   location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties,classpath:/conf/application.properties"/>
+
     <util:properties location="classpath:/conf/application.properties"
                      id="applicationProps"/>
 
     <util:properties location="classpath:/conf/sms.properties"
                      id="smsProperties"/>
+
+    <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
     <bean id="policyResource" class="org.springframework.core.io.ClassPathResource">
         <constructor-arg index="0" value="policy/bucket_read_write_policy.txt"/>

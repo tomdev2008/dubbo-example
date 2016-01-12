@@ -63,7 +63,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         entity.setSourceFrom(InformationSource.NEWSFEEDS.getCode());
         newsfeedsPostDAO.save(entity);
 
-        //由于用户发帖之后,希望自己能马上看到,因此必须同步推送到自己到名下,但对于朋友,可以采用异步;
+        //由于用户发帖之后,希望自己能马上看到,因此必须同步推送到自己到名下,但对于朋友圈,可以采用异步;
         PushPost myPost = new PushPost();
         myPost.setMemberSn(addPostParam.getCurrentSn());
         myPost.setPostId(entity.getId());
@@ -248,7 +248,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
                 postInfoResult.setLikedList(new ArrayList<UserInfoResult>());
             }
             postInfoResult.getLikedList().add(userInfoResult);
-            if("0".equals(postInfoResult.getLiked())){
+            if ("0".equals(postInfoResult.getLiked())) {
                 postInfoResult.setLiked(memberSn.equals(memberLike.getMemberSn()) ? "1" : "0");
             }
         }

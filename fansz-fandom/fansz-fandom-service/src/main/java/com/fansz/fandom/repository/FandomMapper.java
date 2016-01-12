@@ -27,8 +27,6 @@ public interface FandomMapper {
 
     FandomInfoResult getFandomDetail(@Param("fandomId") Long fandomId, @Param("memberSn") String memberSn);
 
-    List<FandomInfoResult> getFandomCategory(Long id);
-
     PageList<FandomInfoResult> searchFandoms(@Param("memberSn") String memberSn, @Param("searchVal") String searchVal, PageBounds pageBounds);
 
     int getCountByFandomName(String fandomName);

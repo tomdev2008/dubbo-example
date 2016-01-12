@@ -20,8 +20,9 @@
         <module>fansz-relations</module>
         <module>fansz-dao</module>
         <module>fansz-redis</module>
+        <module>fansz-push</module>
     </modules>
-    <repositories>
+    <!--<repositories>
         <repository>
             <id>nexus-public</id>
             <name>Public Repository of fansz</name>
@@ -34,6 +35,7 @@
             </snapshots>
         </repository>
     </repositories>
+    -->
     <dependencyManagement>
         <dependencies>
             <dependency>

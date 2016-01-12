@@ -1,3 +1,4 @@
+/fansz-push/target
 /fansz-redis/target
 target/*
 !.gitignore

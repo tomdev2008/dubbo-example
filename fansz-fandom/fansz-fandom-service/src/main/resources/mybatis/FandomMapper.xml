@@ -125,16 +125,6 @@
         WHERE f.id =  #{fandomId,jdbcType=BIGINT} AND f.fandom_creator_sn=p.sn
     </select>
 
-    <select id="getFandomCategory" parameterType="java.lang.Long" resultMap="fandomAllInfoResultMap">
-        select
-        <include refid="Fandom_Column_List">
-            <property name="alias" value="a"/>
-        </include>
-        from feeds_fandom a
-        where a.fandom_parent_id = #{id,jdbcType=BIGINT}
-        order by a.id
-    </select>
-
     <select id="searchFandoms" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">
         SELECT
         ff.id,

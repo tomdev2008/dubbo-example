@@ -61,8 +61,7 @@ public class FandomServiceImpl implements FandomService {
     @Resource(name = "commonsTemplate")
     private CommonsTemplate commonsTemplate;
 
-    @PostConstruct
-    private void init() {
+    public void init() {
         if (!commonsTemplate.isCategoryInCache()) {
             //如果从redis中没有查到category,从数据库中查找
             List<Map<String, Object>> dbCategoryList = fandomMapper.getFandomCategory();

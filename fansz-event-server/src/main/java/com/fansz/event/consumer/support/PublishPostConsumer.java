@@ -14,10 +14,13 @@ import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.redis.JedisTemplate;
+import com.fansz.redis.RelationTemplate;
+import com.fansz.redis.model.CountListResult;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +29,8 @@ import java.util.List;
  */
 @Component("publishPostConsumer")
 public class PublishPostConsumer implements IEventConsumer {
-    @Autowired
-    private JedisTemplate jedisTemplate;
 
+    private final static Long FRIEND_LIMIT = 500l;
     @Autowired
     private PushPostDAO pushPostDAO;
 
@@ -38,11 +40,13 @@ public class PublishPostConsumer implements IEventConsumer {
     @Autowired
     private UserRelationDAO userRelationDAO;
 
+    @Resource(name = "relationTemplate")
+    private RelationTemplate relationTemplate;
+
     @Override
     public void onEvent(ConsumerRecord<String, String> record) {
         final PublishPostEvent publishPostEvent = JSON.parseObject(record.value(), PublishPostEvent.class);
         Long postId = publishPostEvent.getPostId();
-        Date now = DateTools.getSysDate();
         if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
             NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
             entity.setSourceFrom(InformationSource.FANDOM.getCode());
@@ -54,20 +58,20 @@ public class PublishPostConsumer implements IEventConsumer {
             PushPost myPost = new PushPost();
             myPost.setMemberSn(publishPostEvent.getMemberSn());
             myPost.setPostId(postId);
-            myPost.setCreatetime(now);
+            myPost.setCreatetime(entity.getPostTime());
             pushPostDAO.save(myPost);
         }
 
-        List<UserRelation> friendList = userRelationDAO.findMyFriends(publishPostEvent.getMemberSn());
-        if (CollectionTools.isNullOrEmpty(friendList)) {
+        CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getMemberSn(), 0, FRIEND_LIMIT);
+        if (friendList.getTotalCount() == 0) {
             return;
         }
         //推送给朋友
-        for (UserRelation friend : friendList) {
+        for (String friendSn : friendList.getResult()) {
             PushPost pushPost = new PushPost();
-            pushPost.setMemberSn(friend.getFriendMemberSn());
+            pushPost.setMemberSn(friendSn);
             pushPost.setPostId(postId);
-            pushPost.setCreatetime(now);
+            pushPost.setCreatetime(publishPostEvent.getPostTime());
             pushPostDAO.save(pushPost);
         }
     }

@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public interface FandomService {
 
+     void init();
+
     List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
 
 

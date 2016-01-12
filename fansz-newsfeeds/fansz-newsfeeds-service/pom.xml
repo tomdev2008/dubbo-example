@@ -121,6 +121,10 @@
             <groupId>com.fansz</groupId>
             <artifactId>fansz-fandom-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>fansz-redis</artifactId>
+        </dependency>
     </dependencies>
     <!--<build>
         <plugins>
