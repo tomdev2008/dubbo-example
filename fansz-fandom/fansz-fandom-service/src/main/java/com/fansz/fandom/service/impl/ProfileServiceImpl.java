@@ -51,7 +51,9 @@ public class ProfileServiceImpl implements ProfileService {
         Map<String, String> userMap = userTemplate.get(queryUserParam.getFriendSn());
         if (StringTools.isNotBlank(queryUserParam.getCurrentSn())) {
             String relation = relationTemplate.getRelation(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
+            String remark = relationTemplate.getFriendRemark(queryUserParam.getCurrentSn(), queryUserParam.getFriendSn());
             userMap.put("relationship", relation);
+            userMap.put("remark", remark);
         }
 
         return userMap;
