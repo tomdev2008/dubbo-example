@@ -1,10 +1,9 @@
 package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.event.model.SpecialFocusEvent;
-import com.fansz.event.model.UnSpecialFocusEvent;
+import com.fansz.db.entity.SpecialFocus;
+import com.fansz.db.repository.SpecialFocusDAO;
 import com.fansz.event.producer.EventProducer;
-import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.entity.FandomMemberEntity;
 import com.fansz.fandom.model.fandom.*;
@@ -60,6 +59,9 @@ public class FandomServiceImpl implements FandomService {
     @Autowired
     private JedisTemplate jedisTemplate;
 
+    @Autowired
+    private SpecialFocusDAO specialFocusDAO;
+
     /**
      * 根据前台传入参数,查询符合条件的fandom列表
      *
@@ -95,7 +97,10 @@ public class FandomServiceImpl implements FandomService {
             fandomMemberEntityMapper.insertSelective(fandomMember);
 
             //添加特别关注记录
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(memberSn, null, Long.parseLong(fandomId), null));
+            SpecialFocus specialFocus = new SpecialFocus();
+            specialFocus.setMemberSn(memberSn);
+            specialFocus.setSpecialFandomId(Long.parseLong(fandomId));
+            specialFocusDAO.save(specialFocus);
         }
         return true;
     }
@@ -112,11 +117,7 @@ public class FandomServiceImpl implements FandomService {
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
 
         //删除特别关注记录
-        UnSpecialFocusEvent unSpecialFocusEvent = new UnSpecialFocusEvent();
-        unSpecialFocusEvent.setCurrentSn(joinFandomParam.getCurrentSn());
-        unSpecialFocusEvent.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-
-        eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, unSpecialFocusEvent);
+        specialFocusDAO.delSpecialFocusInfo(joinFandomParam.getCurrentSn(), null, Long.parseLong(joinFandomParam.getFandomId()));
         return false;
     }
 
@@ -281,6 +282,7 @@ public class FandomServiceImpl implements FandomService {
         List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(), addFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
         fandomInfoResult.setFandomTagResultList(fandomTagResultList);
+        fandomInfoResult.setFandomParentInfo(this.getFandomParentInfo(fandomInfoResult.getFandomParentId()));
         return fandomInfoResult;
 
     }
@@ -332,6 +334,26 @@ public class FandomServiceImpl implements FandomService {
             return fandomTagMapper.selectFandomTagsByFandomId(fandomId);
         }
         return null;
+    }
+
+    @Override
+    public Map<String, Object> getFandomParentInfo(final Long parentId) {
+        Map<String, Object> categoryFandomsResult = null;
+        Map<String, String> categoryFandoms = jedisTemplate.execute(new JedisCallback<Map<String, String>>() {
+            @Override
+            public Map<String, String> doInRedis(Jedis jedis) throws Exception {
+                return jedis.hgetAll(CATEGORY_PREFIX + parentId);
+            }
+        });
+        Long fandomParentId = categoryFandoms.get("fandom_parent_id")==null?0:Long.valueOf(categoryFandoms.get("fandom_parent_id"));
+        if(fandomParentId > 0){
+            categoryFandomsResult = getFandomParentInfo(fandomParentId);
+            categoryFandomsResult.put("fandom_parent_info",categoryFandoms);
+        }else{
+            categoryFandomsResult = new HashMap<String,Object>();
+            categoryFandomsResult.putAll(categoryFandoms);
+        }
+        return categoryFandomsResult;
     }
 
 }
