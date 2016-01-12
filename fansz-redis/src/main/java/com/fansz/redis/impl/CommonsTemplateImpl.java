@@ -103,4 +103,25 @@ public class CommonsTemplateImpl implements CommonsTemplate {
     public void setJedisTemplate(JedisTemplate jedisTemplate) {
         this.jedisTemplate = jedisTemplate;
     }
+
+    @Override
+    public Map<String, Object> getFandomParentInfo(final Long parentId) {
+        Map<String, Object> categoryFandomsResult = null;
+        Map<String, String> categoryFandoms = jedisTemplate.execute(new JedisCallback<Map<String, String>>() {
+            @Override
+            public Map<String, String> doInRedis(Jedis jedis) throws Exception {
+                return jedis.hgetAll(RedisKeyUtils.getCategoryKey(String.valueOf(parentId)));
+            }
+        });
+        Long fandomParentId = categoryFandoms.get("fandom_parent_id")==null?0:Long.valueOf(categoryFandoms.get("fandom_parent_id"));
+        if(fandomParentId > 0){
+            categoryFandomsResult = getFandomParentInfo(fandomParentId);
+            categoryFandomsResult.put("fandom_parent_info",categoryFandoms);
+        }else{
+            categoryFandomsResult = new HashMap<String,Object>();
+            categoryFandomsResult.putAll(categoryFandoms);
+        }
+        return categoryFandomsResult;
+    }
+
 }

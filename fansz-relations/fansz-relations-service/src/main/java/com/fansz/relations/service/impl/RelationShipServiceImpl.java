@@ -3,8 +3,12 @@ package com.fansz.relations.service.impl;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.db.entity.SpecialFocus;
 import com.fansz.db.entity.User;
+import com.fansz.db.entity.UserRelation;
+import com.fansz.db.repository.SpecialFocusDAO;
 import com.fansz.db.repository.UserDAO;
+import com.fansz.db.repository.UserRelationDAO;
 import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
@@ -15,6 +19,7 @@ import com.fansz.redis.UserTemplate;
 import com.fansz.redis.model.CountListResult;
 import com.fansz.relations.model.*;
 import com.fansz.relations.service.RelationShipService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -36,6 +41,12 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Resource(name = "userDAO")
     private UserDAO userDAO;
+
+    @Autowired
+    private UserRelationDAO userRelationDAO;
+
+    @Autowired
+    private SpecialFocusDAO specialFocusDAO;
 
     /**
      * 查询好友列表
@@ -95,17 +106,28 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+        boolean bool;
         if (add) {//添加特殊关注,要求是朋友且不能是特殊关注
             if (!RelationShip.FRIEND.getCode().equals(relation)) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
-            return relationTemplate.addAsSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+            //保存特殊关注记录
+            SpecialFocus specialFocus = new SpecialFocus();
+            specialFocus.setMemberSn(addFriendParam.getCurrentSn());
+            specialFocus.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
+            specialFocusDAO.save(specialFocus);
+
+            bool = relationTemplate.addAsSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         } else {//取消特殊关注,要求已经是特殊好友
             if (!RelationShip.SPECIAL_FRIEND.getCode().equals(relation)) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
-            return relationTemplate.removeSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+            //删除特殊关注记录
+            specialFocusDAO.delSpecialFocusInfo(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn(), null);
+
+            bool =  relationTemplate.removeSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         }
+        return bool;
     }
 
     /**
@@ -192,7 +214,6 @@ public class RelationShipServiceImpl implements RelationShipService {
         }
         return new QueryResult<>(friendList, userList.getTotalrecord());
     }
-
 
     @Override
     public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {

@@ -41,5 +41,4 @@ public interface FandomService {
     int delFandom(DelFandomParam delFandomParam);
 
     FandomInfoResult modifyFandom(ModifyFandomParam modifyFandomParam);
-
 }

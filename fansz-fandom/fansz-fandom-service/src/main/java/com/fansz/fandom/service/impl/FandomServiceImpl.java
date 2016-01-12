@@ -1,19 +1,18 @@
 package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.event.model.SpecialFocusEvent;
-import com.fansz.event.model.UnSpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
-import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.entity.FandomMemberEntity;
 import com.fansz.fandom.model.fandom.*;
 import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.relationship.ExitFandomParam;
 import com.fansz.fandom.model.relationship.JoinFandomsParam;
+import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomMemberEntityMapper;
 import com.fansz.fandom.repository.FandomTagMapper;
+import com.fansz.fandom.repository.SpecialFocusMapper;
 import com.fansz.fandom.service.FandomService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
@@ -60,6 +59,9 @@ public class FandomServiceImpl implements FandomService {
 
     @Resource(name = "commonsTemplate")
     private CommonsTemplate commonsTemplate;
+
+    @Autowired
+    private SpecialFocusMapper specialFocusMapper;
 
     public void init() {
         if (!commonsTemplate.isCategoryInCache()) {
@@ -117,7 +119,10 @@ public class FandomServiceImpl implements FandomService {
             fandomMemberEntityMapper.insertSelective(fandomMember);
 
             //添加特别关注记录
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, new SpecialFocusEvent(memberSn, null, Long.parseLong(fandomId), null));
+            SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+            specialFocusParam.setCurrentSn(memberSn);
+            specialFocusParam.setSpecialFandomId(Long.parseLong(fandomId));
+            specialFocusMapper.addSpecialFocusInfo(specialFocusParam);
         }
         return true;
     }
@@ -139,12 +144,11 @@ public class FandomServiceImpl implements FandomService {
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
 
         //删除特别关注记录
-        UnSpecialFocusEvent unSpecialFocusEvent = new UnSpecialFocusEvent();
-        unSpecialFocusEvent.setCurrentSn(joinFandomParam.getCurrentSn());
-        unSpecialFocusEvent.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
-
-        eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, unSpecialFocusEvent);
-        return false;
+        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
+        specialFocusParam.setCurrentSn(joinFandomParam.getCurrentSn());
+        specialFocusParam.setSpecialFandomId(Long.parseLong(joinFandomParam.getFandomId()));
+        specialFocusMapper.delSpecialFocusInfo(specialFocusParam);
+        return true;
     }
 
     /**
@@ -155,7 +159,16 @@ public class FandomServiceImpl implements FandomService {
      */
     public PageList<FandomInfoResult> getRecommendFandom(FandomQueryParam fandomQueryParam) {
         PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
-        return fandomMapper.getRecommendFandom(fandomQueryParam.getCurrentSn(), pageBounds);
+        PageList<FandomInfoResult> result = fandomMapper.getRecommendFandom(fandomQueryParam.getCurrentSn(), pageBounds);
+        for (FandomInfoResult fandomInfoResult : result) { //查询fandom一二级
+            Long fandomParentId = fandomInfoResult.getFandomParentId();
+            if (fandomParentId <= 0) {
+                continue;
+            }
+            Map<String, Object> map = commonsTemplate.getFandomParentInfo(fandomParentId);
+            fandomInfoResult.setFandomParentInfo(map);
+        }
+        return result;
     }
 
     /**
@@ -190,6 +203,8 @@ public class FandomServiceImpl implements FandomService {
         if (null != fandomInfoResult) {
             List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(fandomInfoParam.getFandomId());
             fandomInfoResult.setFandomTagResultList(fandomTagList);
+            Map<String, Object> map = commonsTemplate.getFandomParentInfo(fandomInfoResult.getFandomParentId());
+            fandomInfoResult.setFandomParentInfo(map);
         }
         return fandomInfoResult;
     }
@@ -218,6 +233,7 @@ public class FandomServiceImpl implements FandomService {
         List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(), addFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
         fandomInfoResult.setFandomTagResultList(fandomTagResultList);
+        fandomInfoResult.setFandomParentInfo(commonsTemplate.getFandomParentInfo(fandomInfoResult.getFandomParentId()));
         return fandomInfoResult;
 
     }
