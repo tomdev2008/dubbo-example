@@ -1,7 +1,6 @@
 package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.db.entity.SpecialFocus;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.fandom.entity.FandomEntity;
 import com.fansz.fandom.entity.FandomMemberEntity;
