@@ -2,12 +2,12 @@ package com.fansz.relations.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.db.entity.SpecialFocus;
 import com.fansz.db.entity.UserRelation;
 import com.fansz.db.model.FriendInfo;
+import com.fansz.db.repository.SpecialFocusDAO;
 import com.fansz.db.repository.UserRelationDAO;
-import com.fansz.event.model.SpecialFocusEvent;
 import com.fansz.event.producer.EventProducer;
-import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.model.Page;
 import com.fansz.pub.model.QueryResult;
 import com.fansz.pub.utils.BeanTools;
@@ -35,6 +35,9 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
     private EventProducer eventProducer;
+
+    @Autowired
+    private SpecialFocusDAO specialFocusDAO;
 
     @Override
     public QueryResult<FriendInfoResult> getFriends(FriendsQueryParam friendsParam, boolean isSpecial) {
@@ -74,23 +77,24 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add) {
         UserRelation oldRelation = userRelationDAO.findFriendRelationBySns(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        SpecialFocusEvent specialFocusEvent = new SpecialFocusEvent();
-        specialFocusEvent.setCurrentSn(addFriendParam.getCurrentSn());
-        specialFocusEvent.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
         if (add) {//添加特殊好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.FRIEND.getCode())) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_ADD);
             }
             oldRelation.setRelationStatus(RelationShip.SPECIAL_FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.SPECIAL_FOCUS, specialFocusEvent);
+
+            SpecialFocus specialFocus = new SpecialFocus();
+            specialFocus.setMemberSn(addFriendParam.getCurrentSn());
+            specialFocus.setSpecialMemberSn(addFriendParam.getFriendMemberSn());
+            specialFocusDAO.save(specialFocus);
+
         } else {//取消特别好友
             if (oldRelation == null || !oldRelation.getRelationStatus().equals(RelationShip.SPECIAL_FRIEND.getCode())) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
             oldRelation.setRelationStatus(RelationShip.FRIEND.getCode());
-            eventProducer.produce(AsyncEventType.UN_SPECIAL_FOCUS, specialFocusEvent);
+            specialFocusDAO.delSpecialFocusInfo(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn(), null);
         }
-
         userRelationDAO.update(oldRelation);
         return true;
     }
