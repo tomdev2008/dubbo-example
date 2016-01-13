@@ -263,7 +263,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             }
 
             Map<String, Object> userMap = allMemberMap.get(postComment.getCommentatorSn());
-            postComment.setCommentatorNickname(userMap.get("nickname") == null ? "" : (String) userMap.get("nickname"));
+            postComment.setCommentatorNickname(userMap.get("nickname") == null ? (String) userMap.get("loginname") : (String) userMap.get("nickname"));
             postComment.setCommentatorAvatar((String) userMap.get("member_avatar"));
             //find parent comment && set value
             if (postComment.getCommentParentId() != null) {
