@@ -5,6 +5,9 @@ import com.fansz.db.entity.NewsfeedsPostComment;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.NewsfeedsCommentDAO;
 import com.fansz.db.repository.UserDAO;
+import com.fansz.event.model.AddCommentEvent;
+import com.fansz.event.producer.EventProducer;
+import com.fansz.event.type.AsyncEventType;
 import com.fansz.feeds.service.NewsfeedsCommentService;
 import com.fansz.newsfeeds.model.comment.DelCommentParam;
 import com.fansz.newsfeeds.model.comment.NewsfeedsCommentParam;
@@ -19,7 +22,7 @@ import org.springframework.stereotype.Service;
  * Created by dell on 2015/12/28.
  */
 @Service("newsfeedsCommentService")
-public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService{
+public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService {
 
     @Autowired
     private NewsfeedsCommentDAO newsfeedsCommentDAO;
@@ -27,20 +30,26 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService{
     @Autowired
     private UserDAO userDAO;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @Override
-    public NewsfeedsPostComment savePostComment(NewsfeedsCommentParam commentPara){
-        NewsfeedsPostComment newsfeedsPostComment = BeanTools.copyAs(commentPara,NewsfeedsPostComment.class);
+    public NewsfeedsPostComment savePostComment(NewsfeedsCommentParam commentPara) {
+        NewsfeedsPostComment newsfeedsPostComment = BeanTools.copyAs(commentPara, NewsfeedsPostComment.class);
         newsfeedsPostComment.setCommentatorSn(commentPara.getCurrentSn());
         newsfeedsPostComment.setCommentTime(DateTools.getSysDate());
         newsfeedsCommentDAO.save(newsfeedsPostComment);
+
+        AddCommentEvent addCommentEvent = new AddCommentEvent(newsfeedsPostComment.getId(), newsfeedsPostComment.getCommentatorSn(), newsfeedsPostComment.getCommentContent());
+        eventProducer.produce(AsyncEventType.ADD_COMMENT,addCommentEvent);
         return newsfeedsPostComment;
     }
 
     @Override
     public String deleteCommet(DelCommentParam delCommentParam) {
         NewsfeedsPostComment newsfeedsPostComment = newsfeedsCommentDAO.load(delCommentParam.getCommentId());
-        if(newsfeedsPostComment!=null){
-            if(!StringTools.equals(newsfeedsPostComment.getCommentatorSn(),delCommentParam.getCurrentSn())){
+        if (newsfeedsPostComment != null) {
+            if (!StringTools.equals(newsfeedsPostComment.getCommentatorSn(), delCommentParam.getCurrentSn())) {
                 return ErrorCode.COMMENT_NO_AUTHORITY_DELETE.getCode();
             }
             newsfeedsCommentDAO.delete(newsfeedsPostComment);
@@ -56,7 +65,7 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService{
     }
 
     @Override
-    public PostCommentQueryResult assemblyPostCommentResult(NewsfeedsPostComment newsfeedsPostComment){
+    public PostCommentQueryResult assemblyPostCommentResult(NewsfeedsPostComment newsfeedsPostComment) {
         PostCommentQueryResult postCommentQueryResult = BeanTools.copyAs(newsfeedsPostComment, PostCommentQueryResult.class);
         User commentUser = userDAO.findBySn(newsfeedsPostComment.getCommentatorSn());
         postCommentQueryResult.setCommentatorNickname(commentUser.getNickname());

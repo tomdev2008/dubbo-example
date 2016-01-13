@@ -10,6 +10,7 @@ import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
 import com.fansz.db.repository.*;
+import com.fansz.event.model.AddLikeEvent;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.event.type.AsyncEventType;
@@ -51,6 +52,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Autowired
     private NewsfeedsMemberLikeDAO newsfeedsMemberLikeDAO;
+
 
     @Override
     public Long addPost(AddPostParam addPostParam) {
@@ -115,6 +117,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         newsfeedsMemberLike.setPostId(postParam.getPostId());
         newsfeedsMemberLike.setMemberSn(postParam.getCurrentSn());
         newsfeedsMemberLikeDAO.save(newsfeedsMemberLike);
+
+        AddLikeEvent addLikeEvent = new AddLikeEvent(newsfeedsMemberLike.getId(), newsfeedsMemberLike.getPostId(), newsfeedsMemberLike.getMemberSn());
+        eventProducer.produce(AsyncEventType.ADD_LIKE, addLikeEvent);
         return null;
     }
 

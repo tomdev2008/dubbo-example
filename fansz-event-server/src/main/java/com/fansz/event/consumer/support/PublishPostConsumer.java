@@ -30,7 +30,7 @@ import java.util.List;
 @Component("publishPostConsumer")
 public class PublishPostConsumer implements IEventConsumer {
 
-    private final static Long FRIEND_LIMIT = 500l;
+
     @Autowired
     private PushPostDAO pushPostDAO;
 
