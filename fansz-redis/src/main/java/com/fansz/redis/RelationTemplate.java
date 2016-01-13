@@ -68,5 +68,13 @@ public interface RelationTemplate {
      */
     CountListResult<String> listSpecialFriend(final String mySn, final long offset, final long limit);
 
+    /**
+     * 查询好友备注
+     * @param currentSn
+     * @param friendSn
+     * @return
+     */
+    String getFriendRemark(final String currentSn, final String friendSn);
+
 
 }
