@@ -44,6 +44,7 @@ public class AddLikeConsumer implements IEventConsumer {
             Date now = DateTools.getSysDate();
             for (String friendSn : friendList.getResult()) {//将回复推送到好友
                 PushLike pushLike = new PushLike();
+                pushLike.setLikeId(addLikeEvent.getLikeId());
                 pushLike.setMemberSn(friendSn);
                 pushLike.setPostId(addLikeEvent.getPostId());
                 pushLike.setCreatetime(now);

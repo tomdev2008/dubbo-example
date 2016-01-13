@@ -22,6 +22,9 @@ public class PushLike {
     @Column(name = "post_id")
     private Long postId;
 
+    @Column(name = "like_id")
+    private Long likeId;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "createtime")
     private Date createtime;
@@ -48,6 +51,14 @@ public class PushLike {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public Long getLikeId() {
+        return likeId;
+    }
+
+    public void setLikeId(Long likeId) {
+        this.likeId = likeId;
     }
 
     public Date getCreatetime() {
