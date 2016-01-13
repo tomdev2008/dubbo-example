@@ -27,24 +27,16 @@
 
     <native-query name="newsfeedsLike.findLikesByPostIdsAndMemberSn">
         <![CDATA[
-          SELECT
-                l.*
-            FROM
-                newsfeeds_member_like l
-            WHERE
-                l.post_id IN (
+          SELECT l.*
+            FROM newsfeeds_member_like l,
+                feeds_member_push_like pl
+            WHERE pl.like_id = l.id
+			AND pl.member_sn = :memberSn
+			AND l.post_id IN (
                   <#list postIds as item>
                     ${item}
                      <#if item_has_next>,</#if>
                   </#list>)
-                    AND (l.member_sn = :memberSn
-                    OR (SELECT
-                        relation_status
-                    FROM
-                        connects_member_relation r
-                    WHERE
-                        r.my_member_sn = :memberSn
-                            AND r.friend_member_sn = l.member_sn) in ('10','11'))
             ORDER BY l.id ASC
         ]]>
     </native-query>
@@ -52,23 +44,14 @@
     <native-query name="newsfeedsComments.findCommentsByPostIdsAndMemberSn">
         <![CDATA[
           SELECT c.*
-            FROM newsfeeds_member_comment c
-            LEFT JOIN newsfeeds_member_comment c1 ON c.comment_parent_id = c1.id
-            WHERE c.post_id IN(<#list postIds as item>
+            FROM feeds_member_push_comment pc,
+            newsfeeds_member_comment c
+            WHERE pc.comment_id = c.id
+            AND pc.member_sn = :memberSn
+            AND c.post_id IN(<#list postIds as item>
                                 ${item}
                                  <#if item_has_next>,</#if>
                               </#list>)
-              AND (c.commentator_sn = :memberSn
-              OR (c.comment_parent_id IS NULL
-                  AND (SELECT relation_status
-                      FROM connects_member_relation r
-                      WHERE r.my_member_sn = :memberSn
-                        AND r.friend_member_sn = c.commentator_sn) IN ('10','11'))
-              OR (c.comment_parent_id IS NOT NULL
-                  AND (SELECT relation_status
-                          FROM connects_member_relation r
-                          WHERE r.my_member_sn = :memberSn
-                            AND r.friend_member_sn = c1.commentator_sn) IN ('10','11')))
             ORDER BY c.id ASC
         ]]>
     </native-query>

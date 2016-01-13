@@ -105,23 +105,27 @@ public class CommonsTemplateImpl implements CommonsTemplate {
     }
 
     @Override
-    public Map<String, Object> getFandomParentInfo(final Long parentId) {
-        Map<String, Object> categoryFandomsResult = null;
-        Map<String, String> categoryFandoms = jedisTemplate.execute(new JedisCallback<Map<String, String>>() {
+    public Map<String, Object> getFandomParentName(final Long parentId) {
+        Map<String,Object> fandomParentNameMap = new HashMap<String,Object>();
+        Map<String, Object> categoryFandoms = jedisTemplate.execute(new JedisCallback<Map<String, Object>>() {
             @Override
-            public Map<String, String> doInRedis(Jedis jedis) throws Exception {
-                return jedis.hgetAll(RedisKeyUtils.getCategoryKey(String.valueOf(parentId)));
+            public Map<String, Object> doInRedis(Jedis jedis) throws Exception {
+                Map<String, String> map = jedis.hgetAll(RedisKeyUtils.getCategoryKey(String.valueOf(parentId)));
+                Map<String,Object> result = new HashMap<String, Object>();
+                result.putAll(map);
+                return result;
             }
         });
-        Long fandomParentId = categoryFandoms.get("fandom_parent_id")==null?0:Long.valueOf(categoryFandoms.get("fandom_parent_id"));
+        fandomParentNameMap.put("fandom_name",categoryFandoms.get("fandom_name"));
+        fandomParentNameMap.put("id",categoryFandoms.get("id"));
+
+        Long fandomParentId = categoryFandoms.get("fandom_parent_id")==null?0:Long.valueOf(categoryFandoms.get("fandom_parent_id").toString());
         if(fandomParentId > 0){
-            categoryFandomsResult = getFandomParentInfo(fandomParentId);
-            categoryFandomsResult.put("fandom_parent_info",categoryFandoms);
-        }else{
-            categoryFandomsResult = new HashMap<String,Object>();
-            categoryFandomsResult.putAll(categoryFandoms);
+            categoryFandoms = null;
+            categoryFandoms = getFandomParentName(fandomParentId);
+            fandomParentNameMap.put("fandom_parent_info",categoryFandoms);
         }
-        return categoryFandomsResult;
+        return fandomParentNameMap;
     }
 
 }

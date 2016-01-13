@@ -77,7 +77,11 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
     public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) throws ApplicationException{
         // 获得我关注的fandom
         PageBounds pageBounds = new PageBounds(fandomParam.getPageNum(), fandomParam.getPageSize());
-        PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(fandomParam.getCurrentSn(), pageBounds);
+        String sn = fandomParam.getFriendSn();
+        if(null == sn || "".equals(sn)){
+            sn = fandomParam.getCurrentSn();
+        }
+        PageList<FandomInfoResult> fandoms = fandomService.findFandomsByMemberSn(sn, pageBounds);
         return renderPagedSuccess(fandoms);
     }
 

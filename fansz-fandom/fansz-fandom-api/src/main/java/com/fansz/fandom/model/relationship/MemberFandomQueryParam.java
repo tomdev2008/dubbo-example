@@ -18,6 +18,9 @@ public class MemberFandomQueryParam extends PageParam implements AccessTokenAwar
 
     private String currentSn;
 
+    @JSONField(name="friend_sn")
+    private String friendSn;
+
     @Override
     public String getAccessToken() {
         return accessToken;
@@ -35,5 +38,13 @@ public class MemberFandomQueryParam extends PageParam implements AccessTokenAwar
     @Override
     public void setCurrentSn(String currentSn) {
         this.currentSn = currentSn;
+    }
+
+    public String getFriendSn() {
+        return friendSn;
+    }
+
+    public void setFriendSn(String friendSn) {
+        this.friendSn = friendSn;
     }
 }

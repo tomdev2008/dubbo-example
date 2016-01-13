@@ -2,8 +2,10 @@ package com.fansz.feeds.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.db.entity.NewsfeedsPostComment;
+import com.fansz.db.entity.PushComment;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.NewsfeedsCommentDAO;
+import com.fansz.db.repository.PushCommentDAO;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.event.model.AddCommentEvent;
 import com.fansz.event.producer.EventProducer;
@@ -17,6 +19,8 @@ import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * Created by dell on 2015/12/28.
@@ -33,14 +37,25 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService {
     @Autowired
     private EventProducer eventProducer;
 
+    @Autowired
+    private PushCommentDAO pushCommentDAO;
+
     @Override
     public NewsfeedsPostComment savePostComment(NewsfeedsCommentParam commentPara) {
         NewsfeedsPostComment newsfeedsPostComment = BeanTools.copyAs(commentPara, NewsfeedsPostComment.class);
+        Date now = DateTools.getSysDate();
         newsfeedsPostComment.setCommentatorSn(commentPara.getCurrentSn());
-        newsfeedsPostComment.setCommentTime(DateTools.getSysDate());
+        newsfeedsPostComment.setCommentTime(now);
         newsfeedsCommentDAO.save(newsfeedsPostComment);
 
-        AddCommentEvent addCommentEvent = new AddCommentEvent(newsfeedsPostComment.getId(), newsfeedsPostComment.getCommentatorSn(), newsfeedsPostComment.getCommentContent());
+        PushComment pushComment = new PushComment();
+        pushComment.setCommentId(newsfeedsPostComment.getId());
+        pushComment.setMemberSn(commentPara.getCurrentSn());
+        pushComment.setCreatetime(now);
+        pushComment.setPostId(commentPara.getPostId());
+        pushCommentDAO.save(pushComment);
+
+        AddCommentEvent addCommentEvent = new AddCommentEvent(newsfeedsPostComment.getId(), newsfeedsPostComment.getPostId(), newsfeedsPostComment.getCommentatorSn(), newsfeedsPostComment.getCommentContent());
         eventProducer.produce(AsyncEventType.ADD_COMMENT,addCommentEvent);
         return newsfeedsPostComment;
     }

@@ -194,6 +194,16 @@ public class RelationTemplateImpl implements RelationTemplate {
     }
 
     @Override
+    public String getFriendRemark(final String currentSn, final String friendSn) {
+        return jedisTemplate.execute(new JedisCallback<String>() {
+            @Override
+            public String doInRedis(Jedis jedis) throws Exception {
+                return jedis.hget(RedisKeyUtils.getFriendRemarkKey(currentSn), friendSn);
+            }
+        });
+    }
+
+    @Override
     public String getRelation(final String currentSn, final String sn) {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
