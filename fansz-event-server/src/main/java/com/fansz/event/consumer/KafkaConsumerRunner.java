@@ -23,10 +23,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 从kafka队列读取消息,并发送短信
  */
 public class KafkaConsumerRunner implements Runnable {
+    private Logger logger = LoggerFactory.getLogger(KafkaConsumerRunner.class);
 
     private final AtomicBoolean closed = new AtomicBoolean(false);
 
-    private Logger logger = LoggerFactory.getLogger(KafkaConsumerRunner.class);
 
     private final Map<String, IEventConsumer> CONSUMER_MAP = new ConcurrentHashMap<>();
 
@@ -82,7 +82,17 @@ public class KafkaConsumerRunner implements Runnable {
 
     private boolean processRecords(ConsumerRecords<String, String> records) {
         for (ConsumerRecord<String, String> record : records) {
-            CONSUMER_MAP.get(record.key()).onEvent(record);
+            IEventConsumer consumer = CONSUMER_MAP.get(record.key());
+            if (consumer != null) {
+                try {
+                    consumer.onEvent(record);
+                } catch (Exception e) {
+                    logger.error("process consumer record encounter error", e);
+                    logger.error("record key:{},record value:{}", record.key(), record.value());
+                }
+            } else {
+                logger.warn("event type {} doesn't have consumer", record.key());
+            }
         }
         return true;
     }
