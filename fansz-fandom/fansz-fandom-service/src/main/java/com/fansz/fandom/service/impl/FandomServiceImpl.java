@@ -165,7 +165,7 @@ public class FandomServiceImpl implements FandomService {
             if (fandomParentId <= 0) {
                 continue;
             }
-            Map<String, Object> map = commonsTemplate.getFandomParentInfo(fandomParentId);
+            Map<String, Object> map = commonsTemplate.getFandomParentName(fandomParentId);
             fandomInfoResult.setFandomParentInfo(map);
         }
         return result;
@@ -203,7 +203,7 @@ public class FandomServiceImpl implements FandomService {
         if (null != fandomInfoResult) {
             List<FandomTagResult> fandomTagList = fandomTagMapper.selectFandomTagsByFandomId(fandomInfoParam.getFandomId());
             fandomInfoResult.setFandomTagResultList(fandomTagList);
-            Map<String, Object> map = commonsTemplate.getFandomParentInfo(fandomInfoResult.getFandomParentId());
+            Map<String, Object> map = commonsTemplate.getFandomParentName(fandomInfoResult.getFandomParentId());
             fandomInfoResult.setFandomParentInfo(map);
         }
         return fandomInfoResult;
@@ -240,7 +240,7 @@ public class FandomServiceImpl implements FandomService {
         List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(), addFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
         fandomInfoResult.setFandomTagResultList(fandomTagResultList);
-        fandomInfoResult.setFandomParentInfo(commonsTemplate.getFandomParentInfo(fandomInfoResult.getFandomParentId()));
+        fandomInfoResult.setFandomParentInfo(commonsTemplate.getFandomParentName(fandomInfoResult.getFandomParentId()));
         return fandomInfoResult;
 
     }

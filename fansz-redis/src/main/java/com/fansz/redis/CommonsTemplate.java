@@ -26,10 +26,10 @@ public interface CommonsTemplate {
     Boolean isCategoryInCache();
 
     /**
-     * 获取fandom一二级
+     * 获取fandom一二级名称
      * @param parentId
      * @return
      */
-    Map<String, Object> getFandomParentInfo(final Long parentId);
+    Map<String, Object> getFandomParentName(final Long parentId);
 
 }
