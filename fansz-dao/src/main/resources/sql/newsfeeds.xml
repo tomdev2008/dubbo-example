@@ -27,24 +27,16 @@
 
     <native-query name="newsfeedsLike.findLikesByPostIdsAndMemberSn">
         <![CDATA[
-          SELECT
-                l.*
-            FROM
-                newsfeeds_member_like l
-            WHERE
-                l.post_id IN (
+          SELECT l.*
+            FROM newsfeeds_member_like l,
+                feeds_member_push_like pl
+            WHERE pl.like_id = l.id
+			AND pl.member_sn = :memberSn
+			AND l.post_id IN (
                   <#list postIds as item>
                     ${item}
                      <#if item_has_next>,</#if>
                   </#list>)
-                    AND (l.member_sn = :memberSn
-                    OR (SELECT
-                        relation_status
-                    FROM
-                        connects_member_relation r
-                    WHERE
-                        r.my_member_sn = :memberSn
-                            AND r.friend_member_sn = l.member_sn) in ('10','11'))
             ORDER BY l.id ASC
         ]]>
     </native-query>
