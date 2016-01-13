@@ -46,22 +46,33 @@ public class AddCommentConsumer implements IEventConsumer {
                 return;
             }
             NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(addCommentEvent.getPostId());
+            //如果是自己评论自己,跳过.评论时,已经添加过,不需要异步添加.
+            if(addCommentEvent.getMemberSn().equals(newsfeedsPost.getMemberSn())){
+                savePushComment(commentFriendList.getResult(), addCommentEvent);
+                return;
+            }
             CountListResult<String> postFriendList = relationTemplate.listFriend(newsfeedsPost.getMemberSn(), 0, FRIEND_LIMIT);//获取发帖人的好友
             if (postFriendList.getTotalCount() == 0) {
                 return;
             }
             Collection sameFriends = CollectionUtils.intersection(commentFriendList.getResult(), postFriendList.getResult());
+            //评论需要发给post creator
+            sameFriends.add(newsfeedsPost.getMemberSn());
             //推送给朋友
+            savePushComment(sameFriends, addCommentEvent);
+        }
+    }
+
+    private void savePushComment(Collection friends, AddCommentEvent addCommentEvent){
+        if (!CollectionTools.isNullOrEmpty(friends)) {
             Date now = DateTools.getSysDate();
-            if (!CollectionTools.isNullOrEmpty(sameFriends)) {
-                for (Object friendSn : sameFriends) {//将回复推送到好友
-                    PushComment pushComment = new PushComment();
-                    pushComment.setMemberSn((String) friendSn);
-                    pushComment.setPostId(addCommentEvent.getPostId());
-                    pushComment.setCommentId(addCommentEvent.getCommentId());
-                    pushComment.setCreatetime(now);
-                    pushCommentDAO.save(pushComment);
-                }
+            for (Object friendSn : friends) {//将回复推送到好友
+                PushComment pushComment = new PushComment();
+                pushComment.setMemberSn((String) friendSn);
+                pushComment.setPostId(addCommentEvent.getPostId());
+                pushComment.setCommentId(addCommentEvent.getCommentId());
+                pushComment.setCreatetime(now);
+                pushCommentDAO.save(pushComment);
             }
         }
     }

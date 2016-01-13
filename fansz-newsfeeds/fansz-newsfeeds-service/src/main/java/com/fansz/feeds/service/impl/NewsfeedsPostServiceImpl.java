@@ -2,10 +2,7 @@ package com.fansz.feeds.service.impl;
 
 
 import com.fansz.common.provider.constant.ErrorCode;
-import com.fansz.db.entity.NewsfeedsMemberLike;
-import com.fansz.db.entity.NewsfeedsPost;
-import com.fansz.db.entity.PushPost;
-import com.fansz.db.entity.User;
+import com.fansz.db.entity.*;
 import com.fansz.db.model.NewsFeedsFandomPostVO;
 import com.fansz.db.model.NewsfeedsCommentVO;
 import com.fansz.db.model.NewsfeedsMemberLikeVO;
@@ -52,6 +49,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
 
     @Autowired
     private NewsfeedsMemberLikeDAO newsfeedsMemberLikeDAO;
+
+    @Autowired
+    private PushLikeDAO pushLikeDAO;
 
 
     @Override
@@ -117,6 +117,12 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         newsfeedsMemberLike.setPostId(postParam.getPostId());
         newsfeedsMemberLike.setMemberSn(postParam.getCurrentSn());
         newsfeedsMemberLikeDAO.save(newsfeedsMemberLike);
+
+        PushLike pushLike = new PushLike();
+        pushLike.setMemberSn(postParam.getCurrentSn());
+        pushLike.setPostId(postParam.getPostId());
+        pushLike.setCreatetime(DateTools.getSysDate());
+        pushLikeDAO.save(pushLike);
 
         AddLikeEvent addLikeEvent = new AddLikeEvent(newsfeedsMemberLike.getId(), newsfeedsMemberLike.getPostId(), newsfeedsMemberLike.getMemberSn());
         eventProducer.produce(AsyncEventType.ADD_LIKE, addLikeEvent);
