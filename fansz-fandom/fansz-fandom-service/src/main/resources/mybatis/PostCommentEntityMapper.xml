@@ -39,11 +39,10 @@
             t.comment_time commentTime,
             m.member_avatar commentatorAvatar,
             m.nickname commentatorNickname,
-            p.commentator_sn orginSn,
-            p.comment_content orginContent,
-            p.comment_time orginTime,
-            q.nickname orginNickname,
-            q.member_avatar orginAvatar
+            p.commentator_sn originSn,
+            p.comment_content originContent,
+            q.nickname originNickname,
+            q.member_avatar originAvatar
         FROM
             feeds_member_post_comment t
         LEFT JOIN connects_member_profile m ON m.sn = t.commentator_sn
