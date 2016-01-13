@@ -126,6 +126,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         pushLike.setMemberSn(postParam.getCurrentSn());
         pushLike.setPostId(postParam.getPostId());
         pushLike.setCreatetime(DateTools.getSysDate());
+        pushLike.setLikeId(newsfeedsMemberLike.getId());
         pushLikeDAO.save(pushLike);
 
         AddLikeEvent addLikeEvent = new AddLikeEvent(newsfeedsMemberLike.getId(), newsfeedsMemberLike.getPostId(), newsfeedsMemberLike.getMemberSn());
