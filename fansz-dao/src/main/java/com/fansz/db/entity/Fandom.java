@@ -32,6 +32,9 @@ public class Fandom {
     @Column(name = "fandom_intro")
     private String fandomIntro;
 
+    @Column(name = "recommend")
+    private String recommend;//默认为0,不推荐
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fandom_create_time")
     private Date fandomCreateTime;
@@ -90,6 +93,14 @@ public class Fandom {
 
     public void setFandomIntro(String fandomIntro) {
         this.fandomIntro = fandomIntro == null ? null : fandomIntro.trim();
+    }
+
+    public String getRecommend() {
+        return recommend;
+    }
+
+    public void setRecommend(String recommend) {
+        this.recommend = recommend;
     }
 
     public Date getFandomCreateTime() {
