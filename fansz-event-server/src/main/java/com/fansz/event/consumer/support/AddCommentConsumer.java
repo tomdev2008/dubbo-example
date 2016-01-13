@@ -2,8 +2,10 @@ package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
 import com.fansz.db.entity.NewsfeedsPost;
+import com.fansz.db.entity.NewsfeedsPostComment;
 import com.fansz.db.entity.PushComment;
 import com.fansz.db.entity.PushPost;
+import com.fansz.db.repository.NewsfeedsCommentDAO;
 import com.fansz.db.repository.NewsfeedsPostDAO;
 import com.fansz.db.repository.PushCommentDAO;
 import com.fansz.event.model.AddCommentEvent;
@@ -19,6 +21,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
 import java.util.Collection;
@@ -37,6 +40,9 @@ public class AddCommentConsumer implements IEventConsumer {
     @Resource(name = "relationTemplate")
     private RelationTemplate relationTemplate;
 
+    @Autowired
+    private NewsfeedsCommentDAO newsfeedsCommentDAO;
+
     @Override
     public void onEvent(ConsumerRecord<String, String> record) {
         final AddCommentEvent addCommentEvent = JSON.parseObject(record.value(), AddCommentEvent.class);
@@ -50,18 +56,48 @@ public class AddCommentConsumer implements IEventConsumer {
             if (postFriendList.getTotalCount() == 0) {
                 return;
             }
-            Collection sameFriends = CollectionUtils.intersection(commentFriendList.getResult(), postFriendList.getResult());
-            //推送给朋友
-            Date now = DateTools.getSysDate();
-            if (!CollectionTools.isNullOrEmpty(sameFriends)) {
-                for (Object friendSn : sameFriends) {//将回复推送到好友
-                    PushComment pushComment = new PushComment();
-                    pushComment.setMemberSn((String) friendSn);
-                    pushComment.setPostId(addCommentEvent.getPostId());
-                    pushComment.setCommentId(addCommentEvent.getCommentId());
-                    pushComment.setCreatetime(now);
-                    pushCommentDAO.save(pushComment);
+            //发表评论的人与POST CREATOR的共同好友
+            Collection bothFriedns = CollectionUtils.intersection(commentFriendList.getResult(), postFriendList.getResult());
+            if (addCommentEvent.getCommentParentId() == null) {
+                //直接评论,评论人与POST creator的共同好友可见(如果是自己评论自己,则共同好友还是全部好友)
+                if (!addCommentEvent.getMemberSn().equals(newsfeedsPost.getMemberSn())) {
+                    //如果不是自己评论自己的post, 评论需要发给post creator
+                    bothFriedns.add(newsfeedsPost.getMemberSn());
                 }
+                //推送给朋友
+                savePushComment(bothFriedns, addCommentEvent);
+            } else {
+                //回复他人评论. 评论人,被回复人,Post creator三方共同好友可见.
+                NewsfeedsPostComment parentComment = newsfeedsCommentDAO.load(addCommentEvent.getCommentParentId());
+                //获取parentComment评论人的好友
+                CountListResult<String> parentCommentFriendList = relationTemplate.listFriend(parentComment.getCommentatorSn(), 0, FRIEND_LIMIT);
+                if (parentCommentFriendList.getTotalCount() == 0) {
+                    return;
+                }
+                //发表评论的人与被回复人以及post creator的共同好友
+                Collection allFriends = CollectionUtils.intersection(bothFriedns, parentCommentFriendList.getResult());
+                //被回复人
+                allFriends.add(parentComment.getCommentatorSn());
+                if (!addCommentEvent.getMemberSn().equals(newsfeedsPost.getMemberSn())) {
+                    //如果不是自己评论自己的post, 评论需要发给post creator
+                    allFriends.add(newsfeedsPost.getMemberSn());
+                }
+                savePushComment(allFriends, addCommentEvent);
+            }
+
+        }
+    }
+
+    private void savePushComment(Collection friends, AddCommentEvent addCommentEvent) {
+        if (!CollectionTools.isNullOrEmpty(friends)) {
+            Date now = DateTools.getSysDate();
+            for (Object friendSn : friends) {//将回复推送到好友
+                PushComment pushComment = new PushComment();
+                pushComment.setMemberSn((String) friendSn);
+                pushComment.setPostId(addCommentEvent.getPostId());
+                pushComment.setCommentId(addCommentEvent.getCommentId());
+                pushComment.setCreatetime(now);
+                pushCommentDAO.save(pushComment);
             }
         }
     }

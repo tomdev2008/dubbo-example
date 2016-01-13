@@ -1,22 +1,24 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.db.entity.PushComment;
+import com.fansz.db.entity.NewsfeedsPost;
 import com.fansz.db.entity.PushLike;
+import com.fansz.db.repository.NewsfeedsPostDAO;
 import com.fansz.db.repository.PushLikeDAO;
 import com.fansz.event.model.AddLikeEvent;
-import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.constant.InformationSource;
-import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.model.CountListResult;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -31,6 +33,9 @@ public class AddLikeConsumer implements IEventConsumer {
     @Resource(name = "relationTemplate")
     private RelationTemplate relationTemplate;
 
+    @Autowired
+    private NewsfeedsPostDAO newsfeedsPostDAO;
+
 
     @Override
     public void onEvent(ConsumerRecord<String, String> record) {
@@ -40,12 +45,29 @@ public class AddLikeConsumer implements IEventConsumer {
             if (friendList.getTotalCount() == 0) {
                 return;
             }
-            //推送给朋友
+            NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(addLikeEvent.getPostId());
+            //如果是自己点赞,需要给我的好友看到
+            if(addLikeEvent.getMemberSn().equals(newsfeedsPost.getMemberSn())){
+                savePushLike(friendList.getResult(), addLikeEvent);
+                return;
+            }
+            CountListResult<String> postFriendList = relationTemplate.listFriend(newsfeedsPost.getMemberSn(), 0, FRIEND_LIMIT);//获取发帖人的好友
+            if (postFriendList.getTotalCount() == 0) {
+                return;
+            }
+            //推送给共同好友 & post creator
+            Collection sameFriends = CollectionUtils.intersection(friendList.getResult(), postFriendList.getResult());
+            sameFriends.add(newsfeedsPost.getMemberSn());
+            savePushLike(sameFriends, addLikeEvent);
+        }
+    }
+
+    private void savePushLike(Collection friends, AddLikeEvent addLikeEvent){
+        if (!CollectionTools.isNullOrEmpty(friends)) {
             Date now = DateTools.getSysDate();
-            for (String friendSn : friendList.getResult()) {//将回复推送到好友
+            for (Object friendSn : friends) {//将点赞推送给好友
                 PushLike pushLike = new PushLike();
-                pushLike.setLikeId(addLikeEvent.getLikeId());
-                pushLike.setMemberSn(friendSn);
+                pushLike.setMemberSn((String) friendSn);
                 pushLike.setPostId(addLikeEvent.getPostId());
                 pushLike.setCreatetime(now);
                 pushLikeDAO.save(pushLike);

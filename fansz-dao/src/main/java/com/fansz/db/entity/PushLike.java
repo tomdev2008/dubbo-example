@@ -26,7 +26,7 @@ public class PushLike {
     private Long likeId;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "createtime")
+    @Column(name = "create_time")
     private Date createtime;
 
     public Long getId() {
