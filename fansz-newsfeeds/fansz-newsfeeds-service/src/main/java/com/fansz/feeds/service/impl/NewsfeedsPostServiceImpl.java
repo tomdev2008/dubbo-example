@@ -153,7 +153,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         page.setPage(postsParam.getPageNum());
         page.setPageSize(postsParam.getPageSize());
         if (postsParam.getSinceId() > 0 || postsParam.getMaxId() > 0) {
-            page.setPageSize(1);
+            page.setPage(1);
         }
         QueryResult<PostInfoResult> postResult = new QueryResult<>(null, 0);
         QueryResult<NewsfeedsPost> postQueryResult = newsfeedsPostDAO.findNewsfeedsPostByPushPostMemberSn(page, postsParam.getCurrentSn(), postsParam.getSinceId(), postsParam.getMaxId());
