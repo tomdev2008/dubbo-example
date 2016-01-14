@@ -70,6 +70,7 @@ public class AddLikeConsumer implements IEventConsumer {
                 pushLike.setMemberSn((String) friendSn);
                 pushLike.setPostId(addLikeEvent.getPostId());
                 pushLike.setCreatetime(now);
+                pushLike.setLikeId(addLikeEvent.getLikeId());
                 pushLikeDAO.save(pushLike);
             }
         }
