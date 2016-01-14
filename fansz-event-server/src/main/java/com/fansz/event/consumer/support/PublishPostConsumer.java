@@ -55,6 +55,8 @@ public class PublishPostConsumer implements IEventConsumer {
             entity.setSourceFrom(InformationSource.FANDOM.getCode());
             entity.setSourcePostId(postId);
             entity.setSourceFandomName(fandom.getFandomName());
+            entity.setSourceFandomAvatarUrl(fandom.getFandomAvatarUrl());
+            entity.setSourcePostType(publishPostEvent.getPostType().getCode());
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
 

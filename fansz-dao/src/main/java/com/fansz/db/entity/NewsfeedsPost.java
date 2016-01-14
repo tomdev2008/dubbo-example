@@ -37,6 +37,9 @@ public class NewsfeedsPost implements java.io.Serializable {
     @Column(name = "source_post_id")
     private Long sourcePostId;
 
+    @Column(name = "source_post_type")
+    private String sourcePostType;
+
     @Column(name = "source_fandom_name")
     private String sourceFandomName;
 
@@ -114,6 +117,14 @@ public class NewsfeedsPost implements java.io.Serializable {
 
     public void setSourcePostId(Long sourcePostId) {
         this.sourcePostId = sourcePostId;
+    }
+
+    public String getSourcePostType() {
+        return sourcePostType;
+    }
+
+    public void setSourcePostType(String sourcePostType) {
+        this.sourcePostType = sourcePostType;
     }
 
     public String getSourceFandomName() {

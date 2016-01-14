@@ -42,12 +42,16 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
      */
     public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException {
         addPostParam.setPostType(PostType.POST.getCode());
+        return saveAndGetPost(addPostParam);
+    }
+
+    private CommonResult<PostInfoResult> saveAndGetPost(AddPostParam addPostParam) throws ApplicationException {
         FandomPostEntity fandomPost = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(fandomPost.getId());
         postParam.setCurrentSn(addPostParam.getCurrentSn());
         if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
-            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent(), PostType.POST);
+            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent(), PostType.getTypeByCode(addPostParam.getPostType()));
             eventProducer.produce(AsyncEventType.PUBLISH_POST, postPublishEvent);
         }
         return getPost(postParam);
@@ -63,7 +67,7 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
     @Override
     public CommonResult<PostInfoResult> addVotePost(AddVotePostParam addVotePostParam) throws ApplicationException {
         addVotePostParam.setPostType(PostType.VOTE_POST.getCode());
-        return addPost(addVotePostParam);
+        return saveAndGetPost(addVotePostParam);
     }
 
     /**
