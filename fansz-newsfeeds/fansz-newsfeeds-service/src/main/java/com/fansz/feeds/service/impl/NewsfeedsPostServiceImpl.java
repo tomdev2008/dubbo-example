@@ -235,6 +235,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             //如果该朋友圈是来自fandom的动态,补充fandom name
             if (InformationSource.FANDOM.getCode().equals(newsfeedsPost.getSourceFrom()) && newsfeedsPost.getSourcePostId() != null) {
                 postInfoResult.setFandomName(newsfeedsPost.getSourceFandomName());
+                postInfoResult.setFandomAvatarUrl(newsfeedsPost.getSourceFandomAvatarUrl());
             }
             postInfoResultList.add(postInfoResult);
         }
