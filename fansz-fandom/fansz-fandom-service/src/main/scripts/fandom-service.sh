@@ -33,7 +33,7 @@ if [ ! -d "$LOG_PATH" ]; then
 fi  
 
 #star fandom server
-nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS -Dio.netty.allocator.type=pooled -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$FANDOM_OUT" 2>&1 &
+nohup "$JAVA_HOME"/bin/java  $JAVA_OPTS  -Dapplication.root="$BASE_DIR" -Dlog4j.configuration="file:$BASE_DIR/conf/log4j.xml" -classpath "$BASE_DIR/lib/*" "$MAIN_CLASS"  >> "$FANDOM_OUT" 2>&1 &
 
 echo $! > "$FANDOM_PID"
 
