@@ -10,6 +10,8 @@
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP"/>
+        <result column="post_type" property="postType" jdbcType="VARCHAR"/>
     </resultMap>
 
     <resultMap id="postInfoResultMap" type="com.fansz.fandom.model.post.PostInfoResult">
@@ -18,6 +20,8 @@
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
+        <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP"/>
+        <result column="post_type" property="postType" jdbcType="VARCHAR"/>
         <result column="liked" property="liked" jdbcType="VARCHAR"/>
         <result column="likes" property="likes" jdbcType="BIGINT"/>
         <result column="comments" property="comments" jdbcType="BIGINT"/>
@@ -29,7 +33,7 @@
 
 
     <sql id="Base_Column_List">
-    id, member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time
+    id, member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time,effective_time,post_type
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -45,9 +49,27 @@
   </delete>
 
     <insert id="insert" parameterType="com.fansz.fandom.entity.FandomPostEntity">
-        insert into feeds_member_post_fandom (member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time)
-        values (#{memberSn,jdbcType=VARCHAR}, #{fandomId,jdbcType=BIGINT},#{postTitle,jdbcType=VARCHAR},
-        #{postContent,jdbcType=VARCHAR},#{postNewsfeeds,jdbcType=VARCHAR}, #{postTime,jdbcType=TIMESTAMP})
+        insert into feeds_member_post_fandom (
+            member_sn,
+            fandom_id,
+            post_title,
+            post_content,
+            post_newsfeeds,
+            post_time,
+            effective_time,
+            post_type
+        )
+        values
+        (
+            #{memberSn,jdbcType=VARCHAR},
+            #{fandomId,jdbcType=BIGINT},
+            #{postTitle,jdbcType=VARCHAR},
+            #{postContent,jdbcType=VARCHAR},
+            #{postNewsfeeds,jdbcType=VARCHAR},
+            #{postTime,jdbcType=TIMESTAMP},
+            #{effectiveTime,jdbcType=TIMESTAMP},
+            #{postType,jdbcType=VARCHAR}
+        )
         <selectKey keyProperty="id" resultType="java.lang.Long" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>

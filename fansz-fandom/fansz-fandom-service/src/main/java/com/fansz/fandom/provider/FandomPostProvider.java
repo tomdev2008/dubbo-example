@@ -12,6 +12,7 @@ import com.fansz.fandom.api.FandomPostApi;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.*;
 import com.fansz.fandom.service.PostService;
+import com.fansz.pub.constant.PostType;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,17 +41,30 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
      * @return resp 返回对象
      */
     public CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException {
+        addPostParam.setPostType(PostType.POST.getCode());
         FandomPostEntity fandomPost = postService.addPost(addPostParam);
         GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(fandomPost.getId());
         postParam.setCurrentSn(addPostParam.getCurrentSn());
         if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
-            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent());
+            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent(), PostType.POST);
             eventProducer.produce(AsyncEventType.PUBLISH_POST, postPublishEvent);
         }
         return getPost(postParam);
     }
 
+    /**
+     * 创建投票帖
+     *
+     * @param addVotePostParam
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonResult<PostInfoResult> addVotePost(AddVotePostParam addVotePostParam) throws ApplicationException {
+        addVotePostParam.setPostType(PostType.VOTE_POST.getCode());
+        return addPost(addVotePostParam);
+    }
 
     /**
      * 查询帖子点赞接口

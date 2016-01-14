@@ -25,6 +25,15 @@ public interface FandomPostApi {
     CommonResult<PostInfoResult> addPost(AddPostParam addPostParam) throws ApplicationException;
 
     /**
+     * 创建投票贴
+     * @param addVotePostParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("publishVotePost")
+    CommonResult<PostInfoResult> addVotePost(AddVotePostParam addVotePostParam) throws ApplicationException;
+
+    /**
      * 删除帖子接口
      *
      * @param removePostrParam 帖子id
