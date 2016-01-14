@@ -197,7 +197,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         }
         HashSet<String> memberSnSet = new HashSet<>();
         //临时存储本次用到的所有用户信息, key为sn, value为redis返回的hash
-        Map<String, Map<String, Object>> allMemberMap = new HashMap<>();
+        Map<String, Map<String, String>> allMemberMap = new HashMap<>();
         HashSet<String> postIdSet = new HashSet<>();
         for (NewsfeedsPost post : newsfeedsPosts) {
             memberSnSet.add(post.getMemberSn());
@@ -218,9 +218,7 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //批量查询所需的user info
         for (String sn : memberSnSet) {
             Map<String, String> userMap = userTemplate.get(sn);
-            Map<String, Object> userInfoResult = new HashMap<>();
-            userInfoResult.putAll(userMap);
-            allMemberMap.put(sn, userInfoResult);
+            allMemberMap.put(sn, userMap);
         }
 
         //NewsfeedsPost convert to PostInfoResult
@@ -228,7 +226,8 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
         //convert newsfeedPost to PostInfoResult
         for (NewsfeedsPost newsfeedsPost : newsfeedsPosts) {
             PostInfoResult postInfoResult = BeanTools.copyAs(newsfeedsPost, PostInfoResult.class);
-            Map<String, Object> userInfoResult = allMemberMap.get(newsfeedsPost.getMemberSn());
+            Map<String, Object> userInfoResult = new HashMap<>();
+            userInfoResult.putAll(allMemberMap.get(newsfeedsPost.getMemberSn()));
             postInfoResult.setUserInfoResult(userInfoResult);
             //liked default 0
             postInfoResult.setLiked("0");
@@ -246,7 +245,8 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
             if (postInfoResult == null) {
                 continue;
             }
-            Map<String, Object> userInfoResult = allMemberMap.get(memberLike.getMemberSn());
+            Map<String, Object> userInfoResult = new HashMap<>();
+            userInfoResult.putAll(allMemberMap.get(memberLike.getMemberSn()));
             if (CollectionTools.isNullOrEmpty(postInfoResult.getLikedList())) {
                 postInfoResult.setLikedList(new ArrayList<Map<String, Object>>());
             }
@@ -263,9 +263,9 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
                 continue;
             }
 
-            Map<String, Object> userMap = allMemberMap.get(postComment.getCommentatorSn());
-            postComment.setCommentatorNickname(userMap.get("nickname") == null ? (String) userMap.get("loginname") : (String) userMap.get("nickname"));
-            postComment.setCommentatorAvatar((String) userMap.get("member_avatar"));
+            Map<String, String> userMap = allMemberMap.get(postComment.getCommentatorSn());
+            postComment.setCommentatorNickname(userMap.get("nickname") == null ? userMap.get("loginname") : userMap.get("nickname"));
+            postComment.setCommentatorAvatar(userMap.get("member_avatar"));
             //find parent comment && set value
             if (postComment.getCommentParentId() != null) {
                 PostCommentQueryResult originComment = CollectionTools.find(commentQueryResultList, "id", postComment.getCommentParentId());
