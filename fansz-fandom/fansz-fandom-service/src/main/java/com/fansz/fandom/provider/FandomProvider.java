@@ -61,18 +61,6 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return renderSuccess();
     }
 
-
-    public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) throws ApplicationException{
-        FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
-        return renderSuccess(result);
-    }
-
-    @Override
-    public CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) throws ApplicationException{
-        FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
-        return renderSuccess(fandomInfoResult);
-    }
-
     @Override
     public CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) throws ApplicationException{
         // 获得我关注的fandom
@@ -126,13 +114,32 @@ public class FandomProvider extends AbstractProvider implements FandomApi {
         return super.renderPagedSuccess(pageList);
     }
 
+    public CommonResult<FandomInfoResult> getFandom(FandomInfoParam fandomInfoParam) throws ApplicationException{
+        FandomInfoResult result = this.fandomService.getFandomInfo(fandomInfoParam);
+        return renderSuccess(result);
+    }
+
+    @Override
+    public CommonResult<FandomInfoResult> addFandom(AddFandomParam addFandomParam) throws ApplicationException{
+        FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
+        return renderSuccess(fandomInfoResult);
+    }
     @Override
     public CommonResult<FandomInfoResult> addJoinFandom(AddFandomParam addFandomParam) throws ApplicationException{
         FandomInfoResult fandomInfoResult = fandomService.addFandom(addFandomParam);
+
+        //关注fandom
         JoinFandomsParam joinFandomsParam = new JoinFandomsParam();
         joinFandomsParam.setCurrentSn(fandomInfoResult.getFandomCreatorSn());
         joinFandomsParam.setFandomIds(Arrays.asList(String.valueOf(fandomInfoResult.getId())));
         fandomService.joinFandom(joinFandomsParam);
+
+        //查询fandom详细信息
+        FandomInfoParam fandomInfoParam = new FandomInfoParam();
+        fandomInfoParam.setCurrentSn(fandomInfoResult.getFandomCreatorSn());
+        fandomInfoParam.setFandomId(fandomInfoResult.getId());
+        fandomInfoResult = this.fandomService.getFandomInfo(fandomInfoParam);
+
         return renderSuccess(fandomInfoResult);
     }
 

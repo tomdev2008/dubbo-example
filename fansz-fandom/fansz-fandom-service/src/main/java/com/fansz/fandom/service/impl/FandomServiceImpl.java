@@ -230,12 +230,6 @@ public class FandomServiceImpl implements FandomService {
         fandomEntity.setFandomParentId(addFandomParam.getFandomParentId());
         this.fandomMapper.insert(fandomEntity);
 
-        //添加特别关注记录
-        SpecialFocusParam specialFocusParam = new SpecialFocusParam();
-        specialFocusParam.setCurrentSn(addFandomParam.getCurrentSn());
-        specialFocusParam.setSpecialFandomId(fandomEntity.getId());
-        specialFocusMapper.addSpecialFocusInfo(specialFocusParam);
-
         //保存fandomTag
         List<FandomTagResult> fandomTagResultList = saveTagByfandomId(fandomEntity.getId(), addFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = BeanTools.copyAs(fandomEntity, FandomInfoResult.class);
