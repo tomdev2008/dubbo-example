@@ -77,6 +77,10 @@ public class RelationShipServiceImpl implements RelationShipService {
             } else {
                 record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
             }
+            String remark = relationTemplate.getFriendRemark(friendsQueryParam.getCurrentSn(), record.get("sn"));
+            if(!StringTools.isBlank(remark)){
+                record.put("remark", remark);
+            }
         }
         return new QueryResult<>(friendList, snList.getTotalCount());
     }
