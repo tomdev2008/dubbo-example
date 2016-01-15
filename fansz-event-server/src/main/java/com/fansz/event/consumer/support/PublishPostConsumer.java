@@ -1,12 +1,8 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.db.entity.NewsfeedsPost;
-import com.fansz.db.entity.PushPost;
-import com.fansz.db.entity.UserRelation;
-import com.fansz.db.repository.NewsfeedsPostDAO;
-import com.fansz.db.repository.PushPostDAO;
-import com.fansz.db.repository.UserRelationDAO;
+import com.fansz.db.entity.*;
+import com.fansz.db.repository.*;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.constant.InformationSource;
@@ -30,7 +26,7 @@ import java.util.List;
 @Component("publishPostConsumer")
 public class PublishPostConsumer implements IEventConsumer {
 
-    private final static Long FRIEND_LIMIT = 500l;
+
     @Autowired
     private PushPostDAO pushPostDAO;
 
@@ -38,7 +34,10 @@ public class PublishPostConsumer implements IEventConsumer {
     private NewsfeedsPostDAO newsfeedsPostDAO;
 
     @Autowired
-    private UserRelationDAO userRelationDAO;
+    private FandomPostDAO fandomPostDAO;
+
+    @Autowired
+    private FandomDAO fandomDAO;
 
     @Resource(name = "relationTemplate")
     private RelationTemplate relationTemplate;
@@ -49,8 +48,15 @@ public class PublishPostConsumer implements IEventConsumer {
         Long postId = publishPostEvent.getPostId();
         if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
             NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
+
+            FandomPost fandomPost = fandomPostDAO.load(postId);
+            //获取post所在fandom的名称
+            Fandom fandom = fandomDAO.load(fandomPost.getFandomId());
             entity.setSourceFrom(InformationSource.FANDOM.getCode());
             entity.setSourcePostId(postId);
+            entity.setSourceFandomName(fandom.getFandomName());
+            entity.setSourceFandomAvatarUrl(fandom.getFandomAvatarUrl());
+            entity.setSourcePostType(publishPostEvent.getPostType().getCode());
             newsfeedsPostDAO.save(entity);
             postId = entity.getId();
 

@@ -6,15 +6,19 @@ public class FandomPostEntity {
 
     private Long id;
 
-    private String memberSn;
-
-    private Long fandomId;
-
     private String postTitle;
 
     private String postContent;
 
     private String postNewsfeeds;
+
+    private String memberSn;
+
+    private Long fandomId;
+
+    private String postType;
+
+    private Date effectiveTime;
 
     private Date postTime;
 
@@ -66,11 +70,27 @@ public class FandomPostEntity {
         this.postNewsfeeds = postNewsfeeds;
     }
 
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
     public Date getPostTime() {
         return postTime;
     }
 
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
+    }
+
+    public Date getEffectiveTime() {
+        return effectiveTime;
+    }
+
+    public void setEffectiveTime(Date effectiveTime) {
+        this.effectiveTime = effectiveTime;
     }
 }

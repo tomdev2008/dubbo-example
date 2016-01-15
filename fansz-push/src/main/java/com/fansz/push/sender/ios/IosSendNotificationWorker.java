@@ -34,6 +34,6 @@ public class IosSendNotificationWorker extends TimerTask {
 
     protected BusinessEventProducer businessEventProducer;
 
-    private PushManager<SimpleApnsPushNotification> pushManagerFactory;
+    private PushManager<SimpleApnsPushNotification> pushManager;
 
 }

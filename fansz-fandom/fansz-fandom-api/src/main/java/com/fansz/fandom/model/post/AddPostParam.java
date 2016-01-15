@@ -34,6 +34,8 @@ public class AddPostParam implements AccessTokenAware, Serializable {
     @JSONField(name="post_newsfeeds")
     private String postNewsfeeds;
 
+    private String postType="P";
+
 
     @Override
     public String getCurrentSn() {
@@ -75,6 +77,14 @@ public class AddPostParam implements AccessTokenAware, Serializable {
 
     public void setPostNewsfeeds(String postNewsfeeds) {
         this.postNewsfeeds = postNewsfeeds;
+    }
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
     }
 
     @Override

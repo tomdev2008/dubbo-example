@@ -22,7 +22,7 @@
         </layout>
     </appender>
     <logger name="com.alibaba">
-        <level value="debug" />
+        <level value="info" />
     </logger>
     <root>
         <level value="debug"/>

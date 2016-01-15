@@ -7,6 +7,7 @@ import com.fansz.newsfeeds.model.profile.UserInfoResult;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * POST信息模型
@@ -37,10 +38,10 @@ public class PostInfoResult implements Serializable {
     private String liked;
 
     @JSONField(name = "post_member")
-    private UserInfoResult userInfoResult;
+    private Map<String, Object> userInfoResult;
 
     @JSONField(name = "liked_list")
-    private List<UserInfoResult> likedList;
+    private List<Map<String, Object>> likedList;
 
     @JSONField(name = "comment_list")
     private List<PostCommentQueryResult> commentList;
@@ -62,7 +63,6 @@ public class PostInfoResult implements Serializable {
         this.id = id;
     }
 
-
     public String getPostContent() {
         return postContent;
     }
@@ -70,7 +70,6 @@ public class PostInfoResult implements Serializable {
     public void setPostContent(String postContent) {
         this.postContent = postContent;
     }
-
 
     public String getLiked() {
         return liked;
@@ -88,29 +87,12 @@ public class PostInfoResult implements Serializable {
         this.postTitle = postTitle;
     }
 
-
-    public UserInfoResult getUserInfoResult() {
-        return userInfoResult;
-    }
-
-    public void setUserInfoResult(UserInfoResult userInfoResult) {
-        this.userInfoResult = userInfoResult;
-    }
-
     public Date getPostTime() {
         return postTime;
     }
 
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
-    }
-
-    public List<UserInfoResult> getLikedList() {
-        return likedList;
-    }
-
-    public void setLikedList(List<UserInfoResult> likedList) {
-        this.likedList = likedList;
     }
 
     public List<PostCommentQueryResult> getCommentList() {
@@ -159,5 +141,21 @@ public class PostInfoResult implements Serializable {
 
     public void setFandomName(String fandomName) {
         this.fandomName = fandomName;
+    }
+
+    public Map<String, Object> getUserInfoResult() {
+        return userInfoResult;
+    }
+
+    public void setUserInfoResult(Map<String, Object> userInfoResult) {
+        this.userInfoResult = userInfoResult;
+    }
+
+    public List<Map<String, Object>> getLikedList() {
+        return likedList;
+    }
+
+    public void setLikedList(List<Map<String, Object>> likedList) {
+        this.likedList = likedList;
     }
 }

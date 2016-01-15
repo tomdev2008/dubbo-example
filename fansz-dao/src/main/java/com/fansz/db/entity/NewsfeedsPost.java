@@ -12,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "newsfeeds_member_post")
 public class NewsfeedsPost implements java.io.Serializable {
 
+    private static final long serialVersionUID = -1709498155978129259L;
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -35,6 +36,15 @@ public class NewsfeedsPost implements java.io.Serializable {
 
     @Column(name = "source_post_id")
     private Long sourcePostId;
+
+    @Column(name = "source_post_type")
+    private String sourcePostType;
+
+    @Column(name = "source_fandom_name")
+    private String sourceFandomName;
+
+    @Column(name = "source_fandom_avatar_url")
+    private String sourceFandomAvatarUrl;
 
     public NewsfeedsPost() {
     }
@@ -107,6 +117,30 @@ public class NewsfeedsPost implements java.io.Serializable {
 
     public void setSourcePostId(Long sourcePostId) {
         this.sourcePostId = sourcePostId;
+    }
+
+    public String getSourcePostType() {
+        return sourcePostType;
+    }
+
+    public void setSourcePostType(String sourcePostType) {
+        this.sourcePostType = sourcePostType;
+    }
+
+    public String getSourceFandomName() {
+        return sourceFandomName;
+    }
+
+    public void setSourceFandomName(String sourceFandomName) {
+        this.sourceFandomName = sourceFandomName;
+    }
+
+    public String getSourceFandomAvatarUrl() {
+        return sourceFandomAvatarUrl;
+    }
+
+    public void setSourceFandomAvatarUrl(String sourceFandomAvatarUrl) {
+        this.sourceFandomAvatarUrl = sourceFandomAvatarUrl;
     }
 }
 

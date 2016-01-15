@@ -38,7 +38,7 @@
 
     <!-- 根logger的设置-->
     <root>
-        <level value="debug"/>
+        <level value="warn"/>
         <appender-ref ref="file"/>
     </root>
 </log4j:configuration>
