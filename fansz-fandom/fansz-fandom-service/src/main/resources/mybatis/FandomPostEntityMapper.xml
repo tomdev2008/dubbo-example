@@ -345,4 +345,63 @@
         ORDER BY f.id DESC
     </select>
 
+    <select id="getVerifyVoteInfo" parameterType="java.lang.Object" resultType="java.util.Map">
+        SELECT
+            f.effective_time,
+            count(c.id) isVote
+        FROM
+            feeds_member_post_fandom f,
+            feeds_member_post_choice c
+        WHERE
+            f.id = c.post_id
+        AND f.id = #{postId,jdbcType=BIGINT}
+        AND voter_sn =  #{memberSn,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="votePost" parameterType="com.fansz.fandom.model.vote.VotePostParam">
+        insert into feeds_member_post_choice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                post_id,
+            </if>
+            <if test="currentSn != null">
+                voter_sn,
+            </if>
+            <if test="selectedOption != null">
+                selected_option,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="postId != null">
+                #{postId,jdbcType=BIGINT},
+            </if>
+            <if test="currentSn != null">
+                #{currentSn,jdbcType=VARCHAR},
+            </if>
+            <if test="selectedOption != null">
+                #{selectedOption,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getVoteResultByPostId" parameterType="java.lang.Long" resultType="com.fansz.fandom.model.vote.VotePostResult">
+        SELECT
+            ifnull(sum(
+                CASE
+                WHEN selected_option = 'A' THEN
+                    1
+                END
+            ),0) AS option_A_count,
+            ifnull(sum(
+                CASE
+                WHEN selected_option = 'B' THEN
+                    1
+                END
+            ),0) AS option_B_count
+        FROM
+            feeds_member_post_choice
+        WHERE
+            post_id = #{postId,jdbcType=BIGINT}
+    </select>
+
 </mapper>
