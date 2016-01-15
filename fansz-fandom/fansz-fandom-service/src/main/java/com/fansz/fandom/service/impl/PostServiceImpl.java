@@ -144,7 +144,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public VotePostResult votePost(VotePostParam votePostParam) {
         Map<String,Object> map = fandomPostEntityMapper.getVerifyVoteInfo(votePostParam.getCurrentSn(),votePostParam.getPostId());
-        if(map == null){
+        if(map.get("effective_time") == null){
             throw new ApplicationException(ErrorCode.VOTE_POST_NOT_EXIST);
         }
         Date effectiveTime = (Date) map.get("effective_time");
