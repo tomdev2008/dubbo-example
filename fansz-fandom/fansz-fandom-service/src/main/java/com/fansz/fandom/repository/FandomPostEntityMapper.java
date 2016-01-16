@@ -3,10 +3,14 @@ package com.fansz.fandom.repository;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.GetPostByIdParam;
 import com.fansz.fandom.model.post.PostInfoResult;
+import com.fansz.fandom.model.vote.VotePostParam;
+import com.fansz.fandom.model.vote.VotePostResult;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
+
+import java.util.Map;
 
 @MapperScan
 public interface FandomPostEntityMapper {
@@ -51,5 +55,27 @@ public interface FandomPostEntityMapper {
 
 
     PageList<PostInfoResult> getPostsAllByMember(@Param("memberSn") String memberSn, @Param("friendSn") String friendSn, PageBounds pageBounds);
+
+    /**
+     *获取验证投票信息
+     * @param memberSn
+     * @param postId
+     * @return map{isVote=1, effective_time=2016-01-15 18:06:36.0}
+     */
+    Map<String,Object> getVerifyVoteInfo(@Param("memberSn")String memberSn, @Param("postId")Long postId);
+
+    /**
+     * 投票
+     * @param votePostParam
+     * @return
+     */
+    int votePost(VotePostParam votePostParam);
+
+    /**
+     * 获取投票帖投票结果
+     * @param postId
+     * @return
+     */
+    VotePostResult getVoteResultByPostId(Long postId);
 
 }

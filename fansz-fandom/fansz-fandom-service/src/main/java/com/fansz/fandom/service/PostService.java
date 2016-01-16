@@ -3,6 +3,9 @@ package com.fansz.fandom.service;
 
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.*;
+import com.fansz.fandom.model.vote.VotePostParam;
+import com.fansz.fandom.model.vote.VotePostResult;
+import com.fansz.fandom.model.vote.VoteResultByPostId;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.stereotype.Service;
@@ -39,4 +42,8 @@ public interface PostService {
     PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam);
 
     PageList<PostInfoResult> getPostsAllByMember(GetMemberPostsParam postParam);
+
+    VotePostResult votePost(VotePostParam votePostParam);
+
+    VotePostResult getVoteResultByPostId(VoteResultByPostId voteResultByPostId);
 }

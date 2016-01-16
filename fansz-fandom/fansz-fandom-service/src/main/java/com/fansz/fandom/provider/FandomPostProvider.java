@@ -11,6 +11,9 @@ import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.api.FandomPostApi;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.model.post.*;
+import com.fansz.fandom.model.vote.VotePostParam;
+import com.fansz.fandom.model.vote.VotePostResult;
+import com.fansz.fandom.model.vote.VoteResultByPostId;
 import com.fansz.fandom.service.PostService;
 import com.fansz.pub.constant.PostType;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -186,5 +189,29 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
     public CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam) throws ApplicationException {
         PageList<PostInfoResult> PostInfoList = postService.getPostsAllByMember(postParam);
         return renderPagedSuccess(PostInfoList);
+    }
+
+    /**
+     * 投票
+     * @param votePostParam
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonResult<VotePostResult> votePost(VotePostParam votePostParam) throws ApplicationException {
+        VotePostResult votePostResult = postService.votePost(votePostParam);
+        return renderSuccess(votePostResult);
+    }
+
+    /**
+     * 获取投票帖投票结果
+     * @param voteResultByPostId
+     * @return
+     * @throws ApplicationException
+     */
+    @Override
+    public CommonResult<VotePostResult> getVoteResultByPostId(VoteResultByPostId voteResultByPostId) throws ApplicationException {
+        VotePostResult votePostResult = postService.getVoteResultByPostId(voteResultByPostId);
+        return renderSuccess(votePostResult);
     }
 }

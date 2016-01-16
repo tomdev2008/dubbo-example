@@ -7,6 +7,9 @@ import com.fansz.common.provider.model.CommonPagedResult;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 import com.fansz.fandom.model.post.*;
+import com.fansz.fandom.model.vote.VotePostParam;
+import com.fansz.fandom.model.vote.VotePostResult;
+import com.fansz.fandom.model.vote.VoteResultByPostId;
 
 import java.util.List;
 
@@ -135,5 +138,21 @@ public interface FandomPostApi {
     @DubboxMethod("getMemberAllPosts")
     CommonPagedResult<PostInfoResult> getAllPostsByMember(GetMemberPostsParam postParam) throws ApplicationException;
 
+    /**
+     * 投票
+     * @param votePostParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("votePost")
+    CommonResult<VotePostResult> votePost(VotePostParam votePostParam) throws ApplicationException;
 
+    /**
+     * 获取投票帖投票结果
+     * @param voteResultByPostId
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("getVoteResultByPostId")
+    CommonResult<VotePostResult> getVoteResultByPostId(VoteResultByPostId voteResultByPostId)throws ApplicationException;
 }

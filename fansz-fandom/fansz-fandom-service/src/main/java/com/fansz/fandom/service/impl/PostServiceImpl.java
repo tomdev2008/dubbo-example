@@ -1,10 +1,14 @@
 package com.fansz.fandom.service.impl;
 
 
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.entity.FandomPostLikeEntity;
 import com.fansz.fandom.model.post.*;
+import com.fansz.fandom.model.vote.VotePostParam;
+import com.fansz.fandom.model.vote.VotePostResult;
+import com.fansz.fandom.model.vote.VoteResultByPostId;
 import com.fansz.fandom.repository.FandomPostEntityMapper;
 import com.fansz.fandom.repository.FandomPostLikeEntityMapper;
 import com.fansz.fandom.service.PostService;
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by root on 15-11-3.
@@ -129,5 +134,42 @@ public class PostServiceImpl implements PostService {
     public PageList<PostInfoResult> getPostsAllByMember(GetMemberPostsParam postParam) {
         PageBounds pageBounds = new PageBounds(postParam.getPageNum(), postParam.getPageSize());
         return fandomPostEntityMapper.getPostsAllByMember(postParam.getCurrentSn(), postParam.getFriendSn(), pageBounds);
+    }
+
+    /**
+     * 投票
+     * @param votePostParam
+     * @return
+     */
+    @Override
+    public VotePostResult votePost(VotePostParam votePostParam) {
+        Map<String,Object> map = fandomPostEntityMapper.getVerifyVoteInfo(votePostParam.getCurrentSn(),votePostParam.getPostId());
+        if(map.get("effective_time") == null){
+            throw new ApplicationException(ErrorCode.VOTE_POST_NOT_EXIST);
+        }
+        Date effectiveTime = (Date) map.get("effective_time");
+        Long count = (Long) map.get("isVote");
+        //判断是否超过截止时间
+        if(effectiveTime.getTime() < System.currentTimeMillis()){
+            throw new ApplicationException(ErrorCode.VOTE_EXPIRED);
+        }
+        //判断是否重复投票
+        if(count > 0){
+            throw new ApplicationException(ErrorCode.VOTE_REPEATED);
+        }
+        //保存投票信息
+        fandomPostEntityMapper.votePost(votePostParam);
+        //统计投票信息
+        return fandomPostEntityMapper.getVoteResultByPostId(votePostParam.getPostId());
+    }
+
+    /**
+     * 获取投票帖投票结果
+     * @param voteResultByPostId
+     * @return
+     */
+    @Override
+    public VotePostResult getVoteResultByPostId(VoteResultByPostId voteResultByPostId) {
+        return fandomPostEntityMapper.getVoteResultByPostId(voteResultByPostId.getPostId());
     }
 }
