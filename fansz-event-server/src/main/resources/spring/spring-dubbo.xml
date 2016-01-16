@@ -7,7 +7,7 @@
 
     <dubbo:application name="members-event-server" owner="backend-team" organization="fansz"/>
 
-    <dubbo:registry address="${dubbo.registry.address}"/>
+    <dubbo:registry address="${dubbo.registry.address}" client="curator"/>
 
     <dubbo:monitor protocol="registry"/>
     <dubbo:reference interface="com.fansz.fandom.api.SpecialFocusApi" id="specialFocusProvider" validation="true"

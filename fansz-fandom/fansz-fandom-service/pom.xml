@@ -111,10 +111,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!--access mysql database start-->
         <dependency>

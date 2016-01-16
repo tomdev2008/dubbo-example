@@ -27,6 +27,6 @@ public class TestUser {
         userTemplate.addUser(userMap);*/
         //41558646531456744
 
-        System.out.println("13761505135".hashCode());
+        System.out.println("18621614455".hashCode()%1000);
     }
 }

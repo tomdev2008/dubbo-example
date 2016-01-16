@@ -12,8 +12,8 @@
 
     <bean id="userJedisTemplate" class="com.fansz.redis.JedisTemplate">
         <property name="jedisPool">
-            <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean">
-                <property name="proxyDir" value="/zk/codis/db_user/proxy"/>
+            <bean id="jedisResourcePool" class="com.fansz.redis.support.JedisPoolFactoryBean" >
+                <property name="proxyDir" value="${user.proxy.dir}"/>
                 <property name="zkAddress" value="${redis.zk.address}"/>
                 <property name="poolConfig" ref="jedisPoolConfig"/>
             </bean>
