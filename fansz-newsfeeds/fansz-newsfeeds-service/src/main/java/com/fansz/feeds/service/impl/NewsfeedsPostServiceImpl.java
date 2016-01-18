@@ -25,6 +25,7 @@ import com.fansz.redis.UserTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -113,7 +114,8 @@ public class NewsfeedsPostServiceImpl implements NewsfeedsPostService {
     @Override
     public String saveNewsfeedLike(GetPostByIdParam postParam) {
         //判断是否重复点赞
-        int count = newsfeedsMemberLikeDAO.isLiked(postParam.getCurrentSn(), postParam.getPostId());
+        Map<String,Object> map = newsfeedsMemberLikeDAO.isLiked(postParam.getCurrentSn(), postParam.getPostId());
+        long count = ((BigInteger)map.get("cnt")).longValue();
         if (count > 0) {
             return ErrorCode.LIKED_REPEATED.getCode();
         }

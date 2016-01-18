@@ -126,7 +126,7 @@
     <native-query name="newsfeeds.isLiked">
         <![CDATA[
             SELECT
-                count(1)
+                count(1) as cnt
             FROM
                 newsfeeds_member_like
             WHERE
