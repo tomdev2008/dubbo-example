@@ -99,6 +99,7 @@ public class UserTemplateImpl implements UserTemplate {
         return jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
+                Map<String,String> oldUser = jedis.hgetAll(RedisKeyUtils.getUserKey(sn)); //获取老的用户信息
                 Pipeline pipe = jedis.pipelined();
                 for (String prop : props.keySet()) {
                     Object val = props.get(prop);
@@ -109,6 +110,10 @@ public class UserTemplateImpl implements UserTemplate {
                 if (props.containsKey("nickname")) {
                     String nickname = (String) props.get("nickname");
                     if (StringTools.isNotBlank(nickname)) {//更新nickname索引
+                        String oldNickName = oldUser.get("nickname");
+                        if(StringTools.isNotBlank(oldNickName)) {
+                            pipe.del(RedisKeyUtils.getNickIdxKey(oldNickName)); //删除老的nickname索引
+                        }
                         pipe.hset(RedisKeyUtils.getNickIdxKey(nickname), nickname, sn);
                     }
                 }
