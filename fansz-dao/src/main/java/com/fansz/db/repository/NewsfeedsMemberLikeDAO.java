@@ -8,6 +8,7 @@ import com.fansz.orm.dao.annotation.NamedExec;
 import com.fansz.orm.dao.annotation.NamedQuery;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 public interface NewsfeedsMemberLikeDAO extends IBaseDAO<NewsfeedsMemberLike> {
 
     @NamedQuery(queryId = "newsfeeds.isLiked", parameters = {"memberSn","postId"})
-    int isLiked(String memberSn,Long postId);
+    Map<String,Object> isLiked(String memberSn, Long postId);
 
     @NamedExec(execId = "newsfeeds.removeLikeByPostId",parameters = "postId")
     int removeLikeByPostId(Long postId);
