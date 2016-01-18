@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -26,7 +27,7 @@ public class TestUser {
 
         userTemplate.addUser(userMap);*/
         //41558646531456744
-
-        System.out.println("18621614455".hashCode()%1000);
+         Date d=new Date(1452838499677L);
+        System.out.println(d);
     }
 }
