@@ -111,10 +111,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.sgroschupf</groupId>
             <artifactId>zkclient</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!--access mysql database start-->
         <dependency>
@@ -202,6 +202,67 @@
             <properties>
                 <env>development</env>
             </properties>
+        </profile>
+        <profile>
+            <id>testing</id>
+            <properties>
+                <env>testing</env>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/log4j.xml</exclude>
+                                <exclude>**/jdbc.properties</exclude>
+                                <exclude>**/kafka.properties</exclude>
+                                <exclude>**/redis.properties</exclude>
+                                <exclude>**/dubbo.properties</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>1.8</version>
+                        <executions>
+                            <execution>
+                                <id>compile</id>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <echo
+                                                message="********************** copy resources to classpath*************************"/>
+                                        <echo
+                                                message="********************** copy ${resources.dir} to classpath*************************"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/jdbc.properties"
+                                                 value="file:${application.root}/conf/jdbc.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/kafka.properties"
+                                                 value="file:${application.root}/conf/kafka.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/redis.properties"
+                                                 value="file:${application.root}/conf/redis.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/dubbo.properties"
+                                                 value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>integration</id>

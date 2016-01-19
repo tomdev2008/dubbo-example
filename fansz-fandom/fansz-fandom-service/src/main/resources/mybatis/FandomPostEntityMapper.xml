@@ -25,6 +25,8 @@
         <result column="liked" property="liked" jdbcType="VARCHAR"/>
         <result column="likes" property="likes" jdbcType="BIGINT"/>
         <result column="comments" property="comments" jdbcType="BIGINT"/>
+        <result column="selected_option" property="votedOption" jdbcType="VARCHAR"/>
+        <result column="voted" property="voted" jdbcType="VARCHAR"/>
         <association property="userInfoResult" javaType="com.fansz.fandom.model.profile.UserInfoResult"
                      resultMap="com.fansz.fandom.repository.UserMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfoResult" javaType="com.fansz.fandom.model.fandom.FandomInfoResult"
@@ -125,17 +127,21 @@
                 WHERE
                     post_id = T1.id
                     AND member_sn=#{memberSn,jdbcType=VARCHAR}
-            ) liked
-        FROM
-            feeds_member_fandom c,
-            feeds_member_post_fandom T1,
-            connects_member_profile T2,
-            feeds_fandom d
+            ) liked,
+            case
+				when ch.id is not null then "1"
+                else "0"
+			end voted,
+            ch.selected_option,
+            T1.effective_time,
+            T1.post_type
+        FROM feeds_member_post_fandom T1
+		LEFT JOIN feeds_member_fandom c ON T1.fandom_id = c.fandom_id
+        LEFT JOIN connects_member_profile T2 ON T1.member_sn = T2.sn
+        LEFT JOIN feeds_fandom d ON c.fandom_id=d.id
+        LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{memberSn,jdbcType=VARCHAR})
         WHERE
             c.member_sn = #{memberSn,jdbcType=VARCHAR}
-        AND c.fandom_id = T1.fandom_id
-        AND T1.member_sn = T2.sn
-        AND c.fandom_id=d.id
         order by T1.id desc
     </select>
 
@@ -220,6 +226,13 @@
             f.fandom_creator_sn fi_fandom_creator_sn,
             f.fandom_avatar_url fi_fandom_avatar_url,
             f.fandom_intro fi_fandom_intro,
+            case
+				when ch.id is not null then "1"
+                else "0"
+			end voted,
+            ch.selected_option,
+            p.effective_time,
+            p.post_type,
             mp.sn ui_sn,
             mp.nickname ui_nickname,
             mp.member_avatar ui_member_avatar
@@ -227,6 +240,7 @@
             feeds_member_post_fandom p
         LEFT JOIN feeds_fandom f ON f.id = p.fandom_id
         LEFT JOIN connects_member_profile mp ON mp.sn = p.member_sn
+        LEFT JOIN feeds_member_post_choice ch ON (p.id = ch.post_id AND ch.voter_sn = #{currentSn,jdbcType=VARCHAR})
         WHERE p.id = #{postId,jdbcType=VARCHAR}
     </select>
 
@@ -245,11 +259,23 @@
             (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = T1.id  AND member_sn=#{mySn,jdbcType=VARCHAR}) liked,
             </if>
             T1.like_count likes,
+            <if test="mySn != null">
+                case
+                when ch.id is not null then "1"
+                else "0"
+                end voted,
+                ch.selected_option,
+            </if>
+            T1.effective_time,
+            T1.post_type,
             T1.comment_count comments
             FROM
             feeds_member_post_fandom T1
             LEFT JOIN
             connects_member_profile T2 ON T1.member_sn = T2.sn
+            <if test="mySn != null">
+                LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{mySn,jdbcType=VARCHAR})
+            </if>
             WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
             <if test="memberSn != null">
                 AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
@@ -269,12 +295,24 @@
         <if test="mySn != null">
             (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = T1.id  AND member_sn=#{mySn,jdbcType=VARCHAR}) liked,
         </if>
+        <if test="mySn != null">
+            case
+            when ch.id is not null then "1"
+            else "0"
+            end voted,
+            ch.selected_option,
+        </if>
+        T1.effective_time,
+        T1.post_type,
         T2.sn ui_sn,
         T2.nickname ui_nickname,
         T2.member_avatar ui_member_avatar
         FROM feeds_member_post_fandom T1
         LEFT JOIN connects_member_profile T2
         ON T1.member_sn = T2.sn
+        <if test="mySn != null">
+            LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{mySn,jdbcType=VARCHAR})
+        </if>
         WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
         <if test="memberSn != null">
             AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}

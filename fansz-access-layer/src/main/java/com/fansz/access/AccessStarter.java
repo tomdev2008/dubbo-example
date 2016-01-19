@@ -19,9 +19,10 @@ public class AccessStarter {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            System.out.println("Access layer server stop running!");
+            System.err.println("Access layer server stop running!");
             try {
                 service.shutDown();
+                ac.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }

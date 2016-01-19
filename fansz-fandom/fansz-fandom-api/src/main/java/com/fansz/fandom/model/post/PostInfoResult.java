@@ -17,6 +17,8 @@ public class PostInfoResult implements Serializable {
     @JSONField(name="post_id")
     private Long id;
 
+    @JSONField(name = "post_type")
+    private String postType;
 
     @JSONField(name="post_title")
     private String postTitle;
@@ -38,12 +40,20 @@ public class PostInfoResult implements Serializable {
     @JSONField(name="comments_count")
     private Long comments;
 
-
     @JSONField(name="fandom_info")
     private FandomInfoResult fandomInfoResult;
 
     @JSONField(name="post_member")
     private UserInfoResult userInfoResult;
+
+    @JSONField(name = "effective_time")
+    private Date effectiveTime;
+
+    @JSONField(name = "voted")
+    private String voted;
+
+    @JSONField(name = "voted_option")
+    private String votedOption;
 
     public Long getId() {
         return id;
@@ -126,5 +136,35 @@ public class PostInfoResult implements Serializable {
         this.postTime = postTime;
     }
 
+    public String getPostType() {
+        return postType;
+    }
 
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
+    public Date getEffectiveTime() {
+        return effectiveTime;
+    }
+
+    public void setEffectiveTime(Date effectiveTime) {
+        this.effectiveTime = effectiveTime;
+    }
+
+    public String getVoted() {
+        return voted;
+    }
+
+    public void setVoted(String voted) {
+        this.voted = voted;
+    }
+
+    public String getVotedOption() {
+        return votedOption;
+    }
+
+    public void setVotedOption(String votedOption) {
+        this.votedOption = votedOption;
+    }
 }

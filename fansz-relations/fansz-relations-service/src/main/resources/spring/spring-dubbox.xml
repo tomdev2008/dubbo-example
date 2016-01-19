@@ -14,7 +14,7 @@
                     port="${dubbo.rpc.port}" charset="UTF-8"  transporter="netty4"/>
 
     <!-- 使用redis注册中心暴露服务地址-->
-    <dubbo:registry address="${dubbo.registry.address}"/>
+    <dubbo:registry address="${dubbo.registry.address}" client="curator"/>
     <dubbo:monitor protocol="registry"/>
 
     <dubbo:service interface="com.fansz.relations.api.RelationShipApi" ref="relationShipProvider" validation="true"
