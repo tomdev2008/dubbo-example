@@ -144,15 +144,17 @@ public class PostServiceImpl implements PostService {
     @Override
     public VotePostResult votePost(VotePostParam votePostParam) {
         Map<String,Object> map = fandomPostEntityMapper.getVerifyVoteInfo(votePostParam.getCurrentSn(),votePostParam.getPostId());
-        if(map.get("effective_time") == null){
+        if(map.get("id") == null){ //记录不存在
             throw new ApplicationException(ErrorCode.VOTE_POST_NOT_EXIST);
         }
-        Date effectiveTime = (Date) map.get("effective_time");
-        Long count = (Long) map.get("isVote");
-        //判断是否超过截止时间
-        if(effectiveTime.getTime() < System.currentTimeMillis()){
-            throw new ApplicationException(ErrorCode.VOTE_EXPIRED);
+        if(map.get("effective_time") != null) {
+            Date effectiveTime = (Date) map.get("effective_time");
+            //判断是否超过截止时间
+            if (effectiveTime.getTime() < System.currentTimeMillis()) {
+                throw new ApplicationException(ErrorCode.VOTE_EXPIRED);
+            }
         }
+        Long count = (Long) map.get("isVote");
         //判断是否重复投票
         if(count > 0){
             throw new ApplicationException(ErrorCode.VOTE_REPEATED);

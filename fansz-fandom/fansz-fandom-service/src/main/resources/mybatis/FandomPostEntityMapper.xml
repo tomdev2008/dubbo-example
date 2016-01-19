@@ -347,6 +347,7 @@
 
     <select id="getVerifyVoteInfo" parameterType="java.lang.Object" resultType="java.util.Map">
         SELECT
+            f.id,
             f.effective_time,
             count(c.id) isVote
         FROM
