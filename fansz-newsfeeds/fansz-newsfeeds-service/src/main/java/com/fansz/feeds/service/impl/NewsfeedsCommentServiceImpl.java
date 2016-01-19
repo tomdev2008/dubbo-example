@@ -17,10 +17,13 @@ import com.fansz.newsfeeds.model.comment.PostCommentQueryResult;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.DateTools;
 import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.UserTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by dell on 2015/12/28.
@@ -39,6 +42,9 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService {
 
     @Autowired
     private PushCommentDAO pushCommentDAO;
+
+    @Resource(name = "userTemplate")
+    private UserTemplate userTemplate;
 
     @Override
     public NewsfeedsPostComment savePostComment(NewsfeedsCommentParam commentPara) {
@@ -82,15 +88,15 @@ public class NewsfeedsCommentServiceImpl implements NewsfeedsCommentService {
     @Override
     public PostCommentQueryResult assemblyPostCommentResult(NewsfeedsPostComment newsfeedsPostComment) {
         PostCommentQueryResult postCommentQueryResult = BeanTools.copyAs(newsfeedsPostComment, PostCommentQueryResult.class);
-        User commentUser = userDAO.findBySn(newsfeedsPostComment.getCommentatorSn());
-        postCommentQueryResult.setCommentatorNickname(commentUser.getNickname());
-        postCommentQueryResult.setCommentatorAvatar(commentUser.getMemberAvatar());
+        Map<String, String> userMap = userTemplate.get(newsfeedsPostComment.getCommentatorSn());
+        postCommentQueryResult.setCommentatorNickname(userMap.get("nickname"));
+        postCommentQueryResult.setCommentatorAvatar(userMap.get("member_avatar"));
         if (newsfeedsPostComment.getCommentParentId() != null) {
             NewsfeedsPostComment originComment = newsfeedsCommentDAO.load(newsfeedsPostComment.getCommentParentId());
-            User originUser = userDAO.findBySn(originComment.getCommentatorSn());
-            postCommentQueryResult.setOriginAvatar(originUser.getMemberAvatar());
-            postCommentQueryResult.setOriginSn(originUser.getSn());
-            postCommentQueryResult.setOriginNickname(originUser.getNickname());
+            Map<String, String> originUserMap = userTemplate.get(originComment.getCommentatorSn());
+            postCommentQueryResult.setOriginAvatar(originUserMap.get("member_avatar"));
+            postCommentQueryResult.setOriginSn(originUserMap.get("sn"));
+            postCommentQueryResult.setOriginNickname(originUserMap.get("nickname"));
             postCommentQueryResult.setOriginContent(originComment.getCommentContent());
         }
         return postCommentQueryResult;

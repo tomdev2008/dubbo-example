@@ -144,7 +144,7 @@ public interface FandomPostApi {
      * @return
      * @throws ApplicationException
      */
-    @DubboxMethod("votePost")
+    @DubboxMethod("voting")
     CommonResult<VotePostResult> votePost(VotePostParam votePostParam) throws ApplicationException;
 
     /**
