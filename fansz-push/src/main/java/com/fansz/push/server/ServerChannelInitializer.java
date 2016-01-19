@@ -9,9 +9,11 @@ import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 import io.netty.util.CharsetUtil;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+@Component
 public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     private static final int IDEL_TIME_OUT = 300;

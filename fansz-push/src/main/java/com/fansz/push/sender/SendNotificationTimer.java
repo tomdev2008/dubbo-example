@@ -25,11 +25,11 @@ public class SendNotificationTimer {
     @Resource(name = "iosSendNotificationWorker")
     private TimerTask iosSendNotificationWorker;
 
-    @Resource(name = "androidDataSyncWorker")
+    /*@Resource(name = "androidDataSyncWorker")
     private TimerTask androidDataSyncWorker;
 
     @Resource(name = "iosDataSyncWorker")
-    private TimerTask iosDataSyncWorker;
+    private TimerTask iosDataSyncWorker;*/
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -37,8 +37,8 @@ public class SendNotificationTimer {
     public void start() {
         timer.scheduleAtFixedRate(androidSendNotificationWorker, delay, 1000 * 60);// 1分钟
         timer.scheduleAtFixedRate(iosSendNotificationWorker, delay, 1000 * 60);// 1分钟
-        timer.scheduleAtFixedRate(androidDataSyncWorker, delay, 1000 * 60 * 10);// 10分钟
-        timer.scheduleAtFixedRate(iosDataSyncWorker, delay, 1000 * 60 * 10);// 10分钟
+        /*timer.scheduleAtFixedRate(androidDataSyncWorker, delay, 1000 * 60 * 10);// 10分钟
+        timer.scheduleAtFixedRate(iosDataSyncWorker, delay, 1000 * 60 * 10);// 10分钟*/
     }
 
     public void close() {

@@ -11,10 +11,13 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * 启动推送服务器，采用单例模式:读取spring配置文件，由Netty启动服务
  */
+@Component
 public class MessageServer {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageServer.class);
@@ -25,6 +28,7 @@ public class MessageServer {
 
     private SessionManager sessionManager;
 
+    @Autowired
     private ServerChannelInitializer serverChannelInitializer;
 
     private int port = 5442;
