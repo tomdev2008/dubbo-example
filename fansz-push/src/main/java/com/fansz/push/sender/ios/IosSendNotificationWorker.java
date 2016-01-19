@@ -6,6 +6,7 @@ import com.fansz.push.server.event.impl.BusinessEventProducer;
 import com.fansz.push.server.session.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.TimerTask;
 
@@ -14,6 +15,7 @@ import java.util.TimerTask;
  *
  * @author Administrator
  */
+@Component("iosSendNotificationWorker")
 public class IosSendNotificationWorker extends TimerTask {
 
     private Logger logger = LoggerFactory.getLogger(IosSendNotificationWorker.class);

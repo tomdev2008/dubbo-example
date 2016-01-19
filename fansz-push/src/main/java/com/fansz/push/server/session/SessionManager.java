@@ -5,6 +5,7 @@ import com.fansz.push.server.model.RegisterParam;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 管理Session
  */
+@Component("sessionManager")
 public class SessionManager {
 
     private static final Logger logger = LoggerFactory.getLogger(SessionManager.class);
