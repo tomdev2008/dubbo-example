@@ -1,6 +1,7 @@
 package com.fansz.auth.model;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
@@ -19,6 +20,9 @@ public class LoginParam implements Serializable {
     @NotBlank
     private String password;
 
+    @JSONField(name = "app_key")
+    private String appKey;
+
     public String getLoginname() {
         return loginname;
     }
@@ -33,5 +37,13 @@ public class LoginParam implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAppKey() {
+        return appKey;
+    }
+
+    public void setAppKey(String appKey) {
+        this.appKey = appKey;
     }
 }

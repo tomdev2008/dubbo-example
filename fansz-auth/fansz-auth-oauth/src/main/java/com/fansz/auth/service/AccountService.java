@@ -4,6 +4,8 @@ package com.fansz.auth.service;
 import com.fansz.auth.model.*;
 import com.fansz.common.provider.exception.ApplicationException;
 
+import java.util.Map;
+
 /**
  * Created by root on 15-11-3.
  */
@@ -40,4 +42,6 @@ public interface AccountService {
      * @param logoutParam
      */
     void logout(LogoutParam logoutParam) throws ApplicationException;
+
+    Map<String, String> requestIMToken(String appKey, String memberSn) throws ApplicationException;
 }
