@@ -76,6 +76,8 @@ public class AccountServiceImpl implements AccountService {
         user.setProfileUpdatetime(now);
         user.setPassword(encodedPwd);
         user.setMemberStatus(USER_STATUS_OK);
+        //注册时,默认将手机号设置为昵称
+        user.setNickname(user.getMobile());
         userDAO.save(user);
 
         Map<String, Object> userMap = JsonHelper.convertJSONString2Object(JsonHelper.convertObject2JSONString(user), Map.class);
