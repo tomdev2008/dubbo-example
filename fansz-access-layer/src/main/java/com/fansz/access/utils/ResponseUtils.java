@@ -27,4 +27,5 @@ public final class ResponseUtils {
     public static String renderLogicError(String errorCode, String message) {
         return String.format(ERROR, errorCode, message);
     }
+
 }
