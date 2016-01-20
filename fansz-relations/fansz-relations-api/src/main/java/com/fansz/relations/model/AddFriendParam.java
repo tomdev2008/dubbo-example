@@ -9,8 +9,6 @@ import org.hibernate.validator.constraints.NotBlank;
  */
 public class AddFriendParam extends AbstractToken {
 
-    @NotBlank
-    @JSONField(name="member_sn")
     private String currentSn;
 
     @NotBlank

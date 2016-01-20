@@ -102,5 +102,12 @@ public interface RelationShipApi {
     @DubboxMethod("getSpecialFriend")
     CommonPagedResult<Map<String, String>> getSpecialFriends(FriendsQueryParam friendsParam) throws ApplicationException;
 
-
+    /**
+     *
+     * @param addFriendParam
+     * @return
+     * @throws ApplicationException
+     */
+    @DubboxMethod("delFriend")
+    CommonResult<FriendInfoResult> delFriend(AddFriendParam addFriendParam)throws ApplicationException;
 }

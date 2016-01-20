@@ -86,4 +86,10 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
         AddContactsRemarkResult addContactsRemarkResult = relationShipService.addContactsRemark(addContactsRemarkParam);
         return super.renderSuccess(addContactsRemarkResult);
     }
+
+    @Override
+    public CommonResult<FriendInfoResult> delFriend(AddFriendParam addFriendParam) throws ApplicationException {
+        FriendInfoResult friendInfoResult = relationShipService.delFriend(addFriendParam);
+        return super.renderSuccess(friendInfoResult);
+    }
 }
