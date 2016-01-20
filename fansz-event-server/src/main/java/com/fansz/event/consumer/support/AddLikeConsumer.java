@@ -42,7 +42,7 @@ public class AddLikeConsumer implements IEventConsumer {
         final AddLikeEvent addLikeEvent = JSON.parseObject(record.value(), AddLikeEvent.class);
         if (InformationSource.NEWSFEEDS.equals(addLikeEvent.getSource())) {
             CountListResult<String> friendList = relationTemplate.listFriend(addLikeEvent.getMemberSn(), 0, FRIEND_LIMIT);
-            if (friendList.getTotalCount() == 0) {
+            if (friendList==null||friendList.getTotalCount() == 0) {
                 return;
             }
             NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(addLikeEvent.getPostId());
@@ -52,7 +52,7 @@ public class AddLikeConsumer implements IEventConsumer {
                 return;
             }
             CountListResult<String> postFriendList = relationTemplate.listFriend(newsfeedsPost.getMemberSn(), 0, FRIEND_LIMIT);//获取发帖人的好友
-            if (postFriendList.getTotalCount() == 0) {
+            if (postFriendList==null||postFriendList.getTotalCount() == 0) {
                 return;
             }
             //推送给共同好友 & post creator

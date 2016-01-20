@@ -13,6 +13,8 @@ import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.model.CountListResult;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,7 +27,7 @@ import java.util.List;
  */
 @Component("publishPostConsumer")
 public class PublishPostConsumer implements IEventConsumer {
-
+    private final static Logger logger = LoggerFactory.getLogger(PublishPostConsumer.class);
 
     @Autowired
     private PushPostDAO pushPostDAO;
@@ -46,30 +48,43 @@ public class PublishPostConsumer implements IEventConsumer {
     public void onEvent(ConsumerRecord<String, String> record) {
         final PublishPostEvent publishPostEvent = JSON.parseObject(record.value(), PublishPostEvent.class);
         Long postId = publishPostEvent.getPostId();
-        if (publishPostEvent.getSource().equals(InformationSource.FANDOM)) {//如果是在fandom发的帖子,需要在newsfeeds中增加记录
-            NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
+        InformationSource source = publishPostEvent.getSource();
+        switch (source) {
+            case FANDOM://如果是在fandom发的帖子,需要在newsfeeds中增加记录
+                FandomPost fandomPost = fandomPostDAO.load(postId);
+                //获取post所在fandom的名称
+                if (fandomPost == null) {//防止用户发帖之后马上删除,但是异步任务还未结束的场景
+                    return;
+                }
+                Fandom fandom = fandomDAO.load(fandomPost.getFandomId());
+                NewsfeedsPost entity = BeanTools.copyAs(publishPostEvent, NewsfeedsPost.class);
+                entity.setSourceFrom(InformationSource.FANDOM.getCode());
+                entity.setSourcePostId(postId);
+                entity.setSourceFandomName(fandom.getFandomName());
+                entity.setSourceFandomAvatarUrl(fandom.getFandomAvatarUrl());
+                entity.setSourcePostType(publishPostEvent.getPostType().getCode());
+                newsfeedsPostDAO.save(entity);
+                postId = entity.getId();
 
-            FandomPost fandomPost = fandomPostDAO.load(postId);
-            //获取post所在fandom的名称
-            Fandom fandom = fandomDAO.load(fandomPost.getFandomId());
-            entity.setSourceFrom(InformationSource.FANDOM.getCode());
-            entity.setSourcePostId(postId);
-            entity.setSourceFandomName(fandom.getFandomName());
-            entity.setSourceFandomAvatarUrl(fandom.getFandomAvatarUrl());
-            entity.setSourcePostType(publishPostEvent.getPostType().getCode());
-            newsfeedsPostDAO.save(entity);
-            postId = entity.getId();
-
-            //同步推送到自己的朋友圈
-            PushPost myPost = new PushPost();
-            myPost.setMemberSn(publishPostEvent.getMemberSn());
-            myPost.setPostId(postId);
-            myPost.setCreatetime(entity.getPostTime());
-            pushPostDAO.save(myPost);
+                //同步推送到自己的朋友圈
+                PushPost myPost = new PushPost();
+                myPost.setMemberSn(publishPostEvent.getMemberSn());
+                myPost.setPostId(postId);
+                myPost.setCreatetime(entity.getPostTime());
+                pushPostDAO.save(myPost);
+                break;
+            case NEWSFEEDS:
+                NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(postId);
+                if (newsfeedsPost == null) {//如果用户马上删除了,则不会推送到朋友圈
+                    return;
+                }
+            default:
+                logger.warn("unknow post source:{}", source);
+                return;
         }
 
         CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getMemberSn(), 0, FRIEND_LIMIT);
-        if (friendList.getTotalCount() == 0) {
+        if (friendList == null || friendList.getTotalCount() == 0) {
             return;
         }
         //推送给朋友

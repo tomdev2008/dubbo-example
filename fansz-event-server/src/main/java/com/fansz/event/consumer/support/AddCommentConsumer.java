@@ -48,12 +48,12 @@ public class AddCommentConsumer implements IEventConsumer {
         final AddCommentEvent addCommentEvent = JSON.parseObject(record.value(), AddCommentEvent.class);
         if (InformationSource.NEWSFEEDS.equals(addCommentEvent.getSource())) {//朋友圈的评论
             CountListResult<String> commentFriendList = relationTemplate.listFriend(addCommentEvent.getMemberSn(), 0, FRIEND_LIMIT);//获取评论人的好友
-            if (commentFriendList.getTotalCount() == 0) {
+            if (commentFriendList == null || commentFriendList.getTotalCount() == 0) {
                 return;
             }
             NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(addCommentEvent.getPostId());
             CountListResult<String> postFriendList = relationTemplate.listFriend(newsfeedsPost.getMemberSn(), 0, FRIEND_LIMIT);//获取发帖人的好友
-            if (postFriendList.getTotalCount() == 0) {
+            if (postFriendList==null||postFriendList.getTotalCount() == 0) {
                 return;
             }
             //发表评论的人与POST CREATOR的共同好友
@@ -71,7 +71,7 @@ public class AddCommentConsumer implements IEventConsumer {
                 NewsfeedsPostComment parentComment = newsfeedsCommentDAO.load(addCommentEvent.getCommentParentId());
                 //获取parentComment评论人的好友
                 CountListResult<String> parentCommentFriendList = relationTemplate.listFriend(parentComment.getCommentatorSn(), 0, FRIEND_LIMIT);
-                if (parentCommentFriendList.getTotalCount() == 0) {
+                if (parentCommentFriendList==null||parentCommentFriendList.getTotalCount() == 0) {
                     return;
                 }
                 //发表评论的人与被回复人以及post creator的共同好友

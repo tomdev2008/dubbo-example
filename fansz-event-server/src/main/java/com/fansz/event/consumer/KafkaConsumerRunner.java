@@ -68,7 +68,10 @@ public class KafkaConsumerRunner implements Runnable {
             }
         } catch (InterruptedException e) {
             logger.warn("thread is interrupted!");
-        } finally {
+        }
+        catch(Exception e){
+            System.out.println("exception");
+        }finally {
             if (consumer != null) {
                 consumer.close();
             }
