@@ -10,6 +10,8 @@ import java.util.Date;
  */
 public class LoginResult  implements Serializable {
 
+    private static final long serialVersionUID = -4409801445339783007L;
+
     private String sn;
 
     private String email;

@@ -60,7 +60,7 @@
         </dependency>
         <!--kryo序列化-->
         <dependency>
-            <groupId>com.esotericsoftware.kryo</groupId>
+            <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
         </dependency>
         <dependency>

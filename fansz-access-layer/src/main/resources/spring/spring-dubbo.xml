@@ -12,7 +12,7 @@
 
     <dubbo:reference interface="com.fansz.auth.api.AccountApi" id="accountProvider" validation="true"
                       scope="remote"
-                      protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>
+                      protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}" />
 
     <dubbo:reference interface="com.fansz.auth.api.VerifyCodeApi" id="verifyCodeProvider" validation="true"
                       scope="remote"
