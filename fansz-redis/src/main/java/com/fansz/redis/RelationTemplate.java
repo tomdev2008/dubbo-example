@@ -2,6 +2,7 @@ package com.fansz.redis;
 
 import com.fansz.redis.model.CountListResult;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -76,5 +77,11 @@ public interface RelationTemplate {
      */
     String getFriendRemark(final String currentSn, final String friendSn);
 
-
+    /**
+     * 删除好友
+     * @param currentSn
+     * @param friendSn
+     * @return
+     */
+    String delFriend(final String currentSn, final String friendSn);
 }

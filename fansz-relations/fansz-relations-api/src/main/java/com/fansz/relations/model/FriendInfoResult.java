@@ -12,6 +12,8 @@ public class FriendInfoResult implements Serializable {
 
     private static final long serialVersionUID = -7836389133676995846L;
 
+    private String id;
+
     private String sn;
 
     private String email;
@@ -123,5 +125,13 @@ public class FriendInfoResult implements Serializable {
 
     public void setRelationship(String relationship) {
         this.relationship = relationship;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

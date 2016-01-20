@@ -11,6 +11,8 @@ import com.fansz.redis.utils.RedisKeyUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -226,5 +228,30 @@ public class RelationTemplateImpl implements RelationTemplate {
 
     public void setJedisTemplate(JedisTemplate jedisTemplate) {
         this.jedisTemplate = jedisTemplate;
+    }
+
+    /**
+     * 删除好友
+     * @param currentSn
+     * @param friendSn
+     * @return 返回friendSn
+     */
+    @Override
+    public String delFriend(final String currentSn,final String friendSn) {
+        return jedisTemplate.execute(new JedisCallback<String>() {
+            @Override
+            public String doInRedis(Jedis jedis) throws Exception {
+                //查询是否
+                Double score = jedis.zscore(RedisKeyUtils.getSpeicalFriendKey(currentSn),friendSn);
+                if(score == null){
+                    //删除好友
+                    jedis.zrem(RedisKeyUtils.getFriendKey(currentSn), friendSn);
+                }else{
+                    //特殊好友不能删除
+                    throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
+                }
+                return friendSn;
+            }
+        });
     }
 }

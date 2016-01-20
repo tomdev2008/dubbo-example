@@ -78,4 +78,11 @@ public interface FandomPostEntityMapper {
      */
     VotePostResult getVoteResultByPostId(Long postId);
 
+    /**
+     * 更新投票帖 投票总数
+     * @param voteCount
+     * @param postId
+     * @return
+     */
+    int updatePostVoteCount(@Param("voteCount")Integer voteCount, @Param("postId")Long postId);
 }

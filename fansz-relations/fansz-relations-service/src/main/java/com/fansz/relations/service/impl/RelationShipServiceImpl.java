@@ -225,4 +225,17 @@ public class RelationShipServiceImpl implements RelationShipService {
 
         return BeanTools.copyAs(addContactsRemarkParam, AddContactsRemarkResult.class);
     }
+
+    @Override
+    public FriendInfoResult delFriend(AddFriendParam addFriendParam) {
+       relationTemplate.delFriend(addFriendParam.getCurrentSn(),addFriendParam.getFriendMemberSn());
+        FriendInfoResult friendInfoResult = null;
+        Map<String,String> userMap = userTemplate.getWithAuthInfo(addFriendParam.getFriendMemberSn());
+        if(null != userMap){
+            friendInfoResult = new FriendInfoResult();
+            friendInfoResult.setSn(userMap.get("sn"));
+            friendInfoResult.setId(userMap.get("id"));
+        }
+        return friendInfoResult;
+    }
 }

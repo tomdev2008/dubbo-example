@@ -27,6 +27,7 @@
         <result column="comments" property="comments" jdbcType="BIGINT"/>
         <result column="selected_option" property="votedOption" jdbcType="VARCHAR"/>
         <result column="voted" property="voted" jdbcType="VARCHAR"/>
+        <result column="vote_count" property="voteCount" jdbcType="VARCHAR"/>
         <association property="userInfoResult" javaType="com.fansz.fandom.model.profile.UserInfoResult"
                      resultMap="com.fansz.fandom.repository.UserMapper.userInfoResultMap" columnPrefix="ui_"/>
         <association property="fandomInfoResult" javaType="com.fansz.fandom.model.fandom.FandomInfoResult"
@@ -134,7 +135,8 @@
 			end voted,
             ch.selected_option,
             T1.effective_time,
-            T1.post_type
+            T1.post_type,
+            T1.vote_count
         FROM feeds_member_post_fandom T1
 		LEFT JOIN feeds_member_fandom c ON T1.fandom_id = c.fandom_id
         LEFT JOIN connects_member_profile T2 ON T1.member_sn = T2.sn
@@ -154,6 +156,7 @@
             a.post_time,
             a.like_count likes,
             a.comment_count comments,
+            a.vote_count,
             b.sn ui_sn,
             b.nickname ui_nickname,
             b.member_avatar ui_member_avatar,
@@ -233,6 +236,7 @@
             ch.selected_option,
             p.effective_time,
             p.post_type,
+            p.vote_count,
             mp.sn ui_sn,
             mp.nickname ui_nickname,
             mp.member_avatar ui_member_avatar
@@ -268,7 +272,8 @@
             </if>
             T1.effective_time,
             T1.post_type,
-            T1.comment_count comments
+            T1.comment_count comments,
+            T1.vote_count
             FROM
             feeds_member_post_fandom T1
             LEFT JOIN
@@ -304,6 +309,7 @@
         </if>
         T1.effective_time,
         T1.post_type,
+        T1.vote_count,
         T2.sn ui_sn,
         T2.nickname ui_nickname,
         T2.member_avatar ui_member_avatar
@@ -404,5 +410,12 @@
         WHERE
             post_id = #{postId,jdbcType=BIGINT}
     </select>
+
+    <update id="updatePostVoteCount" parameterType="java.lang.Object" >
+        UPDATE feeds_member_post_fandom
+        SET vote_count = #{voteCount,jdbcType=BIGINT}
+        WHERE
+            id = #{postId,jdbcType=BIGINT}
+    </update>
 
 </mapper>
