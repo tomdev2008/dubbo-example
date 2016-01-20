@@ -76,7 +76,7 @@ public class AccountServiceImpl implements AccountService {
         user.setProfileUpdatetime(now);
         user.setPassword(encodedPwd);
         user.setMemberStatus(USER_STATUS_OK);
-        //注册时,默认将手机号设置为昵称
+        //注册时,默认昵称为手机号
         user.setNickname(user.getMobile());
         userDAO.save(user);
 
