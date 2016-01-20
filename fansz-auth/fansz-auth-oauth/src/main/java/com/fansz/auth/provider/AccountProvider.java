@@ -12,6 +12,8 @@ import com.fansz.common.provider.model.NullResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * 账户服务
  */
@@ -96,5 +98,11 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
     public SessionInfoResult getSession(SessionQueryParam sessionQueryParam) throws ApplicationException {
         SessionInfoResult sessionInfoResult = sessionService.getSession(sessionQueryParam.getAccessToken());
         return sessionInfoResult;
+    }
+
+    @Override
+    public CommonResult<Map<String, String>> getIMToken(IMTokenParam imTokenParam) throws ApplicationException {
+        Map<String, String> tokenMap = accountService.requestIMToken(imTokenParam.getAppKey(), imTokenParam.getCurrentSn());
+        return renderSuccess(tokenMap);
     }
 }

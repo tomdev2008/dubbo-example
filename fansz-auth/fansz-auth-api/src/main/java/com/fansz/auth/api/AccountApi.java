@@ -7,6 +7,8 @@ import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.common.provider.model.CommonResult;
 import com.fansz.common.provider.model.NullResult;
 
+import java.util.Map;
+
 /**
  * 账户服务
  */
@@ -64,4 +66,8 @@ public interface AccountApi {
 
     @DubboxMethod("getSession")
     SessionInfoResult getSession(SessionQueryParam sessionQueryParam) throws ApplicationException;
+
+    @DubboxMethod("getIMToken")
+    CommonResult<Map<String, String>> getIMToken(IMTokenParam imTokenParam) throws ApplicationException;
+
 }
