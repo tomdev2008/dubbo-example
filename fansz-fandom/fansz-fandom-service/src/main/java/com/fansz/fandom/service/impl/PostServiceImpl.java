@@ -162,7 +162,11 @@ public class PostServiceImpl implements PostService {
         //保存投票信息
         fandomPostEntityMapper.votePost(votePostParam);
         //统计投票信息
-        return fandomPostEntityMapper.getVoteResultByPostId(votePostParam.getPostId());
+        VotePostResult votePostResult = fandomPostEntityMapper.getVoteResultByPostId(votePostParam.getPostId());
+        Integer voteCount = votePostResult.getOptionACount()+votePostResult.getOptionBCount(); //总的投票数
+        //更新投票帖 投票总数
+        fandomPostEntityMapper.updatePostVoteCount(voteCount,votePostParam.getPostId());
+        return votePostResult;
     }
 
     /**

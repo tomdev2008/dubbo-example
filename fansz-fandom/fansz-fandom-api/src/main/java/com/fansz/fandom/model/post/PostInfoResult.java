@@ -55,6 +55,9 @@ public class PostInfoResult implements Serializable {
     @JSONField(name = "voted_option")
     private String votedOption;
 
+    @JSONField(name = "vote_count")
+    private Long voteCount;
+
     public Long getId() {
         return id;
     }
@@ -166,5 +169,13 @@ public class PostInfoResult implements Serializable {
 
     public void setVotedOption(String votedOption) {
         this.votedOption = votedOption;
+    }
+
+    public Long getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(Long voteCount) {
+        this.voteCount = voteCount;
     }
 }
