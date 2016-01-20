@@ -12,6 +12,7 @@ public class AccessStarter {
         ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-access.xml");
         ac.start();
         HttpRequestRouter httpRequestRouter = ac.getBean(HttpRequestRouter.class);
+        System.setProperty("io.netty.initialSeedUniquifier",String.valueOf(System.currentTimeMillis()));
         NettyHttpService service = null;
         try {
             service = NettyHttpService.builder().setPort(3000).setHttpRequestRouter(httpRequestRouter).build();

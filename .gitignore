@@ -1,7 +1,9 @@
 /fansz-push/target
 /fansz-redis/target
+/fansz-backend.iml
 target/*
 !.gitignore
+.DS_Store
 /.idea
 *.iml
 /fansz-access-layer/target
@@ -27,4 +29,3 @@ target/*
 /fansz-newsfeeds/fansz-newsfeeds.iml
 /fansz-relations/fansz-relations-api/fansz-relations-api.iml
 /fansz-relations/fansz-relations-service/fansz-relations-service.iml
-.DS_Store
