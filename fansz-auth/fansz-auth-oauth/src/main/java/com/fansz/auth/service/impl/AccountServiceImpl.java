@@ -1,35 +1,23 @@
 package com.fansz.auth.service.impl;
 
 
-import com.alibaba.fastjson.JSON;
 import com.fansz.auth.model.*;
 import com.fansz.auth.service.AccountService;
 import com.fansz.auth.service.SessionService;
 import com.fansz.auth.service.VerifyCodeService;
-import com.fansz.auth.utils.IMUtils;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.pub.utils.*;
 import com.fansz.redis.UserTemplate;
-import org.apache.commons.httpclient.Header;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URLDecoder;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -205,50 +193,5 @@ public class AccountServiceImpl implements AccountService {
         sessionService.invalidateSession(logoutParam.getAccessToken());
     }
 
-    /**
-     * 根据appkey, memberSn请求IM接口,获取token
-     * @param appKey
-     * @param memberSn
-     * @return
-     */
-    public Map<String, String> requestIMToken(String appKey, String memberSn) throws ApplicationException {
-        String uri = "http://124.42.103.250:1234/bopo/GetToken";
-        HttpClient client = new HttpClient();
-        PostMethod method = new PostMethod(uri);
-        String userId = IMUtils.getUserId(memberSn, appKey);
-        Map<String, String> tokenMap = new HashMap<>();
-        try{
-            Map<String, Object> param = new HashMap<>();
-            param.put("Arg", Collections.singletonMap("AppId", IMUtils.getAppId()));
-            param.put("CoreArg", Collections.singletonMap("userId", userId));
-            String queryString = JsonHelper.convertObject2JSONString(param);
-            StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
-            method.setRequestEntity(requestEntity);
-            method.setRequestHeader(new Header("Content-Type", "application/json"));
-            int result = client.executeMethod(method);
-            if (result == HttpStatus.SC_OK) {
-                InputStream in = method.getResponseBodyAsStream();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int len = 0;
-                while ((len = in.read(buffer)) != -1) {
-                    baos.write(buffer, 0, len);
-                }
-                String response = URLDecoder.decode(baos.toString(), "UTF-8");
-                Map<String, String> map = JsonHelper.convertJSONObject2Map(JSON.parseObject(response));
-                if (!map.isEmpty()){
-                    tokenMap.put("token", map.get("token"));
-                    tokenMap.put("status_code", map.get("statusCode"));
-                }
-            } else {
-                throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
-            }
-        }catch (Exception e){
-            throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
-        }finally {
-            method.releaseConnection();
-        }
-        return tokenMap;
-    }
 
 }

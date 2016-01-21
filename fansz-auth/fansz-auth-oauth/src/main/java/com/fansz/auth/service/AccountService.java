@@ -43,5 +43,4 @@ public interface AccountService {
      */
     void logout(LogoutParam logoutParam) throws ApplicationException;
 
-    Map<String, String> requestIMToken(String appKey, String memberSn) throws ApplicationException;
 }

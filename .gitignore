@@ -8,6 +8,8 @@ target/*
 *.iml
 /fansz-access-layer/target
 /fansz-auth/fansz-auth-api/target
+/fansz-token/fansz-token-api/target
+/fansz-token/fansz-token-service/target
 /fansz-auth/fansz-auth-oauth/target
 /fansz-dao/target
 /fansz-event-server/target

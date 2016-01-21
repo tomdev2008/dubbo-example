@@ -92,6 +92,15 @@
 
         <dependency>
             <groupId>com.fansz</groupId>
+            <artifactId>commons-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fansz</groupId>
+            <artifactId>http-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fansz</groupId>
             <artifactId>fansz-fandom-api</artifactId>
         </dependency>
         <dependency>
@@ -108,11 +117,7 @@
         </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>commons-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>http-server</artifactId>
+            <artifactId>fansz-token-api</artifactId>
         </dependency>
     </dependencies>
     <profiles>

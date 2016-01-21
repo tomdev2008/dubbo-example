@@ -21,6 +21,7 @@
         <module>fansz-dao</module>
         <module>fansz-redis</module>
         <module>fansz-push</module>
+        <module>fansz-token</module>
     </modules>
     <repositories>
         <repository>
@@ -60,6 +61,11 @@
             <dependency>
                 <groupId>com.fansz</groupId>
                 <artifactId>fansz-relations-api</artifactId>
+                <version>${fansz.backend.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fansz</groupId>
+                <artifactId>fansz-token-api</artifactId>
                 <version>${fansz.backend.version}</version>
             </dependency>
             <dependency>

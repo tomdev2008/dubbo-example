@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component("dynaDubboInvoker")
 public class DynaDubboInvoker implements RpcInvoker {
 
-    private final static String[] BASE_PACKAGE = new String[]{"com.fansz.auth.api", "com.fansz.relations.api", "com.fansz.fandom.api", "com.fansz.newsfeeds.api"};
+    private final static String[] BASE_PACKAGE = new String[]{"com.fansz.auth.api", "com.fansz.relations.api", "com.fansz.fandom.api", "com.fansz.newsfeeds.api","com.fansz.token.api"};
 
     private Logger logger = LoggerFactory.getLogger(DynaDubboInvoker.class);
 

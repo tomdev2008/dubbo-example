@@ -67,7 +67,5 @@ public interface AccountApi {
     @DubboxMethod("getSession")
     SessionInfoResult getSession(SessionQueryParam sessionQueryParam) throws ApplicationException;
 
-    @DubboxMethod("getIMToken")
-    CommonResult<Map<String, String>> getIMToken(IMTokenParam imTokenParam) throws ApplicationException;
 
 }

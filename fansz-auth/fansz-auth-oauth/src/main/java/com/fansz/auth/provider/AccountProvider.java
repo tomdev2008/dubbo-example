@@ -100,9 +100,4 @@ public class AccountProvider extends AbstractProvider implements AccountApi {
         return sessionInfoResult;
     }
 
-    @Override
-    public CommonResult<Map<String, String>> getIMToken(IMTokenParam imTokenParam) throws ApplicationException {
-        Map<String, String> tokenMap = accountService.requestIMToken(imTokenParam.getAppKey(), imTokenParam.getCurrentSn());
-        return renderSuccess(tokenMap);
-    }
 }

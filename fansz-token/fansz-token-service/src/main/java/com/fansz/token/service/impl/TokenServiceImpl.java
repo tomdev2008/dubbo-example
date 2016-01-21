@@ -1,5 +1,6 @@
-package com.fansz.auth.service.impl;
+package com.fansz.token.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
@@ -8,10 +9,17 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleRequest;
 import com.aliyuncs.sts.model.v20150401.AssumeRoleResponse;
-import com.fansz.auth.service.OssService;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.pub.utils.FileTools;
+import com.fansz.pub.utils.JsonHelper;
+import com.fansz.token.service.TokenService;
+import com.fansz.token.utils.IMUtils;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +28,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URLDecoder;
+import java.util.*;
 
 /**
  * Created by allan on 16/1/4.
  */
 @Component
-public class OssServiceImpl implements OssService {
+public class TokenServiceImpl implements TokenService {
 
     @Resource(name = "applicationProps")
     private Properties applicationProps;
@@ -36,7 +45,7 @@ public class OssServiceImpl implements OssService {
     @Resource(name = "policyResource")
     private ClassPathResource policyResource;
 
-    private final Logger logger = LoggerFactory.getLogger(OssServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -86,4 +95,53 @@ public class OssServiceImpl implements OssService {
             throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
         }
     }
+
+    /**
+     * 根据appkey, memberSn请求IM接口,获取token
+     *
+     * @param appKey
+     * @param memberSn
+     * @return
+     */
+    public Map<String, String> requestIMToken(String appKey, String memberSn) throws ApplicationException {
+        String uri = applicationProps.getProperty("im.tokenServer.address");
+        HttpClient client = new HttpClient();
+        PostMethod method = new PostMethod(uri);
+        String userId = IMUtils.getUserId(memberSn, appKey);
+        Map<String, String> tokenMap = new HashMap<>();
+        try {
+            Map<String, Object> param = new HashMap<>();
+            param.put("Arg", Collections.singletonMap("AppId", IMUtils.getAppId()));
+            param.put("CoreArg", Collections.singletonMap("userId", userId));
+            String queryString = JsonHelper.convertObject2JSONString(param);
+            StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
+            method.setRequestEntity(requestEntity);
+            method.setRequestHeader(new Header("Content-Type", "application/json"));
+            int result = client.executeMethod(method);
+            if (result == HttpStatus.SC_OK) {
+                InputStream in = method.getResponseBodyAsStream();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int len = 0;
+                while ((len = in.read(buffer)) != -1) {
+                    baos.write(buffer, 0, len);
+                }
+                String response = URLDecoder.decode(baos.toString(), "UTF-8");
+                Map<String, String> map = JsonHelper.convertJSONObject2Map(JSON.parseObject(response));
+                if (!map.isEmpty()) {
+                    tokenMap.put("token", map.get("token"));
+                    tokenMap.put("status_code", map.get("statusCode"));
+                }
+            } else {
+                logger.error("im token server return code:{}",result);
+                throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
+            }
+        } catch (Exception e) {
+            throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
+        } finally {
+            method.releaseConnection();
+        }
+        return tokenMap;
+    }
+
 }

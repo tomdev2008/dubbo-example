@@ -3,23 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>fansz-auth</artifactId>
+        <artifactId>fansz-token</artifactId>
         <groupId>com.fansz</groupId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>fansz-auth-oauth</artifactId>
+    <artifactId>fansz-token-service</artifactId>
     <packaging>jar</packaging>
     <dependencies>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>dubbo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-        <!--kryo序列化-->
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
@@ -28,31 +19,21 @@
             <groupId>de.javakaffee</groupId>
             <artifactId>kryo-serializers</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>javax.validation</groupId>
-            <artifactId>validation-api</artifactId>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-sts</artifactId>
+            <version>2.1.6</version>
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
-
-        <!--spring begin-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>2.1.7</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
         </dependency>
-        <!--spring end-->
 
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
@@ -64,79 +45,14 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
-        <!--<dependency>
-            <groupId>com.github.sgroschupf</groupId>
-            <artifactId>zkclient</artifactId>
-        </dependency>-->
-
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cglib</groupId>
-            <artifactId>cglib-nodep</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-beanutils</groupId>
-            <artifactId>commons-beanutils-bean-collections</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>commons-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>commons-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>commons-dao</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.fansz</groupId>
             <artifactId>commons-provider</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>commons-event</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>fansz-auth-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fansz</groupId>
-            <artifactId>fansz-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.fansz</groupId>
-            <artifactId>fansz-dao</artifactId>
+            <artifactId>fansz-token-api</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -195,9 +111,6 @@
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
                                 <exclude>**/application.properties</exclude>
-                                <exclude>**/kafka.properties</exclude>
-                                <exclude>**/jdbc.properties</exclude>
-                                <exclude>**/redis.properties</exclude>
                                 <exclude>**/dubbo.properties</exclude>
                             </excludes>
                         </configuration>
@@ -214,23 +127,11 @@
                                     <tasks>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/application.properties"
                                                  value="file:${application.root}/conf/application.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/kafka.properties"
-                                                 value="file:${application.root}/conf/kafka.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/jdbc.properties"
-                                                 value="file:${application.root}/conf/jdbc.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/redis.properties"
-                                                 value="file:${application.root}/conf/redis.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
@@ -260,9 +161,6 @@
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
                                 <exclude>**/application.properties</exclude>
-                                <exclude>**/kafka.properties</exclude>
-                                <exclude>**/jdbc.properties</exclude>
-                                <exclude>**/redis.properties</exclude>
                                 <exclude>**/dubbo.properties</exclude>
                             </excludes>
                         </configuration>
@@ -279,23 +177,11 @@
                                     <tasks>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/application.properties"
                                                  value="file:${application.root}/conf/application.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/kafka.properties"
-                                                 value="file:${application.root}/conf/kafka.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/jdbc.properties"
-                                                 value="file:${application.root}/conf/jdbc.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/redis.properties"
-                                                 value="file:${application.root}/conf/redis.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
@@ -325,9 +211,6 @@
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
                                 <exclude>**/application.properties</exclude>
-                                <exclude>**/kafka.properties</exclude>
-                                <exclude>**/jdbc.properties</exclude>
-                                <exclude>**/redis.properties</exclude>
                                 <exclude>**/dubbo.properties</exclude>
                             </excludes>
                         </configuration>
@@ -344,23 +227,11 @@
                                     <tasks>
                                         <echo
                                                 message="********************** copy ${resources.dir} to classpath*************************"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/application.properties"
                                                  value="file:${application.root}/conf/application.properties"
                                                  encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/kafka.properties"
-                                                 value="file:${application.root}/conf/kafka.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/jdbc.properties"
-                                                 value="file:${application.root}/conf/jdbc.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
-                                                 token="classpath:/conf/redis.properties"
-                                                 value="file:${application.root}/conf/redis.properties"
-                                                 encoding="utf-8"/>
-                                        <replace file="target/classes/applicationContext-auth.xml"
+                                        <replace file="target/classes/applicationContext-token.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
@@ -376,4 +247,5 @@
             </build>
         </profile>
     </profiles>
+
 </project>

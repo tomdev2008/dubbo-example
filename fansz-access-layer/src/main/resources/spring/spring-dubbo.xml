@@ -18,7 +18,7 @@
                       scope="remote"
                       protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>
 
-    <dubbo:reference interface="com.fansz.auth.api.OssApi" id="ossProvider" validation="true"
+    <dubbo:reference interface="com.fansz.token.api.TokenApi" id="tokenProvider" validation="true"
                      scope="remote"
                      protocol="dubbo" client="netty4" version="${provider.version}" retries="0" group="${provider.group}"/>
 
