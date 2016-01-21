@@ -241,15 +241,10 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
-                //查询是否
-                Double score = jedis.zscore(RedisKeyUtils.getSpeicalFriendKey(currentSn),friendSn);
-                if(score == null){
-                    //删除好友
-                    jedis.zrem(RedisKeyUtils.getFriendKey(currentSn), friendSn);
-                }else{
-                    //特殊好友不能删除
-                    throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
-                }
+                //取消特殊关注好友
+                removeSpecial(currentSn,friendSn);
+                //删除好友
+                jedis.zrem(RedisKeyUtils.getFriendKey(currentSn), friendSn);
                 return friendSn;
             }
         });
