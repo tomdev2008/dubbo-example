@@ -18,6 +18,6 @@
         echo "PID file is empty and has been ignored."
       fi
     else
-      echo "\$AUTH_PID was set but the specified file does not exist. Is $CONSUMER_PID running? Stop aborted."
+      echo "\$AUTH_PID was set but the specified file does not exist. Is $AUTH_PID running? Stop aborted."
       exit 1
     fi
