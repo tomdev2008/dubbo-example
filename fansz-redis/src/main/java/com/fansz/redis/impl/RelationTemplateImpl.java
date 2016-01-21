@@ -241,8 +241,6 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
-                //取消特殊关注好友
-                removeSpecial(currentSn,friendSn);
                 //删除好友
                 jedis.zrem(RedisKeyUtils.getFriendKey(currentSn), friendSn);
                 return friendSn;

@@ -228,14 +228,11 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public FriendInfoResult delFriend(AddFriendParam addFriendParam) {
-       relationTemplate.delFriend(addFriendParam.getCurrentSn(),addFriendParam.getFriendMemberSn());
-        FriendInfoResult friendInfoResult = null;
-        Map<String,String> userMap = userTemplate.getWithAuthInfo(addFriendParam.getFriendMemberSn());
-        if(null != userMap){
-            friendInfoResult = new FriendInfoResult();
-            friendInfoResult.setSn(userMap.get("sn"));
-            friendInfoResult.setId(userMap.get("id"));
-        }
+        dealSpecialFriend(addFriendParam,false); //取消特殊关注
+        relationTemplate.delFriend(addFriendParam.getCurrentSn(),addFriendParam.getFriendMemberSn());
+
+        FriendInfoResult friendInfoResult = new FriendInfoResult();
+        friendInfoResult.setSn(addFriendParam.getFriendMemberSn());
         return friendInfoResult;
     }
 }
