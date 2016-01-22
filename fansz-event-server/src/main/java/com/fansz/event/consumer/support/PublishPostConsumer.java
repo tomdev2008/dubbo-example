@@ -78,8 +78,9 @@ public class PublishPostConsumer implements IEventConsumer {
                 if (newsfeedsPost == null) {//如果用户马上删除了,则不会推送到朋友圈
                     return;
                 }
+                break;
             default:
-                logger.warn("unknow post source:{}", source);
+                logger.warn("unknow post source:{} record:{}", source, record);
                 return;
         }
 
