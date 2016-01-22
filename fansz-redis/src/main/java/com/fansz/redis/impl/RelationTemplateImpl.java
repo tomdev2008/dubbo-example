@@ -241,8 +241,10 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
-                //删除好友
+                //删除我的好友列表记录
                 jedis.zrem(RedisKeyUtils.getFriendKey(currentSn), friendSn);
+                //删除对方列表记录
+                jedis.zrem(RedisKeyUtils.getFriendKey(friendSn), currentSn);
                 return friendSn;
             }
         });

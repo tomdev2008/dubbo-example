@@ -15,7 +15,7 @@ public interface RelationShipService {
 
     boolean addFriendRequest(AddFriendParam addFriendParam);
 
-    boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add);
+    boolean dealSpecialFriend(AddFriendParam addFriendParam, boolean add,final boolean exception);
 
     boolean dealFriendRequest(OpRequestParam opRequestParam, boolean agree);
 

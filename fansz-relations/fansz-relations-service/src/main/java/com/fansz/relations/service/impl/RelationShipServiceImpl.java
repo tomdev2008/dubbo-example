@@ -108,7 +108,7 @@ public class RelationShipServiceImpl implements RelationShipService {
      * @return
      */
     @Override
-    public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add) {
+    public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add,final boolean exception) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         boolean bool;
         if (add) {//添加特殊关注,要求是朋友且不能是特殊关注
@@ -123,7 +123,7 @@ public class RelationShipServiceImpl implements RelationShipService {
 
             bool = relationTemplate.addAsSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         } else {//取消特殊关注,要求已经是特殊好友
-            if (!RelationShip.SPECIAL_FRIEND.getCode().equals(relation)) {
+            if (!RelationShip.SPECIAL_FRIEND.getCode().equals(relation) && exception) {
                 throw new ApplicationException(ErrorCode.RELATION_SPECIAL_NO_DEL);
             }
             //删除特殊关注记录
@@ -228,11 +228,18 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public FriendInfoResult delFriend(AddFriendParam addFriendParam) {
-        dealSpecialFriend(addFriendParam,false); //取消特殊关注
-        relationTemplate.delFriend(addFriendParam.getCurrentSn(),addFriendParam.getFriendMemberSn());
+        String memberSn = addFriendParam.getCurrentSn();
+        String friendMemberSn = addFriendParam.getFriendMemberSn();
+        //删除特殊关注记录
+        dealSpecialFriend(addFriendParam,false,false);
+        addFriendParam.setCurrentSn(friendMemberSn);
+        addFriendParam.setFriendMemberSn(memberSn);
+        dealSpecialFriend(addFriendParam,false,false);
+        //删除好友
+        relationTemplate.delFriend(memberSn,friendMemberSn);
 
         FriendInfoResult friendInfoResult = new FriendInfoResult();
-        friendInfoResult.setSn(addFriendParam.getFriendMemberSn());
+        friendInfoResult.setSn(friendMemberSn);
         return friendInfoResult;
     }
 }
