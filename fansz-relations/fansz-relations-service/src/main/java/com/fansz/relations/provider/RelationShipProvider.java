@@ -47,13 +47,13 @@ public class RelationShipProvider extends AbstractProvider implements RelationSh
 
     @Override
     public CommonResult<NullResult> addSpecialFriend(AddFriendParam addFriendParam) throws ApplicationException {
-        relationShipService.dealSpecialFriend(addFriendParam, true);
+        relationShipService.dealSpecialFriend(addFriendParam, true,true);
         return renderSuccess();
     }
 
     @Override
     public CommonResult<NullResult> cancelSpecialFriend(AddFriendParam addFriendParam) throws ApplicationException {
-        relationShipService.dealSpecialFriend(addFriendParam, false);
+        relationShipService.dealSpecialFriend(addFriendParam, false,true);
         return renderSuccess();
     }
 
