@@ -85,4 +85,14 @@ public interface FandomPostEntityMapper {
      * @return
      */
     int updatePostVoteCount(@Param("voteCount")Integer voteCount, @Param("postId")Long postId);
+
+    /**
+     * 根据fandomId, memberSn分页查询所有投票帖
+     * @param fandomId
+     * @param memberSn
+     * @param mySn
+     * @param pageBounds
+     * @return
+     */
+    PageList<PostInfoResult> listVoteMemberFandomPosts(@Param("fandomId") long fandomId, @Param("memberSn") String memberSn, @Param("mySn") String mySn, PageBounds pageBounds);
 }

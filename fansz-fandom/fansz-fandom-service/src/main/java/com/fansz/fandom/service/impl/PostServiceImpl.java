@@ -123,8 +123,10 @@ public class PostServiceImpl implements PostService {
         PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
         if ("new".equals(postsQueryParam.getType())) {
             entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
-        } else {
+        } else if("hot".equals(postsQueryParam.getType())) {
             entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
+        } else if("vote".equals(postsQueryParam.getType())){
+            entities = fandomPostEntityMapper.listVoteMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
         }
 
         return entities;
