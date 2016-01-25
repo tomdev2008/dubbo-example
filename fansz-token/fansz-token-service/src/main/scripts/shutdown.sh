@@ -5,7 +5,7 @@
 
  TOKEN_PID="$BASE_DIR/logs/token.pid"
  
- echo "star to kill process:$TOKEN_PID"
+ echo "start to kill process:$TOKEN_PID"
     if [ -f "$TOKEN_PID" ]; then
       if [ -s "$TOKEN_PID" ]; then
         kill -15 `cat "$TOKEN_PID"` >/dev/null 2>&1

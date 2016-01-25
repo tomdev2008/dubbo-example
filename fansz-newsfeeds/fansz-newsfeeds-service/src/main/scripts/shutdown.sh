@@ -5,7 +5,7 @@
 
  FEEDS_PID="$BASE_DIR/logs/feeds.pid"
  
- echo "star to kill process:$FEEDS_PID"
+ echo "start to kill process:$FEEDS_PID"
     if [ -f "$FEEDS_PID" ]; then
       if [ -s "$FEEDS_PID" ]; then
         kill -15 `cat "$FEEDS_PID"` >/dev/null 2>&1

@@ -5,7 +5,7 @@
 
  EVENT_PID="$BASE_DIR/logs/event-server.pid"
  
- echo "star to kill process:$EVENT_PID"
+ echo "start to kill process:$EVENT_PID"
     if [ -f "$EVENT_PID" ]; then
       if [ -s "$EVENT_PID" ]; then
         kill -15 `cat "$EVENT_PID"` >/dev/null 2>&1

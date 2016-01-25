@@ -5,7 +5,7 @@
 
  AUTH_PID="$BASE_DIR/logs/auth.pid"
  
- echo "star to kill process:$AUTH_PID"
+ echo "start to kill process:$AUTH_PID"
     if [ -f "$AUTH_PID" ]; then
       if [ -s "$AUTH_PID" ]; then
         kill -15 `cat "$AUTH_PID"` >/dev/null 2>&1

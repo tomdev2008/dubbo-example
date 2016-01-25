@@ -5,7 +5,7 @@
 
  ACCESS_PID="$BASE_DIR/logs/access.pid"
  
- echo "star to kill process:$ACCESS_PID"
+ echo "start to kill process:$ACCESS_PID"
     if [ -f "$ACCESS_PID" ]; then
       if [ -s "$ACCESS_PID" ]; then
         kill -15 `cat "$ACCESS_PID"` >/dev/null 2>&1

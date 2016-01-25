@@ -5,7 +5,7 @@
 
  FANDOM_PID="$BASE_DIR/logs/fandom.pid"
  
- echo "star to kill process:$FANDOM_PID"
+ echo "start to kill process:$FANDOM_PID"
     if [ -f "$FANDOM_PID" ]; then
       if [ -s "$FANDOM_PID" ]; then
         kill -15 `cat "$FANDOM_PID"` >/dev/null 2>&1

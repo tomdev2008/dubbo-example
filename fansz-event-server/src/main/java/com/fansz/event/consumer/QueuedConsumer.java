@@ -113,12 +113,14 @@ public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Run
     @Override
     public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
         //TODO:
+        logger.info("rebalance operation begin,partitions={}", partitions);
     }
 
     // read the offsets from an external store
     @Override
     public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
         //TODO:
+        logger.info("partition re-assignment complete,partitions={}", partitions);
     }
 
     public void setConsumer(KafkaConsumer consumer) {

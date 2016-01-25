@@ -5,7 +5,7 @@
 
  RELATION_PID="$BASE_DIR/logs/relation.pid"
  
- echo "star to kill process:$RELATION_PID"
+ echo "start to kill process:$RELATION_PID"
     if [ -f "$RELATION_PID" ]; then
       if [ -s "$RELATION_PID" ]; then
         kill -15 `cat "$RELATION_PID"` >/dev/null 2>&1
