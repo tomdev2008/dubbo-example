@@ -12,13 +12,13 @@
 
     <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
-    <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
+   <!-- <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
         <constructor-arg index="0">
             <ref bean="kafkaProp"/>
         </constructor-arg>
-    </bean>
+    </bean>-->
 
-    <bean id="kafkaConsumerRunner" class="com.fansz.event.consumer.KafkaConsumerRunner"/>
+    <bean id="queuedConsumer" class="com.fansz.event.consumer.QueuedConsumer"/>
 
     <!--<import resource="classpath:/spring/spring-dubbo.xml"/>-->
     <import resource="classpath:/spring/spring-redis.xml"/>

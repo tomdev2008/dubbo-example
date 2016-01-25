@@ -1,37 +1,48 @@
 package com.fansz.event;
 
-import com.fansz.event.consumer.KafkaConsumerRunner;
-import com.fansz.event.exception.EventConsumerException;
+import com.fansz.event.consumer.QueuedConsumer;
+import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.NetWorkTools;
+import com.fansz.pub.utils.StringTools;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Properties;
 
 /**
- * 短消息发送线程启动入口
+ * 异步队列处理线程启动入口
  */
 public class EventStarter {
     private final static Logger logger = LoggerFactory.getLogger(EventStarter.class);
 
     public static void main(String[] args) {
-        KafkaConsumerRunner kafkaConsumerRunner = null;
-        ClassPathXmlApplicationContext ac = null;
-        try {
-            ac = new ClassPathXmlApplicationContext("applicationContext-event.xml");
-            ac.start();
-            kafkaConsumerRunner = (KafkaConsumerRunner) ac.getBean("kafkaConsumerRunner");
-            ExecutorService executor = Executors.newFixedThreadPool(4);
-            executor.submit(kafkaConsumerRunner);
-        } catch (EventConsumerException e) {
-            logger.error("event server error,please restart the application!", e);
-            if (kafkaConsumerRunner != null) {
-                kafkaConsumerRunner.shutdown();
-            }
-            if (ac != null) {
-                ac.close();
-            }
+        String clientId = CollectionTools.isNotNullOrEmptyArray(args) ? args[0] : NetWorkTools.getLocalIpAddress();
+        if (StringTools.isBlank(clientId)) {
+            System.err.println("failed to get local ip address or can't find  clientId configuration ,system exit!");
+            System.exit(0);
         }
+
+        final ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-event.xml");
+        ac.start();
+
+        Properties kafkaProp = (Properties) ac.getBean("kafkaProp");
+        kafkaProp.setProperty("client.id", "consumer-" + clientId);
+        KafkaConsumer kafkaConsumer = new KafkaConsumer(kafkaProp);
+        final QueuedConsumer queuedConsumer = (QueuedConsumer) ac.getBean("queuedConsumer");
+        queuedConsumer.setConsumer(kafkaConsumer);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                logger.info("system exit");
+                queuedConsumer.close();
+                ac.stop();
+            }
+        });
+
+        queuedConsumer.run();
+
     }
 }
