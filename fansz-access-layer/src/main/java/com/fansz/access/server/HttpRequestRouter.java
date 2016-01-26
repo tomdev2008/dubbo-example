@@ -9,6 +9,9 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.timeout.IdleStateEvent;
+import io.netty.util.Attribute;
+import io.netty.util.AttributeKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -29,12 +32,18 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
     @Resource(name = "dynaDubboInvoker")
     private RpcInvoker rpcInvoker;
 
+    private final AttributeKey<RpcStatistics> STATISTICS = AttributeKey.valueOf("STATISTICS");
+
     private static final Logger LOG = LoggerFactory.getLogger(HttpRequestRouter.class);
 
     public HttpRequestRouter() {
 
     }
 
+    private void initChannelContext(ChannelHandlerContext ctx) {
+        Attribute<RpcStatistics> connAttr = ctx.attr(STATISTICS);
+        connAttr.set(new RpcStatistics(System.currentTimeMillis()));
+    }
 
     /**
      * 处理接收到的HTTP请求，并进行分发
@@ -45,6 +54,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
      */
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+        initChannelContext(ctx);
         BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), HttpHeaders.isKeepAlive(request));
         if (HttpMethod.HEAD.equals(request.getMethod()) || HttpMethod.OPTIONS.equals(request.getMethod())) {
             // HTTP HEAD请求:1、只请求资源的首部；2、检查超链接的有效性；3、检查网页是否被修改；目前主要用于支持nginx的健康检测
@@ -72,11 +82,31 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         if (ctx.channel() != null) {
-            LOG.error(String.format("channel(%s) encounters error", ctx.name()), cause);
+            LOG.error("channel encounters error", cause);
             if (ctx.channel().isActive()) {
+                Attribute<RpcStatistics> connAttr = ctx.attr(STATISTICS);
+                RpcStatistics statistics = connAttr.get();
+                if (statistics != null) {
+                    Long received = statistics.getReceived();
+                    Long finished = System.currentTimeMillis();
+                    LOG.error("received request at {},finished at {},token ms", new Object[]{received, finished, finished - received});
+                }
                 BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), false);
                 responder.sendJson(HttpResponseStatus.OK, ERROR);
             }
         }
+    }
+
+    /**
+     * 处理timeout
+     */
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        if (IdleStateEvent.class.isAssignableFrom(evt.getClass())) {
+            IdleStateEvent event = (IdleStateEvent) evt;
+            LOG.warn("close channel for {}", event);
+            ctx.close();
+        }
+
     }
 }
