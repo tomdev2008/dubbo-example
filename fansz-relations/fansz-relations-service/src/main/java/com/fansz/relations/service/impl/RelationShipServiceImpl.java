@@ -221,8 +221,9 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
-        relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
-
+        if(StringTools.isNotBlank(addContactsRemarkParam.getRemark())){
+            relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
+        }
         return BeanTools.copyAs(addContactsRemarkParam, AddContactsRemarkResult.class);
     }
 
