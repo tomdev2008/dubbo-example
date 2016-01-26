@@ -1,18 +1,15 @@
 package com.fansz.event.consumer.support;
 
 import com.alibaba.fastjson.JSON;
-import com.fansz.db.entity.Fandom;
-import com.fansz.db.entity.FandomPost;
-import com.fansz.db.entity.NewsfeedsPost;
-import com.fansz.db.entity.PushPost;
-import com.fansz.db.repository.FandomDAO;
-import com.fansz.db.repository.FandomPostDAO;
-import com.fansz.db.repository.NewsfeedsPostDAO;
-import com.fansz.db.repository.PushPostDAO;
+import com.fansz.db.entity.*;
+import com.fansz.db.repository.*;
 import com.fansz.event.model.PublishPostEvent;
 import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.DateTools;
+import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.model.CountListResult;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -22,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by allan on 15/12/21.
@@ -81,7 +80,7 @@ public class PublishPostConsumer implements IEventConsumer {
                 }
                 break;
             default:
-                logger.warn("unknow post source:{} record:{}", source, record);
+                logger.warn("unknow post source:{},record", source,record);
                 return;
         }
 

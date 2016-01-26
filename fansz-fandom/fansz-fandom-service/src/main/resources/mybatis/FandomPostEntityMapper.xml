@@ -418,4 +418,43 @@
             id = #{postId,jdbcType=BIGINT}
     </update>
 
+    <select id="listVoteMemberFandomPosts" resultMap="postInfoResultMap">
+        SELECT
+        T1.id,
+        T1.post_title,
+        T1.post_content,
+        T1.post_newsfeeds,
+        T1.post_time,
+        T1.like_count likes,
+        T1.comment_count comments,
+        <if test="mySn != null">
+            (SELECT count(1)  FROM  feeds_member_post_like  WHERE   post_id = T1.id  AND member_sn=#{mySn,jdbcType=VARCHAR}) liked,
+        </if>
+        <if test="mySn != null">
+            case
+            when ch.id is not null then "1"
+            else "0"
+            end voted,
+            ch.selected_option,
+        </if>
+        T1.effective_time,
+        T1.post_type,
+        T1.vote_count,
+        T2.sn ui_sn,
+        T2.nickname ui_nickname,
+        T2.member_avatar ui_member_avatar
+        FROM feeds_member_post_fandom T1
+        LEFT JOIN connects_member_profile T2
+        ON T1.member_sn = T2.sn
+        <if test="mySn != null">
+            LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{mySn,jdbcType=VARCHAR})
+        </if>
+        WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+        <if test="memberSn != null">
+            AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
+        </if>
+        AND T1.post_type="V"
+        ORDER BY T1.id DESC
+    </select>
+
 </mapper>
