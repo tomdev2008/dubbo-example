@@ -31,7 +31,7 @@
     </appender>
 
     <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
-    <logger name="org.apache.kafka" additivity="false">
+    <logger name="com.alibaba.dubbo.remoting.exchange.support.header" additivity="false">
         <priority value="info"/>
         <appender-ref ref="file"/>
     </logger>

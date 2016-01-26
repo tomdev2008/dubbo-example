@@ -7,13 +7,13 @@
        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="fansz-auth-service" owner="backend-team" organization="fansz"/>
+    <dubbo:application name="fansz-token-service" owner="backend-team" organization="fansz"/>
 
     <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.rpc.port}" server="netty4"
                     client="netty4"  charset="UTF-8" accepts="1000" transporter="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
-    <dubbo:registry address="${dubbo.registry.address}" client="curator"/>
+    <dubbo:registry address="${dubbo.registry.address}" client="curator" file="${dubbo.registry.file}"/>
     <dubbo:monitor protocol="registry"/>
 
     <!-- 声明需要暴露的服务接口 -->

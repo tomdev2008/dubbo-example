@@ -195,15 +195,6 @@
     </build>
     <profiles>
         <profile>
-            <id>development</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <env>development</env>
-            </properties>
-        </profile>
-        <profile>
             <id>testing</id>
             <properties>
                 <env>testing</env>

@@ -13,7 +13,7 @@
                     client="netty4"  charset="UTF-8" accepts="1000" transporter="netty4"/>
 
     <!-- 使用zookeeper注册中心暴露服务地址-->
-    <dubbo:registry address="${dubbo.registry.address}" client="curator"/>
+    <dubbo:registry address="${dubbo.registry.address}" client="curator" file="${dubbo.registry.file}"/>
     <dubbo:monitor protocol="registry"/>
 
     <!-- 声明需要暴露的服务接口 -->
