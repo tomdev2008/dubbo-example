@@ -28,6 +28,6 @@ public class TestUser {
         userTemplate.addUser(userMap);*/
         //41558646531456744
          Date d=new Date(1452838499677L);
-        System.out.println(d);
+        System.out.println("18610302640".hashCode()%1000);
     }
 }

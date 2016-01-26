@@ -16,8 +16,7 @@ public class TestKyro {
       String a=String.format("{\"date\":\"%d\"}",now);
         TestModel model=JsonHelper.convertJSONString2Object(a,TestModel.class);
         System.out.println(now);*/
-        byte[] a={48,48,48,51};
-        System.out.println(new String(a));
+        System.out.println("REDIS".hashCode());
     }
 
 }

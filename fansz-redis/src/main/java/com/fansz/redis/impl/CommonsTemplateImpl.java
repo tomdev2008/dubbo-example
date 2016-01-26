@@ -1,6 +1,7 @@
 package com.fansz.redis.impl;
 
 import com.fansz.pub.utils.CollectionTools;
+import com.fansz.pub.utils.JsonHelper;
 import com.fansz.redis.CommonsTemplate;
 import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.support.JedisCallback;
@@ -8,10 +9,7 @@ import com.fansz.redis.utils.RedisKeyUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by allan on 16/1/11.
@@ -75,10 +73,17 @@ public class CommonsTemplateImpl implements CommonsTemplate {
                 public Boolean doInRedis(Jedis jedis) throws Exception {
                     Pipeline pipe = jedis.pipelined();
                     for (Map<String, Object> category : categoryList) {
-                        String categoryId = (String) category.get("id");
+                        String categoryId = String.valueOf(category.get("id"));
                         pipe.lpush(RedisKeyUtils.getCategoryListKey(), categoryId);
                         for (String key : category.keySet()) {
-                            pipe.hset(RedisKeyUtils.getCategoryKey(categoryId), key, String.valueOf(category));
+                            Object val = category.get(key);
+                            if (val != null) {
+                                if (val instanceof Date) {
+                                    pipe.hset(RedisKeyUtils.getCategoryKey(categoryId), key, String.valueOf(((Date) val).getTime()));
+                                } else {
+                                    pipe.hset(RedisKeyUtils.getCategoryKey(categoryId), key, String.valueOf(val));
+                                }
+                            }
                         }
                     }
                     pipe.sync();
@@ -94,8 +99,8 @@ public class CommonsTemplateImpl implements CommonsTemplate {
         return jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
-                Long len=jedis.llen(RedisKeyUtils.getCategoryListKey());
-                return len>0;
+                Long len = jedis.llen(RedisKeyUtils.getCategoryListKey());
+                return len > 0;
             }
         });
     }
@@ -106,24 +111,24 @@ public class CommonsTemplateImpl implements CommonsTemplate {
 
     @Override
     public Map<String, Object> getFandomParentName(final Long parentId) {
-        Map<String,Object> fandomParentNameMap = new HashMap<String,Object>();
+        Map<String, Object> fandomParentNameMap = new HashMap<String, Object>();
         Map<String, Object> categoryFandoms = jedisTemplate.execute(new JedisCallback<Map<String, Object>>() {
             @Override
             public Map<String, Object> doInRedis(Jedis jedis) throws Exception {
                 Map<String, String> map = jedis.hgetAll(RedisKeyUtils.getCategoryKey(String.valueOf(parentId)));
-                Map<String,Object> result = new HashMap<String, Object>();
+                Map<String, Object> result = new HashMap<String, Object>();
                 result.putAll(map);
                 return result;
             }
         });
-        fandomParentNameMap.put("fandom_name",categoryFandoms.get("fandom_name"));
-        fandomParentNameMap.put("id",categoryFandoms.get("id"));
+        fandomParentNameMap.put("fandom_name", categoryFandoms.get("fandom_name"));
+        fandomParentNameMap.put("id", categoryFandoms.get("id"));
 
-        Long fandomParentId = categoryFandoms.get("fandom_parent_id")==null?0:Long.valueOf(categoryFandoms.get("fandom_parent_id").toString());
-        if(fandomParentId > 0){
+        Long fandomParentId = categoryFandoms.get("fandom_parent_id") == null ? 0 : Long.valueOf(categoryFandoms.get("fandom_parent_id").toString());
+        if (fandomParentId > 0) {
             categoryFandoms = null;
             categoryFandoms = getFandomParentName(fandomParentId);
-            fandomParentNameMap.put("fandom_parent_info",categoryFandoms);
+            fandomParentNameMap.put("fandom_parent_info", categoryFandoms);
         }
         return fandomParentNameMap;
     }
