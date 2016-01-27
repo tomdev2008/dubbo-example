@@ -32,13 +32,13 @@
 
     <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
     <logger name="com.fansz" additivity="false">
-        <priority value="info"/>
+        <priority value="debug"/>
         <appender-ref ref="file"/>
     </logger>
 
     <!-- 根logger的设置-->
     <root>
-        <level value="warn"/>
+        <level value="info"/>
         <appender-ref ref="file"/>
     </root>
 </log4j:configuration>
