@@ -4,6 +4,7 @@
 target/*
 !.gitignore
 .DS_Store
+.dubbo
 /.idea
 *.iml
 /fansz-access-layer/target
