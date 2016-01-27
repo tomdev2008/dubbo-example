@@ -6,9 +6,9 @@
 	 http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
     <dubbo:application name="fansz-access-layer" owner="backend-team" organization="fansz" logger="slf4j"/>
 
-    <dubbo:registry address="${dubbo.registry.address}" client="curator" file="${dubbo.registry.file}"/>
+    <dubbo:registry address="${dubbo.registry.address}" client="curator" file="${dubbo.registry.file}"  group="${provider.group}"/>
 
-    <dubbo:monitor protocol="registry"/>
+    <dubbo:monitor protocol="registry"  group="${provider.group}"/>
 
     <dubbo:reference interface="com.fansz.auth.api.AccountApi" id="accountProvider" validation="true"
                       scope="remote"
