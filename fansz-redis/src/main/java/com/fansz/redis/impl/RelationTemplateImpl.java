@@ -125,11 +125,11 @@ public class RelationTemplateImpl implements RelationTemplate {
     }
 
     @Override
-    public boolean removeFriendRemark(final String mySn,final String friendSn) {
+    public boolean removeFriendRemark(final String mySn, final String friendSn) {
         return jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
-                if(StringTools.isNotBlank(jedis.hget(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn))){
+                if (jedis.hexists(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn)) {
                     jedis.hdel(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn);
                 }
                 return true;
@@ -246,12 +246,13 @@ public class RelationTemplateImpl implements RelationTemplate {
 
     /**
      * 删除好友
+     *
      * @param currentSn
      * @param friendSn
      * @return 返回friendSn
      */
     @Override
-    public String delFriend(final String currentSn,final String friendSn) {
+    public String delFriend(final String currentSn, final String friendSn) {
         return jedisTemplate.execute(new JedisCallback<String>() {
             @Override
             public String doInRedis(Jedis jedis) throws Exception {
