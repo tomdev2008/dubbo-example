@@ -211,6 +211,7 @@
                                 <exclude>**/jdbc.properties</exclude>
                                 <exclude>**/redis.properties</exclude>
                                 <exclude>**/dubbo.properties</exclude>
+                                <exclude>**/kafka.properties</exclude>
                             </excludes>
                         </configuration>
                     </plugin>
@@ -239,6 +240,10 @@
                                         <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-feeds.xml"
+                                                 token="classpath:/conf/kafka.properties"
+                                                 value="file:${application.root}/conf/kafka.properties"
                                                  encoding="utf-8"/>
                                     </tasks>
                                 </configuration>
@@ -297,6 +302,10 @@
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
                                                  encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-feeds.xml"
+                                                 token="classpath:/conf/kafka.properties"
+                                                 value="file:${application.root}/conf/kafka.properties"
+                                                 encoding="utf-8"/>
                                     </tasks>
                                 </configuration>
                                 <goals>
@@ -353,6 +362,10 @@
                                         <replace file="target/classes/applicationContext-feeds.xml"
                                                  token="classpath:/conf/dubbo.properties"
                                                  value="file:${application.root}/conf/dubbo.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-feeds.xml"
+                                                 token="classpath:/conf/kafka.properties"
+                                                 value="file:${application.root}/conf/kafka.properties"
                                                  encoding="utf-8"/>
                                     </tasks>
                                 </configuration>

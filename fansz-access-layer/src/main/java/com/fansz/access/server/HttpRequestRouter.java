@@ -89,7 +89,7 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
                 if (statistics != null) {
                     Long received = statistics.getReceived();
                     Long finished = System.currentTimeMillis();
-                    LOG.error("received request at {},finished at {},token ms", new Object[]{received, finished, finished - received});
+                    LOG.error("received request at {},finished at {},token {} ms", new Object[]{received, finished, finished - received});
                 }
                 BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), false);
                 responder.sendJson(HttpResponseStatus.OK, ERROR);

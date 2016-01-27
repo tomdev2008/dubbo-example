@@ -94,6 +94,7 @@ public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Run
 
     private boolean onRecordsReceived(ConsumerRecords<String, String> records) {
         for (ConsumerRecord<String, String> record : records) {
+            logger.debug("received event,content:{}", record);
             IEventConsumer consumer = CONSUMER_MAP.get(record.key());
             if (consumer != null) {
                 try {
