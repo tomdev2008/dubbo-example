@@ -223,6 +223,9 @@ public class RelationShipServiceImpl implements RelationShipService {
     public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
         if(StringTools.isNotBlank(addContactsRemarkParam.getRemark())){
             relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
+        }else {
+            relationTemplate.removeFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn());
+            addContactsRemarkParam.setRemark(null);
         }
         return BeanTools.copyAs(addContactsRemarkParam, AddContactsRemarkResult.class);
     }

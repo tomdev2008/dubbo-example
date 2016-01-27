@@ -3,6 +3,7 @@ package com.fansz.redis.impl;
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.constant.RelationShip;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.pub.utils.StringTools;
 import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.model.CountListResult;
@@ -118,6 +119,19 @@ public class RelationTemplateImpl implements RelationTemplate {
                     throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
                 }
                 jedis.hset(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn, remark);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean removeFriendRemark(final String mySn,final String friendSn) {
+        return jedisTemplate.execute(new JedisCallback<Boolean>() {
+            @Override
+            public Boolean doInRedis(Jedis jedis) throws Exception {
+                if(StringTools.isNotBlank(jedis.hget(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn))){
+                    jedis.hdel(RedisKeyUtils.getFriendRemarkKey(mySn), friendSn);
+                }
                 return true;
             }
         });
