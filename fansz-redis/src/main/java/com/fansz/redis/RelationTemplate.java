@@ -33,6 +33,8 @@ public interface RelationTemplate {
 
     boolean addFriendRemark(String mySn, String friendSn, String remark);
 
+    boolean removeFriendRemark(String mySn, String friendSn);
+
     /**
      * 查询用户主动添加的请求
      *
