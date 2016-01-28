@@ -93,6 +93,8 @@ public class HttpRequestRouter extends SimpleChannelInboundHandler<FullHttpReque
                 }
                 BasicHttpResponder responder = new BasicHttpResponder(ctx.channel(), false);
                 responder.sendJson(HttpResponseStatus.OK, ERROR);
+            } else {
+                ctx.close();
             }
         }
     }
