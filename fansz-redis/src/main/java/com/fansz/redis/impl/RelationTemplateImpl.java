@@ -231,11 +231,10 @@ public class RelationTemplateImpl implements RelationTemplate {
                     return RelationShip.SPECIAL_FRIEND.getCode();
                 } else if (jedis.zrank(RedisKeyUtils.getFriendKey(currentSn), sn) != null) {
                     return RelationShip.FRIEND.getCode();
-                }
-                if (jedis.zrank(RedisKeyUtils.getMyRequestKey(currentSn), sn) != null) {
-                    return RelationShip.TO_ADD.getCode();
-                } else if (jedis.zrank(RedisKeyUtils.getMyRequestedKey(currentSn), sn) != null) {
+                }else if (jedis.zrank(RedisKeyUtils.getMyRequestedKey(currentSn), sn) != null) {
                     return RelationShip.BE_ADDED.getCode();
+                }else if (jedis.zrank(RedisKeyUtils.getMyRequestKey(currentSn), sn) != null) {
+                    return RelationShip.TO_ADD.getCode();
                 } else {
                     return null;
                 }
