@@ -35,6 +35,10 @@
         <priority value="info"/>
         <appender-ref ref="file"/>
     </logger>
+    <logger name="org.apache.commons" additivity="false">
+        <priority value="info"/>
+        <appender-ref ref="file"/>
+    </logger>
 
     <!-- 根logger的设置-->
     <root>
