@@ -148,7 +148,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                     if (totalSize == 0 || totalSize < offset) {
                         return null;
                     }
-                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit);
+                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit - 1);
                     return new CountListResult(result, totalSize);
                 } finally {
                     jedis.del(unionKey);
@@ -168,7 +168,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                     if (totalSize == 0 || totalSize < offset) {
                         return null;
                     }
-                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit);
+                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit - 1);
                     return new CountListResult(result, totalSize);
                 } finally {
                     jedis.del(unionKey);
@@ -187,7 +187,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                 if (totalSize == 0 || totalSize < offset) {
                     return null;
                 }
-                Set<String> result = jedis.zrange(key, offset, offset + limit);
+                Set<String> result = jedis.zrange(key, offset, offset + limit - 1);
                 return new CountListResult<>(result, totalSize);
             }
         });
@@ -203,7 +203,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                 if (totalSize == 0 || totalSize < offset) {
                     return null;
                 }
-                Set<String> result = jedis.zrange(key, offset, offset + limit);
+                Set<String> result = jedis.zrange(key, offset, offset + limit - 1);
                 return new CountListResult<>(result, totalSize);
             }
         });
