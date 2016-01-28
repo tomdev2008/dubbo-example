@@ -94,8 +94,8 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean addFriendRequest(final AddFriendParam addFriendParam) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
-        if (!StringTools.isBlank(relation)) {
-            throw new ApplicationException(ErrorCode.RELATION_IS_FRIEND);
+        if (RelationShip.FRIEND.getCode().equals(relation)) {
+          return true;
         }
         return relationTemplate.addFriend(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
     }
@@ -144,9 +144,6 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealFriendRequest(final OpRequestParam opRequestParam, boolean agree) {
         String relation = relationTemplate.getRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
-        if (!RelationShip.BE_ADDED.getCode().equals(relation)) { //检查对方是否在我接收到的好友请求列表中,如果不在,则返回错误消息
-            throw new ApplicationException(ErrorCode.RELATION_FRIEND_NO_EXISTS);
-        }
         return relationTemplate.agreeFriend(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
     }
 
