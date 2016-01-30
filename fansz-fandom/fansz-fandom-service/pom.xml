@@ -364,6 +364,10 @@
                                                  value="file:${application.root}/conf/jdbc.properties"
                                                  encoding="utf-8"/>
                                         <replace file="target/classes/applicationContext-provider.xml"
+                                                 token="classpath:/conf/kafka.properties"
+                                                 value="file:${application.root}/conf/kafka.properties"
+                                                 encoding="utf-8"/>
+                                        <replace file="target/classes/applicationContext-provider.xml"
                                                  token="classpath:/conf/redis.properties"
                                                  value="file:${application.root}/conf/redis.properties"
                                                  encoding="utf-8"/>

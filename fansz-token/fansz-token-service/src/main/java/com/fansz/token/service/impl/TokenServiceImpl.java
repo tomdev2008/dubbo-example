@@ -154,7 +154,7 @@ public class TokenServiceImpl implements TokenService {
                 while ((len = in.read(buffer)) != -1) {
                     baos.write(buffer, 0, len);
                 }
-                String response = URLDecoder.decode(baos.toString(), "UTF-8");
+                String response = baos.toString("UTF-8");
                 Map<String, String> map = JsonHelper.convertJSONObject2Map(JSON.parseObject(response));
                 if (!map.isEmpty()) {
                     tokenMap.put("token", map.get("token"));

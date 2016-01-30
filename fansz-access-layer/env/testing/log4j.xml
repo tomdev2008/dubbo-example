@@ -30,19 +30,28 @@
         </layout>
     </appender>
 
+    <appender name="SYSLOG" class="org.apache.log4j.net.SyslogAppender">
+        <param name="Facility" value="local2"/>
+        <param name="SyslogHost" value="10.0.0.7"/>
+        <param name="Header" value="true"/>
+        <param name="Threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
     <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
     <logger name="com.alibaba.dubbo.remoting" additivity="false">
-        <priority value="info"/>
+        <level value="info"/>
         <appender-ref ref="file"/>
     </logger>
 
     <logger name="io.netty" additivity="false">
-        <priority value="debug"/>
-        <appender-ref ref="file"/>
+        <level value="debug"/>
+        <appender-ref ref="SYSLOG"/>
     </logger>
 
     <logger name="org.apache.zookeeper" additivity="false">
-        <priority value="info"/>
+        <level value="info"/>
         <appender-ref ref="file"/>
     </logger>
 
