@@ -9,6 +9,7 @@ import com.fansz.fandom.model.comment.PostCommentQueryParam;
 import com.fansz.fandom.model.comment.PostCommentQueryResult;
 import com.fansz.fandom.repository.FandomPostEntityMapper;
 import com.fansz.fandom.repository.PostCommentEntityMapper;
+import com.fansz.fandom.service.AsyncEventService;
 import com.fansz.fandom.service.CommentService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
@@ -34,6 +35,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private FandomPostEntityMapper fandomPostEntityMapper;
 
+    @Autowired
+    private AsyncEventService asyncEventService;
+
     @Override
     public PostCommentQueryResult addComment(AddCommentParam commentPara) throws ApplicationException {
         PostCommentEntity postCommentEntity = new PostCommentEntity();
@@ -45,6 +49,7 @@ public class CommentServiceImpl implements CommentService {
         postCommentEntity.setCommentTime(new Date());
         postCommentEntityMapper.insert(postCommentEntity);
         fandomPostEntityMapper.incrCommentCountById(commentPara.getPostId());
+        asyncEventService.addComment(postCommentEntity);
         return BeanTools.copyAs(postCommentEntity, PostCommentQueryResult.class);
     }
 
@@ -55,17 +60,17 @@ public class CommentServiceImpl implements CommentService {
      */
     @Override
     public void removeComment(DelCommentParam delCommentParam) throws ApplicationException {
-        PostCommentEntity postCommentEntity=postCommentEntityMapper.selectByIdAndSn(delCommentParam.getCurrentSn(), delCommentParam.getCommentId());
-        if(postCommentEntity==null){
-            throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE,"No authority to delete Comment");
+        PostCommentEntity postCommentEntity = postCommentEntityMapper.selectByIdAndSn(delCommentParam.getCurrentSn(), delCommentParam.getCommentId());
+        if (postCommentEntity == null) {
+            throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE, "No authority to delete Comment");
         }
         postCommentEntityMapper.deleteByPrimaryKey(postCommentEntity.getId());
         fandomPostEntityMapper.decrCommentCountById(postCommentEntity.getPostId());
     }
 
     @Override
-    public PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom, PageBounds pageBounds) throws ApplicationException{
-        return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(),commentQueryFromFandom.getCommentSource(), pageBounds);
+    public PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(PostCommentQueryParam commentQueryFromFandom, PageBounds pageBounds) throws ApplicationException {
+        return postCommentEntityMapper.getCommentsByPostidFromFandom(commentQueryFromFandom.getPostId(), commentQueryFromFandom.getCommentSource(), pageBounds);
     }
 
 }

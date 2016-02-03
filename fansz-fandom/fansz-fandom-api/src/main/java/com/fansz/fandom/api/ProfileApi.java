@@ -27,23 +27,6 @@ public interface ProfileApi {
     CommonResult<Map<String,String>> getProfile(QueryProfileParam queryUserParam) throws ApplicationException;
 
     /**
-     * 根据昵称、账号、手机号码搜索会员
-     *
-     * @param searchMemberParam
-     * @return
-     */
-    @DubboxMethod("searchMembers")
-    CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam) throws ApplicationException;
-
-    /**
-     * C021:获取某类型（名人、明星、名企等）的会员列表
-     * @param searchMemberParam
-     * @return
-     */
-    @DubboxMethod("getFamousers")
-    CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) throws ApplicationException;
-
-    /**
      * 修改会员信息
      *
      * @param modifyProfileParam
@@ -70,6 +53,22 @@ public interface ProfileApi {
     @Deprecated
     @DubboxMethod("getMembersAlbum")
     CommonResult<List<String>> getMembersAlbum(ContactQueryParam contractQueryParam) throws ApplicationException;
+    /**
+     * 根据昵称、账号、手机号码搜索会员
+     *
+     * @param searchMemberParam
+     * @return
+     */
+    @DubboxMethod("searchMembers")
+    CommonPagedResult<UserInfoResult> searchMembersByKey(SearchMemberParam searchMemberParam) throws ApplicationException;
+
+    /**
+     * C021:获取某类型（名人、明星、名企等）的会员列表
+     * @param searchMemberParam
+     * @return
+     */
+    @DubboxMethod("getFamousers")
+    CommonPagedResult<UserInfoResult> searchMembersByType(SearchMemberParam searchMemberParam) throws ApplicationException;
 
 
 }

@@ -9,6 +9,8 @@ import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.db.entity.User;
 import com.fansz.db.repository.UserDAO;
+import com.fansz.event.producer.EventProducer;
+import com.fansz.event.type.AsyncEventType;
 import com.fansz.pub.utils.*;
 import com.fansz.redis.UserTemplate;
 import org.slf4j.Logger;
@@ -41,6 +43,9 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     /**
      * 用户注册
@@ -95,6 +100,8 @@ public class AccountServiceImpl implements AccountService {
          */
         //将用户信息保存到redis
         userTemplate.addUser(userMap);
+        userMap.remove("password");
+        eventProducer.produce(AsyncEventType.USER, user.getSn(), userMap);
     }
 
 

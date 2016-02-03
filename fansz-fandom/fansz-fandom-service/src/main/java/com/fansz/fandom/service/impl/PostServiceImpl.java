@@ -3,6 +3,8 @@ package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
+import com.fansz.event.model.PublishPostEvent;
+import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.entity.FandomPostLikeEntity;
 import com.fansz.fandom.model.post.*;
@@ -11,8 +13,10 @@ import com.fansz.fandom.model.vote.VotePostResult;
 import com.fansz.fandom.model.vote.VoteResultByPostId;
 import com.fansz.fandom.repository.FandomPostEntityMapper;
 import com.fansz.fandom.repository.FandomPostLikeEntityMapper;
+import com.fansz.fandom.service.AsyncEventService;
 import com.fansz.fandom.service.PostService;
 import com.fansz.fandom.tools.Constants;
+import com.fansz.pub.constant.PostType;
 import com.fansz.pub.utils.BeanTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -38,12 +42,19 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
 
+    @Autowired
+    private AsyncEventService asyncEventService;
+
     @Override
     public FandomPostEntity addPost(AddPostParam addPostParam) {
         FandomPostEntity fandomPostEntity = BeanTools.copyAs(addPostParam, FandomPostEntity.class);
         fandomPostEntity.setMemberSn(addPostParam.getCurrentSn());
         fandomPostEntity.setPostTime(new Date());
         fandomPostEntityMapper.insert(fandomPostEntity);
+        if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
+            asyncEventService.addPost(fandomPostEntity.getId(), fandomPostEntity.getPostTime(), addPostParam);
+        }
+
         return fandomPostEntity;
     }
 
@@ -93,6 +104,7 @@ public class PostServiceImpl implements PostService {
         entity.setLikeTime(new Date());
         this.fandomPostLikeEntityMapper.insert(entity);
         fandomPostEntityMapper.incrLikeCountById(addLikeParam.getPostId());
+        asyncEventService.addLike(entity);
     }
 
     @Override
@@ -123,9 +135,9 @@ public class PostServiceImpl implements PostService {
         PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
         if ("new".equals(postsQueryParam.getType())) {
             entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
-        } else if("hot".equals(postsQueryParam.getType())) {
+        } else if ("hot".equals(postsQueryParam.getType())) {
             entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
-        } else if("vote".equals(postsQueryParam.getType())){
+        } else if ("vote".equals(postsQueryParam.getType())) {
             entities = fandomPostEntityMapper.listVoteMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
         }
 
@@ -140,16 +152,17 @@ public class PostServiceImpl implements PostService {
 
     /**
      * 投票
+     *
      * @param votePostParam
      * @return
      */
     @Override
     public VotePostResult votePost(VotePostParam votePostParam) {
-        Map<String,Object> map = fandomPostEntityMapper.getVerifyVoteInfo(votePostParam.getCurrentSn(),votePostParam.getPostId());
-        if(map.get("id") == null){ //记录不存在
+        Map<String, Object> map = fandomPostEntityMapper.getVerifyVoteInfo(votePostParam.getCurrentSn(), votePostParam.getPostId());
+        if (map.get("id") == null) { //记录不存在
             throw new ApplicationException(ErrorCode.VOTE_POST_NOT_EXIST);
         }
-        if(map.get("effective_time") != null) {
+        if (map.get("effective_time") != null) {
             Date effectiveTime = (Date) map.get("effective_time");
             //判断是否超过截止时间
             if (effectiveTime.getTime() < System.currentTimeMillis()) {
@@ -158,21 +171,22 @@ public class PostServiceImpl implements PostService {
         }
         Long count = (Long) map.get("isVote");
         //判断是否重复投票
-        if(count > 0){
+        if (count > 0) {
             throw new ApplicationException(ErrorCode.VOTE_REPEATED);
         }
         //保存投票信息
         fandomPostEntityMapper.votePost(votePostParam);
         //统计投票信息
         VotePostResult votePostResult = fandomPostEntityMapper.getVoteResultByPostId(votePostParam.getPostId());
-        Integer voteCount = votePostResult.getOptionACount()+votePostResult.getOptionBCount(); //总的投票数
+        Integer voteCount = votePostResult.getOptionACount() + votePostResult.getOptionBCount(); //总的投票数
         //更新投票帖 投票总数
-        fandomPostEntityMapper.updatePostVoteCount(voteCount,votePostParam.getPostId());
+        fandomPostEntityMapper.updatePostVoteCount(voteCount, votePostParam.getPostId());
         return votePostResult;
     }
 
     /**
      * 获取投票帖投票结果
+     *
      * @param voteResultByPostId
      * @return
      */

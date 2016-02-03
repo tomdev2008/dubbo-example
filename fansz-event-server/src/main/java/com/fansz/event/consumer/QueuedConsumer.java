@@ -24,9 +24,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Runnable {
     private Logger logger = LoggerFactory.getLogger(QueuedConsumer.class);
 
-    private final AtomicBoolean closed = new AtomicBoolean(false);
-
-
     private final Map<String, IEventConsumer> CONSUMER_MAP = new ConcurrentHashMap<>();
 
     private final List<String> eventList = new ArrayList<>();
@@ -43,12 +40,14 @@ public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Run
     private void init() {
         Map<String, IEventConsumer> m = applicationContext.getBeansOfType(IEventConsumer.class);
         for (IEventConsumer consumer : m.values()) {
-            CONSUMER_MAP.put(consumer.getEventType().getCode(), consumer);
+            CONSUMER_MAP.put(consumer.getEventType().getName(), consumer);
         }
 
-        for (AsyncEventType aet : AsyncEventType.values()) {
-            eventList.add(aet.getName());
-        }
+        eventList.add(AsyncEventType.PUBLISH_POST.getName());
+        eventList.add(AsyncEventType.SEND_SMS.getName());
+        eventList.add(AsyncEventType.ADD_COMMENT.getName());
+        eventList.add(AsyncEventType.ADD_LIKE.getName());
+        eventList.add(AsyncEventType.USER.getName());
     }
 
     public void run() {
@@ -95,7 +94,7 @@ public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Run
     private boolean onRecordsReceived(ConsumerRecords<String, String> records) {
         for (ConsumerRecord<String, String> record : records) {
             logger.debug("received event,content:{}", record);
-            IEventConsumer consumer = CONSUMER_MAP.get(record.key());
+            IEventConsumer consumer = CONSUMER_MAP.get(record.topic());
             if (consumer != null) {
                 try {
                     consumer.onEvent(record);
@@ -120,6 +119,7 @@ public class QueuedConsumer implements Closeable, ConsumerRebalanceListener, Run
     // read the offsets from an external store
     @Override
     public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+        consumer.seekToBeginning(new TopicPartition("USER", 0));
         //TODO:
         logger.info("partition re-assignment complete,partitions={}", partitions);
     }

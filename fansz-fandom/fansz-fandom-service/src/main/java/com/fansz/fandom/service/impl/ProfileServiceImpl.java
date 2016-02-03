@@ -5,6 +5,7 @@ import com.fansz.fandom.model.profile.*;
 import com.fansz.fandom.model.search.SearchMemberParam;
 import com.fansz.fandom.repository.MemberAlbumEntityMapper;
 import com.fansz.fandom.repository.UserMapper;
+import com.fansz.fandom.service.AsyncEventService;
 import com.fansz.fandom.service.ProfileService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
@@ -15,6 +16,18 @@ import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.UserTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -33,6 +46,8 @@ import java.util.Map;
 @Transactional(propagation = Propagation.REQUIRED)
 public class ProfileServiceImpl implements ProfileService {
 
+    private Logger logger = LoggerFactory.getLogger(ProfileServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
 
@@ -45,6 +60,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     private MemberAlbumEntityMapper memberAlbumEntityMapper;
 
+    @Autowired
+    private AsyncEventService asyncEventService;
+
+    @Resource(name = "searchClient")
+    private Client searchClient;
 
     @Override
     public Map<String, String> getProfile(QueryProfileParam queryUserParam) {
@@ -81,6 +101,8 @@ public class ProfileServiceImpl implements ProfileService {
         userInfoResult.setSn(modifyProfilePara.getCurrentSn());
         userInfoResult.setProfileUpdatetime(now);
         userMapper.updateByUidSelective(userInfoResult);
+
+        asyncEventService.onUserChanged(userMap);
     }
 
     @Override
@@ -108,6 +130,9 @@ public class ProfileServiceImpl implements ProfileService {
         userInfoResult.setSn(setMemberParam.getCurrentSn());
         userInfoResult.setProfileUpdatetime(now);
         userMapper.updateByUidSelective(userInfoResult);
+
+        props.put("sn", setMemberParam.getCurrentSn());
+        asyncEventService.onUserChanged(props);
         return true;
     }
 
@@ -115,12 +140,16 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public PageList<UserInfoResult> searchMembers(SearchMemberParam searchMemberParam) {
         PageBounds pageBounds = new PageBounds(searchMemberParam.getPageNum(), searchMemberParam.getPageSize());
-        return userMapper.searchMembers(null, null, searchMemberParam.getMemberType(), null, pageBounds);
+        PageList<UserInfoResult> result = search(null, searchMemberParam.getMemberType(), pageBounds);
+        for (UserInfoResult user : result) {
+            user.setRelationship(relationTemplate.getRelation(searchMemberParam.getCurrentSn(), user.getSn()));
+        }
+        return result;
     }
 
     @Override
     public PageList<UserInfoResult> searchMembers(String searchKey, String sn, PageBounds pageBounds) {
-        PageList<UserInfoResult> result = userMapper.searchMembersByKey(searchKey, sn, pageBounds);
+        PageList<UserInfoResult> result = search(searchKey, null, pageBounds);
         for (UserInfoResult user : result) {
             user.setRelationship(relationTemplate.getRelation(sn, user.getSn()));
         }
@@ -130,5 +159,28 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public List<String> getImages(ContactQueryParam contractQueryParam) {
         return memberAlbumEntityMapper.getImages(contractQueryParam.getFriendSn());
+    }
+
+    public PageList<UserInfoResult> search(String searchKey, String searchType, PageBounds pageBounds) {
+        SearchRequestBuilder builder = searchClient.prepareSearch("fansz").setTypes("user").setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if (StringTools.isNotBlank(searchKey)) {
+            qb.should(new QueryStringQueryBuilder(searchKey).field("mobile").field("loginname").field("nickname"));
+        } else if (StringTools.isNotBlank(searchType)) {
+            qb.must(new QueryStringQueryBuilder(searchType).field("member_type"));
+        }
+        builder.setQuery(qb);
+        SearchResponse response = builder.execute().actionGet();
+        SearchHits hits = response.getHits();
+        logger.debug("查询到记录数={}", hits.getTotalHits());
+        SearchHit[] searchHists = hits.getHits();
+        PageList<UserInfoResult> userList = new PageList<>(new Paginator(pageBounds.getPage(), pageBounds.getLimit(), (int) hits.getTotalHits()));
+        if (searchHists.length > 0) {
+            for (SearchHit hit : searchHists) {
+                Map<String, Object> props = hit.getSource();
+                userList.add(JsonHelper.copyAs(props, UserInfoResult.class));
+            }
+        }
+        return userList;
     }
 }

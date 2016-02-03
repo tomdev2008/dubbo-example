@@ -18,6 +18,7 @@ import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.UserTemplate;
 import com.fansz.redis.model.CountListResult;
 import com.fansz.relations.model.*;
+import com.fansz.relations.service.AsyncEventService;
 import com.fansz.relations.service.RelationShipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,9 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Autowired
     private SpecialFocusDAO specialFocusDAO;
+
+    @Autowired
+    private AsyncEventService asyncEventService;
 
     /**
      * 查询好友列表
@@ -78,7 +82,7 @@ public class RelationShipServiceImpl implements RelationShipService {
                 record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
             }
             String remark = relationTemplate.getFriendRemark(friendsQueryParam.getCurrentSn(), record.get("sn"));
-            if(!StringTools.isBlank(remark)){
+            if (!StringTools.isBlank(remark)) {
                 record.put("remark", remark);
             }
         }
@@ -95,7 +99,7 @@ public class RelationShipServiceImpl implements RelationShipService {
     public boolean addFriendRequest(final AddFriendParam addFriendParam) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         if (RelationShip.FRIEND.getCode().equals(relation)) {
-          return true;
+            return true;
         }
         return relationTemplate.addFriend(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
     }
@@ -108,7 +112,7 @@ public class RelationShipServiceImpl implements RelationShipService {
      * @return
      */
     @Override
-    public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add,final boolean exception) {
+    public boolean dealSpecialFriend(final AddFriendParam addFriendParam, final boolean add, final boolean exception) {
         String relation = relationTemplate.getRelation(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         boolean bool;
         if (add) {//添加特殊关注,要求是朋友且不能是特殊关注
@@ -129,7 +133,7 @@ public class RelationShipServiceImpl implements RelationShipService {
             //删除特殊关注记录
             specialFocusDAO.delSpecialFocusInfo(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn(), null);
 
-            bool =  relationTemplate.removeSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
+            bool = relationTemplate.removeSpecial(addFriendParam.getCurrentSn(), addFriendParam.getFriendMemberSn());
         }
         return bool;
     }
@@ -144,6 +148,9 @@ public class RelationShipServiceImpl implements RelationShipService {
     @Override
     public boolean dealFriendRequest(final OpRequestParam opRequestParam, boolean agree) {
         String relation = relationTemplate.getRelation(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
+        if (agree) {
+            asyncEventService.addFriend(opRequestParam);
+        }
         return relationTemplate.agreeFriend(opRequestParam.getCurrentSn(), opRequestParam.getFriendMemberSn());
     }
 
@@ -218,9 +225,9 @@ public class RelationShipServiceImpl implements RelationShipService {
 
     @Override
     public AddContactsRemarkResult addContactsRemark(final AddContactsRemarkParam addContactsRemarkParam) {
-        if(StringTools.isNotBlank(addContactsRemarkParam.getRemark())){
+        if (StringTools.isNotBlank(addContactsRemarkParam.getRemark())) {
             relationTemplate.addFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn(), addContactsRemarkParam.getRemark());
-        }else {
+        } else {
             relationTemplate.removeFriendRemark(addContactsRemarkParam.getCurrentSn(), addContactsRemarkParam.getFriendMemberSn());
             addContactsRemarkParam.setRemark(null);
         }
@@ -232,12 +239,12 @@ public class RelationShipServiceImpl implements RelationShipService {
         String memberSn = addFriendParam.getCurrentSn();
         String friendMemberSn = addFriendParam.getFriendMemberSn();
         //删除特殊关注记录
-        dealSpecialFriend(addFriendParam,false,false);
+        dealSpecialFriend(addFriendParam, false, false);
         addFriendParam.setCurrentSn(friendMemberSn);
         addFriendParam.setFriendMemberSn(memberSn);
-        dealSpecialFriend(addFriendParam,false,false);
+        dealSpecialFriend(addFriendParam, false, false);
         //删除好友
-        relationTemplate.delFriend(memberSn,friendMemberSn);
+        relationTemplate.delFriend(memberSn, friendMemberSn);
 
         FriendInfoResult friendInfoResult = new FriendInfoResult();
         friendInfoResult.setSn(friendMemberSn);

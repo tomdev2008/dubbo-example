@@ -68,7 +68,7 @@ public class PublishPostConsumer implements IEventConsumer {
 
                 //同步推送到自己的朋友圈
                 PushPost myPost = new PushPost();
-                myPost.setMemberSn(publishPostEvent.getMemberSn());
+                myPost.setMemberSn(publishPostEvent.getPostCreator());
                 myPost.setPostId(postId);
                 myPost.setCreatetime(entity.getPostTime());
                 pushPostDAO.save(myPost);
@@ -80,11 +80,11 @@ public class PublishPostConsumer implements IEventConsumer {
                 }
                 break;
             default:
-                logger.warn("unknow post source:{},record", source,record);
+                logger.warn("unknow post source:{},record", source, record);
                 return;
         }
 
-        CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getMemberSn(), 0, FRIEND_LIMIT);
+        CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getPostCreator(), 0, FRIEND_LIMIT);
         if (friendList == null || friendList.getTotalCount() == 0) {
             return;
         }
