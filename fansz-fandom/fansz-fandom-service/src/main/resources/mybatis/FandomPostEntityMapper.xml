@@ -37,7 +37,8 @@
 
     <sql id="Base_Column_List">
     id, member_sn, fandom_id, post_title,post_content,post_newsfeeds, post_time,effective_time,post_type
-  </sql>
+    </sql>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
         <include refid="Base_Column_List"/>

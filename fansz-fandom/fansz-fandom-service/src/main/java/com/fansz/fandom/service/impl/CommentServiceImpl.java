@@ -1,6 +1,7 @@
 package com.fansz.fandom.service.impl;
 
 
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.entity.PostCommentEntity;
 import com.fansz.fandom.model.comment.AddCommentParam;
@@ -62,7 +63,7 @@ public class CommentServiceImpl implements CommentService {
     public void removeComment(DelCommentParam delCommentParam) throws ApplicationException {
         PostCommentEntity postCommentEntity = postCommentEntityMapper.selectByIdAndSn(delCommentParam.getCurrentSn(), delCommentParam.getCommentId());
         if (postCommentEntity == null) {
-            throw new ApplicationException(Constants.COMMENT_NO_AUTHORITY_DELETE, "No authority to delete Comment");
+            throw new ApplicationException(ErrorCode.COMMENT_NO_AUTHORITY_DELETE);
         }
         postCommentEntityMapper.deleteByPrimaryKey(postCommentEntity.getId());
         fandomPostEntityMapper.decrCommentCountById(postCommentEntity.getPostId());

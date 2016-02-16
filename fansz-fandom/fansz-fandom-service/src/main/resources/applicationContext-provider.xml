@@ -12,7 +12,7 @@
     <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
+                                  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties,classpath:/conf/elastic.properties"/>
     <bean id="searchClient" class="com.fansz.event.search.SearchClientFactoryBean">
         <property name="props">
             <map>

@@ -3,31 +3,45 @@ package com.fansz.fandom.service.impl;
 
 import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
-import com.fansz.event.model.PublishPostEvent;
-import com.fansz.event.type.AsyncEventType;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.entity.FandomPostLikeEntity;
+import com.fansz.fandom.model.fandom.FandomInfoResult;
 import com.fansz.fandom.model.post.*;
+import com.fansz.fandom.model.profile.UserInfoResult;
 import com.fansz.fandom.model.vote.VotePostParam;
 import com.fansz.fandom.model.vote.VotePostResult;
 import com.fansz.fandom.model.vote.VoteResultByPostId;
+import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomPostEntityMapper;
 import com.fansz.fandom.repository.FandomPostLikeEntityMapper;
 import com.fansz.fandom.service.AsyncEventService;
 import com.fansz.fandom.service.PostService;
 import com.fansz.fandom.tools.Constants;
-import com.fansz.pub.constant.PostType;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.JsonHelper;
+import com.fansz.pub.utils.StringTools;
+import com.fansz.redis.UserTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchType;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * Created by root on 15-11-3.
@@ -35,6 +49,11 @@ import java.util.Map;
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class PostServiceImpl implements PostService {
+
+    private Logger logger = LoggerFactory.getLogger(PostServiceImpl.class);
+
+    @Autowired
+    private FandomMapper fandomMapper;
 
     @Autowired
     private FandomPostEntityMapper fandomPostEntityMapper;
@@ -44,6 +63,12 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private AsyncEventService asyncEventService;
+
+    @Resource(name = "userTemplate")
+    private UserTemplate userTemplate;
+
+    @Resource(name = "searchClient")
+    private Client searchClient;
 
     @Override
     public FandomPostEntity addPost(AddPostParam addPostParam) {
@@ -62,10 +87,10 @@ public class PostServiceImpl implements PostService {
     public void removePost(RemovePostParam removePostrParam) {
         FandomPostEntity fandomPostEntity = fandomPostEntityMapper.selectByPrimaryKey(removePostrParam.getPostId());
         if (fandomPostEntity == null) {
-            throw new ApplicationException(Constants.POST_NOT_EXISTS, "Post not exists");
+            throw new ApplicationException(ErrorCode.POST_NOT_EXISTS);
         }
         if (!fandomPostEntity.getMemberSn().equals(removePostrParam.getCurrentSn())) {
-            throw new ApplicationException(Constants.POST_NOT_ALLOW_DEL, "Not your post");
+            throw new ApplicationException(ErrorCode.POST_NOT_ALLOW_DEL);
         }
         fandomPostEntityMapper.deleteByPrimaryKey(removePostrParam.getPostId());
     }
@@ -96,7 +121,7 @@ public class PostServiceImpl implements PostService {
     public void addLike(AddLikeParam addLikeParam) {
         int existed = fandomPostLikeEntityMapper.isLiked(addLikeParam.getCurrentSn(), addLikeParam.getPostId());
         if (existed > 0) {
-            throw new ApplicationException(Constants.LIKED_REPEATED, "Liked repeated");
+            throw new ApplicationException(ErrorCode.LIKED_REPEATED);
         }
         FandomPostLikeEntity entity = new FandomPostLikeEntity();
         entity.setPostId(addLikeParam.getPostId());
@@ -111,7 +136,7 @@ public class PostServiceImpl implements PostService {
     public void deleteLike(DeleteLikeParam deleteLikeParam) {
         int deleteCount = this.fandomPostLikeEntityMapper.deleteMyLike(deleteLikeParam.getCurrentSn(), deleteLikeParam.getPostId());
         if (deleteCount == 0) {
-            throw new ApplicationException(Constants.LIKED_NO_DELETE, "Need authority to delete");
+            throw new ApplicationException(ErrorCode.LIKED_NO_DELETE);
         }
         fandomPostEntityMapper.decrLikeCountById(deleteLikeParam.getPostId());
 
@@ -123,10 +148,72 @@ public class PostServiceImpl implements PostService {
         return this.fandomPostEntityMapper.listTimedMemberFandomPosts(getMemberFandomPostsParam.getFandomId(), getMemberFandomPostsParam.getMemberSn(), null, pageBounds);
     }
 
+    /**
+     * @Override public PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
+     * PageBounds pageBounds = new PageBounds(searchPostParam.getPageNum(), searchPostParam.getPageSize());
+     * return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(), pageBounds);
+     * }
+     */
+    /**
+     * 根据关键字搜索fandom post
+     *
+     * @param searchPostParam
+     * @return
+     */
     @Override
     public PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam) {
         PageBounds pageBounds = new PageBounds(searchPostParam.getPageNum(), searchPostParam.getPageSize());
-        return fandomPostEntityMapper.searchPosts(searchPostParam.getSearchVal(), pageBounds);
+        PageList<PostInfoResult> EMPTY = new PageList<>(new Paginator(pageBounds.getPage(), pageBounds.getLimit(), 0));
+
+        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_NAME).setTypes(Constants.TYPE_POST).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        if (StringTools.isBlank(searchPostParam.getSearchVal())) {
+            return EMPTY;
+        }
+        qb.should(new QueryStringQueryBuilder(searchPostParam.getSearchVal()).field("post_title").field("post_content"));
+        builder.setQuery(qb);
+        SearchResponse response = builder.execute().actionGet();
+        SearchHits hits = response.getHits();
+        logger.debug("查询到post记录总数={}", hits.getTotalHits());
+        SearchHit[] searchHists = hits.getHits();
+        if (searchHists.length == 0) {
+            return EMPTY;
+        }
+
+
+        PageList<PostInfoResult> postList = new PageList<>(new Paginator(pageBounds.getPage(), pageBounds.getLimit(), (int) hits.getTotalHits()));
+        Set<String> fandomIdList = new HashSet<>();
+        for (SearchHit hit : searchHists) {
+            Map<String, Object> props = hit.getSource();
+            PostInfoResult post = JsonHelper.copyAs(props, PostInfoResult.class);
+
+            //补足用户信息
+            Map<String, String> userMap = userTemplate.get((String) props.get("member_sn"));
+            UserInfoResult userInfo = JsonHelper.copyMapAs(userMap, UserInfoResult.class);
+            post.setUserInfoResult(userInfo);
+
+            //补足fandom信息
+            String fandomId = (String) props.get("fandom_id");
+            FandomInfoResult fandom = new FandomInfoResult();
+            fandom.setId(Long.valueOf(fandomId));
+            post.setFandomInfoResult(fandom);
+            fandomIdList.add(fandomId);
+
+
+            postList.add(post);
+        }
+        List<FandomInfoResult> fandomList = fandomMapper.getFandomByIds(fandomIdList);
+        Map<Long, FandomInfoResult> fandomMap = new HashMap<>();
+        for (FandomInfoResult fandom : fandomList) {
+            fandomMap.put(fandom.getId(), fandom);
+        }
+
+        for (PostInfoResult post : postList) {
+            post.setFandomInfoResult(fandomMap.get(post.getFandomInfoResult().getId()));
+        }
+        return postList;
+
+
     }
 
     @Override

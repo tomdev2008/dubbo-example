@@ -1,5 +1,6 @@
 package com.fansz.fandom.service.impl;
 
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.model.specialfocus.ModifySpecialFocusParam;
 import com.fansz.fandom.model.specialfocus.SpecialFocusParam;
@@ -34,7 +35,7 @@ public class SpecialFocusImpl implements SpecialFocusService {
     public int addSpecialFocusInfo(SpecialFocusParam specialFocusParam) {
         int count = specialFocusMapper.getCount(specialFocusParam);
         if(count > 0){
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "already special focus");
+            throw new ApplicationException(ErrorCode.RELATION_IS_IN_FANDOM);
         }
         return specialFocusMapper.addSpecialFocusInfo(specialFocusParam);
     }

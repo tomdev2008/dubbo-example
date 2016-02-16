@@ -1,5 +1,6 @@
 package com.fansz.fandom.service.impl;
 
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.model.profile.*;
 import com.fansz.fandom.model.search.SearchMemberParam;
@@ -83,12 +84,12 @@ public class ProfileServiceImpl implements ProfileService {
     public void modifyProfile(ModifyProfileParam modifyProfilePara) {
         Map<String, String> user = userTemplate.get(modifyProfilePara.getCurrentSn());
         if (user == null || user.isEmpty()) {
-            throw new ApplicationException(Constants.USER_NOT_FOUND, "User does't exist");
+            throw new ApplicationException(ErrorCode.USER_NOT_FOUND);
         }
         if (StringTools.isNotBlank(modifyProfilePara.getNickname())) {
             boolean exist = isExistsNickname(modifyProfilePara.getNickname(), modifyProfilePara.getCurrentSn());
             if (exist) {
-                throw new ApplicationException(Constants.NICK_NAME_REPATEDD, "Nickname repeated");
+                throw new ApplicationException(ErrorCode.NICK_NAME_REPATEDD);
             }
         }
         Date now = DateTools.getSysDate();
@@ -162,7 +163,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public PageList<UserInfoResult> search(String searchKey, String searchType, PageBounds pageBounds) {
-        SearchRequestBuilder builder = searchClient.prepareSearch("fansz").setTypes("user").setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
+        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_NAME).setTypes(Constants.TYPE_USER).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
         BoolQueryBuilder qb = QueryBuilders.boolQuery();
         if (StringTools.isNotBlank(searchKey)) {
             qb.should(new QueryStringQueryBuilder(searchKey).field("mobile").field("loginname").field("nickname"));

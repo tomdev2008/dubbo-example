@@ -5,6 +5,9 @@ import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -12,11 +15,13 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.index.VersionType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.net.InetSocketAddress;
@@ -36,6 +41,8 @@ public class TestSender {
         TransportClient client = TransportClient.builder().settings(settings).build();
         client.addTransportAddresses(new InetSocketTransportAddress(new InetSocketAddress("192.168.88.7", 9300)));
 
+       /* DeleteIndexResponse response=client.admin().indices().prepareDelete("fandom").get();
+        System.out.println(response.toString());*/
       /*  for (User u : userList) {
             client.prepareIndex("fansz", "user", u.getSn()).setRefresh(true).setSource(JsonHelper.convertObject2JSONString(u)).setTTL(2000).execute().actionGet();
         }*/
@@ -49,24 +56,25 @@ public class TestSender {
          String content = JsonHelper.convertObject2JSONString(u);
          client.prepareUpdate("fansz", "user", u.getSn()).setUpsert(content).setDoc(content).setTtl(2000L).execute();
          */
-
-
-        SearchRequestBuilder builder = client.prepareSearch("fansz").setTypes("user").setSearchType(SearchType.DEFAULT).setFrom(0).setSize(100);
-        BoolQueryBuilder qb = QueryBuilders.boolQuery();
-        qb.should(new QueryStringQueryBuilder("18621614455").field("mobile").field("loginname").field("nickname"));
+        SearchRequestBuilder builder = client.prepareSearch("fansz").setTypes("post").setSearchType(SearchType.DEFAULT).setFrom(0).setSize(100);
+        //BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        //qb.should(new QueryStringQueryBuilder("1").field("post_title").field("post_content"));
         //qb.should(new QueryStringQueryBuilder("18621614455").field("loginname"));
         //qb.should(new QueryStringQueryBuilder("18621614455").field("nickname"));
-        builder.setQuery(qb);
+        //builder.setQuery(qb);
+        builder.addSort("id", SortOrder.ASC);
         SearchResponse response = builder.execute().actionGet();
         SearchHits hits = response.getHits();
         System.out.println("查询到记录数=" + hits.getTotalHits());
         SearchHit[] searchHists = hits.getHits();
+        System.out.println("返回记录数=" +searchHists.length);
         if (searchHists.length > 0) {
             for (SearchHit hit : searchHists) {
                 Map<String, Object> props = hit.getSource();
                 System.out.println(JsonHelper.convertObject2JSONString(props));
             }
         }
+
     }
 }
 
