@@ -1,6 +1,6 @@
 #!/bin/sh
 LOCAL_PATH=/Users/allan/Works/backend/fansz-backend
-REMOTE_PATH=/usr/local/applications
+REMOTE_PATH=/home/applications
 
 pssh -P -h hosts.txt $REMOTE_PATH/access-layer-2.0.0-RELEASE/bin/shutdown.sh 
 pssh -P -h hosts.txt $REMOTE_PATH/fansz-auth-oauth-2.0.0-RELEASE/bin/shutdown.sh  

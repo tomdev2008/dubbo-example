@@ -28,9 +28,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.QueryStringQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.slf4j.Logger;
@@ -165,12 +163,13 @@ public class PostServiceImpl implements PostService {
         PageBounds pageBounds = new PageBounds(searchPostParam.getPageNum(), searchPostParam.getPageSize());
         PageList<PostInfoResult> EMPTY = new PageList<>(new Paginator(pageBounds.getPage(), pageBounds.getLimit(), 0));
 
-        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_NAME).setTypes(Constants.TYPE_POST).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
+        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_FANDOM).setTypes(Constants.TYPE_POST).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
         BoolQueryBuilder qb = QueryBuilders.boolQuery();
         if (StringTools.isBlank(searchPostParam.getSearchVal())) {
             return EMPTY;
         }
-        qb.should(new QueryStringQueryBuilder(searchPostParam.getSearchVal()).field("post_title").field("post_content"));
+        qb.should(new MatchQueryBuilder("post_title", searchPostParam.getSearchVal()));
+        qb.should(new MatchQueryBuilder("post_content", searchPostParam.getSearchVal()));
         builder.setQuery(qb);
         SearchResponse response = builder.execute().actionGet();
         SearchHits hits = response.getHits();

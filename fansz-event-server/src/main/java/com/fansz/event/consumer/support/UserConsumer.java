@@ -48,6 +48,6 @@ public class UserConsumer implements IEventConsumer {
     private void createIndex(String sn, String content) throws Exception {
         //IndexResponse response = searchClient.prepareIndex("fansz", "user", sn).setRefresh(true).setSource(content).setTTL(2000).execute().actionGet();
         //logger.info("Response id is {}", response.getId());
-        searchClient.prepareUpdate("fansz", "user", sn).setUpsert(content).setDoc(content).setTtl(2000L).execute();
+        searchClient.prepareUpdate("member", "user", sn).setUpsert(content).setDoc(content).setTtl(2000L).execute();
     }
 }

@@ -163,7 +163,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     public PageList<UserInfoResult> search(String searchKey, String searchType, PageBounds pageBounds) {
-        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_NAME).setTypes(Constants.TYPE_USER).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
+        SearchRequestBuilder builder = searchClient.prepareSearch(Constants.INDEX_MEMBER).setTypes(Constants.TYPE_USER).setSearchType(SearchType.DEFAULT).setFrom(pageBounds.getOffset()).setSize(pageBounds.getLimit());
         BoolQueryBuilder qb = QueryBuilders.boolQuery();
         if (StringTools.isNotBlank(searchKey)) {
             qb.should(new QueryStringQueryBuilder(searchKey).field("mobile").field("loginname").field("nickname"));
