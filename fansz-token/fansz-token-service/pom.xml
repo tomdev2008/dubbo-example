@@ -5,7 +5,7 @@
     <parent>
         <artifactId>fansz-token</artifactId>
         <groupId>com.fansz</groupId>
-        <version>2.0.0-SNAPSHOT</version>
+        <version>2.0.0-RELEASE</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>fansz-token-service</artifactId>
@@ -59,7 +59,6 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -68,7 +67,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.2.1</version>
                 <configuration>
                     <descriptors>
                         <descriptor>assembly.xml</descriptor>
@@ -106,7 +104,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
-                        <version>2.4</version>
                         <configuration>
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
@@ -118,7 +115,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
                         <executions>
                             <execution>
                                 <id>compile</id>
@@ -156,7 +152,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
-                        <version>2.4</version>
                         <configuration>
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
@@ -168,7 +163,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
                         <executions>
                             <execution>
                                 <id>compile</id>
@@ -206,7 +200,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-jar-plugin</artifactId>
-                        <version>2.4</version>
                         <configuration>
                             <excludes>
                                 <exclude>**/log4j.xml</exclude>
@@ -218,7 +211,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-antrun-plugin</artifactId>
-                        <version>1.8</version>
                         <executions>
                             <execution>
                                 <id>compile</id>
