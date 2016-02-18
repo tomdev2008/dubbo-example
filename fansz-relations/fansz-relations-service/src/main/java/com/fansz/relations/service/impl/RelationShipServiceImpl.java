@@ -24,9 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by allan on 16/1/7.
@@ -174,6 +172,12 @@ public class RelationShipServiceImpl implements RelationShipService {
         for (Map<String, String> record : friendList) {
             record.put("relationship", relationTemplate.getRelation(mySn, record.get("sn")));
         }
+        Collections.sort(friendList, new Comparator<Map<String, String>>() {
+            @Override
+            public int compare(Map<String, String> o1, Map<String, String> o2) {
+                return o1.get("relationship").compareTo(o2.get("relationship"));
+            }
+        });
         return new QueryResult<>(friendList, snList.getTotalCount());
     }
 
