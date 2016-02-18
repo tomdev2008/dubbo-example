@@ -10,7 +10,7 @@
         "oss:ListObjects"
       ],
       "Effect": "Allow",
-      "Resource": ["acs:oss:*:*:$BUCKET_NAME/*", "acs:oss:*:*:$BUCKET_NAME"]
+      "Resource": ["acs:oss:*:*:fd-images/*", "acs:oss:*:*:fd-images"]
     }
   ],
   "Version": "1"
