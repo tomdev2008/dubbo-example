@@ -202,7 +202,7 @@
         </if>
     </select>
 
-    <select id="getFandomCategory"  resultType="java.util.Map">
+    <select id="getFandomCategory" resultType="java.util.Map">
         SELECT
         <include refid="Fandom_Column_List">
             <property name="alias" value="a"/>
@@ -213,4 +213,15 @@
         order by a.id
     </select>
 
+    <select id="getFandomByIds" resultMap="fandomAllInfoResultMap">
+        SELECT
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        FROM feeds_fandom a
+        where a.id in
+        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

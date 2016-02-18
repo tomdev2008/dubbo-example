@@ -21,6 +21,8 @@
             <param name="ConversionPattern" value="%-d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n"/>
         </layout>
     </appender>
+
+    <!--
     <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="File" value="/usr/local/applications/logs/token.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
@@ -29,16 +31,27 @@
                    value="%-d{yyyy-MM-dd HH:mm:ss} %5p %c{1}:%L - %m%n"/>
         </layout>
     </appender>
-
+-->
+    <appender name="socketAppender" class="org.apache.log4j.net.SocketAppender">
+        <param name="remoteHost" value="10.0.0.7"/>
+        <param name="port" value="4560"/>
+        <param name="Threshold" value="DEBUG"/>
+        <param name="ReconnectionDelay" value="2000"/>
+        <param name="LocationInfo" value="true"/>
+    </appender>
     <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
     <logger name="com.alibaba.dubbo.remoting.exchange.support.header" additivity="false">
-        <priority value="info"/>
-        <appender-ref ref="file"/>
+        <level value="info"/>
+        <appender-ref ref="socketAppender"/>
+    </logger>
+    <logger name="org.apache.commons" additivity="false">
+        <level value="info"/>
+        <appender-ref ref="socketAppender"/>
     </logger>
 
     <!-- 根logger的设置-->
     <root>
         <level value="debug"/>
-        <appender-ref ref="file"/>
+        <appender-ref ref="socketAppender"/>
     </root>
 </log4j:configuration>

@@ -11,6 +11,7 @@ import org.mybatis.spring.annotation.MapperScan;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @MapperScan
 public interface FandomMapper {
@@ -34,4 +35,6 @@ public interface FandomMapper {
     FandomInfoResult getFandomInfo(@Param("fandomId") Long fandomId, @Param("fandomName") String fandomName);
 
     List<Map<String, Object>> getFandomCategory();
+
+    List<FandomInfoResult> getFandomByIds(@Param("idList")Set<String> idList);
 }

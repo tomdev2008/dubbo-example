@@ -18,8 +18,10 @@ import com.fansz.token.utils.IMUtils;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
+import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -46,6 +50,29 @@ public class TokenServiceImpl implements TokenService {
     private ClassPathResource policyResource;
 
     private final Logger logger = LoggerFactory.getLogger(TokenServiceImpl.class);
+
+    private HttpClient client;
+
+    private MultiThreadedHttpConnectionManager connectionManager;
+
+    @PostConstruct
+    private void init() {
+        HttpConnectionManagerParams params = new HttpConnectionManagerParams();
+        params.setConnectionTimeout(1000);//连接超时1s
+        params.setSoTimeout(3000);//请求超时
+        params.setStaleCheckingEnabled(true);
+        connectionManager =
+                new MultiThreadedHttpConnectionManager();
+        connectionManager.setParams(params);
+        client = new HttpClient(connectionManager);
+    }
+
+    @PreDestroy
+    private void destroy() {
+        if (connectionManager != null) {
+            connectionManager.shutdown();
+        }
+    }
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -105,7 +132,6 @@ public class TokenServiceImpl implements TokenService {
      */
     public Map<String, String> requestIMToken(String appKey, String memberSn) throws ApplicationException {
         String uri = applicationProps.getProperty("im.tokenServer.address");
-        HttpClient client = new HttpClient();
         PostMethod method = new PostMethod(uri);
         String userId = IMUtils.getUserId(memberSn, appKey);
         Map<String, String> tokenMap = new HashMap<>();
@@ -117,7 +143,9 @@ public class TokenServiceImpl implements TokenService {
             StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
             method.setRequestEntity(requestEntity);
             method.setRequestHeader(new Header("Content-Type", "application/json"));
+            logger.debug("begin to request im server to get token for:{}", memberSn);
             int result = client.executeMethod(method);
+            logger.debug("end to request im server to get token for :{}", memberSn);
             if (result == HttpStatus.SC_OK) {
                 InputStream in = method.getResponseBodyAsStream();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -126,18 +154,19 @@ public class TokenServiceImpl implements TokenService {
                 while ((len = in.read(buffer)) != -1) {
                     baos.write(buffer, 0, len);
                 }
-                String response = URLDecoder.decode(baos.toString(), "UTF-8");
+                String response = baos.toString("UTF-8");
                 Map<String, String> map = JsonHelper.convertJSONObject2Map(JSON.parseObject(response));
                 if (!map.isEmpty()) {
                     tokenMap.put("token", map.get("token"));
                     tokenMap.put("status_code", map.get("statusCode"));
                 }
             } else {
-                logger.error("im token server return code:{}",result);
-                throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
+                logger.error("im token server return code:{}", result);
+                tokenMap.put("token", "");
+                tokenMap.put("status_code", String.valueOf(result));
             }
         } catch (Exception e) {
-            throw new ApplicationException(ErrorCode.SYSTEM_ERROR);
+            logger.error(String.format("error to request im server to get token for:%s", memberSn), e);
         } finally {
             method.releaseConnection();
         }

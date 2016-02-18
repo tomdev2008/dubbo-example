@@ -1,5 +1,7 @@
 package com.fansz.db.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,22 +18,28 @@ public class FandomPost {
     private Long id;
 
     @Column(name = "member_sn")
+    @JSONField(name = "member_sn")
     private String memberSn;
 
     @Column(name = "fandom_id")
+    @JSONField(name = "fandom_id")
     private Long fandomId;
 
     @Column(name = "post_title")
+    @JSONField(name = "post_title")
     private String postTitle;
 
     @Column(name = "post_content")
+    @JSONField(name = "post_content")
     private String postContent;
 
     @Column(name = "post_newsfeeds")
+    @JSONField(name = "post_newsfeeds")
     private String postNewsfeeds;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "post_time")
+    @JSONField(name = "post_time")
     private Date postTime;
 
     public Long getId() {

@@ -9,10 +9,13 @@ import com.fansz.pub.constant.InformationSource;
 import com.fansz.pub.utils.BeanTools;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.DateTools;
+import com.fansz.pub.utils.JsonHelper;
 import com.fansz.redis.JedisTemplate;
 import com.fansz.redis.RelationTemplate;
 import com.fansz.redis.model.CountListResult;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,9 @@ public class PublishPostConsumer implements IEventConsumer {
     @Resource(name = "relationTemplate")
     private RelationTemplate relationTemplate;
 
+    @Resource(name = "searchClient")
+    private Client searchClient;
+
     @Override
     public void onEvent(ConsumerRecord<String, String> record) {
         final PublishPostEvent publishPostEvent = JSON.parseObject(record.value(), PublishPostEvent.class);
@@ -68,10 +74,14 @@ public class PublishPostConsumer implements IEventConsumer {
 
                 //同步推送到自己的朋友圈
                 PushPost myPost = new PushPost();
-                myPost.setMemberSn(publishPostEvent.getMemberSn());
+                myPost.setMemberSn(publishPostEvent.getPostCreator());
                 myPost.setPostId(postId);
                 myPost.setCreatetime(entity.getPostTime());
                 pushPostDAO.save(myPost);
+
+                //更新elasticsearch索引
+                IndexResponse response=searchClient.prepareIndex("fansz", "post", String.valueOf(postId)).setRefresh(true).setSource(JsonHelper.convertObject2JSONString(fandomPost)).setTTL(2000).execute().actionGet();
+                logger.debug(response.toString());
                 break;
             case NEWSFEEDS:
                 NewsfeedsPost newsfeedsPost = newsfeedsPostDAO.load(postId);
@@ -80,11 +90,11 @@ public class PublishPostConsumer implements IEventConsumer {
                 }
                 break;
             default:
-                logger.warn("unknow post source:{},record", source,record);
+                logger.warn("unknow post source:{},record", source, record);
                 return;
         }
 
-        CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getMemberSn(), 0, FRIEND_LIMIT);
+        CountListResult<String> friendList = relationTemplate.listFriend(publishPostEvent.getPostCreator(), 0, FRIEND_LIMIT);
         if (friendList == null || friendList.getTotalCount() == 0) {
             return;
         }

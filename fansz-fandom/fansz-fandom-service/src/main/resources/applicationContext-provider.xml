@@ -12,7 +12,16 @@
     <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
     <context:property-placeholder ignore-resource-not-found="false"
-                                  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties"/>
+                                  location="classpath:/conf/jdbc.properties,classpath:/conf/redis.properties,classpath:/conf/dubbo.properties,classpath:/conf/elastic.properties"/>
+    <bean id="searchClient" class="com.fansz.event.search.SearchClientFactoryBean">
+        <property name="props">
+            <map>
+                <entry key="cluster.name" value="${elasticsearch.cluster.name}"/>
+            </map>
+        </property>
+        <property name="addresses" value="${elasticsearch.cluster.nodes}"/>
+    </bean>
+
     <import resource="classpath:/spring/spring-mybatis.xml"/>
     <import resource="classpath:/spring/spring-redis.xml"/>
     <import resource="classpath:/spring/spring-kafka.xml"/>

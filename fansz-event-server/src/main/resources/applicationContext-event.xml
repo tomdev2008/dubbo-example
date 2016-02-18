@@ -12,13 +12,21 @@
 
     <util:properties id="kafkaProp" location="classpath:/conf/kafka.properties"/>
 
-   <!-- <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
-        <constructor-arg index="0">
-            <ref bean="kafkaProp"/>
-        </constructor-arg>
-    </bean>-->
+    <!-- <bean id="KafkaConsumer" class="org.apache.kafka.clients.consumer.KafkaConsumer">
+         <constructor-arg index="0">
+             <ref bean="kafkaProp"/>
+         </constructor-arg>
+     </bean>-->
 
     <bean id="queuedConsumer" class="com.fansz.event.consumer.QueuedConsumer"/>
+    <bean id="searchClient" class="com.fansz.event.search.SearchClientFactoryBean">
+        <property name="props">
+            <map>
+                <entry key="cluster.name" value="${elasticsearch.cluster.name}"/>
+            </map>
+        </property>
+        <property name="addresses" value="${elasticsearch.cluster.nodes}"/>
+    </bean>
 
     <!--<import resource="classpath:/spring/spring-dubbo.xml"/>-->
     <import resource="classpath:/spring/spring-redis.xml"/>

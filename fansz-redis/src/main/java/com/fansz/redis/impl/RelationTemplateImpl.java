@@ -11,6 +11,7 @@ import com.fansz.redis.support.JedisCallback;
 import com.fansz.redis.utils.RedisKeyUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
+import redis.clients.jedis.ZParams;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,7 @@ public class RelationTemplateImpl implements RelationTemplate {
     }
 
     @Override
+    @Deprecated
     public Set<String> listByPosition(final String key, final long start, final long end) {
         return jedisTemplate.execute(new JedisCallback<Set<String>>() {
             @Override
@@ -68,7 +70,8 @@ public class RelationTemplateImpl implements RelationTemplate {
         return jedisTemplate.execute(new JedisCallback<Boolean>() {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
-                jedis.zadd(RedisKeyUtils.getSpeicalFriendKey(mySn), System.currentTimeMillis(), friendSn);
+                double score = jedis.zscore(RedisKeyUtils.getFriendKey(mySn), friendSn);
+                jedis.zadd(RedisKeyUtils.getSpeicalFriendKey(mySn), score, friendSn);
                 return true;
             }
         });
@@ -96,7 +99,7 @@ public class RelationTemplateImpl implements RelationTemplate {
             @Override
             public Boolean doInRedis(Jedis jedis) throws Exception {
                 //如果在列表中,则从请求sorted set中删除请求,并添加到朋友sorted set中
-                long now = System.currentTimeMillis();
+                double now = jedis.zscore(RedisKeyUtils.getMyRequestKey(friendSn), mySn);
                 Pipeline pipe = jedis.pipelined();
                 pipe.zadd(RedisKeyUtils.getFriendKey(mySn), now, friendSn);
                 pipe.zadd(RedisKeyUtils.getFriendKey(friendSn), now, mySn);
@@ -144,11 +147,11 @@ public class RelationTemplateImpl implements RelationTemplate {
             @Override
             public CountListResult<String> doInRedis(Jedis jedis) throws Exception {
                 try {
-                    long totalSize = jedis.zunionstore(unionKey, RedisKeyUtils.getMyRequestKey(mySn), RedisKeyUtils.getFriendKey(mySn), RedisKeyUtils.getSpeicalFriendKey(mySn));
+                    long totalSize = jedis.zunionstore(unionKey, new ZParams().aggregate(ZParams.Aggregate.MAX), RedisKeyUtils.getMyRequestKey(mySn), RedisKeyUtils.getFriendKey(mySn), RedisKeyUtils.getSpeicalFriendKey(mySn));
                     if (totalSize == 0 || totalSize < offset) {
                         return null;
                     }
-                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit);
+                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit - 1);
                     return new CountListResult(result, totalSize);
                 } finally {
                     jedis.del(unionKey);
@@ -164,11 +167,11 @@ public class RelationTemplateImpl implements RelationTemplate {
             @Override
             public CountListResult<String> doInRedis(Jedis jedis) throws Exception {
                 try {
-                    long totalSize = jedis.zunionstore(unionKey, RedisKeyUtils.getMyRequestedKey(mySn), RedisKeyUtils.getFriendKey(mySn), RedisKeyUtils.getSpeicalFriendKey(mySn));
+                    long totalSize = jedis.zunionstore(unionKey, new ZParams().aggregate(ZParams.Aggregate.MAX), RedisKeyUtils.getMyRequestedKey(mySn), RedisKeyUtils.getFriendKey(mySn), RedisKeyUtils.getSpeicalFriendKey(mySn));
                     if (totalSize == 0 || totalSize < offset) {
                         return null;
                     }
-                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit);
+                    Set<String> result = jedis.zrange(unionKey, offset, offset + limit - 1);
                     return new CountListResult(result, totalSize);
                 } finally {
                     jedis.del(unionKey);
@@ -187,7 +190,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                 if (totalSize == 0 || totalSize < offset) {
                     return null;
                 }
-                Set<String> result = jedis.zrange(key, offset, offset + limit);
+                Set<String> result = jedis.zrange(key, offset, offset + limit - 1);
                 return new CountListResult<>(result, totalSize);
             }
         });
@@ -203,7 +206,7 @@ public class RelationTemplateImpl implements RelationTemplate {
                 if (totalSize == 0 || totalSize < offset) {
                     return null;
                 }
-                Set<String> result = jedis.zrange(key, offset, offset + limit);
+                Set<String> result = jedis.zrange(key, offset, offset + limit - 1);
                 return new CountListResult<>(result, totalSize);
             }
         });
@@ -228,11 +231,10 @@ public class RelationTemplateImpl implements RelationTemplate {
                     return RelationShip.SPECIAL_FRIEND.getCode();
                 } else if (jedis.zrank(RedisKeyUtils.getFriendKey(currentSn), sn) != null) {
                     return RelationShip.FRIEND.getCode();
-                }
-                if (jedis.zrank(RedisKeyUtils.getMyRequestKey(currentSn), sn) != null) {
-                    return RelationShip.TO_ADD.getCode();
-                } else if (jedis.zrank(RedisKeyUtils.getMyRequestedKey(currentSn), sn) != null) {
+                }else if (jedis.zrank(RedisKeyUtils.getMyRequestedKey(currentSn), sn) != null) {
                     return RelationShip.BE_ADDED.getCode();
+                }else if (jedis.zrank(RedisKeyUtils.getMyRequestKey(currentSn), sn) != null) {
+                    return RelationShip.TO_ADD.getCode();
                 } else {
                     return null;
                 }
@@ -240,9 +242,6 @@ public class RelationTemplateImpl implements RelationTemplate {
         });
     }
 
-    public void setJedisTemplate(JedisTemplate jedisTemplate) {
-        this.jedisTemplate = jedisTemplate;
-    }
 
     /**
      * 删除好友
@@ -263,5 +262,9 @@ public class RelationTemplateImpl implements RelationTemplate {
                 return friendSn;
             }
         });
+    }
+
+    public void setJedisTemplate(JedisTemplate jedisTemplate) {
+        this.jedisTemplate = jedisTemplate;
     }
 }

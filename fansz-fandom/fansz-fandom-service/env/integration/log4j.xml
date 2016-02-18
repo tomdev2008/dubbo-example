@@ -22,7 +22,7 @@
         </layout>
     </appender>
     <appender name="file" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="/usr/local/applications/logs/fandom.log"/>
+        <param name="File" value="/home/applications/logs/fandom.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd'.log'"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
@@ -32,7 +32,7 @@
 
     <!-- 指定logger的设置，additivity指示是否遵循缺省的继承机制-->
     <logger name="org.apache.kafka" additivity="false">
-        <priority value="info"/>
+        <level value="info"/>
         <appender-ref ref="file"/>
     </logger>
 

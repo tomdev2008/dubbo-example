@@ -53,10 +53,6 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
         GetPostByIdParam postParam = new GetPostByIdParam();
         postParam.setPostId(fandomPost.getId());
         postParam.setCurrentSn(addPostParam.getCurrentSn());
-        if ("1".equals(addPostParam.getPostNewsfeeds())) {//发布到朋友圈
-            PublishPostEvent postPublishEvent = new PublishPostEvent(fandomPost.getId(), addPostParam.getCurrentSn(), fandomPost.getPostTime(), fandomPost.getPostTitle(), fandomPost.getPostContent(), PostType.getTypeByCode(addPostParam.getPostType()));
-            eventProducer.produce(AsyncEventType.PUBLISH_POST, postPublishEvent);
-        }
         return getPost(postParam);
     }
 

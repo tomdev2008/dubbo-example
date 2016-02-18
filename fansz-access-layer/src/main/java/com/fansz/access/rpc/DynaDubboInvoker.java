@@ -4,6 +4,7 @@ import com.alibaba.dubbo.rpc.RpcException;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fansz.access.utils.ConsumerConstants;
 import com.fansz.access.utils.ResponseUtils;
 import com.fansz.auth.api.AccountApi;
@@ -157,7 +158,7 @@ public class DynaDubboInvoker implements RpcInvoker {
         }
         Object result = m.invoke(invoker, values);
 
-        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.convertObject2JSONString(result);
+        return result == null ? ResponseUtils.renderMethodNameError() : JsonHelper.convert2FormatJSONString(result, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     private boolean isValid(SessionInfoResult session) {

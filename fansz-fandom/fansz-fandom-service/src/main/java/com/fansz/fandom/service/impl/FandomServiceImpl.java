@@ -1,5 +1,6 @@
 package com.fansz.fandom.service.impl;
 
+import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.event.producer.EventProducer;
 import com.fansz.fandom.entity.FandomEntity;
@@ -113,7 +114,7 @@ public class FandomServiceImpl implements FandomService {
             fandomMember.setInfatuation("1");//1表示特别关注
             FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(fandomMember);
             if (exist != null) {
-                throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is already in fandom");
+                throw new ApplicationException(ErrorCode.RELATION_IS_IN_FANDOM);
             }
 
             fandomMemberEntityMapper.insertSelective(fandomMember);
@@ -139,7 +140,7 @@ public class FandomServiceImpl implements FandomService {
         queryParam.setMemberSn(joinFandomParam.getCurrentSn());
         FandomMemberEntity exist = fandomMemberEntityMapper.selectByMemberAndFandom(queryParam);
         if (exist == null) {
-            throw new ApplicationException(Constants.RELATION_IS_IN_FANDOM, "User is not in fandom");
+            throw new ApplicationException(ErrorCode.RELATION_IS_NOT_IN_FANDOM);
         }
         fandomMemberEntityMapper.deleteByPrimaryKey(exist.getId());
 
@@ -218,7 +219,7 @@ public class FandomServiceImpl implements FandomService {
     public FandomInfoResult addFandom(AddFandomParam addFandomParam) {
         int count = this.fandomMapper.getCountByFandomName(addFandomParam.getFandomName());
         if (count > 0) {
-            throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
+            throw new ApplicationException(ErrorCode.FANDOM_NAME_REPATEDD);
         }
         FandomEntity fandomEntity = new FandomEntity();
         fandomEntity.setFandomAdminSn(addFandomParam.getCurrentSn());
@@ -243,7 +244,7 @@ public class FandomServiceImpl implements FandomService {
     public int delFandom(DelFandomParam delFandomParam) {
         int count = fandomMapper.delFandom(delFandomParam);
         if (count == 0) {
-            throw new ApplicationException(Constants.FANDOM_NO_DELETE, "Need authority to delete");
+            throw new ApplicationException(ErrorCode.FANDOM_NO_DELETE);
         }
         return 1;
     }
@@ -253,12 +254,12 @@ public class FandomServiceImpl implements FandomService {
         if (StringTools.isNotBlank(modifyFandomParam.getFandomName())) {
             FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(null, modifyFandomParam.getFandomName());
             if (null != fandomInfoResult && !fandomInfoResult.getId().equals(modifyFandomParam.getId())) {
-                throw new ApplicationException(Constants.FANDOM_NAME_REPATEDD, "Fandom name repeated");
+                throw new ApplicationException(ErrorCode.FANDOM_NAME_REPATEDD);
             }
         }
         int count2 = fandomMapper.modifyFandom(modifyFandomParam);
         if (count2 == 0) {
-            throw new ApplicationException(Constants.FANDOM_MONDIFY_NOT_PERMISSION, "No fandom modify permissions");
+            throw new ApplicationException(ErrorCode.FANDOM_MONDIFY_NOT_PERMISSION);
         }
         List<FandomTagResult> fandomTagList = saveTagByfandomId(modifyFandomParam.getId(), modifyFandomParam.getFandomTagParam());
         FandomInfoResult fandomInfoResult = fandomMapper.getFandomInfo(modifyFandomParam.getId(), null);
