@@ -22,7 +22,9 @@ public interface FandomMapper {
 
     int modifyFandom(ModifyFandomParam modifyFandomParam);
 
-    List<FandomInfoResult> listByCondition(FandomEntity param);
+    PageList<FandomInfoResult> listAllFandom(PageBounds pageBounds);
+
+    PageList<FandomInfoResult> listUnfocusFandom(@Param("memberSn") String memberSn,PageBounds pageBounds);
 
     PageList<FandomInfoResult> getRecommendFandom(@Param("memberSn") String memberSn, PageBounds pageBounds);
 

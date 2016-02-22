@@ -68,7 +68,7 @@
         where id = #{id,jdbcType=BIGINT} AND fandom_admin_sn = #{adminSn,jdbcType=VARCHAR}
     </update>
 
-    <select id="listByCondition" parameterType="com.fansz.fandom.entity.FandomEntity"
+    <select id="listAllFandom" parameterType="com.fansz.fandom.entity.FandomEntity"
             resultMap="fandomAllInfoResultMap">
         SELECT
         <include refid="Fandom_Column_List">
@@ -80,26 +80,23 @@
         </include>
         FROM feeds_fandom a LEFT JOIN
         connects_member_profile b ON a.fandom_creator_sn = b.sn
-        <where>
-            <if test="fandomName != null">
-                fandom_name = #{fandomName,jdbcType=VARCHAR},
-            </if>
-            <if test="fandomParentId != null">
-                fandom_parent_id = #{fandomParentId,jdbcType=BIGINT},
-            </if>
-            <if test="fandomAdminSn != null">
-                fandom_admin_sn = #{fandomAdminSn,jdbcType=VARCHAR},
-            </if>
-            <if test="fandomCreatorSn != null">
-                fandom_creator_sn = #{fandomCreatorSn,jdbcType=VARCHAR},
-            </if>
-            <if test="fandomAvatarUrl != null">
-                fandom_avatar_url = #{fandomAvatarUrl,jdbcType=VARCHAR},
-            </if>
-            <if test="fandomIntro != null">
-                fandom_intro = #{fandomIntro,jdbcType=VARCHAR},
-            </if>
-        </where>
+    </select>
+
+    <select id="listUnfocusFandom" parameterType="com.fansz.fandom.entity.FandomEntity"
+            resultMap="fandomAllInfoResultMap">
+        SELECT
+        <include refid="Fandom_Column_List">
+            <property name="alias" value="a"/>
+        </include>
+        ,
+        <include refid="com.fansz.fandom.repository.UserMapper.User_Column_List">
+            <property name="alias" value="b"/>
+        </include>
+        FROM feeds_fandom a LEFT JOIN
+        connects_member_profile b ON a.fandom_creator_sn = b.sn
+        WHERE NOT EXISTS
+        (select 1 FROM feeds_member_fandom c WHERE c.fandom_id=a.id AND c.member_sn=#{memberSn,jdbcType=VARCHAR})
+
     </select>
 
     <select id="getRecommendFandom" parameterType="java.lang.String" resultMap="fandomAllInfoResultMap">

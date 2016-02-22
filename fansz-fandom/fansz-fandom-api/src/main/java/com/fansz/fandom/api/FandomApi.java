@@ -66,14 +66,22 @@ public interface FandomApi {
     CommonPagedResult<FandomInfoResult> getMyFandoms(MemberFandomQueryParam fandomParam) throws ApplicationException;
 
     /**
-     * 查询所有的fandom
+     * F010:查询所有的fandom
      *
      * @param fandomQueryParam 查询参数
      * @return CommonResult<List<FandomInfoResult>> 返回对象
      */
     @DubboxMethod("listAllFandoms")
-    CommonResult<List<FandomInfoResult>> listAllFandoms(FandomQueryParam fandomQueryParam) throws ApplicationException;
+    CommonPagedResult<FandomInfoResult> listAllFandoms(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
+    /**
+     * F040:查询所有的fandom(排除已经关注的fandom)
+     *
+     * @param fandomQueryParam 查询参数
+     * @return CommonResult<List<FandomInfoResult>> 返回对象
+     */
+    @DubboxMethod("listUnFocusFandoms")
+    CommonPagedResult<FandomInfoResult> listUnFocusFandoms(FandomQueryParam fandomQueryParam) throws ApplicationException;
 
     /**
      * 获取推荐的fandom接口

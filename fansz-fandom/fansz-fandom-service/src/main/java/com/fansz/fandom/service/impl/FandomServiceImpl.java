@@ -79,11 +79,16 @@ public class FandomServiceImpl implements FandomService {
      * @return
      */
     @Override
-    public List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam) {
-        FandomEntity param = BeanTools.copyAs(fandomQueryParam, FandomEntity.class);
-        return fandomMapper.listByCondition(param);
+    public PageList<FandomInfoResult> listAllFandom(FandomQueryParam fandomQueryParam) {
+        PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
+        return fandomMapper.listAllFandom(pageBounds);
     }
 
+    @Override
+    public PageList<FandomInfoResult> listUnfocusFandoms(FandomQueryParam fandomQueryParam) {
+        PageBounds pageBounds = new PageBounds(fandomQueryParam.getPageNum(), fandomQueryParam.getPageSize());
+        return fandomMapper.listUnfocusFandom(fandomQueryParam.getCurrentSn(),pageBounds);
+    }
     /**
      * 获取用户关注的fandom列表
      *

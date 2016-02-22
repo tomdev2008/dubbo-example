@@ -17,8 +17,9 @@ public interface FandomService {
 
      void init();
 
-    List<FandomInfoResult> listFandom(FandomQueryParam fandomQueryParam);
+    PageList<FandomInfoResult> listAllFandom(FandomQueryParam fandomQueryParam);
 
+    PageList<FandomInfoResult> listUnfocusFandoms(FandomQueryParam fandomQueryParam);
 
     PageList<FandomInfoResult> findFandomsByMemberSn(String sn, PageBounds pageBounds);
 
