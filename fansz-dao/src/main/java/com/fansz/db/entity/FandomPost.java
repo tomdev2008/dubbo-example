@@ -37,6 +37,10 @@ public class FandomPost {
     @JSONField(name = "post_newsfeeds")
     private String postNewsfeeds;
 
+    @Column(name = "post_level")
+    @JSONField(name = "post_level")
+    private String postLevel;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "post_time")
     @JSONField(name = "post_time")
@@ -96,5 +100,13 @@ public class FandomPost {
 
     public void setPostTime(Date postTime) {
         this.postTime = postTime;
+    }
+
+    public String getPostLevel() {
+        return postLevel;
+    }
+
+    public void setPostLevel(String postLevel) {
+        this.postLevel = postLevel;
     }
 }

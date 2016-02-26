@@ -1,4 +1,6 @@
+import com.fansz.db.entity.FandomPost;
 import com.fansz.db.entity.User;
+import com.fansz.db.repository.FandomPostDAO;
 import com.fansz.db.repository.UserDAO;
 import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.JsonHelper;
@@ -44,7 +46,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by allan on 15/11/30.
  */
-public class TestSender {
+public class TestSearch {
     public static void main(String[] args) throws Exception {
 
         Settings settings = Settings.settingsBuilder().put("cluster.name", "fansz-searcher").put("client.transport.sniff", true).build();
@@ -52,33 +54,65 @@ public class TestSender {
         client.addTransportAddresses(new InetSocketTransportAddress(new InetSocketAddress("192.168.88.6", 9300)));
 
 
-        searchPost(client, "测试", "V");
+        //deleteIndex(client,"member");
+        //searchPost(client, "测试", "V");
 
-        //createMapping(client, "fandom", "post");
-        // migrate(client);
-        //createUser(client);
+        //createUserMapping(client);
+        //migrate(client);
+        createUser(client);
+        //createPost(client);
     }
 
-    private static void createMapping(TransportClient client, String indices, String mappingType) throws Exception {
+    private static void createPostMapping(TransportClient client) throws Exception {
         client.admin().indices().prepareCreate("fandom").execute().actionGet();
         XContentBuilder builder = JsonXContent.contentBuilder()
                 .startObject()
                 .startObject("properties")
-                .startObject("id").field("type", "string").endObject()
-                .startObject("fandom_id").field("type", "integer").endObject()
-                .startObject("member_sn").field("type", "string").endObject()
+                .startObject("id").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("fandom_id").field("type", "integer").field("index", "not_analyzed").endObject()
+                .startObject("member_sn").field("type", "string").field("index", "not_analyzed").endObject()
                 .startObject("post_content").field("type", "string").field("analyzer", "ik_smart").endObject()
                 .startObject("post_title").field("type", "string").field("analyzer", "ik_smart").endObject()
-                .startObject("post_newsfeeds").field("type", "string").endObject()
-                .startObject("post_type").field("type", "string").endObject()
-                .startObject("post_time").field("type", "string").endObject()
-                .startObject("effective_time").field("type", "string").endObject()
-                .startObject("comment_count").field("type", "integer").endObject()
-                .startObject("vote_count").field("type", "integer").endObject()
-                .startObject("like_count").field("type", "integer").endObject()
+                .startObject("post_newsfeeds").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("post_type").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("post_time").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("effective_time").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("comment_count").field("type", "integer").field("index", "not_analyzed").endObject()
+                .startObject("vote_count").field("type", "integer").field("index", "not_analyzed").endObject()
+                .startObject("like_count").field("type", "integer").field("index", "not_analyzed").endObject()
+                .startObject("post_level").field("type", "string").field("index", "not_analyzed").endObject()
                 .endObject()
                 .endObject();
-        PutMappingRequest mapping = Requests.putMappingRequest(indices).type(mappingType).source(builder);
+        PutMappingRequest mapping = Requests.putMappingRequest("fandom").type("post").source(builder);
+        client.admin().indices().putMapping(mapping).actionGet();
+        client.close();
+
+    }
+
+    private static void createUserMapping(TransportClient client) throws Exception {
+        client.admin().indices().prepareCreate("member").execute().actionGet();
+        XContentBuilder builder = JsonXContent.contentBuilder()
+                .startObject()
+                .startObject("properties")
+                .startObject("id").field("type", "long").field("index", "not_analyzed").endObject()
+                .startObject("sn").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("loginname").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("password").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("mobile").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("email").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("nickname").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("gender").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("birthday").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("member_avatar").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("profile_createtime").field("type", "long").field("index", "not_analyzed").endObject()
+                .startObject("profile_updatetime").field("type", "long").field("index", "not_analyzed").endObject()
+                .startObject("member_type").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("member_status").field("type", "string").field("index", "not_analyzed").endObject()
+                .startObject("signature").field("type", "string").field("analyzer", "ik_smart").endObject()
+                .startObject("country").field("type", "string").field("index", "not_analyzed").endObject()
+                .endObject()
+                .endObject();
+        PutMappingRequest mapping = Requests.putMappingRequest("member").type("user").source(builder);
         client.admin().indices().putMapping(mapping).actionGet();
         client.close();
 
@@ -132,6 +166,17 @@ public class TestSender {
         List<User> userList = dao.findAll();
         for (User u : userList) {
             client.prepareIndex("member", "user", u.getSn()).setRefresh(true).setSource(JsonHelper.convertObject2JSONString(u)).setTTL(2000).execute().actionGet();
+        }
+        client.close();
+    }
+
+    private static void createPost(TransportClient client) {
+        final ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext-event.xml");
+        ac.start();
+        FandomPostDAO dao = ac.getBean(FandomPostDAO.class);
+        List<FandomPost> userList = dao.findAll();
+        for (FandomPost p : userList) {
+            client.prepareIndex("fandom", "post", String.valueOf(p.getId())).setRefresh(true).setSource(JsonHelper.convertObject2JSONString(p)).setTTL(2000).execute().actionGet();
         }
         client.close();
     }
