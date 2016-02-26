@@ -30,7 +30,6 @@ public interface FandomPostEntityMapper {
 
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
-    PageList<PostInfoResult> findPostsOfMyFriends(String memberSn, PageBounds pageBounds);
 
     PageList<PostInfoResult> searchPosts(String searchVal, PageBounds pageBounds);
 

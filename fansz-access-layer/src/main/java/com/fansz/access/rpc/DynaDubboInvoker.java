@@ -69,7 +69,8 @@ public class DynaDubboInvoker implements RpcInvoker {
 
     public String invoke(String url, String requestBody) {
         Map<String, Object> reqMap = parseParameter(requestBody);
-        String header = JSON.toJSONString(reqMap.get(ConsumerConstants.HTTP_HEADER));
+        //String header = JSON.toJSONString(reqMap.get(ConsumerConstants.HTTP_HEADER));
+        String header="{}";
         JSONArray reqArray = (JSONArray) reqMap.get(ConsumerConstants.HTTP_REQUEST);
         String response = "";
         if (reqArray == null) {//请求参数格式错误,不再进行后续处理

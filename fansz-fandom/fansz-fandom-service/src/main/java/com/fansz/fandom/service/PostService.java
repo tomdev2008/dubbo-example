@@ -27,8 +27,6 @@ public interface PostService {
 
     List<PostLikeInfoResult> listPostVotes(PostParam postParam);
 
-    PageList<PostInfoResult> getFriendsPosts(String memberSn, PageBounds pageBounds);
-
     PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds);
 
     PageList<PostInfoResult> searchPosts(SearchPostParam searchPostParam);

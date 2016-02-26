@@ -40,20 +40,20 @@ public class SSLTest {
     }
 
     public static void test() throws Exception {
-        AuthSSLProtocolSocketFactory factory = new AuthSSLProtocolSocketFactory(null, null, new File("/Users/allan/fansztrusted.jks").toURI().toURL(), "fanszapp");
-        Protocol myhttps = new Protocol("https", factory, 443);
+        AuthSSLProtocolSocketFactory factory = new AuthSSLProtocolSocketFactory(null, null, new File("/Users/allan/Downloads/ssl/fansztrusted.jks").toURI().toURL(), "fansz!23456");
+        Protocol myhttps = new Protocol("https", factory, 3000);
 
         Protocol.registerProtocol("https",
-                new Protocol("https", factory, 443));
+                new Protocol("https", factory, 3000));
         HttpClient httpclient = new HttpClient();
-        PostMethod httpget = new PostMethod("https://121.43.188.186");
-        String queryString = "{\"header\": {\"local\": \"ZH_cn\",\"terminal_type\": \"IOS\"},\"request\": [{\"method\": \"getVerifyCodeForReset\",\"params\": {\"mobile\":\"13764473493\"}}]}";
-        StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
+        PostMethod httpget = new PostMethod("https://192.168.88.6");
+        String queryString = "{\\\"header\\\": {\\\"local\\\": \\\"ZH_cn\\\",\\\"terminal_type\\\": \\\"IOS\\\"},\\\"request\\\": [{\\\"method\\\": \\\"listAllFandoms\\\",\\\"params\\\": {\\\"access_token\\\": \\\"demo\\\",\\\"page_num\\\":1,\\\"page_size\\\" :10}}]}";
+                StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
         httpget.setRequestEntity(requestEntity);
         httpget.setRequestHeader(new Header("Content-Type", "application/json"));
         try {
             httpclient.executeMethod(httpget);
-            System.out.println(httpget.getStatusLine());
+            System.out.println(new String(httpget.getResponseBody()));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

@@ -19,6 +19,7 @@
         <result column="post_title" property="postTitle" jdbcType="VARCHAR"/>
         <result column="post_content" property="postContent" jdbcType="VARCHAR"/>
         <result column="post_newsfeeds" property="postNewsfeeds" jdbcType="VARCHAR"/>
+        <result column="post_level" property="postLevel" jdbcType="VARCHAR"/>
         <result column="post_time" property="postTime" jdbcType="TIMESTAMP"/>
         <result column="effective_time" property="effectiveTime" jdbcType="TIMESTAMP"/>
         <result column="post_type" property="postType" jdbcType="VARCHAR"/>
@@ -110,6 +111,7 @@
             T1.post_content,
             T1.post_newsfeeds,
             T1.post_time,
+            T1.post_level,
             T1.like_count likes,
             T1.comment_count comments,
             T2.sn ui_sn,
@@ -146,41 +148,6 @@
         WHERE
             c.member_sn = #{memberSn,jdbcType=VARCHAR}
         order by T1.id desc
-    </select>
-
-    <select id="findPostsOfMyFriends" parameterType="java.lang.String" resultMap="postInfoResultMap">
-            SELECT
-            a.id,
-            a.post_title,
-            a.post_content,
-            a.post_newsfeeds,
-            a.post_time,
-            a.like_count likes,
-            a.comment_count comments,
-            a.vote_count,
-            b.sn ui_sn,
-            b.nickname ui_nickname,
-            b.member_avatar ui_member_avatar,
-            (SELECT
-                    count(1)
-                FROM
-                    feeds_member_post_like
-                WHERE
-                    post_id = a.id
-                    AND member_sn=#{memberSn,jdbcType=VARCHAR}
-            ) liked
-        FROM
-            feeds_member_post_fandom a,
-            connects_member_profile b,
-            connects_member_relation c
-        WHERE
-              c.my_member_sn = #{memberSn,jdbcType=VARCHAR}
-                AND c.friend_member_sn = a.member_sn
-                AND a.member_sn=b.sn
-                AND a.post_newsfeeds = '1'
-                AND c.relation_status IN ('10','11')
-                AND a.fandom_id IS NULL
-        ORDER BY a.id DESC
     </select>
 
     <select id="searchPosts" parameterType="java.lang.String" resultMap="postInfoResultMap">
@@ -256,6 +223,7 @@
             T1.post_title,
             T1.post_content,
             T1.post_newsfeeds,
+            T1.post_level,
             T1.post_time,
             T2.sn ui_sn,
             T2.nickname ui_nickname,
@@ -282,7 +250,7 @@
             <if test="mySn != null">
                 LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{mySn,jdbcType=VARCHAR})
             </if>
-            WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+            WHERE T1.post_type='P' AND T1.fandom_id = #{fandomId,jdbcType=BIGINT}
             <if test="memberSn != null">
                 AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
             </if>
@@ -294,6 +262,7 @@
             T1.id,
             T1.post_title,
             T1.post_content,
+            T1.post_level,
             T1.post_newsfeeds,
             T1.post_time,
             T1.like_count likes,
@@ -320,7 +289,7 @@
         <if test="mySn != null">
             LEFT JOIN feeds_member_post_choice ch ON (T1.id = ch.post_id AND ch.voter_sn = #{mySn,jdbcType=VARCHAR})
         </if>
-        WHERE T1.fandom_id = #{fandomId,jdbcType=BIGINT}
+        WHERE   T1.post_type='P' AND T1.fandom_id = #{fandomId,jdbcType=BIGINT}
         <if test="memberSn != null">
             AND T1.member_sn=#{memberSn,jdbcType=VARCHAR}
         </if>

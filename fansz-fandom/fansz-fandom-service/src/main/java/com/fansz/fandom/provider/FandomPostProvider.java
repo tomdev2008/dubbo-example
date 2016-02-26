@@ -122,18 +122,6 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
     }
 
     /**
-     * 获得所有好友的所有帖子接口
-     *
-     * @param getPostsParam 分页参数
-     * @return resp 返回对象
-     */
-    public CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) throws ApplicationException {
-        PageBounds pageBounds = new PageBounds(getPostsParam.getPageNum(), getPostsParam.getPageSize());
-        PageList<PostInfoResult> dataResult = postService.getFriendsPosts(getPostsParam.getCurrentSn(), pageBounds);
-        return renderPagedSuccess(dataResult);
-    }
-
-    /**
      * 获得我所关注的所有fandom的所有帖子接口
      *
      * @param getPostsParam 分页参数
@@ -171,6 +159,13 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
      */
     @Override
     public CommonPagedResult<PostInfoResult> getPostsByFandom(PostsQueryParam param) throws ApplicationException {
+        //兼容老接口
+        if ("new".equals(param.getType()) || "hot".equals(param.getType())) {
+            param.setType("P");
+            param.setOrder(param.getType());
+        } else if ("vote".equals(param.getType())) {
+            param.setType("V");
+        }
         PageList<PostInfoResult> postInfoResults = this.postService.getFandomPosts(param);
         return renderPagedSuccess(postInfoResults);
     }
@@ -189,6 +184,7 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
 
     /**
      * 投票
+     *
      * @param votePostParam
      * @return
      * @throws ApplicationException
@@ -201,6 +197,7 @@ public class FandomPostProvider extends AbstractProvider implements FandomPostAp
 
     /**
      * 获取投票帖投票结果
+     *
      * @param voteResultByPostId
      * @return
      * @throws ApplicationException

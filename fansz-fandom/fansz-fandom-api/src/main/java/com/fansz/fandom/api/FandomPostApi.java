@@ -82,15 +82,6 @@ public interface FandomPostApi {
     CommonResult<List<PostLikeInfoResult>> listPostVoteList(PostParam postParam) throws ApplicationException;
 
     /**
-     * 获得所有好友的所有帖子接口
-     *
-     * @param getPostsParam 分页参数
-     * @return resp 返回对象
-     */
-    @DubboxMethod("listMyNewsfeeds")
-    CommonPagedResult<PostInfoResult> listFriendsPosts(GetPostsParam getPostsParam) throws ApplicationException;
-
-    /**
      * 获得我所关注的所有fandom的帖子列表
      *
      * @param getPostsParam 分页参数

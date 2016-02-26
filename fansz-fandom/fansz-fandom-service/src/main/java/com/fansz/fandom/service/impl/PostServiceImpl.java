@@ -109,11 +109,6 @@ public class PostServiceImpl implements PostService {
         return fandomPostEntityMapper.findPostsOfMyFandoms(memberSn, pageBounds);
     }
 
-    @Override
-    public PageList<PostInfoResult> getFriendsPosts(String memberSn, PageBounds pageBounds) {
-        return fandomPostEntityMapper.findPostsOfMyFriends(memberSn, pageBounds);
-    }
-
 
     @Override
     public void addLike(AddLikeParam addLikeParam) {
@@ -219,14 +214,15 @@ public class PostServiceImpl implements PostService {
     public PageList<PostInfoResult> getFandomPosts(PostsQueryParam postsQueryParam) {
         PageList<PostInfoResult> entities = null;
         PageBounds pageBounds = new PageBounds(postsQueryParam.getPageNum(), postsQueryParam.getPageSize());
-        if ("new".equals(postsQueryParam.getType())) {
-            entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
-        } else if ("hot".equals(postsQueryParam.getType())) {
-            entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
-        } else if ("vote".equals(postsQueryParam.getType())) {
+        if ("V".equalsIgnoreCase(postsQueryParam.getType())) {//投票贴
             entities = fandomPostEntityMapper.listVoteMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
+        } else {//普通帖子
+            if ("new".equals(postsQueryParam.getOrder())) {
+                entities = fandomPostEntityMapper.listTimedMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
+            } else if ("hot".equals(postsQueryParam.getOrder())) {
+                entities = fandomPostEntityMapper.listHotMemberFandomPosts(postsQueryParam.getFandomId(), null, postsQueryParam.getCurrentSn(), pageBounds);
+            }
         }
-
         return entities;
     }
 

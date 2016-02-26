@@ -29,6 +29,9 @@ public class PostInfoResult implements Serializable {
     @JSONField(name="post_newsfeeds")
     private String postNewsfeeds;
 
+    @JSONField(name="post_level")
+    private String postLevel;
+
     @JSONField(name="post_time")
     private Date postTime;
 
@@ -81,6 +84,14 @@ public class PostInfoResult implements Serializable {
 
     public void setPostNewsfeeds(String postNewsfeeds) {
         this.postNewsfeeds = postNewsfeeds;
+    }
+
+    public String getPostLevel() {
+        return postLevel;
+    }
+
+    public void setPostLevel(String postLevel) {
+        this.postLevel = postLevel;
     }
 
     public String getLiked() {

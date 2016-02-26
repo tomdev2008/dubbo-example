@@ -9,17 +9,18 @@ import com.fansz.common.provider.model.PageParam;
  */
 public class PostsQueryParam extends PageParam implements AccessTokenAware {
 
-    @JSONField(name="member_sn")
+    @JSONField(name = "member_sn")
     private String currentSn;
 
-    @JSONField(name="access_token")
+    @JSONField(name = "access_token")
     private String accessToken;
 
-    @JSONField(name="fandom_id")
+    @JSONField(name = "fandom_id")
     private Long fandomId;
 
-    @JSONField(name="type")
     private String type;
+
+    private String order;
 
 
     @Override
@@ -57,4 +58,11 @@ public class PostsQueryParam extends PageParam implements AccessTokenAware {
         this.type = type;
     }
 
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
+    }
 }
