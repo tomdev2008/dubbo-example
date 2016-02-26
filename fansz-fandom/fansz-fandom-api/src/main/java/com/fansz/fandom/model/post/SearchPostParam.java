@@ -21,6 +21,8 @@ public class SearchPostParam extends PageParam implements AccessTokenAware, Seri
     @JSONField(name="search_val")
     private String searchVal;
 
+    private String type;
+
     @Override
     public String getCurrentSn() {
         return currentSn;
@@ -47,4 +49,11 @@ public class SearchPostParam extends PageParam implements AccessTokenAware, Seri
         this.searchVal = searchVal;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

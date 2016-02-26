@@ -24,7 +24,7 @@ public class AccessStarter {
             String keyStorePassword = prop.getProperty("keystore.password");
             File keyStore = new File(keyStorePath);
             SSLConfig sslConfig = SSLConfig.builder(keyStore, keyStorePassword).build();
-            service = NettyHttpService.builder().enableSSL(sslConfig).setHttpRequestRouter(httpRequestRouter).setPort(3000).build();
+            service = NettyHttpService.builder()/*.enableSSL(sslConfig)*/.setHttpRequestRouter(httpRequestRouter).setPort(4000).build();
             service.startUp();
         } catch (Exception e) {
             e.printStackTrace();

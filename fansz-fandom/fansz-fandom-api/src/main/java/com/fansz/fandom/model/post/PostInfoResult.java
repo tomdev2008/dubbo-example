@@ -1,11 +1,13 @@
 package com.fansz.fandom.model.post;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fansz.fandom.model.comment.PostCommentQueryResult;
 import com.fansz.fandom.model.fandom.FandomInfoResult;
 import com.fansz.fandom.model.profile.UserInfoResult;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * POST信息模型
@@ -45,6 +47,9 @@ public class PostInfoResult implements Serializable {
 
     @JSONField(name="fandom_info")
     private FandomInfoResult fandomInfoResult;
+
+    @JSONField(name="comment_list")
+    private List<PostCommentQueryResult> commentList;
 
     @JSONField(name="post_member")
     private UserInfoResult userInfoResult;
@@ -188,5 +193,13 @@ public class PostInfoResult implements Serializable {
 
     public void setVoteCount(Long voteCount) {
         this.voteCount = voteCount;
+    }
+
+    public List<PostCommentQueryResult> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<PostCommentQueryResult> commentList) {
+        this.commentList = commentList;
     }
 }

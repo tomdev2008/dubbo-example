@@ -5,6 +5,7 @@ import com.fansz.common.provider.constant.ErrorCode;
 import com.fansz.common.provider.exception.ApplicationException;
 import com.fansz.fandom.entity.FandomPostEntity;
 import com.fansz.fandom.entity.FandomPostLikeEntity;
+import com.fansz.fandom.model.comment.PostCommentQueryResult;
 import com.fansz.fandom.model.fandom.FandomInfoResult;
 import com.fansz.fandom.model.post.*;
 import com.fansz.fandom.model.profile.UserInfoResult;
@@ -14,16 +15,19 @@ import com.fansz.fandom.model.vote.VoteResultByPostId;
 import com.fansz.fandom.repository.FandomMapper;
 import com.fansz.fandom.repository.FandomPostEntityMapper;
 import com.fansz.fandom.repository.FandomPostLikeEntityMapper;
+import com.fansz.fandom.repository.PostCommentEntityMapper;
 import com.fansz.fandom.service.AsyncEventService;
 import com.fansz.fandom.service.PostService;
 import com.fansz.fandom.tools.Constants;
 import com.fansz.pub.utils.BeanTools;
+import com.fansz.pub.utils.CollectionTools;
 import com.fansz.pub.utils.JsonHelper;
 import com.fansz.pub.utils.StringTools;
 import com.fansz.redis.UserTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import com.google.common.collect.Lists;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -58,6 +62,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private FandomPostLikeEntityMapper fandomPostLikeEntityMapper;
+
+    @Autowired
+    private PostCommentEntityMapper postCommentEntityMapper;
 
     @Autowired
     private AsyncEventService asyncEventService;
@@ -100,13 +107,34 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostLikeInfoResult> listPostVotes(PostParam postParam) {
-        List<PostLikeInfoResult> list = fandomPostLikeEntityMapper.listPostVotes(postParam.getPostId());
-        return list;
+        return fandomPostLikeEntityMapper.listPostVotes(postParam.getPostId());
     }
 
     @Override
     public PageList<PostInfoResult> findPostsOfMyFandoms(String memberSn, PageBounds pageBounds) {
-        return fandomPostEntityMapper.findPostsOfMyFandoms(memberSn, pageBounds);
+        PageList<PostInfoResult> result = fandomPostEntityMapper.findPostsOfMyFandoms(memberSn, pageBounds);
+        if (CollectionTools.isNullOrEmpty(result)) {
+            return result;
+        }
+
+        //组装参数,用于拼装评论
+        List<Long> postIdList = new ArrayList<>();
+        Map<Long, PostInfoResult> postMap = new HashMap<>();
+        for (PostInfoResult post : result) {
+            postIdList.add(post.getId());
+            postMap.put(post.getId(), post);
+        }
+
+        //返回post最新的一条评论,出于扩展性的考虑,返回list类型
+        List<PostCommentQueryResult> commentList = postCommentEntityMapper.getCommentsByPostIds(postIdList);
+        if (!CollectionTools.isNullOrEmpty(commentList)) {
+            for (PostCommentQueryResult comment : commentList) {
+                List<PostCommentQueryResult> comments = new ArrayList<>();
+                comments.add(comment);
+                postMap.get(comment.getPostId()).setCommentList(comments);
+            }
+        }
+        return result;
     }
 
 
@@ -162,6 +190,9 @@ public class PostServiceImpl implements PostService {
         BoolQueryBuilder qb = QueryBuilders.boolQuery();
         if (StringTools.isBlank(searchPostParam.getSearchVal())) {
             return EMPTY;
+        }
+        if (StringTools.isNotBlank(searchPostParam.getType())) {
+            qb.must(new QueryStringQueryBuilder(searchPostParam.getType()).field("post_type"));
         }
         qb.should(new MatchQueryBuilder("post_title", searchPostParam.getSearchVal()));
         qb.should(new MatchQueryBuilder("post_content", searchPostParam.getSearchVal()));

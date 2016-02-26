@@ -7,6 +7,8 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.annotation.MapperScan;
 
+import java.util.List;
+
 @MapperScan
 public interface PostCommentEntityMapper {
 
@@ -17,6 +19,8 @@ public interface PostCommentEntityMapper {
 
     PageList<PostCommentQueryResult> getCommentsByPostidFromFandom(@Param("postId") Long postId, @Param("commentSource") String commentSource, PageBounds pageBounds);
 
+    List<PostCommentQueryResult> getCommentsByPostIds(@Param("idList") List<Long> idList);
+
     /**
      * 删除我的评论
      *
@@ -25,4 +29,5 @@ public interface PostCommentEntityMapper {
      * @return
      */
     PostCommentEntity selectByIdAndSn(@Param("sn") String sn, @Param("id") long id);
+
 }

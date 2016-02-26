@@ -35,8 +35,10 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.net.InetSocketAddress;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -50,26 +52,7 @@ public class TestSender {
         client.addTransportAddresses(new InetSocketTransportAddress(new InetSocketAddress("192.168.88.6", 9300)));
 
 
-        SearchRequestBuilder builder = client.prepareSearch("fandom").setTypes("post").setSearchType(SearchType.DEFAULT).setFrom(0).setSize(100);
-        BoolQueryBuilder qb = QueryBuilders.boolQuery();
-        //qb.should(new QueryStringQueryBuilder("1").field("post_title").field("post_content"));
-        //qb.should(new QueryStringQueryBuilder("18621614455").field("loginname"));
-        //qb.should(new QueryStringQueryBuilder("18621614455").field("nickname"));
-        //builder.setQuery(qb);
-        qb.should(new MatchQueryBuilder("post_title", "测试投票"));
-        //qb.should(new MatchQueryBuilder("post_content", "关键字"));
-        builder.setQuery(qb);
-        SearchResponse response = builder.execute().actionGet();
-        SearchHits hits = response.getHits();
-        System.out.println("查询到记录数=" + hits.getTotalHits());
-        SearchHit[] searchHists = hits.getHits();
-        System.out.println("返回记录数=" + searchHists.length);
-        if (searchHists.length > 0) {
-            for (SearchHit hit : searchHists) {
-                Map<String, Object> props = hit.getSource();
-                System.out.println(JsonHelper.convertObject2JSONString(props));
-            }
-        }
+        searchPost(client, "测试", "V");
 
         //createMapping(client, "fandom", "post");
         // migrate(client);
@@ -159,5 +142,24 @@ public class TestSender {
     }
 
 
+    private static void searchPost(TransportClient searchClient, String keyWord, String postType) {
+        SearchRequestBuilder builder = searchClient.prepareSearch("fandom").setTypes("post").setSearchType(SearchType.DEFAULT).setFrom(0).setSize(10);
+        BoolQueryBuilder qb = QueryBuilders.boolQuery();
+        qb.must(new QueryStringQueryBuilder(postType).field("post_type"));
+        qb.should(new MatchQueryBuilder("post_title", keyWord));
+        qb.should(new MatchQueryBuilder("post_content", keyWord));
+        builder.setQuery(qb);
+        SearchResponse response = builder.execute().actionGet();
+        SearchHits hits = response.getHits();
+        System.out.println("查询到post记录总数=" + hits.getTotalHits());
+        SearchHit[] searchHists = hits.getHits();
+
+
+        Set<String> fandomIdList = new HashSet<>();
+        for (SearchHit hit : searchHists) {
+            Map<String, Object> props = hit.getSource();
+            System.out.println(JsonHelper.convertObject2JSONString(props));
+        }
+    }
 }
 
