@@ -24,15 +24,15 @@ public class SSLTest {
 
     public static void convert() throws Exception {
         KeyStore ks = KeyStore.getInstance("jks");
-        char[] password = "fanszapp".toCharArray();
-        ks.load(new FileInputStream("/Users/allan/fansz1.jks"), password);
+        char[] password = "fansz!23456".toCharArray();
+        ks.load(new FileInputStream("/Users/allan/Downloads/ssl/fansz.jks"), password);
 
-        FileOutputStream kos = new FileOutputStream("/Users/allan/key.der");
+        FileOutputStream kos = new FileOutputStream("/Users/allan/Downloads/ssl/key.der");
         Key pvt = ks.getKey("fansz", password);
         kos.write(pvt.getEncoded());
         kos.flush();
         kos.close();
-        FileOutputStream cos = new FileOutputStream("/Users/allan/cert.der");
+        FileOutputStream cos = new FileOutputStream("/Users/allan/Downloads/ssl/cert.der");
         Certificate pub = ks.getCertificate("fansz");
         cos.write(pub.getEncoded());
         cos.flush();
@@ -41,13 +41,13 @@ public class SSLTest {
 
     public static void test() throws Exception {
         AuthSSLProtocolSocketFactory factory = new AuthSSLProtocolSocketFactory(null, null, new File("/Users/allan/Downloads/ssl/fansztrusted.jks").toURI().toURL(), "fansz!23456");
-        Protocol myhttps = new Protocol("https", factory, 3000);
+        Protocol myhttps = new Protocol("https", factory, 443);
 
         Protocol.registerProtocol("https",
-                new Protocol("https", factory, 3000));
+                new Protocol("https", factory, 443));
         HttpClient httpclient = new HttpClient();
         PostMethod httpget = new PostMethod("https://192.168.88.6");
-        String queryString = "{\\\"header\\\": {\\\"local\\\": \\\"ZH_cn\\\",\\\"terminal_type\\\": \\\"IOS\\\"},\\\"request\\\": [{\\\"method\\\": \\\"listAllFandoms\\\",\\\"params\\\": {\\\"access_token\\\": \\\"demo\\\",\\\"page_num\\\":1,\\\"page_size\\\" :10}}]}";
+        String queryString = "{\"header\": {\"local\": \"ZH_cn\",\"terminal_type\": \"IOS\"},\"request\": [{\"method\": \"login\",\"params\": {\"loginname\":\"13764473493\",\"password\" :\"111111\"}}]}";
                 StringRequestEntity requestEntity = new StringRequestEntity(queryString, "application/json", "UTF-8");
         httpget.setRequestEntity(requestEntity);
         httpget.setRequestHeader(new Header("Content-Type", "application/json"));
